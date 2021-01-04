@@ -1,0 +1,1 @@
+﻿SELECT X FROM Bots, coordinates WHERE Bots.Id = 1 AND Bots.Id = coordinates.IdBots

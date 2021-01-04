@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BD4BC46C-838B-4520-A470-A08A3EBD6F89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>States</RootNamespace>
+    <AssemblyName>States</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Check.cs" />
+    <Compile Include="DriversOfState.cs" />
+    <Compile Include="IState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateDriver.cs" />
+    <Compile Include="StateGT267.cs" />
+    <Compile Include="StateGT318.cs" />
+    <Compile Include="StateGT319.cs" />
+    <Compile Include="StateGT320.cs" />
+    <Compile Include="StateGT321.cs" />
+    <Compile Include="StateGT322.cs" />
+    <Compile Include="StateGT326.cs" />
+    <Compile Include="StateGT331.cs" />
+    <Compile Include="StateGT330.cs" />
+    <Compile Include="StateGT325.cs" />
+    <Compile Include="StateGT324.cs" />
+    <Compile Include="StateGT323.cs" />
+    <Compile Include="StateGT307.cs" />
+    <Compile Include="StateGT306.cs" />
+    <Compile Include="StateGT305.cs" />
+    <Compile Include="StateGT304.cs" />
+    <Compile Include="StateGT303.cs" />
+    <Compile Include="StateGT302.cs" />
+    <Compile Include="StateGT301.cs" />
+    <Compile Include="StateGT300.cs" />
+    <Compile Include="StateGT317.cs" />
+    <Compile Include="StateGT316.cs" />
+    <Compile Include="StateGT315.cs" />
+    <Compile Include="StateGT314.cs" />
+    <Compile Include="StateGT014a.cs" />
+    <Compile Include="StateGT015a.cs" />
+    <Compile Include="StateGT016new2.cs" />
+    <Compile Include="StateGT016new.cs" />
+    <Compile Include="StateGT095.cs" />
+    <Compile Include="StateGT096a.cs" />
+    <Compile Include="StateGT096.cs" />
+    <Compile Include="StateGT097.cs" />
+    <Compile Include="StateGT098.cs" />
+    <Compile Include="StateGT099.cs" />
+    <Compile Include="StateGT094.cs" />
+    <Compile Include="StateGT104a.cs" />
+    <Compile Include="StateGT150.cs" />
+    <Compile Include="StateGT141.cs" />
+    <Compile Include="StateGT140.cs" />
+    <Compile Include="StateGT139.cs" />
+    <Compile Include="StateGT138.cs" />
+    <Compile Include="StateGT137.cs" />
+    <Compile Include="StateGT136.cs" />
+    <Compile Include="StateGT135.cs" />
+    <Compile Include="StateGT134.cs" />
+    <Compile Include="StateGT133.cs" />
+    <Compile Include="StateGT132.cs" />
+    <Compile Include="StateGT131.cs" />
+    <Compile Include="StateGT172.cs" />
+    <Compile Include="StateGT103a.cs" />
+    <Compile Include="StateGT165.cs" />
+    <Compile Include="StateGT166.cs" />
+    <Compile Include="StateGT167.cs" />
+    <Compile Include="StateGT168.cs" />
+    <Compile Include="StateGT170.cs" />
+    <Compile Include="StateGT169.cs" />
+    <Compile Include="StateGT214.cs" />
+    <Compile Include="StateGT213.cs" />
+    <Compile Include="StateGT212.cs" />
+    <Compile Include="StateGT211.cs" />
+    <Compile Include="StateGT203.cs" />
+    <Compile Include="StateGT201.cs" />
+    <Compile Include="StateGT126.cs" />
+    <Compile Include="StateGT125.cs" />
+    <Compile Include="StateGT124.cs" />
+    <Compile Include="StateGT130.cs" />
+    <Compile Include="StateGT129.cs" />
+    <Compile Include="StateGT123.cs" />
+    <Compile Include="StateGT122.cs" />
+    <Compile Include="StateGT121.cs" />
+    <Compile Include="StateGT120.cs" />
+    <Compile Include="StateGT119.cs" />
+    <Compile Include="StateGT118.cs" />
+    <Compile Include="StateGT117.cs" />
+    <Compile Include="StateGT116.cs" />
+    <Compile Include="StateGT115.cs" />
+    <Compile Include="StateGT114.cs" />
+    <Compile Include="StateGT113.cs" />
+    <Compile Include="StateGT112.cs" />
+    <Compile Include="StateGT111.cs" />
+    <Compile Include="StateGT110.cs" />
+    <Compile Include="StateGT220.cs" />
+    <Compile Include="StateGT221.cs" />
+    <Compile Include="StateGT222.cs" />
+    <Compile Include="StateGT223.cs" />
+    <Compile Include="StateGT224.cs" />
+    <Compile Include="StateGT225.cs" />
+    <Compile Include="StateGT226.cs" />
+    <Compile Include="StateGT227.cs" />
+    <Compile Include="StateGT228.cs" />
+    <Compile Include="StateGT229.cs" />
+    <Compile Include="StateGT230.cs" />
+    <Compile Include="StateGT231.cs" />
+    <Compile Include="StateGT232.cs" />
+    <Compile Include="StateGT233.cs" />
+    <Compile Include="StateGT234.cs" />
+    <Compile Include="StateGT236.cs" />
+    <Compile Include="StateGT237.cs" />
+    <Compile Include="StateGT238.cs" />
+    <Compile Include="StateGT239.cs" />
+    <Compile Include="StateGT240.cs" />
+    <Compile Include="StateGT241.cs" />
+    <Compile Include="StateGT242.cs" />
+    <Compile Include="StateGT243.cs" />
+    <Compile Include="StateGT244.cs" />
+    <Compile Include="StateGT245.cs" />
+    <Compile Include="StateGT246.cs" />
+    <Compile Include="StateGT247.cs" />
+    <Compile Include="StateGT248.cs" />
+    <Compile Include="StateGT249.cs" />
+    <Compile Include="StateGT235.cs" />
+    <Compile Include="StateGT252.cs" />
+    <Compile Include="StateGT253.cs" />
+    <Compile Include="StateGT254.cs" />
+    <Compile Include="StateGT255.cs" />
+    <Compile Include="StateGT256.cs" />
+    <Compile Include="StateGT257.cs" />
+    <Compile Include="StateGT258.cs" />
+    <Compile Include="StateGT259.cs" />
+    <Compile Include="StateGT251.cs" />
+    <Compile Include="StateGT250.cs" />
+    <Compile Include="StateGT217.cs" />
+    <Compile Include="StateGT216.cs" />
+    <Compile Include="StateGT215.cs" />
+    <Compile Include="StateGT266.cs" />
+    <Compile Include="StateGT265.cs" />
+    <Compile Include="StateGT264.cs" />
+    <Compile Include="StateGT263.cs" />
+    <Compile Include="StateGT262.cs" />
+    <Compile Include="StateGT261.cs" />
+    <Compile Include="StateGT260.cs" />
+    <Compile Include="StateGT162.cs" />
+    <Compile Include="StateGT161.cs" />
+    <Compile Include="StateGT160.cs" />
+    <Compile Include="StateGT159.cs" />
+    <Compile Include="StateGT158.cs" />
+    <Compile Include="StateGT157.cs" />
+    <Compile Include="StateGT156.cs" />
+    <Compile Include="StateGT155.cs" />
+    <Compile Include="StateGT154.cs" />
+    <Compile Include="StateGT153.cs" />
+    <Compile Include="StateGT152.cs" />
+    <Compile Include="StateGT151.cs" />
+    <Compile Include="StateGT001.cs" />
+    <Compile Include="StateGT003.cs" />
+    <Compile Include="StateGT004.cs" />
+    <Compile Include="StateGT005.cs" />
+    <Compile Include="StateGT006.cs" />
+    <Compile Include="StateGT007.cs" />
+    <Compile Include="StateGT008.cs" />
+    <Compile Include="StateGT009.cs" />
+    <Compile Include="StateGT010.cs" />
+    <Compile Include="StateGT109.cs" />
+    <Compile Include="StateGT108.cs" />
+    <Compile Include="StateGT107.cs" />
+    <Compile Include="StateGT106.cs" />
+    <Compile Include="StateGT105.cs" />
+    <Compile Include="StateGT104.cs" />
+    <Compile Include="StateGT103.cs" />
+    <Compile Include="StateGT102.cs" />
+    <Compile Include="StateGT101.cs" />
+    <Compile Include="StateGT011.cs" />
+    <Compile Include="StateGT011a.cs" />
+    <Compile Include="StateGT012.cs" />
+    <Compile Include="StateGT014.cs" />
+    <Compile Include="StateGT015.cs" />
+    <Compile Include="StateGT016.cs" />
+    <Compile Include="StateGT100.cs" />
+    <Compile Include="StateGT017.cs" />
+    <Compile Include="StateGT018.cs" />
+    <Compile Include="StateGT020.cs" />
+    <Compile Include="StateGT021.cs" />
+    <Compile Include="StateGT022.cs" />
+    <Compile Include="StateGT023.cs" />
+    <Compile Include="StateGT024.cs" />
+    <Compile Include="StateGT025.cs" />
+    <Compile Include="StateGT026.cs" />
+    <Compile Include="StateGT027.cs" />
+    <Compile Include="StateGT028.cs" />
+    <Compile Include="StateGT030.cs" />
+    <Compile Include="StateGT031.cs" />
+    <Compile Include="StateGT032.cs" />
+    <Compile Include="StateGT033.cs" />
+    <Compile Include="StateGT034.cs" />
+    <Compile Include="StateGT035.cs" />
+    <Compile Include="StateGT036.cs" />
+    <Compile Include="StateGT037.cs" />
+    <Compile Include="StateGT038.cs" />
+    <Compile Include="StateGT039.cs" />
+    <Compile Include="StateGT040.cs" />
+    <Compile Include="StateGT041.cs" />
+    <Compile Include="StateGT042.cs" />
+    <Compile Include="StateGT043.cs" />
+    <Compile Include="StateGT044.cs" />
+    <Compile Include="StateGT045.cs" />
+    <Compile Include="StateGT046.cs" />
+    <Compile Include="StateGT047.cs" />
+    <Compile Include="StateGT048.cs" />
+    <Compile Include="StateGT049.cs" />
+    <Compile Include="StateGT050.cs" />
+    <Compile Include="StateGT051.cs" />
+    <Compile Include="StateGT052.cs" />
+    <Compile Include="StateGT053.cs" />
+    <Compile Include="StateGT054.cs" />
+    <Compile Include="StateGT055.cs" />
+    <Compile Include="StateGT056.cs" />
+    <Compile Include="StateGT057.cs" />
+    <Compile Include="StateGT751.cs" />
+    <Compile Include="StateGT093.cs" />
+    <Compile Include="StateGT092.cs" />
+    <Compile Include="StateGT091.cs" />
+    <Compile Include="StateGT090.cs" />
+    <Compile Include="StateGT089.cs" />
+    <Compile Include="StateGT088.cs" />
+    <Compile Include="StateGT087.cs" />
+    <Compile Include="StateGT086.cs" />
+    <Compile Include="StateGT085.cs" />
+    <Compile Include="StateGT084.cs" />
+    <Compile Include="StateGT083.cs" />
+    <Compile Include="StateGT082.cs" />
+    <Compile Include="StateGT081.cs" />
+    <Compile Include="StateGT080.cs" />
+    <Compile Include="StateGT079.cs" />
+    <Compile Include="StateGT078.cs" />
+    <Compile Include="StateGT077.cs" />
+    <Compile Include="StateGT076.cs" />
+    <Compile Include="StateGT075.cs" />
+    <Compile Include="StateGT074.cs" />
+    <Compile Include="StateGT073.cs" />
+    <Compile Include="StateGT072.cs" />
+    <Compile Include="StateGT071.cs" />
+    <Compile Include="StateGT070.cs" />
+    <Compile Include="StateGT069.cs" />
+    <Compile Include="StateGT068.cs" />
+    <Compile Include="StateGT067.cs" />
+    <Compile Include="StateGT066.cs" />
+    <Compile Include="StateGT065.cs" />
+    <Compile Include="StateGT064.cs" />
+    <Compile Include="StateGT063.cs" />
+    <Compile Include="StateGT062.cs" />
+    <Compile Include="StateGT061.cs" />
+    <Compile Include="StateGT060.cs" />
+    <Compile Include="StateGTI63.cs" />
+    <Compile Include="StateGTI70.cs" />
+    <Compile Include="StateGTI71.cs" />
+    <Compile Include="StateGTI72.cs" />
+    <Compile Include="StateGTI73.cs" />
+    <Compile Include="StateGTI74.cs" />
+    <Compile Include="StateGTI75.cs" />
+    <Compile Include="StateGTI76.cs" />
+    <Compile Include="StateGTI77.cs" />
+    <Compile Include="StateGTI78.cs" />
+    <Compile Include="StateGTI79.cs" />
+    <Compile Include="StateGTI80.cs" />
+    <Compile Include="StateGTI67.cs" />
+    <Compile Include="StateGTI66.cs" />
+    <Compile Include="StateGTI65.cs" />
+    <Compile Include="StateGTI64.cs" />
+    <Compile Include="StateGTI62.cs" />
+    <Compile Include="StateGTI61.cs" />
+    <Compile Include="StateGTI60.cs" />
+    <Compile Include="StateGT058.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GEBot.Data\GEBot.Data.csproj">
+      <Project>{3e94057c-f406-4c7a-b12c-fc8ea064b141}</Project>
+      <Name>GEBot.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenGEWindows\OpenGEWindows.csproj">
+      <Project>{60aa44d6-e4b0-48a8-a5f0-2b9fd3d00171}</Project>
+      <Name>OpenGEWindows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
