@@ -56,6 +56,7 @@ namespace States
             botwindow.PressEscThreeTimes();   // ================= убирает все лишние окна с экрана =================================
             botwindow.Pause(500);
 
+            server.runAway();
             server.TeleportToTownAltW(1);            //летим в Ребольдо
 
             //ожидание загрузки города

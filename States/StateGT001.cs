@@ -60,6 +60,7 @@ namespace States
             botwindow.Pause(500);
 
             //================ переход в тот город, где надо продаться (переход по Alt+W) =================================
+            server.runAway();
             server.TeleportToTownAltW(botwindow.getNomerTeleport());            //метод без ветвлений и циклов
 
             botwindow.Pause(3000);

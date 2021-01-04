@@ -836,24 +836,27 @@ namespace OpenGEWindows
         /// <summary>
         /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
         /// </summary>
-        /// <param name="numberOfThePartitionMenu"></param>
-        /// <param name="punkt"></param>
+        /// <param name="numberOfThePartitionMenu">номер раздела верхнего меню п/п</param>
+        /// <param name="punkt">пункт меню. номер п/п</param>
         public override void TopMenu(int numberOfThePartitionMenu, int punkt)
         {
-            int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0, 0 };
-            int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
-
-            int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 };
+            int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
+            //int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
+            int[] PunktX = { 0, 336, 368, 401, 0, 462, 510, 561, 578, 0, 0, 0, 0 };    //координата X пунктов меню
+            int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 }; //координата Y первого пункта меню
 
             if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
             {
-                int x = MenukoordX[numberOfThePartitionMenu - 1] + 25;
+                //int x = MenukoordX[numberOfThePartitionMenu - 1] + 25;
                 int y = FirstPunktOfMenuKoordY[numberOfThePartitionMenu - 1] + 25 * (punkt - 1);
-                iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+                //iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
 
                 TopMenu(numberOfThePartitionMenu);   //сначала открываем раздел верхнего меню (1-14)
                 Pause(500);
-                pointMenu.PressMouse();  //выбираем конкретный пункт подменю (раскрывающийся список)
+
+                int x = PunktX[numberOfThePartitionMenu - 1];
+                iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+                pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
             }
         }
 
@@ -873,21 +876,12 @@ namespace OpenGEWindows
                 pointTeleportToTownAltW = new Point(800 + xx, 500 + yy);   //ребольдо
             }
 
-            // отбегаю в сторону. чтобы бот не стрелял  
-            //iPoint pointNotToShoot = new Point(300 - 5 + xx, 300 - 5 + yy);
-            //iPoint pointNotToShoot2 = new Point(350 - 5 + xx, 350 - 5 + yy);
-            //pointNotToShoot.DoubleClickL();
-            //botwindow.Pause(4000);
-            //pointNotToShoot2.DoubleClickL();
-            //botwindow.Pause(3000);
-
-            // отбегаю в сторону. чтобы бот не стрелял 
-            runAway();                            
-
+            //// отбегаю в сторону. чтобы бот не стрелял 
+            //runAway();                            
 
             TopMenu(6, 1);
             Pause(1000);
-            pointTeleportToTownAltW.PressMouse();           //было два нажатия левой, решил попробовать RRL
+            pointTeleportToTownAltW.PressMouseL();           
             botwindow.Pause(2000);
         }
 
