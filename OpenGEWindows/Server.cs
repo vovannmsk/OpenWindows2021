@@ -591,6 +591,65 @@ namespace OpenGEWindows
             protected iPointColor pointisBeginOfMission2;
         #endregion
 
+        #region Работа с инвентарем и CASH-инвентарем
+
+        /// <summary>
+        /// структура для поиска вещей в инвентаре по двум точкам типа PointColor
+        /// </summary>
+        public struct Thing   //вещь 
+        {
+            public PointColor point1;
+            public PointColor point2;
+
+            public Thing(PointColor point1, PointColor point2)
+            {
+                this.point1 = point1;
+                this.point2 = point2;
+            }
+        }
+
+        /// <summary>
+        /// структура для поиска вещей в CASH-инвентаре по одной точке
+        /// </summary>
+        public struct Item    //предмет 
+        {
+            public int x;
+            public int y;
+            public uint color;
+
+            /// <summary>
+            /// конструктор. Создание структуры по координатам (x, y) и цвету точки (color)
+            /// </summary>
+            /// <param name="x">X</param>
+            /// <param name="y">Y</param>
+            /// <param name="color">цвет</param>
+            public Item(int x, int y, uint color)
+            {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+            }
+        }
+
+        Item Coat = new Item(35, 209, 16645630);
+        Item Necklace = new Item(36, 219, 12179686);
+        Item Glove = new Item(26, 205, 2906307);
+        Item Shoes = new Item(33, 202, 16777215);
+        Item Belt = new Item(35, 209, 11372402);
+        Item Earring = new Item(37, 205, 11263973);
+        Item Rifle = new Item(31, 214, 12567238);
+        /// <summary>
+        /// журнал с ежедневными наградами
+        /// </summary>
+        Item Journal = new Item(38, 209, 4390911);
+        Item Steroid = new Item(36, 211, 11690052);
+        Item Principle = new Item(37, 210, 3226091);
+        Item Triumph = new Item(35, 209, 47612);
+        Item SteroidLeftPanel = new Item(31, 241, 11690052);
+        Item PrincipleLeftPanel = new Item(32, 272, 3226091);
+        Item TriumphLeftPanel = new Item(31, 304, 47612);
+        #endregion
+
         // ===========================================  Методы ==========================================
 
         #region общие методы
@@ -4252,21 +4311,6 @@ namespace OpenGEWindows
         #region Обычный инвентарь
 
         /// <summary>
-        /// структура для поиска вещей в инвентаре по двум точкам
-        /// </summary>
-        public struct Thing   //вещь
-        {
-            public PointColor point1;
-            public PointColor point2;
-
-            public Thing(PointColor point1, PointColor point2)
-            {
-                this.point1 = point1;
-                this.point2 = point2;
-            }
-        }
-
-        /// <summary>
         /// ищем указанную вещь в инвентаре (инвентарь должен быть открыт на нужной закладке)
         /// </summary>
         /// <param name="thing">искомая вещь</param>
@@ -4530,22 +4574,6 @@ namespace OpenGEWindows
 
         #region CASH-инвентарь
 
-        /// <summary>
-        /// структура для поиска вещей в CASH-инвентаре
-        /// </summary>
-        public struct Item
-        {
-            public int x;
-            public int y;
-            public uint color;
-
-            public Item(int x, int y, uint color)
-            {
-                this.x = x;
-                this.y = y;
-                this.color = color;
-            }
-        }
 
         /// <summary>
         /// если в середине экрана возникает запрос на подтверждение, то ответить
@@ -4608,7 +4636,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// переложить вещь из указанной ячейки кэш инвентаря в быстрый слот
+        /// переложить вещь из указанной ячейки кэш инвентаря в быстрый слот  (ПУСТОЙ МЕТОД. НЕ ДОДЕЛАНО)
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
@@ -4618,7 +4646,7 @@ namespace OpenGEWindows
             //Point beginPoint = new Point();
 
 
-        }
+        } // (ПУСТОЙ МЕТОД. НЕ ДОДЕЛАНО)
 
         /// <summary>
         /// открыт ли специнвентарь
@@ -4635,23 +4663,9 @@ namespace OpenGEWindows
         /// </summary>
         public void OpenSpecInventory(int bookmark)
         {
-            if (!isOpenSpecInventory()) TopMenu(8, 2);
-            Pause(1500);
-            switch (bookmark)
-            {
-                case 1:
-                    new Point(47 - 5 + xx, 182 - 5 + yy).PressMouseL();     //первая - Equip
-                    break;
-                case 2:
-                    new Point(114 - 5 + xx, 182 - 5 + yy).PressMouseL();     //вторая - Expand
-                    break;
-                case 3:
-                    new Point(177 - 5 + xx, 182 - 5 + yy).PressMouseL();     //третья - Misk
-                    break;
-                case 4:
-                    new Point(247 - 5 + xx, 182 - 5 + yy).PressMouseL();     //четвертая - Costume
-                    break;
-            }
+            if (!isOpenSpecInventory()) OpenSpecInventory();
+            Pause(1000);
+            SpecInventoryBookmark(bookmark);
         }
 
         /// <summary>
@@ -4683,37 +4697,39 @@ namespace OpenGEWindows
         /// </summary>
         public void PuttingOnWeaponsAndArmors()
         {
-            Item Coat = new Item(35, 209, 16645630);
-            Item Necklace = new Item(36, 219, 12179686);
-            Item Glove = new Item(26, 205, 2906307);
-            Item Shoes = new Item(33, 202, 16777215);
-            Item Belt = new Item(35, 209, 11372402);
-            Item Earring = new Item(37, 205, 11263973);
-            Item Rifle = new Item(31, 214, 12567238);
+            //Item Coat = new Item(35, 209, 16645630);
+            //Item Necklace = new Item(36, 219, 12179686);
+            //Item Glove = new Item(26, 205, 2906307);
+            //Item Shoes = new Item(33, 202, 16777215);
+            //Item Belt = new Item(35, 209, 11372402);
+            //Item Earring = new Item(37, 205, 11263973);
+            //Item Rifle = new Item(31, 214, 12567238);
 
             Item[] items = new Item[7] { Coat, Necklace, Glove, Shoes, Belt, Earring, Rifle };
 
-
-            //new Point(48 - 5 + xx, 181 - 5 + yy).PressMouseL();     //первая закладка инвентаря
             SpecInventoryBookmark(1);
 
             botwindow.FirstHero();
-            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
 
             botwindow.SecondHero();
-            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
 
             botwindow.ThirdHero();
-            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
         }
 
         /// <summary>
-        /// открываем закладку с указанным номером в уже открытом спец инвентаре
+        /// открываем закладку с указанным номером в уже открытом спец инвентаре:
+        /// первая - Equip;
+        /// вторая - Expand;
+        /// третья - Misk;
+        /// четвертая - Costume.
         /// </summary>
         /// <param name="n">номер закладки</param>
         public void SpecInventoryBookmark(int n)
         {
-            new Point(48 - 5 + xx + (n - 1) * 60, 181 - 5 + yy).PressMouseL();     //первая закладка инвентаря
+            new Point(48 - 5 + xx + (n - 1) * 60, 181 - 5 + yy).PressMouseL();     //закладка инвентаря с номером n
         }
 
         /// <summary>
@@ -4721,11 +4737,9 @@ namespace OpenGEWindows
         /// </summary>
         public void ApplyingJournal()
         {
-            Item Journal = new Item(38, 209, 4390911);
-
             SpecInventoryBookmark(3);
 
-            PuttingItem(Journal);     //применяем журнал
+            PuttingItem(Journal);     
 
             AnswerYesOrNo(true);
         }
@@ -4744,7 +4758,7 @@ namespace OpenGEWindows
         protected void PuttingItem(Item item)
         {
             bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            for (int i = 1; i <= 7; i++)         //строки в инвентаре
             {
                 for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
                 {
@@ -4764,21 +4778,46 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Находим конкретную вещь (Item) в спец инвентаре в текущей закладке
+        /// применяем вещь в специнвентаре (новый метод)
+        /// </summary>
+        protected bool PuttingItem2(Item item)
+        {
+            Point point;
+            
+            if (FindItemFromSpecInventory(item, 0, out point))
+            {
+                point.DoubleClickL();
+                new Point(1500, 800).Move();   //убираем мышь в сторону
+                Pause(500);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+              
+        } // НЕ проверено
+
+
+        /// <summary>
+        /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке
         /// </summary>
         /// <param name="item">искомая вещь</param>
+        /// <param name="sdvig">величина сдвига специнвентаря по оси Х</param>
         /// <param name="point">если вещь найдена, то возвращаем точку с координатами вещи</param>
         /// <returns>если вещь найдена, то возвращаем true</returns>
-        protected bool FindItemFromSpecInventory(Item item, out Point point)
+        protected bool FindItemFromSpecInventory(Item item, int sdvig, out Point point)
         {
+            MoveCursorFromSpecInventory();
             point = new Point(item.x - 5 + xx, item.y - 5 + yy);
             bool result = false;   //объект в кармане пока не найден
 
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            for (int i = 1; i <= 7; i++)         //строки в инвентаре
             {
                 for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
                 {
-                    int xxx = item.x - 5 + xx + (j - 1) * 39;
+                    int xxx = item.x - 5 + xx + (j - 1) * 39 + sdvig;
                     int yyy = item.y - 5 + yy + (i - 1) * 38;
                     if (!result)
                     {
@@ -4799,12 +4838,12 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="item">вещь</param>
         /// <param name="CellNumber">номер ячейки, куда перемещаем вещь</param>
-        protected void MoveItemOnLeftPanelFromSpecInventory(Item item, int CellNumber)
+        protected void MoveItemOnLeftPanelFromSpecInventory(Item item, int sdvig, int CellNumber)
         {
             bool result;
 
             Point pointBegin = new Point(0, 0);
-            result = FindItemFromSpecInventory(item, out pointBegin);
+            result = FindItemFromSpecInventory(item, sdvig, out pointBegin);
             if (result)
             {
                 Point pointEnd = new Point(31 - 5 + xx, 114 - 5 + (CellNumber - 1) * 32 + yy);
@@ -4837,21 +4876,28 @@ namespace OpenGEWindows
         {
             int sdvig = 40;
             OpenSpecInventory();
+            Pause(500);
             SpecInventoryBookmark(2);
+            Pause(500);
             MoveSpecInventory(sdvig);
+            Pause(500);
 
-            Item Steroid = new Item(36 + sdvig, 211, 11230273);  
-            MoveItemOnLeftPanelFromSpecInventory(Steroid, 5);
-            MoveCursorFromSpecInventory();
+            MoveItemOnLeftPanelFromSpecInventory(Steroid, sdvig, 5);
+            
+            MoveItemOnLeftPanelFromSpecInventory(Principle, sdvig, 6);
+            
+            MoveItemOnLeftPanelFromSpecInventory(Triumph, sdvig, 7);
+        }
 
-            Item Principle = new Item(37 + sdvig, 210, 3226091);  //проверено
-            MoveItemOnLeftPanelFromSpecInventory(Principle, 6);
-            MoveCursorFromSpecInventory();
-
-
-            Item Triumph = new Item(35 + sdvig, 209, 47612);  //проверено
-            MoveItemOnLeftPanelFromSpecInventory(Triumph, 7);
-            MoveCursorFromSpecInventory();
+        /// <summary>
+        /// проверяем, есть ли указанная вещь item на левой панели
+        /// </summary>
+        /// <param name="item">искомая вещь</param>
+        /// <returns></returns>
+        public bool isItemOnLeftPanel(Item item)
+        {
+            PointColor Bottle = new PointColor(item.x - 5 + xx, item.y - 5 + yy, item.color, 0);
+            return Bottle.isColor();
         }
 
         /// <summary>
@@ -4860,9 +4906,13 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isBottlesOnLeftPanel()
         {
-            return  new PointColor(31 - 5 + xx, 241 - 5 + yy, 11690052, 0).isColor() &&
-                    new PointColor(32 - 5 + xx, 272 - 5 + yy, 3226091, 0).isColor() &&
-                    new PointColor(31 - 5 + xx, 304 - 5 + yy, 47612, 0).isColor();
+            return isItemOnLeftPanel(SteroidLeftPanel) &&
+                    isItemOnLeftPanel(PrincipleLeftPanel) &&
+                    isItemOnLeftPanel(TriumphLeftPanel);
+
+            //return  new PointColor(31 - 5 + xx, 241 - 5 + yy, 11690052, 0).isColor() &&
+            //        new PointColor(32 - 5 + xx, 272 - 5 + yy, 3226091, 0).isColor() &&
+            //        new PointColor(31 - 5 + xx, 304 - 5 + yy, 47612, 0).isColor();
         }
 
         #endregion

@@ -756,7 +756,9 @@ namespace States
             //Dialog dialog = new DialogSing(botwindow);
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
 
-            Server server = new ServerSing(botwindow);
+            //Server server = new ServerSing(botwindow);
+            //server.isBottlesOnLeftPanel();
+            //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //Town town = new SingTownArmonia(botwindow);
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.MoveBottlesToTheLeftPanel();
@@ -860,7 +862,7 @@ namespace States
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
             PointColor point1 = new PointColor(31 - 5 + xx, 241 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(871 - 5 + xx, 42 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(871 - 5 + xx, 42 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 

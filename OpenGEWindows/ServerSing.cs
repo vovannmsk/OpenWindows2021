@@ -860,7 +860,6 @@ namespace OpenGEWindows
             }
         }
 
-
         /// <summary>
         /// телепортируемся в город продажи по Alt+W (Америка)
         /// </summary>
