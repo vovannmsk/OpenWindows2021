@@ -57,8 +57,6 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.OpenSpecInventory(4);
-
             server.PutWings();
         }
 

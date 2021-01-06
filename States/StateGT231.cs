@@ -59,10 +59,8 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             botwindow.PressEscThreeTimes();
-            server.OpenInventory(2);
-            botwindow.Pause(1000);
 
-            isFound = server.DragExpCardToManaslots();
+            isFound = server.DragExpCardToManaSlots();
             botwindow.Pause(1000);
         }
 

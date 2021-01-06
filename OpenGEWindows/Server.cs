@@ -608,6 +608,11 @@ namespace OpenGEWindows
             }
         }
 
+        Thing masterScroll = new Thing(new PointColor(703, 187, 461065, 0), new PointColor(704, 174, 1317005, 0));
+        Thing expCard = new Thing(new PointColor(704, 174, 1317005, 0), new PointColor(705, 174, 1317005, 0));
+        Thing Honey = new Thing(new PointColor(697, 180, 4289893, 0), new PointColor(703, 180, 4487011, 0));
+        Thing Apple = new Thing(new PointColor(697, 180, 7465471, 0), new PointColor(704, 180, 42495, 0));
+
         /// <summary>
         /// структура для поиска вещей в CASH-инвентаре по одной точке
         /// </summary>
@@ -648,7 +653,16 @@ namespace OpenGEWindows
         Item SteroidLeftPanel = new Item(31, 241, 11690052);
         Item PrincipleLeftPanel = new Item(32, 272, 3226091);
         Item TriumphLeftPanel = new Item(31, 304, 47612);
+        Item PinkWings = new Item(36, 211, 4870905);
+
+        protected iPointColor pointisOpenInventory1;
+        protected iPointColor pointisOpenInventory2;
+
+
+
         #endregion
+
+
 
         // ===========================================  Методы ==========================================
 
@@ -4226,8 +4240,9 @@ namespace OpenGEWindows
         /// </summary>
         public void PutAppleToFirstStorage()
         {
-            Thing Apple = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 7465471, 0), 
-                                    new PointColor(704 - 5 + xx, 180 - 5 + yy, 42495, 0));
+            //Thing Apple = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 7465471, 0), 
+            //                        new PointColor(704 - 5 + xx, 180 - 5 + yy, 42495, 0));
+
             DragItemToXY(Apple, 529 - 5 + xx, 181 - 5 + yy);  //перекладываем яблоки на аппарат
             Pause(2000);
 
@@ -4249,8 +4264,7 @@ namespace OpenGEWindows
         /// </summary>
         public void PutHoneyToSecondStorage()
         {
-            Thing Honey = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 4289893, 0),
-                                    new PointColor(703 - 5 + xx, 180 - 5 + yy, 4487011, 0));
+            //Thing Honey = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 4289893, 0), new PointColor(703 - 5 + xx, 180 - 5 + yy, 4487011, 0));
 
             DragItemToXY(Honey, 492 - 5 + xx, 112 - 5 + yy);
             Pause(1000);
@@ -4346,23 +4360,34 @@ namespace OpenGEWindows
         /// </summary>
         protected bool UseItem(Thing thing)
         {
-            bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            bool result = false;   //объект в инвентаре пока не найден
+
+            //for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            //{
+            //    for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
+            //    {
+            //        if (!result)         //если вещь уже найдена, то дальше не ищем
+            //        {
+            //            if (CheckThingInCell(i, j, thing))
+            //            {
+            //                UseThingInCell(i, j);
+            //                new Point(1000 - 5 + xx, 500 - 5 + yy).Move();   //убираем мышь в сторону
+            //                result = true;
+            //                Pause(500);
+            //            }
+            //        }
+            //    }
+            //}
+
+            int i, j;
+            if (FindItem(thing, out i, out j))
             {
-                for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
-                {
-                    if (!result)         //если вещь уже найдена, то дальше не ищем
-                    {
-                        if (CheckThingInCell(i, j, thing))
-                        {
-                            UseThingInCell(i, j);
-                            new Point(1000 - 5 + xx, 500 - 5 + yy).Move();   //убираем мышь в сторону
-                            result = true;
-                            Pause(500);
-                        }
-                    }
-                }
+                UseThingInCell(i, j);
+                Pause(500);
+                result = true;
             }
+            MoveCursorOfMouse();
+            Pause(500);
             return result;
         }
 
@@ -4370,10 +4395,10 @@ namespace OpenGEWindows
         /// открыт ли инвентарь?
         /// </summary>
         /// <returns></returns>
-        public bool isOpenInventory()
+        protected bool isOpenInventory()
         {
-            return new PointColor(731 - 5 + xx, 86 - 5 + yy, 8036794, 0).isColor() &&
-                   new PointColor(745 - 5 + xx, 86 - 5 + yy, 8036794, 0).isColor();
+            return pointisOpenInventory1.isColor() &&
+                   pointisOpenInventory2.isColor();
         }
 
         /// <summary>
@@ -4383,25 +4408,28 @@ namespace OpenGEWindows
         public void OpenInventory(int numberOfbookmark)
         {
             if (!isOpenInventory()) TopMenu(8, 1);
-            Pause(1500);
-            switch (numberOfbookmark)
-            {
-                case 1:
-                    new Point(713 - 5 + xx, 152 - 5 + yy).PressMouseL();     //первая - Equip
-                    break;
-                case 2:
-                    new Point(782 - 5 + xx, 152 - 5 + yy).PressMouseL();     //вторая - Expand
-                    break;
-                case 3:
-                    new Point(843 - 5 + xx, 152 - 5 + yy).PressMouseL();     //третья - Misk
-                    break;
-                case 4:
-                    new Point(902 - 5 + xx, 152 - 5 + yy).PressMouseL();     //четвертая - Quest
-                    break;
-                case 5:
-                    new Point(871 - 5 + xx, 133 - 5 + yy).PressMouseL();     //пятая - костюмы
-                    break;
-            }
+            Pause(1000);
+
+            new Point(713 - 5 + xx + 61 * (numberOfbookmark - 1), 152 - 5 + yy).PressMouseL();
+
+            //switch (numberOfbookmark)
+            //{
+            //    case 1:
+            //        new Point(713 - 5 + xx, 152 - 5 + yy).PressMouseL();     //первая - Equip
+            //        break;
+            //    case 2:
+            //        new Point(782 - 5 + xx, 152 - 5 + yy).PressMouseL();     //вторая - Expand
+            //        break;
+            //    case 3:
+            //        new Point(843 - 5 + xx, 152 - 5 + yy).PressMouseL();     //третья - Misk
+            //        break;
+            //    case 4:
+            //        new Point(902 - 5 + xx, 152 - 5 + yy).PressMouseL();     //четвертая - Quest
+            //        break;
+            //    case 5:
+            //        new Point(871 - 5 + xx, 133 - 5 + yy).PressMouseL();     //пятая - костюмы
+            //        break;
+            //}
         }
 
         /// <summary>
@@ -4430,27 +4458,41 @@ namespace OpenGEWindows
         /// <summary>
         /// перекладываем указанную вещь во все слоты (инвентарь должене быть открыт на нужной закладке)
         /// </summary>
-        protected bool DragItemToManaslot(Thing thing)
+        protected bool DragItemToManaSlots(Thing thing)
         {
             bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
+
+            //for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            //{
+            //    for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
+            //    {
+            //        if (!result)
+            //        {
+            //            if (CheckThingInCell(i, j, thing))
+            //            {
+            //                DragItemToSlot(i, j, 1);
+            //                DragItemToSlot(i, j, 2);
+            //                DragItemToSlot(i, j, 3);
+            //                new Point(1500, 800).Move();   //убираем мышь в сторону
+            //                result = true;
+            //                Pause(500);
+            //            }
+            //        }
+            //    }
+            //}
+
+            int i, j;
+
+            if (FindItem(thing, out i, out j))
             {
-                for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
-                {
-                    if (!result)
-                    {
-                        if (CheckThingInCell(i, j, thing))
-                        {
-                            DragItemToSlot(i, j, 1);
-                            DragItemToSlot(i, j, 2);
-                            DragItemToSlot(i, j, 3);
-                            new Point(1500, 800).Move();   //убираем мышь в сторону
-                            result = true;
-                            Pause(500);
-                        }
-                    }
-                }
+                result = true;
+                DragItemToSlot(i, j, 1);
+                DragItemToSlot(i, j, 2);
+                DragItemToSlot(i, j, 3);
+                MoveCursorOfMouse();
+                Pause(500);
             }
+
             return result;
         }
 
@@ -4462,45 +4504,33 @@ namespace OpenGEWindows
         /// <param name="Slot">номер слота маны</param>
         protected void DragItemToSlot(int i, int j, int Slot)
         {
-            iPoint pointSlot;
-
-            switch (Slot)
-            {
-                case 1:
-                    pointSlot = new Point(244, 702);
-                    break;
-                case 2:
-                    pointSlot = new Point(495, 702);
-                    break;
-                case 3:
-                    pointSlot = new Point(754, 702);
-                    break;
-                default:
-                    pointSlot = new Point(244, 702);
-                    break;
-            }
-
             iPoint pointBegin = new Point(700 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38);
+            iPoint pointSlot  = new Point(244 - 5 + xx + (Slot - 1) * 255, 700 - 5 + yy);   //конечная точка перемещения
+
             pointBegin.Drag(pointSlot);
             Pause(1000);
         }
 
         /// <summary>
-        /// перетащить мастер свиток в слоты маны
+        /// перетащить мастер свиток в слоты маны (в процессе открываем инвентарь)
         /// </summary>
-        public bool DragMasterCardToManaslots()
+        public bool DragMasterCardToManaSlots()
         {
-            Thing masterScroll = new Thing(new PointColor(703, 187, 461065, 0), new PointColor(704, 174, 1317005, 0));
-            return DragItemToManaslot(masterScroll);
+            OpenInventory(2);
+            botwindow.Pause(1000);
+
+            return DragItemToManaSlots(masterScroll);
         }
 
         /// <summary>
         /// перетащить любую карту опыта в слоты маны
         /// </summary>
-        public bool DragExpCardToManaslots()
+        public bool DragExpCardToManaSlots()
         {
-            Thing expCard = new Thing(new PointColor(704, 174, 1317005, 0), new PointColor(705, 174, 1317005, 0));
-            return DragItemToManaslot(expCard);
+            OpenInventory(2);
+            botwindow.Pause(1000);
+
+            return DragItemToManaSlots(expCard);
         }
 
         /// <summary>
@@ -4511,10 +4541,10 @@ namespace OpenGEWindows
         /// <param name="Slot">номер слота маны</param>
         protected void DragItemToXY(int i, int j, int x, int y)
         {
-            iPoint pointResult = new Point(x - 5 + xx, y - 5 + yy);
+            iPoint pointEnd = new Point(x - 5 + xx, y - 5 + yy);
             iPoint pointBegin = new Point(700 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38);
 
-            pointBegin.Drag(pointResult);
+            pointBegin.Drag(pointEnd);
             Pause(1000);
         }
 
@@ -4524,51 +4554,46 @@ namespace OpenGEWindows
         protected bool DragItemToXY(Thing thing, int x, int y)
         {
             bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
+            int i, j;
+            
+            if (FindItem(thing, out i, out j))
             {
-                for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
-                {
-                    if (!result)
-                    {
-                        if (CheckThingInCell(i, j, thing))
-                        {
-                            DragItemToXY(i, j, x, y);
-                            new Point(1500, 800).Move();   //убираем мышь в сторону
-                            result = true;
-                            Pause(500);
-                        }
-                    }
-                }
+                DragItemToXY(i, j, x, y);
+                Pause(500);
+                MoveCursorOfMouse();
+                result = true;
+                Pause(500);
             }
+
             return result;
         }
 
-        /// <summary>
-        /// перетаскивание коробки с подарком в ячейку Mana1
-        /// </summary>
-        public void MoveGiftBox()
-        {
-            iPointColor pointmovegift = new PointColor(237 - 5 + xx, 701 - 5 + yy, 16700000, 5);
-            if (!pointmovegift.isColor())    //если нет на месте коробки с подарком
-            {
-                //перекладываем коробку с подарком в ячейку Mana1
-                TopMenu(8, 1);
-                new Point(778 - 5 + xx, 152 - 5 + yy).PressMouseLL();   //вторая закладка инвентаря
+        ///// <summary>
+        ///// перетаскивание коробки с подарком в ячейку Mana1
+        ///// </summary>
+        //public void MoveGiftBox()
+        //{
+        //    iPointColor pointmovegift = new PointColor(237 - 5 + xx, 701 - 5 + yy, 16700000, 5);
+        //    if (!pointmovegift.isColor())    //если нет на месте коробки с подарком
+        //    {
+        //        //перекладываем коробку с подарком в ячейку Mana1
+        //        TopMenu(8, 1);
+        //        new Point(778 - 5 + xx, 152 - 5 + yy).PressMouseLL();   //вторая закладка инвентаря
 
-                for (int i = 1; i <= 5; i++)         //строки в инвентаре
-                {
-                    for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
-                    {
-                        if (new PointColor(694 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38, 16700000, 5).isColor())
-                        {
-                            new Point(694 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38).Drag(new Point(237 - 5 + xx, 701 - 5 + yy));
-                            Pause(1000);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        //        for (int i = 1; i <= 5; i++)         //строки в инвентаре
+        //        {
+        //            for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
+        //            {
+        //                if (new PointColor(694 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38, 16700000, 5).isColor())
+        //                {
+        //                    new Point(694 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38).Drag(new Point(237 - 5 + xx, 701 - 5 + yy));
+        //                    Pause(1000);
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}     // нигде не применяется !!!!!!!!!!!!!!!!!!!!
 
         #endregion
 
@@ -4588,65 +4613,6 @@ namespace OpenGEWindows
                 else
                     new Point(565, 422).PressMouseL();   //нет
         }
-
-        /// <summary>
-        /// ищем указанную кэшевую вещь в кэш инвентаре (кэш инвентарь должен быть открыт на нужной закладке)
-        /// </summary>
-        /// <param name="thing">искомая вещь</param>
-        /// <param name="ii">строка с найденной вещью</param>
-        /// <param name="jj">столбец с найденной вещью</param>
-        /// <returns></returns>
-        protected bool FindCashItem(Thing thing, out int ii, out int jj)
-        {
-            ii = 1;
-            jj = 1;
-            bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 5; i++)         //строки в инвентаре
-            {
-                for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
-                {
-                    if (!result)         //если вещь уже найдена, то дальше не ищем
-                    {
-                        if (CheckThingInCell(i, j, thing))
-                        {
-                            ii = i;
-                            jj = j;
-                            result = true;
-                            Pause(500);
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// переложить вещь из кэш инвентаря в быстрый слот
-        /// </summary>
-        /// <param name="thing">вещь</param>
-        /// <param name="slot"></param>
-        protected void DragCashItemInCell(Thing thing, int slot)
-        {
-            int ii = 0;
-            int jj = 0;
-            if (FindCashItem(thing, out ii, out jj))
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// переложить вещь из указанной ячейки кэш инвентаря в быстрый слот  (ПУСТОЙ МЕТОД. НЕ ДОДЕЛАНО)
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="j"></param>
-        /// <param name="slot"></param>
-        protected void DragCashItem(int i, int j, int slot)
-        {
-            //Point beginPoint = new Point();
-
-
-        } // (ПУСТОЙ МЕТОД. НЕ ДОДЕЛАНО)
 
         /// <summary>
         /// открыт ли специнвентарь
@@ -4669,27 +4635,34 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// надеть крылья   (================ ПЕРЕПИСАТЬ =========================================)
+        /// надеть крылья (сначала открываем специнвентарь, а после надевания крыльев закрываем его)  
         /// </summary>
         public void PutWings()
         {
+            OpenSpecInventory(4);
+
             botwindow.FirstHero();
-            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            PuttingItem(PinkWings);
+//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
 
             botwindow.SecondHero();
-            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            PuttingItem(PinkWings);
+//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
 
             botwindow.ThirdHero();
-            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            PuttingItem(PinkWings);
+//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
+
+            botwindow.PressEsc();
         }
 
         /// <summary>
@@ -4710,13 +4683,13 @@ namespace OpenGEWindows
             SpecInventoryBookmark(1);
 
             botwindow.FirstHero();
-            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
 
             botwindow.SecondHero();
-            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
 
             botwindow.ThirdHero();
-            for (int i = 0; i <= 6; i++) PuttingItem2(items[i]);     //надеваем амуницию
+            for (int i = 0; i <= 6; i++) PuttingItem(items[i]);     //надеваем амуницию
         }
 
         /// <summary>
@@ -4745,7 +4718,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открыть специнвентарь
+        /// открыть специнвентарь (без проверок)
         /// </summary>
         public void OpenSpecInventory()
         {
@@ -4755,7 +4728,7 @@ namespace OpenGEWindows
         /// <summary>
         /// применяем вещь в специнвентаре
         /// </summary>
-        protected void PuttingItem(Item item)
+        protected void PuttingItemOld(Item item)
         {
             bool result = false;   //объект в кармане пока не найден
             for (int i = 1; i <= 7; i++)         //строки в инвентаре
@@ -4780,7 +4753,7 @@ namespace OpenGEWindows
         /// <summary>
         /// применяем вещь в специнвентаре (новый метод)
         /// </summary>
-        protected bool PuttingItem2(Item item)
+        protected bool PuttingItem(Item item)
         {
             Point point;
             
@@ -4799,7 +4772,6 @@ namespace OpenGEWindows
               
         } // НЕ проверено
 
-
         /// <summary>
         /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке
         /// </summary>
@@ -4809,7 +4781,7 @@ namespace OpenGEWindows
         /// <returns>если вещь найдена, то возвращаем true</returns>
         protected bool FindItemFromSpecInventory(Item item, int sdvig, out Point point)
         {
-            MoveCursorFromSpecInventory();
+            MoveCursorOfMouse();
             point = new Point(item.x - 5 + xx, item.y - 5 + yy);
             bool result = false;   //объект в кармане пока не найден
 
@@ -4862,9 +4834,9 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// перемещаем курсор мыши прочь от специнвентаря
+        /// перемещаем курсор мыши прочь от специнвентаря и инвентаря
         /// </summary>
-        protected void MoveCursorFromSpecInventory()
+        protected void MoveCursorOfMouse()
         {
             new Point(400 - 5 + xx, 400 - 5 + yy).Move();
         }
