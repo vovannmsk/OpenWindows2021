@@ -38,6 +38,8 @@ namespace OpenGEWindows
 
         private Server server;
         private ServerFactory serverFactory;
+        private int xx, yy, channel;
+        private UIntPtr hwnd;
 
         //private int counterMitridat;
         //private System.DateTime timeMitridat = System.DateTime.Now;
@@ -68,6 +70,11 @@ namespace OpenGEWindows
             botParam = new BotParam(numberWindow);
             globalParam = new GlobalParam();
 
+            this.xx = botParam.X;
+            this.yy = botParam.Y;
+            this.hwnd = botParam.Hwnd;
+            this.channel = botParam.Kanal;
+
             #region Вариант 1. переменные класса подчитываются из текстовых файлов
 
             //this.databot = LoadUserDataBot(TypeLoadUserData.txt);
@@ -88,8 +95,8 @@ namespace OpenGEWindows
 
 
             // точки для тыканья. универсально для всех серверов
-            this.pointButtonClose = new Point(850 - 5 + botParam.X, 625 - 5 + botParam.Y);   //(848, 620);
-            this.pointOneMode = new Point(123 - 5 + botParam.X, 489 - 5 + botParam.Y);    // 118, 484
+            this.pointButtonClose = new Point(850 - 5 + xx, 625 - 5 + yy);   //(848, 620);
+            this.pointOneMode = new Point(123 - 5 + xx, 489 - 5 + yy);    // 118, 484
         }
 
         // ============================== методы ============================================
@@ -101,14 +108,14 @@ namespace OpenGEWindows
         
 
 
-        /// <summary>
-        /// сеттер для statusOfAtk. Параллельно идет запись в файл
-        /// </summary>
-        /// <param name="status"></param>
-        public void setStatusOfAtk(int status)
-        {
-            botParam.StatusOfAtk = status;
-        }
+        ///// <summary>
+        ///// сеттер для statusOfAtk. Параллельно идет запись в файл
+        ///// </summary>
+        ///// <param name="status"></param>
+        //public void setStatusOfAtk(int status)
+        //{
+        //    botParam.StatusOfAtk = status;
+        //}
 
         ///// <summary>
         ///// геттер для statusOfAtk 
@@ -124,24 +131,18 @@ namespace OpenGEWindows
         { return this.numberWindow; }
 
         public int getX()
-        { return botParam.X; }
+        { return xx; }
 
         public int getY()
-        { return botParam.Y; }
+        { return yy; }
 
         public string getParam()
         {
-            //string result = botParam.Parametrs[0];
-            //if (globalParam.Infinity)
-            //{
-            //    result = botParam.Parametrs[botParam.NumberOfInfinity];
-            //}
-            //return result;
             return botParam.Parametrs[botParam.NumberOfInfinity];
         }
 
         public int getKanal()
-        { return botParam.Kanal; }
+        { return channel; }
 
         public int[] getTriangleX()
         { return botParam.TriangleX; }
@@ -215,7 +216,7 @@ namespace OpenGEWindows
         ///// </summary>
         //private void EnterLoginAndPasword()
         //{
-        //    iPoint pointPassword = new Point(510 - 5 + botParam.X, 355 - 5 + botParam.Y);    //  505, 350
+        //    iPoint pointPassword = new Point(510 - 5 + xx, 355 - 5 + yy);    //  505, 350
         //    // окно открылось, надо вставить логин и пароль
         //    pointPassword.PressMouseL();   //Кликаю в строчку с паролем
         //    //PressMouseL(505, 350);       //Кликаю в строчку с паролем
@@ -239,7 +240,7 @@ namespace OpenGEWindows
         ///// <returns>true=если удалось нажать,  false=если окно вылетело</returns>
         //private bool PressConnectButton()
         //{
-        //    iPoint pointButtonConnect = new Point(595 - 5 + botParam.X, 485 - 5 + botParam.Y);    // кнопка "Connect" в логауте 
+        //    iPoint pointButtonConnect = new Point(595 - 5 + xx, 485 - 5 + yy);    // кнопка "Connect" в логауте 
         //    if (server.isHwnd())
         //    {
         //        pointButtonConnect.PressMouseLL();   // Кликаю в Connect
@@ -295,9 +296,9 @@ namespace OpenGEWindows
         //    //server.WriteToLogFile(botParam.NumberOfInfinity + " " + botParam.Logins[botParam.NumberOfInfinity] + " " + botParam.Passwords[botParam.NumberOfInfinity] + " " + botParam.Parametrs[botParam.NumberOfInfinity]);
         //    //server.serverSelection();          //выбираем из списка свой сервер
 
-        //    iPointColor point5050 = new PointColor(50 - 5 + botParam.X, 50 - 5 + botParam.Y, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
-        //    iPoint pointButtonOk = new Point(525 - 5 + botParam.X, 410 - 5 + botParam.Y);    // кнопка Ok в логауте
-        //    iPoint pointButtonOk2 = new Point(525 - 5 + botParam.X, 445 - 5 + botParam.Y);    // кнопка Ok в логауте
+        //    iPointColor point5050 = new PointColor(50 - 5 + xx, 50 - 5 + yy, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
+        //    iPoint pointButtonOk = new Point(525 - 5 + xx, 410 - 5 + yy);    // кнопка Ok в логауте
+        //    iPoint pointButtonOk2 = new Point(525 - 5 + xx, 445 - 5 + yy);    // кнопка Ok в логауте
 
         //    uint Tek_Color1;
         //    uint Test_Color = 0;
@@ -396,8 +397,8 @@ namespace OpenGEWindows
         ///// </summary>
         //private void BugFixes()
         //{
-        //    iPoint pointButtonOk = new Point(525 - 5 + botParam.X, 410 - 5 + botParam.Y);    // кнопка Ok в логауте
-        //    iPoint pointButtonOk2 = new Point(525 - 5 + botParam.X, 445 - 5 + botParam.Y);    // кнопка Ok в логауте
+        //    iPoint pointButtonOk = new Point(525 - 5 + xx, 410 - 5 + yy);    // кнопка Ok в логауте
+        //    iPoint pointButtonOk2 = new Point(525 - 5 + xx, 445 - 5 + yy);    // кнопка Ok в логауте
 
         //    pointButtonOk.PressMouse();   //кликаю в кнопку  "ОК"
         //    Pause(500);
@@ -424,7 +425,7 @@ namespace OpenGEWindows
         ///// <returns>true, если сменился экран</returns>
         //private bool isChangeDisplay(uint testColor)
         //{
-        //    iPointColor currentColor = new PointColor(65 - 5 + botParam.X, 55 - 5 + botParam.Y, 7800000, 5);
+        //    iPointColor currentColor = new PointColor(65 - 5 + xx, 55 - 5 + yy, 7800000, 5);
         //    uint color = currentColor.GetPixelColor();
         //    bool result = (color == testColor);
         //    return !result;
@@ -443,7 +444,7 @@ namespace OpenGEWindows
         //    const int MAX_NUMBER_ITERATION = 4;    //максимальное количество итераций
         //    uint count = 0;
 
-        //    iPointColor testColor = new PointColor(65 - 5 + botParam.X, 55 - 5 + botParam.Y, 7800000, 5);  //запоминаем цвет в координатах 55, 55 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
+        //    iPointColor testColor = new PointColor(65 - 5 + xx, 55 - 5 + yy, 7800000, 5);  //запоминаем цвет в координатах 55, 55 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
         //    Pause(500);
 
         //    do
@@ -474,7 +475,7 @@ namespace OpenGEWindows
         ///// </summary>
         //public void LeaveGame()
         //{
-        //    new Point(605 - 5 + botParam.X, 535 - 5 + botParam.Y).PressMouseL();    // кнопка LeaveGame в логауте
+        //    new Point(605 - 5 + xx, 535 - 5 + yy).PressMouseL();    // кнопка LeaveGame в логауте
         //}
 
 
@@ -496,9 +497,9 @@ namespace OpenGEWindows
         /// </summary>
         public void Placement()
         {
-            iPoint pointFirstHero = new Point(botParam.TriangleX[0] + botParam.X, botParam.TriangleY[0] + botParam.Y);
-            iPoint pointSecondHero = new Point(botParam.TriangleX[1] + botParam.X, botParam.TriangleY[1] + botParam.Y);
-            iPoint pointThirdHero = new Point(botParam.TriangleX[2] + botParam.X, botParam.TriangleY[2] + botParam.Y);
+            iPoint pointFirstHero = new Point(botParam.TriangleX[0] + xx, botParam.TriangleY[0] + yy);
+            iPoint pointSecondHero = new Point(botParam.TriangleX[1] + xx, botParam.TriangleY[1] + yy);
+            iPoint pointThirdHero = new Point(botParam.TriangleX[2] + xx, botParam.TriangleY[2] + yy);
 
             // ============= нажимаем на первого перса (обязательно на точку ниже открытой карты)
             FirstHero();
@@ -531,10 +532,10 @@ namespace OpenGEWindows
         /// </summary>
         public void FirstHero()
         {
-            //iPoint pointFirstHeroUp = new Point(155 - 5 + botParam.X, 640 - 5 + botParam.Y);       // верхняя точка
-            //iPoint pointFirstHeroDown = new Point(155 - 5 + botParam.X, 682 - 5 + botParam.Y);     // нижняя точка
-            iPoint pointFirstHeroUp = new Point(213 - 5 + botParam.X, 636 - 5 + botParam.Y);       // верхняя точка
-            iPoint pointFirstHeroDown = new Point(213 - 5 + botParam.X, 701 - 5 + botParam.Y);     // нижняя точка
+            //iPoint pointFirstHeroUp = new Point(155 - 5 + xx, 640 - 5 + yy);       // верхняя точка
+            //iPoint pointFirstHeroDown = new Point(155 - 5 + xx, 682 - 5 + yy);     // нижняя точка
+            iPoint pointFirstHeroUp = new Point(213 - 5 + xx, 636 - 5 + yy);       // верхняя точка
+            iPoint pointFirstHeroDown = new Point(213 - 5 + xx, 701 - 5 + yy);     // нижняя точка
             pointFirstHeroDown.PressMouseL();  
             pointFirstHeroDown.PressMouseL();
             Pause(500);
@@ -546,10 +547,10 @@ namespace OpenGEWindows
         /// </summary>
         public void SecondHero()
         {
-            //iPoint pointSecondHeroUp = new Point(408 - 5 + botParam.X, 640 - 5 + botParam.Y);  
-            //iPoint pointSecondHeroDown = new Point(408 - 5 + botParam.X, 682 - 5 + botParam.Y);
-            iPoint pointSecondHeroUp = new Point(472 - 5 + botParam.X, 636 - 5 + botParam.Y);    
-            iPoint pointSecondHeroDown = new Point(472 - 5 + botParam.X, 701 - 5 + botParam.Y);  
+            //iPoint pointSecondHeroUp = new Point(408 - 5 + xx, 640 - 5 + yy);  
+            //iPoint pointSecondHeroDown = new Point(408 - 5 + xx, 682 - 5 + yy);
+            iPoint pointSecondHeroUp = new Point(472 - 5 + xx, 636 - 5 + yy);    
+            iPoint pointSecondHeroDown = new Point(472 - 5 + xx, 701 - 5 + yy);  
 
             pointSecondHeroDown.PressMouseL();
             pointSecondHeroDown.PressMouseL();
@@ -562,10 +563,10 @@ namespace OpenGEWindows
         /// </summary>
         public void ThirdHero()
         {
-            //iPoint pointThirdHeroUp = new Point(663 - 5 + botParam.X, 640 - 5 + botParam.Y);    // 670, 635
-            //iPoint pointThirdHeroDown = new Point(663 - 5 + botParam.X, 682 - 5 + botParam.Y);    // 670, 664
-            iPoint pointThirdHeroUp = new Point(723 - 5 + botParam.X, 636 - 5 + botParam.Y);    // 670, 635
-            iPoint pointThirdHeroDown = new Point(723 - 5 + botParam.X, 701 - 5 + botParam.Y);    // 670, 664
+            //iPoint pointThirdHeroUp = new Point(663 - 5 + xx, 640 - 5 + yy);    // 670, 635
+            //iPoint pointThirdHeroDown = new Point(663 - 5 + xx, 682 - 5 + yy);    // 670, 664
+            iPoint pointThirdHeroUp = new Point(723 - 5 + xx, 636 - 5 + yy);    // 670, 635
+            iPoint pointThirdHeroDown = new Point(723 - 5 + xx, 701 - 5 + yy);    // 670, 664
 
             pointThirdHeroDown.PressMouseL();
             pointThirdHeroDown.PressMouseL();
@@ -579,7 +580,7 @@ namespace OpenGEWindows
         /// <returns> true, если командный режим включен </returns>
         public bool isCommandMode()
         {
-            iPointColor pointCommandMode = new PointColor(123 - 5 + botParam.X, 479 - 5 + botParam.Y, 8000000, 6);
+            iPointColor pointCommandMode = new PointColor(123 - 5 + xx, 479 - 5 + yy, 8000000, 6);
             return pointCommandMode.isColor2();
         }
 
@@ -630,7 +631,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ClickSpace()
         {
-            iPoint pointBattleMode = new Point(190 - 5 + botParam.X, 530 - 5 + botParam.Y);    //  185, 525
+            iPoint pointBattleMode = new Point(190 - 5 + xx, 530 - 5 + yy);    //  185, 525
             pointBattleMode.PressMouse();  // Кликаю на кнопку "боевой режим"
         }
 
@@ -639,7 +640,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ClickSpaceBH()
         {
-            iPoint pointBattleMode = new Point(190 - 5 + botParam.X, 530 - 5 + botParam.Y);    //  185, 525
+            iPoint pointBattleMode = new Point(190 - 5 + xx, 530 - 5 + yy);    //  185, 525
             pointBattleMode.PressMouseL();  // Кликаю на кнопку "боевой режим"
         }
 
@@ -668,7 +669,7 @@ namespace OpenGEWindows
         /// </summary>
         public void CureOneWindow2()
         {
-            iPoint pointEnterBattleMode = new Point(205 - 5 + botParam.X, 205 - 5 + botParam.Y);    // 200, 200
+            iPoint pointEnterBattleMode = new Point(205 - 5 + xx, 205 - 5 + yy);    // 200, 200
             // ================================= убирает все лишние окна с экрана =========================================
             PressEscThreeTimes();
             Pause(1000);
@@ -699,12 +700,12 @@ namespace OpenGEWindows
         /// </summary>
         public void PressMitridat()
         {
-            iPoint pointPanel = new Point(38 - 5 + botParam.X, 486 - 5 + botParam.Y);    // 33, 481
-            //iPoint pointFirstBox = new Point(31 - 5 + botParam.X, 110 - 5 + botParam.Y);
-            //iPoint pointSecondBox = new Point(31 - 5 + botParam.X, 140 - 5 + botParam.Y);
-            //iPoint pointThirdBox = new Point(31 - 5 + botParam.X, 170 - 5 + botParam.Y);
-            //iPoint pointFourthBox = new Point(31 - 5 + botParam.X, 200 - 5 + botParam.Y);
-            //iPoint pointFifthBox = new Point(31 - 5 + botParam.X, 230 - 5 + botParam.Y);
+            iPoint pointPanel = new Point(38 - 5 + xx, 486 - 5 + yy);    // 33, 481
+            //iPoint pointFirstBox = new Point(31 - 5 + xx, 110 - 5 + yy);
+            //iPoint pointSecondBox = new Point(31 - 5 + xx, 140 - 5 + yy);
+            //iPoint pointThirdBox = new Point(31 - 5 + xx, 170 - 5 + yy);
+            //iPoint pointFourthBox = new Point(31 - 5 + xx, 200 - 5 + yy);
+            //iPoint pointFifthBox = new Point(31 - 5 + xx, 230 - 5 + yy);
 
             //System.DateTime timeNow = DateTime.Now;  //текущее время
             //System.TimeSpan PeriodMitridat = timeNow.Subtract(timeMitridat);   //сколько времени прошло с последнего применения митридата
@@ -745,7 +746,7 @@ namespace OpenGEWindows
         /// <param name="NumberOfBox">номер ячейки</param>
         public void PressBoxInLeftPanel(int NumberOfBox)
         {
-            new Point(31 - 5 + botParam.X, 114 - 5 + (NumberOfBox - 1) * 32 + botParam.Y).PressMouseL();
+            new Point(31 - 5 + xx, 114 - 5 + (NumberOfBox - 1) * 32 + yy).PressMouseL();
         }
 
         #endregion
@@ -757,7 +758,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ToMoveMouse()
         {
-            iPoint pointToMoveMouse = new Point(205 - 5 + botParam.X, 575 - 5 + botParam.Y);    //
+            iPoint pointToMoveMouse = new Point(205 - 5 + xx, 575 - 5 + yy);    //
             pointToMoveMouse.PressMouseR();
         }
 
@@ -766,7 +767,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ActiveAllBuffBH()
         {
-            //iPoint pointPanel = new Point(38 - 5 + botParam.X, 486 - 5 + botParam.Y);    // 33, 481
+            //iPoint pointPanel = new Point(38 - 5 + xx, 486 - 5 + yy);    // 33, 481
             //pointPanel.PressMouseR();                   // Кликаю правой кнопкой в панель с бытылками, чтобы сделать ее активной и поверх всех окон (группа может мешать)
 
             PressBoxInLeftPanel(5);
@@ -793,8 +794,8 @@ namespace OpenGEWindows
         /// </summary>
         public void SelectChannel()
         {
-            iPoint pointChoiceOfChannel = new Point(125 + botParam.X, 660 + (botParam.Kanal - 1) * 15 + server.sdvig() + botParam.Y);    //переход на нужный канал в казарме
-            iPoint pointButtonSelectChannel = new Point(125 + botParam.X, 705 + botParam.Y); //   125, 705);
+            iPoint pointChoiceOfChannel = new Point(125 + xx, 660 + (channel - 1) * 15 + server.sdvig() + yy);    //переход на нужный канал в казарме
+            iPoint pointButtonSelectChannel = new Point(125 + xx, 705 + yy); //   125, 705);
 
             pointButtonSelectChannel.PressMouseL();
             Pause(500);
@@ -807,8 +808,8 @@ namespace OpenGEWindows
         /// </summary>
         public void SelectChannel(int channel)
         {
-            iPoint pointChoiceOfChannel = new Point(125 + botParam.X, 660 + (channel - 1) * 15 + server.sdvig() + botParam.Y);    //переход на указанный канал
-            iPoint pointButtonSelectChannel = new Point(125 + botParam.X, 705 + botParam.Y); //   125, 705);
+            iPoint pointChoiceOfChannel = new Point(125 + xx, 660 + (channel - 1) * 15 + server.sdvig() + yy);    //переход на указанный канал
+            iPoint pointButtonSelectChannel = new Point(125 + xx, 705 + yy); //   125, 705);
             pointButtonSelectChannel.PressMouseL();
             pointChoiceOfChannel.PressMouseL();
         }
@@ -837,10 +838,10 @@ namespace OpenGEWindows
         /// </summary>
         public void ActiveWindowBH()
         {
-            ShowWindow(botParam.Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
-            SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
+            ShowWindow(hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
+            SetForegroundWindow(hwnd);                                 // Перемещает окно в верхний список Z порядка     
             //перемещаем окно в заданные для него координаты. не учитываются ширина и высота окна
-            SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+            SetWindowPos(hwnd, 0, xx, yy, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
         }
 
 

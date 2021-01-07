@@ -1,4 +1,5 @@
 ﻿using OpenGEWindows;
+using GEBot.Data;
 
 
 namespace States
@@ -10,6 +11,7 @@ namespace States
         private ServerFactory serverFactory;
         private BHDialog BHdialog;
         private BHDialogFactory dialogFactory;
+        private BotParam botParam;
 
         private int tekStateInt;
 
@@ -21,6 +23,7 @@ namespace States
         public StateGT102(botWindow botwindow)   
         {
             this.botwindow = botwindow;
+            this.botParam = new BotParam(botwindow.getNumberWindow());
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
             this.dialogFactory = new BHDialogFactory(botwindow);
@@ -64,7 +67,8 @@ namespace States
         {
             //ничего не выполняем на этом шаге, а только распределяем по потокам с помощью StateNext
             server.WriteToLogFileBH("102 Распределение по состояниям ворот 1 или 3");
-            botwindow.setStatusOfAtk(0);
+            //botwindow.setStatusOfAtk(0);
+            botParam.StatusOfAtk = 0;
         }
 
         /// <summary>

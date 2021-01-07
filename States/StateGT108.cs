@@ -1,5 +1,5 @@
 ﻿using OpenGEWindows;
-
+using GEBot.Data;
 
 namespace States
 {
@@ -9,6 +9,7 @@ namespace States
         private Server server;
         private ServerFactory serverFactory;
         private int tekStateInt;
+        private BotParam botParam;
 
         public StateGT108()
         {
@@ -18,6 +19,7 @@ namespace States
         public StateGT108(botWindow botwindow)   
         {
             this.botwindow = botwindow;
+            this.botParam = new BotParam(botwindow.getNumberWindow());
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
             this.tekStateInt = 108;
@@ -60,7 +62,8 @@ namespace States
             //никаких действий, только проверка того, на какую миссию попали и распределение по состояниям
             server.WriteToLogFileBH("108 выбираем, в какую миссию идти");
             //botwindow.PressMitridatBH();
-            botwindow.setStatusOfAtk(1);                      // статус атаки = 1 (начинаем атаковать босса)
+            //botwindow.setStatusOfAtk(1);                      // статус атаки = 1 (начинаем атаковать босса)
+            botParam.StatusOfAtk = 1;
         }
 
         /// <summary>
@@ -87,7 +90,8 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            botwindow.setStatusOfAtk(1);                      // статус атаки = 1 (начинаем атаковать босса)
+            //botwindow.setStatusOfAtk(1);                      // статус атаки = 1 (начинаем атаковать босса)
+            botParam.StatusOfAtk = 1;
             int result = server.NumberOfMissionBH();
             switch (result)
             {
