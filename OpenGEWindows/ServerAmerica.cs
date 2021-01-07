@@ -11,12 +11,6 @@ namespace OpenGEWindows
     public class ServerAmerica : Server 
     {
         [DllImport("user32.dll")]
-        public static extern bool SetWindowPos(UIntPtr myhWnd, int myhwndoptional, int xx, int yy, int cxx, int cyy, uint flagus); // Перемещает окно в заданные координаты с заданным размером
-
-        //[DllImport("user32.dll")]
-        //private static extern bool ShowWindow(UIntPtr hWnd, int nCmdShow);
-
-        [DllImport("user32.dll")]
         private static extern UIntPtr FindWindow(String ClassName, String WindowName);  //ищет окно с заданным именем и классом
 
         /// <summary>
@@ -484,7 +478,7 @@ namespace OpenGEWindows
             Pause(100);
             if (isLogout())
             {
-                botwindow.EnterLoginAndPasword();
+                EnterLoginAndPasword();
             }
         }
 

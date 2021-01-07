@@ -59,7 +59,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             server.WriteToLogFileBH("Начало");
-            bool result = this.botwindow.Connect(); 
+            bool result = server.Connect(); 
             //там запоминается цвет точки на экране и, если он меняется, то значит true вошли в казарму
 
             if (result)   // если получилось войти, то

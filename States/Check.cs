@@ -520,7 +520,7 @@ namespace States
                 //    server.AddBullet10000();              //открываем коробку с патронами 10 000 штук
                 //    break;
                 case 16:
-                    botwindow.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
+                    server.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
                     //server.CloseSandboxie();              //закрываем все проги в песочнице
                     break;
                 case 17:
@@ -582,14 +582,6 @@ namespace States
         public bool isLogout()
         {
             return server.isLogout();
-        }
-
-        /// <summary>
-        /// ввод в форму логина и пароля
-        /// </summary>
-        public void EnterLoginAndPasword()
-        {
-            botwindow.EnterLoginAndPasword();
         }
 
         /// <summary>

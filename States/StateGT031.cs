@@ -60,7 +60,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            bool result = botwindow.Connect();
+            bool result = server.Connect();
             
         }
 

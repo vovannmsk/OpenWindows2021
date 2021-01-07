@@ -68,7 +68,7 @@ namespace States
             //    botwindow.Pause(500);
             //}
 
-            botwindow.Connect();
+            server.Connect();
             //botwindow.Pause(10000);
 
         }
