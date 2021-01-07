@@ -30,7 +30,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
         }
 
         /// <summary>

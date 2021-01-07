@@ -572,7 +572,7 @@ namespace States
         /// <returns></returns>
         public void ReOpenWindow()
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
         }
 
         /// <summary>
@@ -748,7 +748,8 @@ namespace States
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
 
             botWindow botwindow = new botWindow(i);
-            botwindow.ReOpenWindow();
+            Server server = new ServerSing(botwindow);
+            server.ReOpenWindow();
 
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);

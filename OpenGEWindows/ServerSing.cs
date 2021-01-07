@@ -749,7 +749,7 @@ namespace OpenGEWindows
         public override void OrangeButton()
         {
             //runClientSteam();
-            botwindow.ReOpenWindow();
+            ReOpenWindow();
             Pause(100);
         }
 

@@ -38,7 +38,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.ReOpenWindow();          //делаем окно активным
+            server.ReOpenWindow();          //делаем окно активным
             botwindow.Pause(1000);
         }
 

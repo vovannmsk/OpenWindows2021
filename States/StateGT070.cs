@@ -38,7 +38,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.ReOpenWindow();          //делаем окно бота активным
+            server.ReOpenWindow();          //делаем окно бота активным
             botwindow.Pause(1000);
 
             //// открываем сундук

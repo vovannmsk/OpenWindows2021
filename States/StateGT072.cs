@@ -30,7 +30,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //делаем окно торговца активным
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
             botwindow.Pause(500);
 
             //продаём 10 ВК в фесо шопе, чтобы было что отдать следующему боту

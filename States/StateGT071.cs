@@ -30,7 +30,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //покупаем еду для пета и закрываем окно бота
-            botwindow.ReOpenWindow();          //делаем окно активным
+            server.ReOpenWindow();          //делаем окно активным
             botwindow.Pause(1000);
 
             // открываем фесо шоп

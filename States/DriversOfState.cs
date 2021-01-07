@@ -250,7 +250,7 @@ namespace States
         /// </summary>
         public void StateSerendibyteToTrade()
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
             StateDriverRun(new StateGT151(botwindow), new StateGT152(botwindow));  //летим в город
             StateDriverRun(new StateGT318(botwindow), new StateGT331(botwindow));
         }
@@ -630,7 +630,7 @@ namespace States
         /// </summary>
         public void StateGotoTradeKatovia()
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
             StateDriverRun(new StateGT151(botwindow), new StateGT162(botwindow));
         } 
 
@@ -639,7 +639,7 @@ namespace States
         /// </summary>
         public void StateGotoTrade()
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
             StateDriverRun(new StateGT001(botwindow), new StateGT014(botwindow));
 //            StateDriverRun(new StateGT01(botwindow), new StateGT12(botwindow));
         }
@@ -788,7 +788,7 @@ namespace States
             
             if (server.IsActiveServer)
             {
-                botwindow.ReOpenWindow();
+                server.ReOpenWindow();
                 botwindow.Pause(1000);
 
                 if (botParam.NomerTeleport != 0 )           // если нужно продаваться

@@ -61,7 +61,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.ReOpenWindow();
+            server.ReOpenWindow();
             dialog.PressStringDialog(1);
             dialog.PressOkButton(1);
             botwindow.Pause(10000);

@@ -406,7 +406,7 @@ namespace OpenGEWindows
         /// </summary>
         public override void OrangeButton()
         {
-            botwindow.ReOpenWindow();
+            ReOpenWindow();
             Pause(100);
             if (isLogout())
             {

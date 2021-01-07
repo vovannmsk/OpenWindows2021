@@ -59,7 +59,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.ReOpenWindow();       //если вылетело окно, то false
+            server.ReOpenWindow();       //если вылетело окно, то false
             
 
         }
