@@ -277,7 +277,7 @@ namespace OpenGEWindows
         /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
         /// </summary>
         /// <returns> hwnd окна </returns>
-        public void OpenWindow()
+        private void OpenWindow()
         {
             server.runClient();    ///запускаем клиент игры и ждем 30 сек
 

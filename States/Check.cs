@@ -86,7 +86,7 @@ namespace States
         /// </summary>
         public void OpenWindow ()
         {
-            botwindow.OpenWindow();
+            server.ReOpenWindow();
         }
 
         public bool EndOfList()
@@ -117,7 +117,7 @@ namespace States
             int statusOfSale = botParam.StatusOfSale;          //не отлажено
             int statusOfAtk = botParam.StatusOfAtk;
 
-            if (!botwindow.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
                 if (!server.FindWindowSteamBool())  //если Стима тоже нет
                 {
@@ -250,7 +250,7 @@ namespace States
         {
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
-                if (botwindow.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
                     Pause(500);

@@ -409,7 +409,7 @@ namespace States
         /// </summary>
         public void StateInputOutput5()
         {
-            if (!botwindow.isHwnd())   //если окно еще не загружено, то грузим и идём в миссию
+            if (!server.isHwnd())   //если окно еще не загружено, то грузим и идём в миссию
             {
                 botParam.NumberOfInfinity = globalParam.Infinity;
                 globalParam.Infinity = globalParam.Infinity + 1;

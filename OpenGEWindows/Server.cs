@@ -728,7 +728,7 @@ namespace OpenGEWindows
         /// Перемещает окно с ботом в заданные координаты. Если окно есть, то result = true, а если вылетело окно, то result = false. не учитываются ширина и высота окна
         /// </summary>
         /// <returns></returns>
-        private bool isHwnd()
+        public bool isHwnd()
         {
             return SetPosition();
         }

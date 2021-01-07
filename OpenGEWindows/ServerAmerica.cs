@@ -548,7 +548,7 @@ namespace OpenGEWindows
                 pointMenu.PressMouse();
                 //PressMouse(x, y);
                 Pause(1000);
-                if ((isLogout()) || (!botwindow.isHwnd())) break;    //если вылетели в логаут или закрылось окно с игрой, то выход из цикла.  (29.04.2017) 
+                if ((isLogout()) || (!isHwnd())) break;    //если вылетели в логаут или закрылось окно с игрой, то выход из цикла.  (29.04.2017) 
             } while (!isOpenTopMenu(numberOfThePartitionMenu));
         }            //нужен
 
