@@ -14,10 +14,19 @@ namespace OpenGEWindows
 
     {
         [DllImport("user32.dll")]
+        public static extern bool SetWindowPos(UIntPtr myhWnd, int myhwndoptional, int xx, int yy, int cxx, int cyy, uint flagus); // Перемещает окно в заданные координаты с заданным размером
+
+        [DllImport("user32.dll")]
         static extern bool PostMessage(UIntPtr hWnd, uint Msg, UIntPtr wParam, UIntPtr lParam);
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern UIntPtr FindWindowEx(UIntPtr hwndParent, UIntPtr hwndChildAfter, string className, string windowName);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(UIntPtr hWnd, int nCmdShow);  //раскрывает окно, если оно было скрыто в трей
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(UIntPtr hWnd); // Перемещает окно в верхний список Z порядка
 
 
         #region статические переменные
@@ -702,6 +711,90 @@ namespace OpenGEWindows
         #endregion
 
         #region No Window
+
+        /// <summary>
+        /// Перемещает окно с ботом в заданные координаты.  не учитываются ширина и высота окна
+        /// </summary>
+        /// <returns>Если окно есть, то result = true, а если вылетело окно, то result = false.</returns>
+        private bool SetPosition()
+        {
+            if (globalParam.Windows10)
+                return SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y - 1, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+            else
+                return SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001); ;
+        }
+
+        /// <summary>
+        /// Перемещает окно с ботом в заданные координаты. Если окно есть, то result = true, а если вылетело окно, то result = false. не учитываются ширина и высота окна
+        /// </summary>
+        /// <returns></returns>
+        private bool isHwnd()
+        {
+            return SetPosition();
+        }
+
+        /// <summary>
+        /// активируем окно
+        /// </summary>
+        private void ActiveWindow()
+        {
+            ShowWindow(botParam.Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
+            SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
+            //BringWindowToTop(databot.hwnd);                                    // Делает окно активным и Перемещает окно в верхний список Z порядка     
+
+            SetPosition();                                                      //перемещаем окно в заданные для него координаты
+        }
+
+        /// <summary>
+        /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
+        /// </summary>
+        /// <returns> hwnd окна </returns>
+        private void OpenWindow()
+        {
+            runClient();    ///запускаем клиент игры и ждем 30 сек
+
+            if (!AccountBusy)           //если аккаунт не занят на другом компе
+            {
+                while (true)
+                {
+                    Pause(3000);
+                    UIntPtr hwnd = FindWindowGE();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
+                    if (hwnd != (UIntPtr)0) break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из цикла
+                }
+            }
+        }
+
+        /// <summary>
+        /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)
+        /// </summary>
+        public void ReOpenWindow()
+        {
+            bool result = isHwnd();   //Перемещает в заданные координаты. Если окно есть, то result=true, а если вылетело окно, то result=false.
+            if (!result)  //нет окна с нужным HWND
+            {
+                if (FindWindowGE() == (UIntPtr)0)   //если поиск окна тоже не дал результатов
+                {
+                    OpenWindow();                 //то загружаем новое окно
+
+                    if (!Server.AccountBusy)
+                    {
+                        ActiveWindow();
+
+                        while (!isLogout()) Pause(1000);    //ожидание логаута        бесконечный цикл
+
+                        ActiveWindow();
+                    }
+                }
+                else
+                {
+                    ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+                }
+            }
+            else
+            {
+                ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+            }
+        }
 
         /// <summary>
         /// проверяем, выскочило ли сообщение о несовместимости версии SafeIPs.dll
