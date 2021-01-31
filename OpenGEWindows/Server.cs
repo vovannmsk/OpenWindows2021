@@ -656,7 +656,8 @@ namespace OpenGEWindows
         /// журнал с ежедневными наградами
         /// </summary>
         Item Journal = new Item(38, 209, 4390911);
-        Item Steroid = new Item(36, 211, 11690052);
+        //Item Steroid = new Item(36, 211, 11690052);
+        Item Steroid = new Item(36, 211, 11296065);
         Item Principle = new Item(37, 210, 3226091);
         Item Triumph = new Item(35, 209, 47612);
         Item SteroidLeftPanel = new Item(31, 241, 11690052);

@@ -453,8 +453,8 @@ namespace States
             //            StateDriverRun(new StateGT152(botwindow), new StateGT161(botwindow));  // летим в Катовию + продажа (нет больше магазина в Катовии)
             
             
-            StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  //  переход к магазину + продажа + выход в город из магазина
-            StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //  переход к аппарату патронов+покупка патронов+выход в город
+            //StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  //  переход к магазину + продажа + выход в город из магазина
+            //StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //  переход к аппарату патронов+покупка патронов+выход в город
             //закрываем проги в песочнице
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
