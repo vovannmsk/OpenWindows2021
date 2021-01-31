@@ -43,6 +43,7 @@ namespace GEBot.Data
         private int howManyCyclesToSkip;           //сколько пропустить циклов. Для БХ 
         private int lengthOfList;
         private int statusOfSale;                       // статус продажи (для BH)
+        private int numberOfRoute;
 
         public string Login { get => login; }
         public string[] Logins { get => logins; }
@@ -77,17 +78,22 @@ namespace GEBot.Data
             get { statusOfSale = GetStatusOfSale(); return statusOfSale; }
             set { statusOfSale = value; SetStatusInFile(); }
         }
+        /// <summary>
+        /// номер маршрута (для добычи отита)
+        /// </summary>
+        public int NumberOfRoute { get => numberOfRoute; set => numberOfRoute = value; }
+
         ///// <summary>
         ///// номер аккаунта в списке аккаунтов п/п (нумерация с нуля) 
         ///// </summary>
         //public static int Infinity { get => infinity; set => infinity = value; }
 
-        //********отключаем временно для проверки*********************************************************
+        //********отключаем временно для проверки****
         //public string Param { get { return parametrs[numberOfInfinity]; } } 
 
         //public bool Infinity { get => infinity; set => infinity = value; }
 
-
+        //**********************************************************************************************
         /// <summary>
         /// конструктор
         /// </summary>

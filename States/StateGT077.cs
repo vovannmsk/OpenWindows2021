@@ -36,8 +36,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            town.PressOldMan1();
-            botwindow.Pause(3000);
+            //town.PressOldMan1();
+            otit.PressOldMan();
         }
 
         /// <summary>

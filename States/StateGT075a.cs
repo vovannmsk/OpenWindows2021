@@ -3,26 +3,26 @@
 
 namespace States
 {
-    public class StateGT751 : IState
+    public class StateGT075a : IState
     {
         private botWindow botwindow;
         private int tekStateInt;
         private Otit otit;
         private Dialog dialog;
 
-        public StateGT751()
+        public StateGT075a()
         {
 
         }
 
-        public StateGT751(botWindow botwindow)   
+        public StateGT075a(botWindow botwindow)   
         {
             this.botwindow = botwindow;
             OtitFactory otitFactory = new OtitFactory(botwindow);
             this.otit = otitFactory.createOtit();
             DialogFactory dialogFactory = new DialogFactory(botwindow);
             this.dialog = dialogFactory.createDialog();
-            this.tekStateInt = 751;
+            this.tekStateInt = 75;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace States
         public void run()                // переход к следующему состоянию 
         {
 
-            otit.GoToOldManEnd();
+            otit.PressOldMan();
         }
 
         /// <summary>

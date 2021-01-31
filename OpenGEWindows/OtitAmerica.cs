@@ -5,7 +5,7 @@
         public OtitAmerica()
         { }
 
-        public OtitAmerica(botWindow botwindow) 
+        public OtitAmerica(botWindow botwindow)
         {
 
             #region общие
@@ -30,9 +30,13 @@
             this.pointTask2 = new PointColor(928 - 5 + xx, 361 - 5 + yy, 8200000, 5);
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
-
+            this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);
+            this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
+            this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
 
         }
+
+
 
         // ======================  методы  ========================
 
@@ -42,10 +46,10 @@
         /// <returns></returns>
         public override iPoint RouteNextPoint()
         {
-            iPoint[] route = { new Point(505 - 5 + xx, 505 - 5 + yy), 
-                               new Point(462 - 5 + xx, 468 - 5 + yy), 
-                               new Point(492 - 5 + xx, 437 - 5 + yy), 
-                               new Point(539 - 5 + xx, 486 - 5 + yy), 
+            iPoint[] route = { new Point(505 - 5 + xx, 505 - 5 + yy),
+                               new Point(462 - 5 + xx, 468 - 5 + yy),
+                               new Point(492 - 5 + xx, 437 - 5 + yy),
+                               new Point(539 - 5 + xx, 486 - 5 + yy),
                                new Point(462 - 5 + xx, 468 - 5 + yy) };
 
             iPoint result = route[counterRouteNode];

@@ -26,10 +26,15 @@
             this.pointOldMan1 = new PointColor(907 - 5 + xx, 675 - 5 + yy, 7800000, 5);
             this.pointOldMan2 = new PointColor(907 - 5 + xx, 676 - 5 + yy, 7800000, 5);
 
-            this.pointTask1 = new PointColor(928 - 5 + xx, 360 - 5 + yy, 8200000, 5);
-            this.pointTask2 = new PointColor(928 - 5 + xx, 361 - 5 + yy, 8200000, 5);
+            //this.pointTask1 = new PointColor(928 - 5 + xx, 360 - 5 + yy, 8200000, 5);
+            //this.pointTask2 = new PointColor(928 - 5 + xx, 361 - 5 + yy, 8200000, 5);
+            this.pointTask1 = new PointColor(929 - 30 + xx, 400 - 30 + yy, 7700000, 5);
+            this.pointTask2 = new PointColor(929 - 30 + xx, 401 - 30 + yy, 7700000, 5);
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
+            this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);
+            this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
+            this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);             
 
         }
 

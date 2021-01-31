@@ -13,18 +13,25 @@ namespace OpenGEWindows
         protected Dialog dialog;
         protected Server server;
         protected static int counterRouteNode;
+        /// <summary>
+        /// голова Мамуна
+        /// </summary>
         protected iPoint pointMamons;
+        /// <summary>
+        /// голова Старого мужика
+        /// </summary>
+        protected iPoint pointOldMan;
+        /// <summary>
+        /// строка на карте Alt+Z со старым мужиком (OldMan)
+        /// </summary>
+        protected iPoint pointOldManOnMap;
+        /// <summary>
+        /// кнопка "Move" на карте Alt+Z
+        /// </summary>
+        protected iPoint pointButtonMoveOnMap;
 
 
         // ============  методы  ========================
-
-        ///// <summary>
-        ///// проверяем, находимся ли мы в диалоге со старым мужиком в Лос Толдосе
-        ///// </summary>
-        //public bool isOldMan()
-        //{
-        //    return (pointOldMan1.isColor() && pointOldMan2.isColor());
-        //}
 
         /// <summary>
         /// меняем маршрут на дополнительный
@@ -130,25 +137,32 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// подходим к старому человеку после перехода из казарм
+        /// нажимаем на кнопку "Move" в открытой карте Alt+Z             
+        /// </summary>
+        public void ClickMoveMap()
+        {
+            pointButtonMoveOnMap.DoubleClickL();
+        }
+
+
+        /// <summary>
+        /// подходим к старому человеку после перехода из казарм и нажимаем на него для диалога
         /// </summary>
         public void GoToOldMan()
         {
-            //while (!town.isOpenMap())
-            //{
-                server.OpenMapForState();
-                Pause(1000);
-            //}
+            GoToOldManBegin();
 
-            town.PressOldManonMap();
-            town.ClickMoveMap();
-
-            botwindow.PressEscThreeTimes();
-            Pause(5000);
-
-            town.PressOldMan1();
-            Pause(2000);
+            PressOldMan();
         }
+
+        /// <summary>
+        /// тыкаем на открытой карте в строчку со старым мужиком
+        /// </summary>
+        public void PressOldManonMap()
+        {
+            pointOldManOnMap.DoubleClickL();
+        }
+
 
         /// <summary>
         /// подходим к старому человеку после перехода из казарм
@@ -158,23 +172,22 @@ namespace OpenGEWindows
             server.OpenMapForState();
             Pause(1000);
 
-            town.PressOldManonMap();
-            town.ClickMoveMap();
+            PressOldManonMap();
+            ClickMoveMap();
 
             botwindow.PressEscThreeTimes();
-            Pause(4000);
+            Pause(5000);
 
         }
 
         /// <summary>
-        /// тыкаем в старого человека для диалога
+        /// тыкаем на старого мужика
         /// </summary>
-        public void GoToOldManEnd()
+        public void PressOldMan()
         {
-            town.PressOldMan1();
+            pointOldMan.PressMouseL();
             Pause(2000);
         }
-
 
         /// <summary>
         /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
@@ -232,7 +245,7 @@ namespace OpenGEWindows
             for (int j = 1; j <= 10; j++)
             {
                 pointMamons.PressMouseWheelDown();
-                Pause(1000);
+                Pause(500);
             }
         }
 

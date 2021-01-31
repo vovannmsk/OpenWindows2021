@@ -489,20 +489,20 @@ namespace States
         /// </summary>
         public void StateOtitRunBaron()
         {
-            StateDriverRun(new StateGT015(this.botwindow), new StateGT017(this.botwindow));  // переход из состояния "Логаут" в состояние "В городе" (Los Toldos)
-            StateDriverRun(new StateGT075(this.botwindow), new StateGT082(this.botwindow));  // до выполнения задания на мертвых землях
-            StateDriverRun(new StateGT015(this.botwindow), new StateGT017(this.botwindow));  // переход из состояния "Логаут" в состояние "В городе" (Los Toldos)
-            StateDriverRun(new StateGT082(this.botwindow), new StateGT085(this.botwindow));  // получаем отит и логаут
+            StateDriverRun(new StateGT015(botwindow), new StateGT017(botwindow));  // переход из состояния "Логаут" в состояние "В городе" (Los Toldos)
+            StateDriverRun(new StateGT075(botwindow), new StateGT082(botwindow));  // до выполнения задания на мертвых землях
+            StateDriverRun(new StateGT015(botwindow), new StateGT017(botwindow));  // переход из состояния "Логаут" в состояние "В городе" (Los Toldos)
+            StateDriverRun(new StateGT082(botwindow), new StateGT085(botwindow));  // получаем отит и логаут
         }
 
         /// <summary>
-        /// идем из состояния логаут до старого человека в Лос Толдосе
+        /// идем из состояния "нет окна" до старого человека в Лос Толдосе
         /// </summary>
         public void StateGotoOldMan ()
         {
-            StateDriverRun(new StateGT015(this.botwindow), new StateGT018(this.botwindow));  // переход из состояния "Логаут" в состояние "Около Мамона" 
-            StateDriverRun(new StateGT086(this.botwindow), new StateGT088(this.botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
-            StateDriverRun(new StateGT075(this.botwindow), new StateGT751(this.botwindow));  // подбегаем к старому мужику
+            StateDriverRun(new StateGT014(botwindow), new StateGT018(botwindow));  // переход из состояния "нет окна" в состояние "Около Мамона" 
+            StateDriverRun(new StateGT086(botwindow), new StateGT088(botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
+            StateDriverRun(new StateGT075(botwindow), new StateGT076(botwindow));  // подбегаем к старому мужику
         }
 
         /// <summary>
@@ -510,21 +510,21 @@ namespace States
         /// </summary>
         public void StateOtitRun2()
         {
-            StateDriverRun(new StateGT751(this.botwindow), new StateGT081(this.botwindow));  // берем задание и выполняем его на мертвых землях
+            StateDriverRun(new StateGT075a(botwindow), new StateGT081(botwindow));  // берем задание и выполняем его на мертвых землях
             if (!server.isKillHero())        //если никого не убили
             {
-                StateDriverRun(new StateGT088(this.botwindow), new StateGT089(this.botwindow));  // отбегаем в сторону (на мертвых землях)
-                StateDriverRun(new StateGT089(this.botwindow), new StateGT090(this.botwindow));  // летим к Мамону
-                StateDriverRun(new StateGT086(this.botwindow), new StateGT088(this.botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
-                StateDriverRun(new StateGT082(this.botwindow), new StateGT084(this.botwindow));  // получаем отит и остаёмся в городе (Лос Толдосе) около старого мужика
+                StateDriverRun(new StateGT088(botwindow), new StateGT089(botwindow));  // отбегаем в сторону (на мертвых землях)
+                StateDriverRun(new StateGT089(botwindow), new StateGT090(botwindow));  // летим к Мамону
+                StateDriverRun(new StateGT086(botwindow), new StateGT088(botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
+                StateDriverRun(new StateGT082(botwindow), new StateGT084(botwindow));  // получаем отит и остаёмся в городе (Лос Толдосе) около старого мужика
             }
             else         //если в процессе выполнения задания кто-то из персов был убит
             {
                 otit.ChangeNumberOfRoute();  //сменить маршрут, чтобы в следующий раз не попасть в ту же ловушку
-                StateDriverRun(new StateGT081(this.botwindow), new StateGT082(this.botwindow));  // отбегаем в сторону (на случай, если кто-то выжил)  и логаут
-                StateDriverRun(new StateGT015(this.botwindow), new StateGT018(this.botwindow));  // переход из состояния "Логаут" в состояние "Около Мамона" 
-                StateDriverRun(new StateGT086(this.botwindow), new StateGT088(this.botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
-                StateDriverRun(new StateGT075(this.botwindow), new StateGT751(this.botwindow));  // подбегаем к старому мужику
+                StateDriverRun(new StateGT081(botwindow), new StateGT082(botwindow));  // отбегаем в сторону (на случай, если кто-то выжил)  и логаут
+                StateDriverRun(new StateGT015(botwindow), new StateGT018(botwindow));  // переход из состояния "Логаут" в состояние "Около Мамона" 
+                StateDriverRun(new StateGT086(botwindow), new StateGT088(botwindow));  // Говорим с Мамоном и переходим в Лос Толдос 
+                StateDriverRun(new StateGT075(botwindow), new StateGT075a(botwindow));  // подбегаем к старому мужику
             }
         }
 

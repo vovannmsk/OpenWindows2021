@@ -37,7 +37,7 @@ namespace States
             while (!server.isWork())
             {
                 botwindow.Pause(1000);
-                i++; if (i > 10) break;
+                i++; if (i > 20) break;
             }
         }
 

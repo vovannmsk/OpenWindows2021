@@ -30,8 +30,12 @@
             this.pointTask2 = new PointColor(928 - 5 + xx, 361 - 5 + yy, 8200000, 5);
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
+            this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);
+            this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
+            this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
 
         }
+
 
         // ===============================  Методы ==================================================
 

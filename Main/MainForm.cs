@@ -586,12 +586,16 @@ namespace Main
         private void funcSilver()
         {
         //    int NumberOfWindow = numberOfAccglobalParam.TotalNumberOfAccounts + 1;
-            Check check = new Check(numberOfAcc+1);
-            DriversOfState drive = new DriversOfState(numberOfAcc+1);
-            check.ReOpenWindow();
+            Check check = new Check(2);
+            //Check[] check = new Check[numberOfAcc + 1];
+            //for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+
+
+            DriversOfState drive = new DriversOfState(2);
+            
             drive.StateGotoOldMan();  //подходим в Old Man
 
-            for (int i = 1; i <= 100; i++)
+            for (int i = 1; i <= 250; i++)
             {
                 //check.ReOpenWindow();
                 //if (check.isLogout())   //если окно находится в логауте
@@ -600,6 +604,7 @@ namespace Main
                     drive.StateOtitRun2();
                 //}
             }
+
         }
 
         #endregion

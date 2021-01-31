@@ -734,7 +734,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 2;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -842,7 +842,7 @@ namespace States
             xx = koordX[i - 1];
             yy = koordY[i - 1];
             uint color1;
-            //uint color2;
+            uint color2;
             //uint color3;
             //int x = 483;
             //int y = 292;
@@ -854,20 +854,20 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(36 - 5 + xx + 40, 211 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(871 - 5 + xx, 42 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(929-30 + xx, 400-30 + yy, 0, 0);
+            PointColor point2 = new PointColor(929-30 + xx, 403-30 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
