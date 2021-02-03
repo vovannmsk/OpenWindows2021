@@ -260,7 +260,8 @@ namespace States
         /// </summary>
         public void StateMuskPlus()
         {
-            StateDriverRun(new StateGT304(botwindow), new StateGT307(botwindow));
+            if (server.isTown())
+                StateDriverRun(new StateGT304(botwindow), new StateGT307(botwindow));
         }
 
         /// <summary>

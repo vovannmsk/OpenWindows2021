@@ -252,7 +252,8 @@ namespace States
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
-                    botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
+                    //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
+                    server.ReOpenWindow();
                     Pause(500);
                 }
 
@@ -383,7 +384,7 @@ namespace States
                         this.botParam = new BotParam(numberOfWindow);
                         //********************************************************************************************************************
                         server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                        botParam.HowManyCyclesToSkip =  rand.Next(1, 6);        //пропускаем следующие циклы. случайное число от 1 до 6.
+                        botParam.HowManyCyclesToSkip =  rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
                         break;
                     case 25:
                         driver.StateLevelAbove20();             // уровень ворот больше 20. идем тратить шайники
