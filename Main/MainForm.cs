@@ -586,22 +586,22 @@ namespace Main
         private void funcSilver()
         {
         //    int NumberOfWindow = numberOfAccglobalParam.TotalNumberOfAccounts + 1;
-            Check check = new Check(2);
+            Check check = new Check(1);
             //Check[] check = new Check[numberOfAcc + 1];
             //for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
 
-            DriversOfState drive = new DriversOfState(2);
+            DriversOfState drive = new DriversOfState(1);
             
             drive.StateGotoOldMan();  //подходим в Old Man
 
-            for (int i = 1; i <= 250; i++)
+            while (true)
             {
                 //check.ReOpenWindow();
                 //if (check.isLogout())   //если окно находится в логауте
                 //{
                 //DriversOfState drive = new DriversOfState(NumberOfWindow);
-                    drive.StateOtitRun2();
+                drive.StateOtitRun2();
                 //}
             }
 
@@ -720,31 +720,6 @@ namespace Main
 
             DateTime Data1 = DateTime.Now;
 
-            //вариант 1. неожиданные остановки программы
-            //bool EndOfLists = false;  //False, когда списки ботов исчерпаются по всем окнам
-            //while(!EndOfLists)              //если боты закончатся, то цикл завершится
-            //{
-            //    EndOfLists = true;
-            //    for (int j = startAccount; j <= numberOfAcc; j++)
-            //    {
-            //        if (check[j].IsActiveServer && !check[j].EndOfList())
-            //            check[j].problemResolutionBH();
-            //        EndOfLists = EndOfLists && check[j].EndOfList();
-            //    }
-            //    DateTime Data2 = DateTime.Now;
-            //    int dd = (Data2 - Data1).Milliseconds;
-            //    if ((Data2 - Data1).Seconds < 5)   check[1].Pause(5000 - (Data2 - Data1).Milliseconds);
-            //    Data1 = Data2;
-            //}
-
-            //вариант 2. упрощенный
-
-            //начальние присваивание переменных
-            //for (int j = startAcc; j <= numberOfAcc; j++)
-            //{
-            //    check[j].InitialAssignment();
-            //}
-
             while (true)
             {
                 for (int j = startAcc; j <= numberOfAcc; j++)
@@ -858,6 +833,42 @@ namespace Main
             startAcc = (int)this.startAccount.Value;
         }
 
+        #region Silver Button (Pure Otite)
+        private void PureOtiteMulti_Click(object sender, EventArgs e)
+        {
+            Thread myThreadSilverMulti = new Thread(funcSilverMulti);
+            myThreadSilverMulti.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого аква кнопкой
+        /// </summary>
+        private void funcSilverMulti()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+
+            DateTime Data1 = DateTime.Now;
+
+            while (true)
+            {
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    check[j].problemResolutionOtite();
+                }
+                DateTime Data2 = DateTime.Now;
+                if ((Data2 - Data1).Seconds < 5)            //если один проход программы был короче 5 сек, 
+                    check[1].Pause(5000 - (Data2 - Data1).Milliseconds);    // то делаем паузу на недостающий промежуток времени
+                Data1 = Data2;
+            }
+
+
+
+        }
+
+
+
+        #endregion
     }// END class MainForm 
 }// END namespace OpenGEWindows
 

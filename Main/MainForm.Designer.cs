@@ -61,6 +61,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.PureOtiteMulti = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -85,7 +86,7 @@
             this.labelInformation.AutoSize = true;
             this.labelInformation.Location = new System.Drawing.Point(19, -14);
             this.labelInformation.Name = "labelInformation";
-            this.labelInformation.Size = new System.Drawing.Size(36, 13);
+            this.labelInformation.Size = new System.Drawing.Size(35, 13);
             this.labelInformation.TabIndex = 2;
             this.labelInformation.Text = "label1";
             this.labelInformation.Visible = false;
@@ -148,7 +149,7 @@
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.LightCoral;
-            this.button5.Location = new System.Drawing.Point(17, 96);
+            this.button5.Location = new System.Drawing.Point(193, 137);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(170, 34);
             this.button5.TabIndex = 48;
@@ -217,7 +218,7 @@
             // 
             this.TransferVis.BackColor = System.Drawing.Color.Green;
             this.TransferVis.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.TransferVis.Location = new System.Drawing.Point(193, 136);
+            this.TransferVis.Location = new System.Drawing.Point(193, 175);
             this.TransferVis.Name = "TransferVis";
             this.TransferVis.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.TransferVis.Size = new System.Drawing.Size(170, 35);
@@ -233,7 +234,7 @@
             this.PureOtite.Name = "PureOtite";
             this.PureOtite.Size = new System.Drawing.Size(170, 34);
             this.PureOtite.TabIndex = 55;
-            this.PureOtite.Text = "Добыча Чистого Отита";
+            this.PureOtite.Text = "Чистый Отит (одно окно)";
             this.PureOtite.UseVisualStyleBackColor = false;
             this.PureOtite.Click += new System.EventHandler(this.PureOtite_Click);
             // 
@@ -322,7 +323,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 206);
+            this.tabControl1.Size = new System.Drawing.Size(386, 246);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -410,6 +411,7 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.LightCyan;
             this.tabPage3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage3.Controls.Add(this.PureOtiteMulti);
             this.tabPage3.Controls.Add(this.ButtonOpenWindow);
             this.tabPage3.Controls.Add(this.undressing);
             this.tabPage3.Controls.Add(this.button5);
@@ -420,16 +422,27 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 180);
+            this.tabPage3.Size = new System.Drawing.Size(378, 220);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
+            // 
+            // PureOtiteMulti
+            // 
+            this.PureOtiteMulti.BackColor = System.Drawing.Color.Silver;
+            this.PureOtiteMulti.Location = new System.Drawing.Point(17, 96);
+            this.PureOtiteMulti.Name = "PureOtiteMulti";
+            this.PureOtiteMulti.Size = new System.Drawing.Size(170, 34);
+            this.PureOtiteMulti.TabIndex = 60;
+            this.PureOtiteMulti.Text = "Чистый Отит (много окон)";
+            this.PureOtiteMulti.UseVisualStyleBackColor = false;
+            this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 206);
+            this.ClientSize = new System.Drawing.Size(386, 246);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -485,6 +498,7 @@
         private System.Windows.Forms.Button ChangingAccounts;
         private System.Windows.Forms.NumericUpDown startAccount;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button PureOtiteMulti;
     }
 }
 

@@ -414,6 +414,285 @@ namespace States
 
         #endregion
 
+        #region Pure Otite
+
+        /// <summary>
+        /// проверяем, есть ли проблемы при добыче Чистого Отита и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemOtite()
+        {
+            //int statusOfSale = botParam.StatusOfSale;          //не отлажено
+            int statusOfAtk = botParam.StatusOfAtk;
+
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (!server.FindWindowGEforBHBool())
+                    {
+                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                    }
+                    else
+                    {
+                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                    }
+                }
+            }
+
+            //ворота
+            //if (BHdialog.isGateBH()) return 7;                    //если стоим в воротах, начальное состояние
+            //if (BHdialog.isGateBH1()) return 8;                   //ворота. дневной лимит миссий еще не исчерпан
+            //if (BHdialog.isGateBH3()) return 9;                   //ворота. дневной лимит миссий уже исчерпан
+            //if (BHdialog.isGateLevelLessThan11()) return 10;      //ворота. уровень миссии меньше 11
+            //if (BHdialog.isGateLevelFrom11to19()) return 19;      //ворота. уровень миссии от 11 до 19
+            //if (BHdialog.isGateLevelAbove20()) return 25;         //ворота. уровень миссии больше 20
+            //if (BHdialog.isInitialize()) return 26;               //ворота. форма, где надо вводить слово Initialize
+
+
+            //Ребольдо или ЛосТолдос
+            if (server.isTown())   //если в городе (том или другом)
+            {
+                //if (server.isBH())     //в БХ 
+                //{
+                //    if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+                    //if (statusOfSale == 1)
+                    //{
+                    //    // если нужно бежать продаваться
+                    //    return 3;                                              ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //}
+                    //else
+                    //{
+                    //    // если не нужно бежать продаваться и стоим в правильном месте (около ворот Инфинити)
+                    //    return 4;
+                    //}
+                //}
+                //else   // в городе, но не в БХ
+                //{
+                //    if (statusOfSale == 1)
+                //    {
+                //        // если нужно бежать продаваться
+                //        return 5;                                              ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //    }
+                //    else
+                //    {
+                //        // если не нужно бежать продаваться
+                //        return 6;
+                //    }
+                //}
+            }
+
+            //в миссии или около Мамута
+            if (server.isWork())
+            {
+                if (statusOfAtk == 0)                                                 //еще не атаковали босса в миссии
+                {
+                    //if (server.isMissionBH())                                         //если миссия определилась
+                    //{
+                    //    return 13;
+                    //}
+                    //else
+                    //{
+                    //    return 21;                                                    //миссия не определилась
+                    //}
+                }
+                else                                                                  //после начала атаки босса
+                {
+                    //if (server.isRouletteBH())                                        //если крутится рулетка
+                    //{
+                    //    return 20;                                                    // подбор дропа
+                    //}
+                    //else
+                    //{
+                    //    if (!server.isAtakBH()) return 14;                            //идем в барак (а можем и в БХ)
+                    //                                                                  //если находимся в миссии, но уже не в начале и не атакуем босса и не крутится рулетка 
+                    //                                                                  //(значит бой окончен, либо заблудились и надо выходить из миссии) 
+                    //}
+                }
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;               // если окно в логауте
+
+            //в бараке
+            if (server.isBarack())                         //если стоят в бараке 
+            {
+                //if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ
+                //{ return 16; }
+                //else
+                //{ 
+                    return 2; 
+                //}
+            }
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //в миссии, но убиты
+            if (server.isKillAllHero()) return 29;            // если убиты все
+            if (server.isKillHero()) return 30;               // если убиты не все 
+
+            //если проблем не найдено
+            return 0;
+        }
+
+
+        /// <summary>
+        /// разрешение выявленных проблем в добыче Pure Otite
+        /// </summary>
+        public void problemResolutionOtite()
+        {
+            //if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            //{
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                int numberOfProblem = NumberOfProblemOtite();
+
+            //============== если зависли в каком-либо состоянии, то особые действия ========
+            //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  
+            //{
+            //    switch (numberOfProblem)
+            //    {
+            //        case 1:  //зависли в логауте
+            //        case 23:  //загруженное окно зависло и не смещается на нужное место
+            //            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+            //            break;
+            //        case 4:  //зависли в БХ
+            //            numberOfProblem = 18; //переходим в стартовый город через системное меню
+            //            break;
+            //    }
+            //}
+            //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+            //Random rand = new Random();
+
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack
+                        //botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:
+                        driver.StateFromBarackToTownBH();           // идем в город
+                        //botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:
+                        //временная заплатка. вместо продажи аккаунта закрываем песочницу и переходим к следующему аккаунту
+                        botParam.StatusOfSale = 0;
+                        server.RemoveSandboxieBH();
+                        break;
+                    case 4:
+                        driver.StateFromBHToGateBH();               // BH --> Gate
+                        break;
+                    case 5:
+                        driver.StateGotoTradeStep2BH();             // если стоят в городе и надо продаваться, то второй этап продажи
+                        break;
+                    case 6:
+                        driver.StateFromTownToBH();                 // town --> BH
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 7:
+                        driver.StateFromGateToMissionBH();          // Gate --> Mission
+                        break;
+                    case 8:
+                        BHdialog.PressOkButton(1);                  //нажимаем Ок в диалоге ворот
+                        break;
+                    case 9:
+                        driver.StateCloseSandboxieBH();              //миссии закончились в воротах
+                        break;
+                    case 10:
+                        driver.StateLevelLessThan11();              // диалог в воротах
+                        break;
+                    case 11:
+                        driver.StateGotoTradeStep3BH();             // третий этап продажи
+                        break;
+                    case 12:
+                        driver.StateGotoTradeStep4BH();             // четвертый этап продажи
+                        break;
+                    case 13:
+                        driver.StateFromMissionToFightBH();         // Mission--> Fight!!!
+                        break;
+                    case 14:
+                        driver.StateFromMissionToBarackBH();        // в барак 
+                        //botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 15:
+                        driver.StateGotoTradeStep5BH();             // пятый этап продажи
+                        break;
+                    case 16:
+                        server.barackLastPoint();                   // начинаем со старого места в БХ
+                        //botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 17:
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 18:
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        //botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 19:
+                        driver.StateLevelFrom11to19();              // диалог в воротах
+                        break;
+                    case 20:
+                        server.GetDrop();                         //подбор дропа
+                        break;
+                    case 21:
+                        server.MissionNotFoundBH();              // миссия не найдена. записываем в файл данные и отбегаем в сторону
+                        driver.StateFromMissionToBarackBH();        // в барак 
+                        break;
+                    case 22:
+                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его
+                        //botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-10 циклов
+                        break;
+                    case 23:
+                        botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                        //botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        break;
+                    case 24:
+                        //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
+                        botwindow = new botWindow(numberOfWindow);
+                        ServerFactory serverFactory = new ServerFactory(botwindow);
+                        this.server = serverFactory.create();
+                        this.globalParam = new GlobalParam();
+                        this.botParam = new BotParam(numberOfWindow);
+                        //********************************************************************************************************************
+                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        //botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                        break;
+                    case 25:
+                        driver.StateLevelAbove20();             // уровень ворот больше 20. идем тратить шайники
+                        break;
+                    case 26:
+                        driver.StateInitialize();              // вводим слово Initialize и ок
+                        break;
+                    case 29:
+                        botwindow.CureOneWindow();              // идем в logout
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 30:
+                        botwindow.CureOneWindow2();             // отбегаем в сторону и логаут
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        break;
+
+                }
+            //}
+            //else
+            //{
+            //    botParam.HowManyCyclesToSkip--;
+            //}
+        }
+
+        #endregion
 
         //************************************************************************************************************************
         /// <summary>
