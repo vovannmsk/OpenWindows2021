@@ -502,6 +502,20 @@ namespace States
                     case 1:
                         result = 6;         //стоим около мамута
                         break;
+                    case 5:
+                        result = 12;        //стоим в миссии. только что зашли
+                        break;
+                    case 6:                 // в бою!
+                        if (!otit.isTaskDone())
+                            result = 13;    //бежим к следующей точке маршрута с атакой
+                        else
+                            result = 14;    //бежим к следующей точке маршрута без атаки
+                        break;
+                    case 7:
+                        result = 15;        //улетаем из миссии к Мамуну
+                        break;
+
+
                 }
                 if (result != 0) return result;
             }
@@ -626,38 +640,40 @@ namespace States
                         NumberOfState = 5;
                     break;
                     case 12:
-                        
-                        break;
+                        driver.FromMissionToFight();                //Mission-- > Mission (Fight begin)
+                        NumberOfState = 6;
+                    break;
                     case 13:
-                        
+                        driver.FightNextPoint();                    //Mission(Fight)-- > Fight To Next Point
                         break;
                     case 14:
-                        
-                        
-                        break;
+                        driver.FightIsFinished();                   // Mission (FightIsFinished) 
+                        NumberOfState = 7;
+                    break;
                     case 15:
-                        
-                        break;
-                    case 16:
-                        
-                        break;
-                    case 17:
-                        botwindow.PressEsc();                       // нажимаем Esc
-                        break;
-                    case 18:
-                        server.systemMenu(3, true);                 // переход в стартовый город
-                        //botParam.HowManyCyclesToSkip = 3;
-                        break;
-                    case 19:
-                        
-                        break;
-                    case 20:
-                        
-                        break;
-                    case 21:
-                        
-                        break;
-                    case 22:
+                        server.Teleport(1);                         // телепорт к Мамуну
+                        NumberOfState = 1;
+                    break;
+                //case 16:
+
+                //    break;
+                case 17:
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                //case 18:
+                //    server.systemMenu(3, true);                 // переход в стартовый город
+                //    //botParam.HowManyCyclesToSkip = 3;
+                //    break;
+                //case 19:
+
+                //    break;
+                //case 20:
+
+                //    break;
+                //case 21:
+
+                //    break;
+                case 22:
                         server.runClientBH();                   // если нет окна ГЭ, то запускаем его
                         //botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-10 циклов
                         break;
@@ -677,15 +693,15 @@ namespace States
                         break;
                     case 29:
                         botwindow.CureOneWindow();              // идем в logout
-                        botParam.HowManyCyclesToSkip = 1;
+                        //botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 30:
                         botwindow.CureOneWindow2();             // отбегаем в сторону и логаут
-                        botParam.HowManyCyclesToSkip = 1;
+                        //botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 31:
-                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
-                        break;
+                    //case 31:
+                    //    server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                    //    break;
 
                 }
             //}

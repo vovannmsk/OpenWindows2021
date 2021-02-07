@@ -113,6 +113,30 @@ namespace States
             StateDriverRun(new StateGT526(botwindow), new StateGT527(botwindow));
         }
 
+        /// <summary>
+        /// Mission --> Mission (Fight begin)
+        /// </summary>
+        public void FromMissionToFight()
+        {
+            StateDriverRun(new StateGT528(botwindow), new StateGT529(botwindow));
+        }
+
+        /// <summary>
+        /// Mission (Fight) --> Fight To Next Point
+        /// </summary>
+        public void FightNextPoint()
+        {
+            StateDriverRun(new StateGT530(botwindow), new StateGT531(botwindow));
+        }
+
+        /// <summary>
+        /// Mission (FightIsFinished) 
+        /// </summary>
+        public void FightIsFinished()
+        {
+            StateDriverRun(new StateGT532(botwindow), new StateGT533(botwindow));
+        }
+
 
         #endregion
 

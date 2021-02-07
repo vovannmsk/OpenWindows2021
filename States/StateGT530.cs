@@ -3,20 +3,19 @@
 
 namespace States
 {
-    public class StateGT079 : IState
+    public class StateGT530 : IState
     {
         private botWindow botwindow;
         private Server server;
-        //private Town town;
-        private int tekStateInt;
         private Otit otit;
+        private int tekStateInt;
 
-        public StateGT079()
+        public StateGT530()
         {
 
         }
 
-        public StateGT079(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT530(botWindow botwindow)   //, GotoTrade gototrade)
         {
             this.botwindow = botwindow;
             ServerFactory serverFactory = new ServerFactory(botwindow);
@@ -24,7 +23,7 @@ namespace States
             OtitFactory otitFactory = new OtitFactory(botwindow);
             this.otit = otitFactory.createOtit();
 
-            this.tekStateInt = 79;
+            this.tekStateInt = 530;
         }
 
 
@@ -33,11 +32,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.PressMitridat();
-            server.OpenMapForState();
-            botwindow.Pause(1000);
-            otit.GotoWork();      //идем к началу маршрута
-            botwindow.Pause(2000);
+            otit.GotoNextPointRouteMulti();
         }
 
         /// <summary>
@@ -53,7 +48,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return true;                                                                                //считаем, что осечек не будет на этом этапе, и мы 100% переёдем к следующему пункту
+            return true;
+            //return otit.isTaskDone();
         }
 
         /// <summary>
@@ -62,7 +58,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT080(botwindow);
+            return new StateGT531(botwindow);
         }
 
         /// <summary>
@@ -71,7 +67,14 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT079(botwindow);
+            IState result = new StateGT530(botwindow);
+            if (server.isKillHero()) 
+            { 
+                //что-нибудь придумать
+                result = new StateGT081(botwindow);
+            }
+
+            return result;
         }
 
         #region стандартные служебные методы для паттерна Состояния

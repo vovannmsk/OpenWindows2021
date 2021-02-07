@@ -215,6 +215,20 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
+        /// </summary>
+        public void GotoNextPointRouteMulti()
+        {
+            RouteNextPoint().PressMouseR();
+            Pause(500);
+            RouteNextPoint().PressMouseR();
+            //Pause(RouteNextPointTime());
+            counterRouteNode++; if (counterRouteNode > 2) counterRouteNode = 0;
+        }
+
+
+
+        /// <summary>
         /// обнуляем счетчик, чтобы начать с начала маршрута
         /// </summary>
         public void  CounterRouteToNull()

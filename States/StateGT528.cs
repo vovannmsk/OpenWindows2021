@@ -3,7 +3,7 @@
 
 namespace States
 {
-    public class StateGT079 : IState
+    public class StateGT528 : IState
     {
         private botWindow botwindow;
         private Server server;
@@ -11,12 +11,12 @@ namespace States
         private int tekStateInt;
         private Otit otit;
 
-        public StateGT079()
+        public StateGT528()
         {
 
         }
 
-        public StateGT079(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT528(botWindow botwindow)   //, GotoTrade gototrade)
         {
             this.botwindow = botwindow;
             ServerFactory serverFactory = new ServerFactory(botwindow);
@@ -24,7 +24,7 @@ namespace States
             OtitFactory otitFactory = new OtitFactory(botwindow);
             this.otit = otitFactory.createOtit();
 
-            this.tekStateInt = 79;
+            this.tekStateInt = 528;       
         }
 
 
@@ -37,7 +37,6 @@ namespace States
             server.OpenMapForState();
             botwindow.Pause(1000);
             otit.GotoWork();      //идем к началу маршрута
-            botwindow.Pause(2000);
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT080(botwindow);
+            return new StateGT529(botwindow);
         }
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT079(botwindow);
+            return this;
         }
 
         #region стандартные служебные методы для паттерна Состояния

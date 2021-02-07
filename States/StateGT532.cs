@@ -3,28 +3,27 @@
 
 namespace States
 {
-    public class StateGT079 : IState
+    public class StateGT532 : IState
     {
         private botWindow botwindow;
-        private Server server;
-        //private Town town;
-        private int tekStateInt;
+        //private Server server;
         private Otit otit;
+        private int tekStateInt;
 
-        public StateGT079()
+        public StateGT532()
         {
 
         }
 
-        public StateGT079(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT532(botWindow botwindow)
         {
             this.botwindow = botwindow;
-            ServerFactory serverFactory = new ServerFactory(botwindow);
-            this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
+            //ServerFactory serverFactory = new ServerFactory(botwindow);
+            //this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
             OtitFactory otitFactory = new OtitFactory(botwindow);
             this.otit = otitFactory.createOtit();
 
-            this.tekStateInt = 79;
+            this.tekStateInt = 532;
         }
 
 
@@ -33,11 +32,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.PressMitridat();
-            server.OpenMapForState();
-            botwindow.Pause(1000);
-            otit.GotoWork();      //идем к началу маршрута
-            botwindow.Pause(2000);
+            otit.RouteNextPoint().PressMouseL();    // отбегаем в сторону
+            botwindow.PressEscThreeTimes();  //закрываем карту
         }
 
         /// <summary>
@@ -45,6 +41,7 @@ namespace States
         /// </summary>
         public void elseRun()
         {
+            botwindow.PressEscThreeTimes();  //закрываем карту
         }
 
         /// <summary>
@@ -62,7 +59,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT080(botwindow);
+            return new StateGT533(botwindow);
         }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT079(botwindow);
+            return new StateGT532(botwindow);
         }
 
         #region стандартные служебные методы для паттерна Состояния
@@ -85,7 +82,14 @@ namespace States
         {
             bool result = false;
             if (!(other == null))            //если other не null, то проверяем на равенство
-                if (this.getTekStateInt() == other.getTekStateInt()) result = true;
+                if (other.getTekStateInt() == 1)         //27.04.17
+                {
+                    if (this.getTekStateInt() == other.getTekStateInt()) result = true;
+                }
+                else   //27.04.17
+                {
+                    if (this.getTekStateInt() >= other.getTekStateInt()) result = true;  //27.04.17
+                }
             return result;
         }
 
