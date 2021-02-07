@@ -571,7 +571,7 @@ namespace Main
 
         #endregion
 
-        #region Silver Button (Pure Otite)
+        #region Silver Button (Pure Otite)   **************************
 
         private void PureOtite_Click(object sender, EventArgs e)
         {
@@ -833,7 +833,7 @@ namespace Main
             startAcc = (int)this.startAccount.Value;
         }
 
-        #region Silver Button (Pure Otite)
+        #region Silver Button (Pure Otite Multi)
         private void PureOtiteMulti_Click(object sender, EventArgs e)
         {
             Thread myThreadSilverMulti = new Thread(funcSilverMulti);

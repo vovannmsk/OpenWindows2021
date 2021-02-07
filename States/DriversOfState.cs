@@ -38,6 +38,83 @@ namespace States
 
         #region движки для запуска перехода по состояниям
 
+        #region Pure Otite Multi
+
+        /// <summary>
+        /// Town --> Mamut
+        /// </summary>
+        public void FromTownToMamut()
+        {
+            StateDriverRun(new StateGT517(botwindow), new StateGT518(botwindow)); 
+        }
+
+        /// <summary>
+        /// LosToldos --> OldMan
+        /// </summary>
+        public void FromLostoldosToOldman()
+        {
+            StateDriverRun(new StateGT075(botwindow), new StateGT076(botwindow));  
+        }
+
+        ///// <summary>
+        ///// Mamut --> LosToldos
+        ///// </summary>
+        //public void FromMamutToLostoldos()
+        //{
+        //    StateDriverRun(new StateGT519(botwindow), new StateGT521(botwindow));
+        //}
+
+        /// <summary>
+        /// Mamons --> Mamons (dialog)
+        /// </summary>
+        public void FromMamonsToMamonsDialog()
+        {
+            StateDriverRun(new StateGT519(botwindow), new StateGT520(botwindow));
+        }
+
+        /// <summary>
+        /// Mamons (dialog) --> LosToldos
+        /// </summary>
+        public void FromMamonsDialogToLostolods()
+        {
+            StateDriverRun(new StateGT520(botwindow), new StateGT521(botwindow));
+        }
+
+
+        /// <summary>
+        /// OldMan --> OldMan (dialog)
+        /// </summary>
+        public void PressOldMan()
+        {
+            StateDriverRun(new StateGT075a(botwindow), new StateGT076(botwindow));
+        }
+
+        /// <summary>
+        /// OldMan (dialog). Get Task
+        /// </summary>
+        public void OldManDialogGetTask()
+        {
+            StateDriverRun(new StateGT522(botwindow), new StateGT523(botwindow));
+        }
+
+        /// <summary>
+        /// OldMan (dialog). Get Reward
+        /// </summary>
+        public void OldManDialogGetReward()
+        {
+            StateDriverRun(new StateGT524(botwindow), new StateGT525(botwindow));
+        }
+
+        /// <summary>
+        /// OldMan (dialog) --> Mission
+        /// </summary>
+        public void FromOldManDialogToMission()
+        {
+            StateDriverRun(new StateGT526(botwindow), new StateGT527(botwindow));
+        }
+
+
+        #endregion
 
 
         #region Гильдия Охотников
@@ -483,7 +560,6 @@ namespace States
 
             StateDriverRun(new StateGT085(this.botwindow), new StateGT086(this.botwindow));  // бегаем по кругу и собираем GoldenEggFruit
         }
-
 
         /// <summary>
         /// перевод из состояния 75 в состояние 90. Цель  - добыча отита. Исполнитель - барон

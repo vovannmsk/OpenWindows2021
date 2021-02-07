@@ -178,7 +178,7 @@ namespace OpenGEWindows
             ClickMoveMap();
 
             botwindow.PressEscThreeTimes();
-            Pause(5000);
+            Pause(4000);
 
         }
 

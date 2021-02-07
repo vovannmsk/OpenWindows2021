@@ -45,6 +45,17 @@
     <Compile Include="IState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateDriver.cs" />
+    <Compile Include="StateGT527.cs" />
+    <Compile Include="StateGT526.cs" />
+    <Compile Include="StateGT525.cs" />
+    <Compile Include="StateGT524.cs" />
+    <Compile Include="StateGT523.cs" />
+    <Compile Include="StateGT522.cs" />
+    <Compile Include="StateGT519.cs" />
+    <Compile Include="StateGT520.cs" />
+    <Compile Include="StateGT521.cs" />
+    <Compile Include="StateGT518.cs" />
+    <Compile Include="StateGT517.cs" />
     <Compile Include="StateGT267.cs" />
     <Compile Include="StateGT318.cs" />
     <Compile Include="StateGT319.cs" />
