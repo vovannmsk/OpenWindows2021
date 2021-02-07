@@ -3,7 +3,8 @@
     public interface iPoint
     {
         void Move();
-        void PressMouseR();  
+        void PressMouseR();
+        void PressMouseRR();
         void PressMouseL();
         void PressMouseLL();
         void PressMouse();

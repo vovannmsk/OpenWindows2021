@@ -445,36 +445,27 @@ namespace States
             //int statusOfAtk = botParam.StatusOfAtk;
             int result = 0;
 
-            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
-            {
-                if (!server.FindWindowSteamBool())  //если Стима тоже нет
-                {
-                    return 24;
-                }
-                else    //если Стим уже загружен
-                {
-                    if (!server.FindWindowGEforBHBool())
-                    {
-                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
-                    }
-                    else
-                    {
-                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
-                    }
-                }
-            }
+            if (!server.isHwnd()) return 25;        //если нет окна с hwnd таким как в файле HWND.txt
 
-            //ворота
-            //if (BHdialog.isGateBH()) return 7;                    //если стоим в воротах, начальное состояние
-            //if (BHdialog.isGateBH1()) return 8;                   //ворота. дневной лимит миссий еще не исчерпан
-            //if (BHdialog.isGateBH3()) return 9;                   //ворота. дневной лимит миссий уже исчерпан
-            //if (BHdialog.isGateLevelLessThan11()) return 10;      //ворота. уровень миссии меньше 11
-            //if (BHdialog.isGateLevelFrom11to19()) return 19;      //ворота. уровень миссии от 11 до 19
-            //if (BHdialog.isGateLevelAbove20()) return 25;         //ворота. уровень миссии больше 20
-            //if (BHdialog.isInitialize()) return 26;               //ворота. форма, где надо вводить слово Initialize
+            //{
+            //    if (!server.FindWindowSteamBool())  //если Стима тоже нет
+            //    {
+            //        return 24;
+            //    }
+            //    else    //если Стим уже загружен
+            //    {
+            //        if (!server.FindWindowGEforBHBool())
+            //        {
+            //            return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+            //        }
+            //        else
+            //        {
+            //            return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+            //        }
+            //    }
+            //}
 
-
-            //Ребольдо или ЛосТолдос
+            // Город (Ребольдо или ЛосТолдос)
             if (server.isTown())   //если в городе (том или другом)
             {
                 switch (NumberOfState)
@@ -613,10 +604,10 @@ namespace States
                         NumberOfState = 3;                          //обязательно нужно, что разделить состояния в ЛосТолдосе
                     break;
                     case 5:
-                        driver.PressOldMan();                           // OldMan --> OldMan (dialog)
+                        driver.PressOldMan();                       // OldMan --> OldMan (dialog)
                     break;
                     case 6:
-                        //driver.FromMamutToLostoldos();              //Mamut --> LosToldos
+                        //driver.FromMamutToLostoldos();            //Mamut --> LosToldos
                         //NumberOfState = 2;
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
                     break;
@@ -634,6 +625,7 @@ namespace States
                     case 10:
                         driver.OldManDialogGetReward();             //Oldman(Dialog) --> Get Reward
                         NumberOfState = 3;
+                        TaskCompleted = false;
                     break;
                     case 11:
                         driver.FromOldManDialogToMission();         //Oldman(Dialog) --> Mission
@@ -648,6 +640,7 @@ namespace States
                         break;
                     case 14:
                         driver.FightIsFinished();                   // Mission (FightIsFinished) 
+                        TaskCompleted = true;
                         NumberOfState = 7;
                     break;
                     case 15:
@@ -686,7 +679,7 @@ namespace States
                         //botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
                         break;
                     case 25:
-                        
+                        server.ReOpenWindow();
                         break;
                     case 26:
                         

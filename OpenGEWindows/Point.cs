@@ -56,6 +56,19 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// нажать мышью в конкретную точку правой кнопкой дважды
+        /// </summary>
+        /// <param name="x"> x - первая координата точки, куда нужно ткнуть мышью </param>
+        /// <param name="y"> y - вторая координата точки, куда нужно ткнуть мышью </param>
+        public void PressMouseRR()
+        {
+            Click_Mouse_and_Keyboard.Mouse_Move_and_Click(X, Y, 2);
+            Pause(500);
+            Click_Mouse_and_Keyboard.Mouse_Move_and_Click(X, Y, 2);
+            Pause(200);
+        }
+
+        /// <summary>
         /// нажать мышью в конкретную точку только левой кнопкой
         /// </summary>
         /// <param name="x"> x - первая координата точки, куда нужно ткнуть мышью </param>

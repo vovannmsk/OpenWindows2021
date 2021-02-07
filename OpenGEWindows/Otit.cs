@@ -12,7 +12,8 @@ namespace OpenGEWindows
         protected iPointColor pointTask2;
         protected Dialog dialog;
         protected Server server;
-        protected static int counterRouteNode;
+        protected int counterRouteNode;
+
         /// <summary>
         /// голова Мамуна
         /// </summary>
@@ -30,6 +31,7 @@ namespace OpenGEWindows
         /// </summary>
         protected iPoint pointButtonMoveOnMap;
 
+        protected int numberOfRoute;
 
         // ============  методы  ========================
 
@@ -205,6 +207,16 @@ namespace OpenGEWindows
         /// <summary>
         /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
         /// </summary>
+        public void GotoWorkMulti()
+        {
+            CounterRouteToNull();
+            RouteNextPointMulti(counterRouteNode).PressMouseL();
+        }
+
+
+        /// <summary>
+        /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
+        /// </summary>
         public void GotoNextPointRoute()
         {
             RouteNextPoint().PressMouseR();
@@ -215,18 +227,13 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
+        /// переход по карте Земли мертвых к следующей точке маршрута с атакой
         /// </summary>
         public void GotoNextPointRouteMulti()
         {
-            RouteNextPoint().PressMouseR();
-            Pause(500);
-            RouteNextPoint().PressMouseR();
-            //Pause(RouteNextPointTime());
             counterRouteNode++; if (counterRouteNode > 2) counterRouteNode = 0;
+            RouteNextPointMulti(counterRouteNode).PressMouseRR();
         }
-
-
 
         /// <summary>
         /// обнуляем счетчик, чтобы начать с начала маршрута
@@ -270,6 +277,12 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>следующая точка</returns>
         public abstract iPoint RouteNextPoint();
+
+        /// <summary>
+        /// получаем следующий пункт маршрута
+        /// </summary>
+        /// <returns>следующая точка</returns>
+        public abstract iPoint RouteNextPointMulti(int counter);
 
         /// <summary>
         /// получаем время для прохождения следующего участка маршрута

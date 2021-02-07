@@ -15,7 +15,7 @@ namespace States
 
         }
 
-        public StateGT530(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT530(botWindow botwindow)   
         {
             this.botwindow = botwindow;
             ServerFactory serverFactory = new ServerFactory(botwindow);
@@ -49,7 +49,6 @@ namespace States
         public bool isAllCool()
         {
             return true;
-            //return otit.isTaskDone();
         }
 
         /// <summary>
@@ -67,14 +66,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            IState result = new StateGT530(botwindow);
-            if (server.isKillHero()) 
-            { 
-                //что-нибудь придумать
-                result = new StateGT081(botwindow);
-            }
-
-            return result;
+            return this;
         }
 
         #region стандартные служебные методы для паттерна Состояния

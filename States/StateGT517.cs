@@ -57,12 +57,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.Teleport(1, true); //летим по первому телепорту с проверкой открытия меню со списком телепортов
-
-            int i = 0;
-            while ((!server.isWork()) && (i < 30))         //ожидание загрузки места работы
-            { botwindow.Pause(1000); i++; }
-            botwindow.Pause(3000);  // еще одна пауза, чтобы окончательно подгрузилась карта с мобами
+            botwindow.PressEscThreeTimes();
+            server.Teleport(1); //летим по первому телепорту с проверкой открытия меню со списком телепортов
         }
 
         /// <summary>
@@ -80,7 +76,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isWork();
+            return true;
+            //return server.isWork();
         }
 
         /// <summary>
@@ -89,7 +86,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT018(botwindow);
+            return new StateGT518(botwindow);
         }
 
         /// <summary>
@@ -98,10 +95,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            if (!server.isHwnd() || server.isLogout()) 
-                return new StateGT518(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
-            else
-                return this;
+            return this;
         }
 
         /// <summary>

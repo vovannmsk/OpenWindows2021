@@ -149,7 +149,7 @@
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.LightCoral;
-            this.button5.Location = new System.Drawing.Point(193, 137);
+            this.button5.Location = new System.Drawing.Point(193, 96);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(170, 34);
             this.button5.TabIndex = 48;
@@ -171,7 +171,7 @@
             // RunToCrater
             // 
             this.RunToCrater.BackColor = System.Drawing.Color.Lime;
-            this.RunToCrater.Location = new System.Drawing.Point(193, 56);
+            this.RunToCrater.Location = new System.Drawing.Point(193, 230);
             this.RunToCrater.Name = "RunToCrater";
             this.RunToCrater.Size = new System.Drawing.Size(170, 35);
             this.RunToCrater.TabIndex = 50;
@@ -218,7 +218,7 @@
             // 
             this.TransferVis.BackColor = System.Drawing.Color.Green;
             this.TransferVis.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.TransferVis.Location = new System.Drawing.Point(193, 175);
+            this.TransferVis.Location = new System.Drawing.Point(193, 136);
             this.TransferVis.Name = "TransferVis";
             this.TransferVis.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.TransferVis.Size = new System.Drawing.Size(170, 35);
@@ -262,7 +262,7 @@
             // 
             this.GoldenEggFruit.BackColor = System.Drawing.Color.Gold;
             this.GoldenEggFruit.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.GoldenEggFruit.Location = new System.Drawing.Point(193, 97);
+            this.GoldenEggFruit.Location = new System.Drawing.Point(193, 56);
             this.GoldenEggFruit.Name = "GoldenEggFruit";
             this.GoldenEggFruit.Size = new System.Drawing.Size(170, 34);
             this.GoldenEggFruit.TabIndex = 58;
@@ -323,7 +323,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 246);
+            this.tabControl1.Size = new System.Drawing.Size(386, 212);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -343,7 +343,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 180);
+            this.tabPage1.Size = new System.Drawing.Size(378, 220);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
@@ -391,7 +391,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 180);
+            this.tabPage2.Size = new System.Drawing.Size(378, 220);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -422,7 +422,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 220);
+            this.tabPage3.Size = new System.Drawing.Size(378, 186);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -442,7 +442,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 246);
+            this.ClientSize = new System.Drawing.Size(386, 212);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;

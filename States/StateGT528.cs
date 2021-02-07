@@ -36,7 +36,7 @@ namespace States
             botwindow.PressMitridat();
             server.OpenMapForState();
             botwindow.Pause(1000);
-            otit.GotoWork();      //идем к началу маршрута
+            otit.GotoWorkMulti();      //идем к началу маршрута
         }
 
         /// <summary>

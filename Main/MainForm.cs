@@ -834,6 +834,7 @@ namespace Main
         }
 
         #region Silver Button (Pure Otite Multi)
+
         private void PureOtiteMulti_Click(object sender, EventArgs e)
         {
             Thread myThreadSilverMulti = new Thread(funcSilverMulti);
@@ -841,7 +842,7 @@ namespace Main
         }
 
         /// <summary>
-        /// метод задает функционал для потока, организуемого аква кнопкой
+        /// метод задает функционал для потока, организуемого серебряной кнопкой
         /// </summary>
         private void funcSilverMulti()
         {
@@ -857,8 +858,8 @@ namespace Main
                     check[j].problemResolutionOtite();
                 }
                 DateTime Data2 = DateTime.Now;
-                if ((Data2 - Data1).Seconds < 5)            //если один проход программы был короче 5 сек, 
-                    check[1].Pause(5000 - (Data2 - Data1).Milliseconds);    // то делаем паузу на недостающий промежуток времени
+                if ((Data2 - Data1).Seconds < 15)                           //если один проход программы был короче 15 сек, 
+                    check[1].Pause(15000 - (Data2 - Data1).Milliseconds);   // то делаем паузу на недостающий промежуток времени
                 Data1 = Data2;
             }
 
