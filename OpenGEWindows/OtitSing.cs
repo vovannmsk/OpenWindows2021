@@ -34,7 +34,7 @@
             this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
 
             this.numberOfRoute = NumberOfRoute();
-            //this.counterRouteNode = 0;
+            //this.CounterRouteNode = 0;
         }
 
         // ===============================  Методы ==================================================
@@ -55,7 +55,7 @@
                                   { new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
                               };
 
-            iPoint result = route[NumberOfRoute(), counterRouteNode];
+            iPoint result = route[NumberOfRoute(), CounterRouteNode];
 
             return result;
         }
@@ -95,7 +95,7 @@
                                    { 20000, 30000, 30000 }
                                };
 
-            int result = routeTime[NumberOfRoute(), counterRouteNode];
+            int result = routeTime[NumberOfRoute(), CounterRouteNode];
 
             return result;
         }

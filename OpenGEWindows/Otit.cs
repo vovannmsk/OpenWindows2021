@@ -12,7 +12,10 @@ namespace OpenGEWindows
         protected iPointColor pointTask2;
         protected Dialog dialog;
         protected Server server;
-        protected int counterRouteNode;
+        /// <summary>
+        /// номер следующей точки маршрута
+        /// </summary>
+        private int counterRouteNode;
 
         /// <summary>
         /// голова Мамуна
@@ -33,7 +36,30 @@ namespace OpenGEWindows
 
         protected int numberOfRoute;
 
+        /// <summary>
+        /// номер следующей точки маршрута
+        /// </summary>
+        protected int CounterRouteNode {
+                                            get { counterRouteNode = CounterFromFile(); return counterRouteNode; }
+                                            set { counterRouteNode = value; CounterToFile(counterRouteNode); }
+                                        }
+
         // ============  методы  ========================
+
+        /// <summary>
+        /// чтение значения счётчика counterRouteNode из файла
+        /// </summary>
+        /// <returns>номер текущей точки маршрута</returns>
+        protected int CounterFromFile()
+        { return int.Parse(File.ReadAllText(KATALOG_MY_PROGRAM + botwindow.getNumberWindow() + "\\Точка маршрута.txt")); }
+
+        /// <summary>
+        /// метод записывает в файл номер маршрута для фарма чистого отита
+        /// </summary>
+        protected void CounterToFile(int number)
+        {
+            File.WriteAllText(KATALOG_MY_PROGRAM + botwindow.getNumberWindow() + "\\Точка маршрута.txt", number.ToString());
+        }
 
         /// <summary>
         /// меняем маршрут на дополнительный
@@ -210,7 +236,7 @@ namespace OpenGEWindows
         public void GotoWorkMulti()
         {
             CounterRouteToNull();
-            RouteNextPointMulti(counterRouteNode).PressMouseL();
+            RouteNextPointMulti(CounterRouteNode).PressMouseL();
         }
 
 
@@ -223,7 +249,7 @@ namespace OpenGEWindows
             Pause(500);
             RouteNextPoint().PressMouseR();
             Pause(RouteNextPointTime());
-            counterRouteNode++; if (counterRouteNode > 2) counterRouteNode = 0;
+            CounterRouteNode++; if (CounterRouteNode > 2) CounterRouteNode = 0;
         }
 
         /// <summary>
@@ -231,8 +257,8 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoNextPointRouteMulti()
         {
-            counterRouteNode++; if (counterRouteNode > 2) counterRouteNode = 0;
-            RouteNextPointMulti(counterRouteNode).PressMouseRR();
+            CounterRouteNode++; if (CounterRouteNode > 2) CounterRouteNode = 0;
+            RouteNextPointMulti(CounterRouteNode).PressMouseRR();
         }
 
         /// <summary>
@@ -240,7 +266,7 @@ namespace OpenGEWindows
         /// </summary>
         public void  CounterRouteToNull()
         {
-            counterRouteNode = 0;
+            CounterRouteNode = 0;
         }
 
         /// <summary>

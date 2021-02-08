@@ -52,8 +52,8 @@
                                new Point(539 - 5 + xx, 486 - 5 + yy),
                                new Point(462 - 5 + xx, 468 - 5 + yy) };
 
-            iPoint result = route[counterRouteNode];
-            counterRouteNode++; if (counterRouteNode > 4) counterRouteNode = 0;
+            iPoint result = route[CounterRouteNode];
+            CounterRouteNode++; if (CounterRouteNode > 4) CounterRouteNode = 0;
 
             return result;
         }
@@ -87,7 +87,7 @@
         {
             int[] routeTime = { 10000, 15000, 15000, 15000, 15000 };
 
-            int result = routeTime[counterRouteNode];
+            int result = routeTime[CounterRouteNode];
 
             return result;
         }

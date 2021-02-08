@@ -505,8 +505,13 @@ namespace States
                     case 7:
                         result = 15;        //улетаем из миссии к Мамуну
                         break;
-
-
+                    default:                //по умолчанию считаем, что если в бою, то в миссии 
+                                            //(не проверено. как вариант сделать  result = 12; )
+                        if (!otit.isTaskDone())
+                            result = 13;    //бежим к следующей точке маршрута с атакой
+                        else
+                            result = 14;    //бежим к следующей точке маршрута без атаки
+                        break;
                 }
                 if (result != 0) return result;
             }
@@ -516,6 +521,7 @@ namespace States
                 switch (NumberOfState)
                 {
                     case 1:
+                    case 2:
                         result = 8;             //Mamons
                         break;
                     case 3:
@@ -525,7 +531,12 @@ namespace States
                             result = 10;        //OldMan (получение награды)
                         break;
                     case 4:
+                    //case 5:                   //на всякий случай. для надежности
+                    //case 6:                   //на всякий случай. для надежности
                         result = 11;            //OldMan (задание взято, переходим в миссию)
+                        break;
+                    default:
+                        result = 10;            //OldMan (получение награды) 
                         break;
                 }
                 if (result != 0) return result;
@@ -601,6 +612,7 @@ namespace States
                     break;
                     case 4:
                         driver.FromLostoldosToOldman();             // Lostoldos --> OldMan
+                        if (otit.isTaskDone()) TaskCompleted = true;   //на всякий случай
                         NumberOfState = 3;                          //обязательно нужно, что разделить состояния в ЛосТолдосе
                     break;
                     case 5:

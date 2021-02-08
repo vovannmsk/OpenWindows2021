@@ -858,7 +858,7 @@ namespace Main
                     check[j].problemResolutionOtite();
                 }
                 DateTime Data2 = DateTime.Now;
-                if ((Data2 - Data1).Seconds < 15)                           //если один проход программы был короче 15 сек, 
+                if ((Data2 - Data1).Seconds < 15)                           //если один проход программы был короче 5 сек, 
                     check[1].Pause(15000 - (Data2 - Data1).Milliseconds);   // то делаем паузу на недостающий промежуток времени
                 Data1 = Data2;
             }
