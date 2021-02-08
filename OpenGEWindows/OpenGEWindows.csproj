@@ -101,14 +101,7 @@
     <Compile Include="America2TownViron2.cs" />
     <Compile Include="AmericaTownFactory.cs" />
     <Compile Include="AmericaTownKatovia.cs" />
-    <Compile Include="OtiteDialog.cs" />
-    <Compile Include="OtiteDialogAmerica.cs" />
-    <Compile Include="OtiteDialogAmerica2.cs" />
-    <Compile Include="OtiteDialogEuropa.cs" />
-    <Compile Include="OtiteDialogEuropa2.cs" />
     <Compile Include="BHDialogEuropa2.cs" />
-    <Compile Include="OtiteDialogFactory.cs" />
-    <Compile Include="OtiteDialogSing.cs" />
     <Compile Include="botWindow.cs" />
     <Compile Include="BHDialogAmerica2.cs" />
     <Compile Include="BHDialogAmerica.cs" />
