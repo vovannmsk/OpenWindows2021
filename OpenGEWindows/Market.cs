@@ -250,7 +250,7 @@ namespace OpenGEWindows
                 case 15575073:    // Blue sap               
                 case 4143156:     // bulk of Coal                **
 //                case 9472397:     // Steel piece                 **
-                //case 7187897:     // Mustang ore
+                case 7187897:     // Mustang ore
                 //=================== пули ===========================
                 
                 case 11258069:    // пули эксп Steel Bullet
