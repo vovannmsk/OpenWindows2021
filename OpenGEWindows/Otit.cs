@@ -149,9 +149,11 @@ namespace OpenGEWindows
                 dialog.PressOkButton(1);
             }
 
+            botwindow.Pause(500);
             dialog.PressStringDialog(1);    //move
+            botwindow.Pause(500);
             dialog.PressOkButton(1);
-
+            botwindow.Pause(500);
         }
 
         /// <summary>
@@ -163,7 +165,12 @@ namespace OpenGEWindows
             dialog.PressOkButton(1);
 
             dialog.PressStringDialog(1);
-            dialog.PressOkButton(3);
+            botwindow.Pause(500);
+            dialog.PressOkButton(1);
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
         }
 
         /// <summary>
@@ -173,7 +180,6 @@ namespace OpenGEWindows
         {
             pointButtonMoveOnMap.DoubleClickL();
         }
-
 
         /// <summary>
         /// подходим к старому человеку после перехода из казарм и нажимаем на него для диалога
@@ -192,7 +198,6 @@ namespace OpenGEWindows
         {
             pointOldManOnMap.DoubleClickL();
         }
-
 
         /// <summary>
         /// подходим к старому человеку после перехода из казарм
@@ -215,7 +220,9 @@ namespace OpenGEWindows
         /// </summary>
         public void PressOldMan()
         {
-            pointOldMan.PressMouseL();
+            botwindow.FirstHero();
+            Pause(1000);
+            pointOldMan.PressMouseLL();
             Pause(2000);
         }
 
@@ -238,7 +245,6 @@ namespace OpenGEWindows
             CounterRouteToNull();
             RouteNextPointMulti(CounterRouteNode).PressMouseL();
         }
-
 
         /// <summary>
         /// переход по карте Земли мертвых к месту начала маршрута для набивания андидов (100 шт.)
@@ -315,9 +321,6 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>время в мс</returns>
         public abstract int RouteNextPointTime();
-
-
-
 
     }
 

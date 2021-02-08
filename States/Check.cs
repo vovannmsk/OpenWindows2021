@@ -535,9 +535,9 @@ namespace States
                     //case 6:                   //на всякий случай. для надежности
                         result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
-                    default:
-                        result = 10;            //OldMan (получение награды) 
-                        break;
+                    //default:
+                    //    result = 10;            //OldMan (получение награды) 
+                    //    break;
                 }
                 if (result != 0) return result;
             }
