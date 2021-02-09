@@ -33,7 +33,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.PressMitridat();
+            //botwindow.PressMitridat();
+            otit.PressMitridat();
             server.OpenMapForState();
             botwindow.Pause(1000);
             otit.GotoWorkMulti();      //идем к началу маршрута

@@ -216,6 +216,20 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// подходим к старому человеку после перехода из казарм
+        /// </summary>
+        public void GoToOldManMulti()
+        {
+            server.OpenMapForState();
+            Pause(1000);
+
+            PressOldManonMap();
+            ClickMoveMap();
+
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
         /// тыкаем на старого мужика
         /// </summary>
         public void PressOldMan()
@@ -297,10 +311,10 @@ namespace OpenGEWindows
         /// </summary>
         public void MinHeight()
         {
-            for (int j = 1; j <= 10; j++)
+            for (int j = 1; j <= 6; j++)
             {
                 pointMamons.PressMouseWheelDown();
-                Pause(500);
+                Pause(400);
             }
         }
 
@@ -321,6 +335,26 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>время в мс</returns>
         public abstract int RouteNextPointTime();
+
+        /// <summary>
+        /// нажимаем на указанную ячейку панели в левом верхнем углу
+        /// </summary>
+        /// <param name="NumberOfBox">номер ячейки</param>
+        public void PressBoxInLeftPanel(int NumberOfBox)
+        {
+            new Point(31 - 5 + xx, 114 - 5 + (NumberOfBox - 1) * 32 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// Нажать на ячейки в левой панели
+        /// </summary>
+        public void PressMitridat()
+        {
+            PressBoxInLeftPanel(1);
+            PressBoxInLeftPanel(2);
+            PressBoxInLeftPanel(3);
+            PressBoxInLeftPanel(4);
+        }
 
     }
 

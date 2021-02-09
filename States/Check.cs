@@ -79,7 +79,7 @@ namespace States
             this.globalParam = new GlobalParam();
             this.botParam = new BotParam(numberOfWindow);
             this.isActiveServer = server.IsActiveServer;
-            
+            botParam.HowManyCyclesToSkip = 0;
         }
 
         /// <summary>
@@ -441,32 +441,18 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemOtite()
         {
-            //int statusOfSale = botParam.StatusOfSale;          //не отлажено
-            //int statusOfAtk = botParam.StatusOfAtk;
-            int result = 0;
+            int result = 0;     // пока проблем не найдено
 
-            if (!server.isHwnd()) return 25;        //если нет окна с hwnd таким как в файле HWND.txt
+            if (!server.isHwnd()) result = 25;                  // если нет окна с hwnd таким как в файле HWND.txt
+            if (server.isLogout()) result = 1;                  // если окно в логауте
+            if (server.isBarack()) result = 2;                  // если стоят в бараке 
+            if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
+            if (server.isKillAllHero()) result = 29;            // если убиты все
+            if (server.isKillHero()) result = 30;               // если убиты не все 
 
-            //{
-            //    if (!server.FindWindowSteamBool())  //если Стима тоже нет
-            //    {
-            //        return 24;
-            //    }
-            //    else    //если Стим уже загружен
-            //    {
-            //        if (!server.FindWindowGEforBHBool())
-            //        {
-            //            return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
-            //        }
-            //        else
-            //        {
-            //            return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
-            //        }
-            //    }
-            //}
 
             // Город (Ребольдо или ЛосТолдос)
-            if (server.isTown())   //если в городе (том или другом)
+            if (server.isTown() && result == 0)   
             {
                 switch (NumberOfState)
                 {
@@ -481,12 +467,11 @@ namespace States
                         result = 5;
                         break;
                 }
-                if (result != 0) return result;
-
+                //if (result != 0) return result;
             }
 
             //в миссии или около Мамута
-            if (server.isWork())
+            if (server.isWork() && result == 0)
             {
                 switch (NumberOfState)
                 {
@@ -513,10 +498,10 @@ namespace States
                             result = 14;    //бежим к следующей точке маршрута без атаки
                         break;
                 }
-                if (result != 0) return result;
+                //if (result != 0) return result;
             }
 
-            if (dialog.isDialog())
+            if (dialog.isDialog() && result == 0)
             {
                 switch (NumberOfState)
                 {
@@ -531,34 +516,18 @@ namespace States
                             result = 10;        //OldMan (получение награды)
                         break;
                     case 4:
-                    //case 5:                   //на всякий случай. для надежности
-                    //case 6:                   //на всякий случай. для надежности
+                    case 5:                   //на всякий случай. для надежности
+                    case 6:                   //на всякий случай. для надежности
                         result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
-                    //default:
-                    //    result = 10;            //OldMan (получение награды) 
-                    //    break;
+                    default:
+                        result = 10;            //OldMan (получение награды) 
+                        break;
                 }
-                if (result != 0) return result;
+                //if (result != 0) return result;
             }
 
-
-            //в логауте
-            if (server.isLogout()) return 1;               // если окно в логауте
-
-            //в бараке
-            if (server.isBarack())                         //если стоят в бараке 
-            {
-                return 2;
-            }
-            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
-
-            //в миссии, но убиты
-            if (server.isKillAllHero()) return 29;            // если убиты все
-            if (server.isKillHero()) return 30;               // если убиты не все 
-
-            //если проблем не найдено
-            return 0;
+            return result;
         }
 
 
@@ -567,8 +536,8 @@ namespace States
         /// </summary>
         public void problemResolutionOtite()
         {
-            //if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
-            //{
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     server.ReOpenWindow();
@@ -593,62 +562,69 @@ namespace States
             //}
             //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
-            //Random rand = new Random();
+                //Random rand = new Random();
 
 
                 switch (numberOfProblem)
                 {
                     case 1:
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack
-                        //botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                     break;
                     case 2:
                         driver.StateFromBarackToTownBH();           // Barack --> Town
                         NumberOfState = 1;
-                        //botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 2;
                     break;
                     case 3:
                         driver.FromTownToMamut();                   // Town --> Mamut
-                    break;
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
                     case 4:
-                        driver.FromLostoldosToOldman();             // Lostoldos --> OldMan
-                        if (otit.isTaskDone()) TaskCompleted = true;   //на всякий случай
+                        otit.GoToOldManMulti();                    // Lostoldos --> OldMan
+                        //driver.FromLostoldosToOldman();             // Lostoldos --> OldMan
+                    if (otit.isTaskDone()) TaskCompleted = true;   //на всякий случай
                         NumberOfState = 3;                          //обязательно нужно, что разделить состояния в ЛосТолдосе
                     break;
                     case 5:
-                        driver.PressOldMan();                       // OldMan --> OldMan (dialog)
+                    otit.PressOldMan();                             // OldMan --> OldMan (dialog)
+                    //driver.PressOldMan();                       // OldMan --> OldMan (dialog)
                     break;
                     case 6:
-                        //driver.FromMamutToLostoldos();            //Mamut --> LosToldos
-                        //NumberOfState = 2;
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
                     break;
-                    case 7:
-                        driver.StateFromGateToMissionBH();          // Gate --> Mission
-                        break;
                     case 8:
-                        driver.FromMamonsDialogToLostolods();       //Mamon Dialog --> LosToldos
+                        otit.TalkMamons();
+                        //driver.FromMamonsDialogToLostolods();       //Mamon Dialog --> LosToldos
                         NumberOfState = 2;
-                    break;
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
                     case 9:
-                        driver.OldManDialogGetTask();               //Oldman(Dialog) --> Get Task
+                        otit.GetTask();                             //Oldman(Dialog) --> Get Task
+                      //driver.OldManDialogGetTask();               //Oldman(Dialog) --> Get Task
                         NumberOfState = 4;
                     break;
                     case 10:
-                        driver.OldManDialogGetReward();             //Oldman(Dialog) --> Get Reward
+                        otit.TakePureOtite();                       //Oldman(Dialog) --> Get Reward
+                    //driver.OldManDialogGetReward();             //Oldman(Dialog) --> Get Reward
                         NumberOfState = 3;
                         TaskCompleted = false;
                     break;
                     case 11:
-                        driver.FromOldManDialogToMission();         //Oldman(Dialog) --> Mission
+                        otit.EnterToTierraDeLosMuertus();           //Oldman(Dialog) --> Mission
+                        //driver.FromOldManDialogToMission();         //Oldman(Dialog) --> Mission
+                        botParam.HowManyCyclesToSkip = 2;
                         NumberOfState = 5;
                     break;
                     case 12:
                         driver.FromMissionToFight();                //Mission-- > Mission (Fight begin)
+                        botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 6;
                     break;
                     case 13:
-                        driver.FightNextPoint();                    //Mission(Fight)-- > Fight To Next Point
+                        otit.GotoNextPointRouteMulti();             //Mission(Fight)-- > Fight To Next Point
+                        //driver.FightNextPoint();                    //Mission(Fight)-- > Fight To Next Point
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 14:
                         driver.FightIsFinished();                   // Mission (FightIsFinished) 
@@ -657,63 +633,29 @@ namespace States
                     break;
                     case 15:
                         server.Teleport(1);                         // телепорт к Мамуну
+                        botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
                     break;
-                //case 16:
-
-                //    break;
-                case 17:
-                    botwindow.PressEsc();                       // нажимаем Esc
-                    break;
-                //case 18:
-                //    server.systemMenu(3, true);                 // переход в стартовый город
-                //    //botParam.HowManyCyclesToSkip = 3;
-                //    break;
-                //case 19:
-
-                //    break;
-                //case 20:
-
-                //    break;
-                //case 21:
-
-                //    break;
-                case 22:
-                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его
-                        //botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-10 циклов
-                        break;
-                    case 23:
-                        botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
-                        //botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
-                        break;
-                    case 24:
-                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                        //botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                    case 17:
+                        botwindow.PressEsc();                       // нажимаем Esc
                         break;
                     case 25:
                         server.ReOpenWindow();
                         break;
-                    case 26:
-                        
-                        break;
                     case 29:
                         botwindow.CureOneWindow();              // идем в logout
-                        //botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 30:
                         botwindow.CureOneWindow2();             // отбегаем в сторону и логаут
-                        //botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
-                    //case 31:
-                    //    server.CloseSandboxieBH();              //закрываем все проги в песочнице
-                    //    break;
-
                 }
-            //}
-            //else
-            //{
-            //    botParam.HowManyCyclesToSkip--;
-            //}
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
         }
 
         #endregion
