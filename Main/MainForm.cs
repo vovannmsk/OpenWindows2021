@@ -849,7 +849,7 @@ namespace Main
             Check[] check = new Check[numberOfAcc + 1];
             for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
-            DateTime Data1 = DateTime.Now;
+            //DateTime Data1 = DateTime.Now;
 
             while (true)
             {
@@ -857,10 +857,10 @@ namespace Main
                 {
                     check[j].problemResolutionOtite();
                 }
-                DateTime Data2 = DateTime.Now;
-                if ((Data2 - Data1).Seconds < 15)                           //если один проход программы был короче 5 сек, 
-                    check[1].Pause(15000 - (Data2 - Data1).Milliseconds);   // то делаем паузу на недостающий промежуток времени
-                Data1 = Data2;
+                //DateTime Data2 = DateTime.Now;
+                //if ((Data2 - Data1).Seconds < 15)                           //если один проход программы был короче 5 сек, 
+                //    check[1].Pause(15000 - (Data2 - Data1).Milliseconds);   // то делаем паузу на недостающий промежуток времени
+                //Data1 = Data2;
             }
 
 
