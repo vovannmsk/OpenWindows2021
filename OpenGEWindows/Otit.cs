@@ -109,15 +109,7 @@ namespace OpenGEWindows
         /// <summary>
         /// получить задачу у старого мужика
         /// </summary>
-        public void GetTask()
-        {
-            dialog.PressStringDialog(1);
-            dialog.PressOkButton(1);
-
-            dialog.PressStringDialog(2);
-            dialog.PressOkButton(2);
-
-        }
+        public abstract void GetTask();
 
         /// <summary>
         /// проверяем, выполнено ли задание (проверяется по тому, что строчка с заданием посерела )
@@ -131,47 +123,11 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// войти в Земли Мертвых через старого мужика
+        /// Диалог OldMan. Войти в Земли Мертвых через старого мужика
         /// </summary>
-        public void EnterToTierraDeLosMuertus()
-        {
-            dialog.PressStringDialog(2);
-            dialog.PressOkButton(1);
+        public abstract void EnterToTierraDeLosMuertus();
 
-            if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
-            {
-                dialog.PressStringDialog(3);     // стартовая точка - около входа
-                dialog.PressOkButton(1);
-            }
-            else
-            {
-                dialog.PressStringDialog(2);     // стартовая точка - центр карты (для маршрутов 2 и 3)
-                dialog.PressOkButton(1);
-            }
-
-            botwindow.Pause(500);
-            dialog.PressStringDialog(1);    //move
-            botwindow.Pause(500);
-            dialog.PressOkButton(1);
-            botwindow.Pause(500);
-        }
-
-        /// <summary>
-        /// получить чистый отит (забрать в диалоге у старого мужика)
-        /// </summary>
-        public void TakePureOtite()
-        {
-            dialog.PressStringDialog(1);
-            dialog.PressOkButton(1);
-
-            dialog.PressStringDialog(1);
-            botwindow.Pause(500);
-            dialog.PressOkButton(1);
-            botwindow.Pause(1000);
-            dialog.PressOkButton(1);
-            botwindow.Pause(1000);
-            dialog.PressOkButton(1);
-        }
+        public abstract void TakePureOtite();
 
         /// <summary>
         /// нажимаем на кнопку "Move" в открытой карте Alt+Z             

@@ -79,7 +79,7 @@ namespace States
             this.globalParam = new GlobalParam();
             this.botParam = new BotParam(numberOfWindow);
             this.isActiveServer = server.IsActiveServer;
-            botParam.HowManyCyclesToSkip = 0;
+            //botParam.HowManyCyclesToSkip = 0;
         }
 
         /// <summary>
@@ -445,8 +445,7 @@ namespace States
 
             if (!server.isHwnd()) result = 25;                  // если нет окна с hwnd таким как в файле HWND.txt
             if (server.isLogout()) result = 1;                  // если окно в логауте
-            if (server.isBarack()) result = 2;                  // если стоят в бараке 
-            if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
+            //if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
             if (server.isKillAllHero()) result = 29;            // если убиты все
             if (server.isKillHero()) result = 30;               // если убиты не все 
 
@@ -466,6 +465,10 @@ namespace States
                     case 4:             //стоим около OldMan задание взято
                         result = 5;
                         break;
+                    default:
+                        //стоим около OldMan 
+                        result = 5;
+                        break;
                 }
                 //if (result != 0) return result;
             }
@@ -476,7 +479,7 @@ namespace States
                 switch (NumberOfState)
                 {
                     case 1:
-                        result = 6;         //стоим около мамута
+                        result = 6;         //стоим около мамута (работает хорошо)
                         break;
                     case 5:
                         result = 12;        //стоим в миссии. только что зашли
@@ -490,13 +493,13 @@ namespace States
                     case 7:
                         result = 15;        //улетаем из миссии к Мамуну
                         break;
-                    default:                //по умолчанию считаем, что если в бою, то в миссии 
-                                            //(не проверено. как вариант сделать  result = 12; )
-                        if (!otit.isTaskDone())
-                            result = 13;    //бежим к следующей точке маршрута с атакой
-                        else
-                            result = 14;    //бежим к следующей точке маршрута без атаки
-                        break;
+                    //default:                //по умолчанию считаем, что если в бою, то в миссии 
+                    //                        //(не проверено. как вариант сделать  result = 12; )
+                    //    if (!otit.isTaskDone())
+                    //        result = 13;    //бежим к следующей точке маршрута с атакой
+                    //    else
+                    //        result = 14;    //бежим к следующей точке маршрута без атаки
+                    //    break;
                 }
                 //if (result != 0) return result;
             }
@@ -520,12 +523,15 @@ namespace States
                     case 6:                   //на всякий случай. для надежности
                         result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
-                    default:
-                        result = 10;            //OldMan (получение награды) 
-                        break;
+                    //default:
+                    //    result = 10;            //OldMan (получение награды) 
+                    //    break;
                 }
                 //if (result != 0) return result;
             }
+
+            if (result == 0 && server.isBarack()) result = 2;                  // если стоят в бараке 
+
 
             return result;
         }
@@ -636,9 +642,9 @@ namespace States
                         botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
                     break;
-                    case 17:
-                        botwindow.PressEsc();                       // нажимаем Esc
-                        break;
+                    //case 17:
+                    //    botwindow.PressEsc();                       // нажимаем Esc
+                    //    break;
                     case 25:
                         server.ReOpenWindow();
                         break;

@@ -16,7 +16,6 @@
 
             #endregion
 
-            //this.server = botwindow.getserver();
             ServerFactory serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
             this.town = server.getTown();
@@ -29,11 +28,12 @@
             this.pointTask1 = new PointColor(948 - 30 + xx, 403 - 30 + yy, 8300000, 5);
             this.pointTask2 = new PointColor(948 - 30 + xx, 404 - 30 + yy, 8300000, 5);
 
-
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
             this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);
             this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
             this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
+
+            this.numberOfRoute = NumberOfRoute();
 
         }
 
@@ -102,6 +102,62 @@
             int result = routeTime[NumberOfRoute(), CounterRouteNode];
 
             return result;
+        }
+
+        /// <summary>
+        /// получить задачу у старого мужика
+        /// </summary>
+        public override void GetTask()
+        {
+            dialog.PressStringDialog(3);
+            dialog.PressOkButton(1);
+
+            dialog.PressStringDialog(2);
+            dialog.PressOkButton(2);
+
+        }
+
+        /// <summary>
+        /// Диалог OldMan. Войти в Земли Мертвых через старого мужика
+        /// </summary>
+        public override void EnterToTierraDeLosMuertus()
+        {
+            dialog.PressStringDialog(4);
+            dialog.PressOkButton(1);
+
+            if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
+            {
+                dialog.PressStringDialog(3);     // стартовая точка - около входа
+                dialog.PressOkButton(1);
+            }
+            else
+            {
+                dialog.PressStringDialog(2);     // стартовая точка - центр карты (для маршрутов 2 и 3)
+                dialog.PressOkButton(1);
+            }
+
+            botwindow.Pause(500);
+            dialog.PressStringDialog(1);    //move
+            botwindow.Pause(500);
+            dialog.PressOkButton(1);
+            botwindow.Pause(500);
+        }
+
+        /// <summary>
+        /// получить чистый отит (забрать в диалоге у старого мужика)
+        /// </summary>
+        public override void TakePureOtite()
+        {
+            dialog.PressStringDialog(3);
+            dialog.PressOkButton(1);
+
+            dialog.PressStringDialog(1);
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
         }
 
     }
