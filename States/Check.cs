@@ -446,8 +446,6 @@ namespace States
             if (!server.isHwnd()) result = 25;                  // если нет окна с hwnd таким как в файле HWND.txt
             if (server.isLogout()) result = 1;                  // если окно в логауте
             //if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
-            if (server.isKillAllHero()) result = 29;            // если убиты все
-            if (server.isKillHero()) result = 30;               // если убиты не все 
 
 
             // Город (Ребольдо или ЛосТолдос)
@@ -535,6 +533,8 @@ namespace States
             }
 
             if (result == 0 && server.isBarack()) result = 2;                  // если стоят в бараке 
+            if (server.isKillAllHero()) result = 29;                            // если убиты все
+            //if (result == 0 && server.isKillHero()) result = 30;               // если убиты не все 
 
 
             return result;
@@ -555,22 +555,32 @@ namespace States
                 }
 
                 int numberOfProblem = NumberOfProblemOtite();
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 3:  //зависли в ЛосТолдосе и не бежим к Олдмену
+                            NumberOfState = 2;
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
-            //============== если зависли в каком-либо состоянии, то особые действия ========
-            //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  
-            //{
-            //    switch (numberOfProblem)
-            //    {
-            //        case 1:  //зависли в логауте
-            //        case 23:  //загруженное окно зависло и не смещается на нужное место
-            //            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
-            //            break;
-            //        case 4:  //зависли в БХ
-            //            numberOfProblem = 18; //переходим в стартовый город через системное меню
-            //            break;
-            //    }
-            //}
-            //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+                //============== если зависли в каком-либо состоянии, то особые действия ========
+                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  
+                //{
+                //    switch (numberOfProblem)
+                //    {
+                //        case 1:  //зависли в логауте
+                //        case 23:  //загруженное окно зависло и не смещается на нужное место
+                //            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                //            break;
+                //        case 4:  //зависли в БХ
+                //            numberOfProblem = 18; //переходим в стартовый город через системное меню
+                //            break;
+                //    }
+                //}
+                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
                 //Random rand = new Random();
 
@@ -656,10 +666,10 @@ namespace States
                         botwindow.CureOneWindow();              // идем в logout
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 30:
-                        botwindow.CureOneWindow2();             // отбегаем в сторону и логаут
-                        botParam.HowManyCyclesToSkip = 1;
-                        break;
+                    //case 30:
+                    //    botwindow.CureOneWindow2();             // отбегаем в сторону и логаут
+                    //    botParam.HowManyCyclesToSkip = 1;
+                    //    break;
                 }
             }
             else
