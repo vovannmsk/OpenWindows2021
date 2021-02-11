@@ -10,6 +10,8 @@ namespace OpenGEWindows
         protected iPointColor pointOldMan2;
         protected iPointColor pointTask1;
         protected iPointColor pointTask2;
+        protected iPointColor pointGetTask1;
+        protected iPointColor pointGetTask2;
         protected Dialog dialog;
         protected Server server;
         /// <summary>
@@ -113,14 +115,23 @@ namespace OpenGEWindows
 
         /// <summary>
         /// проверяем, выполнено ли задание (проверяется по тому, что строчка с заданием посерела )
-        /// будет работать только на этом компе. на других компах нужно сдвигать поле с заданием аналогично
-        /// переделать на чистом клиенте
+        /// будет работать только на этом компе. на других компах нужно переписать с этого компа клиент игры
         /// </summary>
         /// <returns></returns>
         public bool isTaskDone()
         {
             return (pointTask1.isColor() && pointTask2.isColor());
         }
+
+        /// <summary>
+        /// проверяем, получено ли задание (проверяется по тому, что строчка с заданием белая )
+        /// </summary>
+        /// <returns></returns>
+        public bool isGetTask()
+        {
+            return (pointGetTask1.isColor() && pointGetTask2.isColor());
+        }
+
 
         /// <summary>
         /// Диалог OldMan. Войти в Земли Мертвых через старого мужика

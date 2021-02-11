@@ -33,6 +33,10 @@ namespace States
         /// выполнено ли задание OldMan для получения отита
         /// </summary>
         private bool taskCompleted;
+        /// <summary>
+        /// задание получено
+        /// </summary>
+        private bool gotTask;
 
         private bool isActiveServer;
 
@@ -45,6 +49,10 @@ namespace States
         /// выполнено ли задание OldMan для получения отита
         /// </summary>
         public bool TaskCompleted { get => taskCompleted; set => taskCompleted = value; }
+        /// <summary>
+        /// задание получено
+        /// </summary>
+        public bool GotTask { get => gotTask; set => gotTask = value; }
 
         public Check()
         { 
@@ -54,6 +62,7 @@ namespace States
         {
             numberOfState = 0;
             taskCompleted = false;
+            gotTask = false;
             prevProblem = 0;
             prevPrevProblem = 0;
             this.numberOfWindow = numberOfWindow;
@@ -451,6 +460,8 @@ namespace States
             // Город (Ребольдо или ЛосТолдос)
             if (server.isTown() && result == 0)   
             {
+                if (otit.isGetTask()) GotTask = true;
+
                 switch (NumberOfState)
                 {
                     case 1:
@@ -520,9 +531,7 @@ namespace States
                             result = 10;        //OldMan (получение награды)
                         break;
                     case 4:
-                    case 5:                   //на всякий случай. для надежности
-                    case 6:                   //на всякий случай. для надежности
-                        result = 11;            //OldMan (задание взято, переходим в миссию)
+                        if (GotTask) result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
                     default:
                         NumberOfState = 3;
@@ -1002,7 +1011,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 2;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1122,8 +1131,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(929-30 + xx, 400-30 + yy, 0, 0);
-            PointColor point2 = new PointColor(929-30 + xx, 403-30 + yy, 0, 0);
+            PointColor point1 = new PointColor(854 - 5 + xx, 379 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(854 - 5 + xx, 380 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
