@@ -850,21 +850,22 @@ namespace Main
             for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
             //DateTime Data1 = DateTime.Now;
+            int Period;
+            DateTime Data1;
+            DateTime Data2;
 
             while (true)
             {
+                Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     if (check[j].IsActiveServer) check[j].problemResolutionOtite();
                 }
-                //DateTime Data2 = DateTime.Now;
-                //if ((Data2 - Data1).Seconds < 10)                           //если один проход программы был короче 5 сек, 
-                //    check[1].Pause(10000 - (Data2 - Data1).Milliseconds);   // то делаем паузу на недостающий промежуток времени
-                //Data1 = DateTime.Now;
+                Data2 = DateTime.Now;
+                Period = (Data2 - Data1).Milliseconds;
+                if (Period < 10000)                           //если один проход программы был короче 10 сек, 
+                    check[startAcc].Pause(10000 - Period);           // то делаем паузу на недостающий промежуток времени
             }
-
-
-
         }
 
 
