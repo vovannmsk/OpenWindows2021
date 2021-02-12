@@ -30,8 +30,9 @@
             this.pointTask1 = new PointColor(928 - 5 + xx, 360 - 5 + yy, 8200000, 5);
             this.pointTask2 = new PointColor(928 - 5 + xx, 361 - 5 + yy, 8200000, 5);
 
-            this.pointGetTask1 = new PointColor(854 - 5 + xx, 379 - 5 + yy, 258, 0);
-            this.pointGetTask2 = new PointColor(854 - 5 + xx, 380 - 5 + yy, 258, 0);
+            this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 258, 0);
+            this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 258, 0);
+
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
             this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);

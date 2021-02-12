@@ -461,6 +461,7 @@ namespace States
             if (server.isTown() && result == 0)   
             {
                 if (otit.isGetTask()) GotTask = true;
+                botwindow.PressEscThreeTimes();  //чтобы убрать рекламу с экрана
 
                 switch (NumberOfState)
                 {
@@ -516,7 +517,7 @@ namespace States
                 //if (result != 0) return result;
             }
 
-            if (dialog.isDialog() && result == 0)
+            if (dialog.isDialog() && result == 0 && !server.isTown())
             {
                 switch (NumberOfState)
                 {
@@ -610,14 +611,15 @@ namespace States
                         botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 4:
-                        otit.GoToOldManMulti();                    // Lostoldos --> OldMan
-                        //driver.FromLostoldosToOldman();             // Lostoldos --> OldMan
-                    if (otit.isTaskDone()) TaskCompleted = true;   //на всякий случай
-                        NumberOfState = 3;                          //обязательно нужно, что разделить состояния в ЛосТолдосе
+                        otit.GoToOldManMulti();                         // Lostoldos --> OldMan
+                        //driver.FromLostoldosToOldman();               // Lostoldos --> OldMan
+                        if (otit.isTaskDone()) TaskCompleted = true;    //на всякий случай
+                        if (otit.isGetTask()) GotTask = true;           //на всякий случай
+                        NumberOfState = 3;                              
                     break;
                     case 5:
-                    otit.PressOldMan();                             // OldMan --> OldMan (dialog)
-                    //driver.PressOldMan();                       // OldMan --> OldMan (dialog)
+                        otit.PressOldMan();                             // OldMan --> OldMan (dialog)
+                        //driver.PressOldMan();                       // OldMan --> OldMan (dialog)
                     break;
                     case 6:
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
