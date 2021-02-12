@@ -132,7 +132,6 @@ namespace OpenGEWindows
             return (pointGetTask1.isColor() && pointGetTask2.isColor());
         }
 
-
         /// <summary>
         /// Диалог OldMan. Войти в Земли Мертвых через старого мужика
         /// </summary>
@@ -171,7 +170,8 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToOldManBegin()
         {
-            server.OpenMapForState();
+            //server.OpenMapForState();
+            server.TopMenu(6, 2, true);       //12-02-2021
             Pause(1000);
 
             PressOldManonMap();

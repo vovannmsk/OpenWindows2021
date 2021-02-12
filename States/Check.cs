@@ -458,7 +458,7 @@ namespace States
 
 
             // Город (Ребольдо или ЛосТолдос)
-            if (server.isTown() && result == 0)   
+            if (server.isTown())   
             {
                 if (otit.isGetTask()) GotTask = true;
                 botwindow.PressEscThreeTimes();  //чтобы убрать рекламу с экрана
@@ -477,7 +477,7 @@ namespace States
                         break;
                     default:
                         ////стоим около OldMan 
-                        //result = 5;
+
                         NumberOfState = 2;
                         result = 4;         // мы в ЛосТолдосе
                         break;
@@ -486,7 +486,7 @@ namespace States
             }
 
             //в миссии или около Мамута
-            if (server.isWork() && result == 0)
+            if (server.isWork())
             {
                 switch (NumberOfState)
                 {
@@ -517,7 +517,7 @@ namespace States
                 //if (result != 0) return result;
             }
 
-            if (dialog.isDialog() && result == 0 && !server.isTown())
+            if (dialog.isDialog() && !server.isTown())
             {
                 switch (NumberOfState)
                 {
@@ -576,22 +576,7 @@ namespace States
                 }
                 else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
-                //============== если зависли в каком-либо состоянии, то особые действия ========
-                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  
-                //{
-                //    switch (numberOfProblem)
-                //    {
-                //        case 1:  //зависли в логауте
-                //        case 23:  //загруженное окно зависло и не смещается на нужное место
-                //            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
-                //            break;
-                //        case 4:  //зависли в БХ
-                //            numberOfProblem = 18; //переходим в стартовый город через системное меню
-                //            break;
-                //    }
-                //}
-                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
-
+                
                 //Random rand = new Random();
 
 
@@ -1133,8 +1118,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(854 - 5 + xx, 379 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(854 - 5 + xx, 380 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 

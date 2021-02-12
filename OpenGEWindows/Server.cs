@@ -1576,7 +1576,6 @@ namespace OpenGEWindows
             systemMenu(4, status);
         }
 
-
         /// <summary>
         /// переход по системному меню 
         /// </summary>
@@ -1601,7 +1600,6 @@ namespace OpenGEWindows
             iPoint pointCurrentMenu = new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy);  //строчка в меню
             if (!isRouletteBH() && (isOpenTopMenu(13))) pointCurrentMenu.PressMouse();   //нажимаем на указанный пункт меню
         }
-
 
         /// <summary>
         /// телепортируемся в город продажи по Alt+W (улетаем из БХ или другого города)
@@ -1643,6 +1641,31 @@ namespace OpenGEWindows
                 count++; if (count > 3) break;
             } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && (status));
         }
+
+        /// <summary>
+        /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
+        /// </summary>
+        /// <param name="numberOfThePartitionMenu">номер раздела верхнего меню п/п</param>
+        /// <param name="punkt">пункт меню. номер п/п</param>
+        public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
+        {
+            int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
+            int[] PunktX = { 0, 336, 368, 401, 0, 462, 510, 561, 578, 0, 0, 0, 0 };    //координата X пунктов меню
+            int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 }; //координата Y первого пункта меню
+
+            if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
+            {
+                int y = FirstPunktOfMenuKoordY[numberOfThePartitionMenu - 1] + 25 * (punkt - 1);
+
+                TopMenu(numberOfThePartitionMenu, status);   //сначала открываем раздел верхнего меню (1-14)
+                Pause(500);
+
+                int x = PunktX[numberOfThePartitionMenu - 1];
+                iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+                pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
+            }
+        }
+
 
         /// <summary>
         /// открываем список телепоров, проверяем, есть ли телепорт в Катовию и летим туда
@@ -1701,9 +1724,6 @@ namespace OpenGEWindows
 
             pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
         }
-
-
-
 
         public abstract void Teleport(int numberOfLine);
         public abstract void TopMenu(int numberOfThePartitionMenu);
