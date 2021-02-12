@@ -35,7 +35,8 @@ namespace States
         {
             //botwindow.PressMitridat();
             otit.PressMitridat();
-            server.OpenMapForState();
+            //server.OpenMapForState();     //13-02-2021
+            server.TopMenu(6, 2, true);
             botwindow.Pause(1000);
             otit.GotoWorkMulti();      //идем к началу маршрута
         }
