@@ -784,13 +784,13 @@ namespace Main
         private void funcCA()
         {
             Check[] check = new Check[numberOfAcc + 1];
-//            for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
-            for (int j = 1; j <= 1; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+            for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+            //for (int j = 1; j <= 1; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
             while (true)
             {
-//                for (int j = startAcc; j <= numberOfAcc; j++)
-                for (int j = 1; j <= 1; j++)
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                //for (int j = 1; j <= 1; j++)
                 {
                     check[j].ChangingAccounts();
                     if (globalParam.Infinity >= 423) globalParam.Infinity = 0;

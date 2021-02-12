@@ -32,7 +32,7 @@
             this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
-            this.pointOldMan = new Point(531 - 5 + xx, 343 - 5 + yy);
+            this.pointOldMan = new Point(531 - 5 + xx, 313 - 5 + yy);
             this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
             this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
 
