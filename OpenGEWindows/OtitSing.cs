@@ -124,16 +124,16 @@
             dialog.PressStringDialog(2);
             dialog.PressOkButton(1);
 
-            if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
-            {
-                dialog.PressStringDialog(3);     // стартовая точка - около входа
-                dialog.PressOkButton(1);
-            }
-            else
-            {
+            //if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
+            //{
+            //    dialog.PressStringDialog(3);     // стартовая точка - около входа
+            //    dialog.PressOkButton(1);
+            //}
+            //else
+            //{
                 dialog.PressStringDialog(2);     // стартовая точка - центр карты (для маршрутов 2 и 3)
                 dialog.PressOkButton(1);
-            }
+            //}
 
             botwindow.Pause(500);
             dialog.PressStringDialog(1);    //move
