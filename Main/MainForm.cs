@@ -851,6 +851,7 @@ namespace Main
 
             //DateTime Data1 = DateTime.Now;
             int Period;
+            int MinTimeOfTurn = 5000;    //минимальное время цикла
             DateTime Data1;
             DateTime Data2;
 
@@ -863,8 +864,8 @@ namespace Main
                 }
                 Data2 = DateTime.Now;
                 Period = (Data2 - Data1).Milliseconds;
-                if (Period < 10000)                           //если один проход программы был короче 10 сек, 
-                    check[startAcc].Pause(10000 - Period);           // то делаем паузу на недостающий промежуток времени
+                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
         }
 

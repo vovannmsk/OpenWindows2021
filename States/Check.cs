@@ -622,15 +622,23 @@ namespace States
                     break;
                     case 10:
                         otit.TakePureOtite();                       //Oldman(Dialog) --> Get Reward
-                    //driver.OldManDialogGetReward();             //Oldman(Dialog) --> Get Reward
+                        //driver.OldManDialogGetReward();             //Oldman(Dialog) --> Get Reward
                         NumberOfState = 3;
                         TaskCompleted = false;
-                    break;
+                        GotTask = false;
+                        break;
                     case 11:
-                        otit.EnterToTierraDeLosMuertus();           //Oldman(Dialog) --> Mission
-                        //driver.FromOldManDialogToMission();         //Oldman(Dialog) --> Mission
-                        botParam.HowManyCyclesToSkip = 2;
-                        NumberOfState = 5;
+                        if (GotTask)
+                        {
+                            otit.EnterToTierraDeLosMuertus();           //Oldman(Dialog) --> Mission
+                            //driver.FromOldManDialogToMission();         //Oldman(Dialog) --> Mission
+                            botParam.HowManyCyclesToSkip = 2;
+                            NumberOfState = 5;
+                        }
+                        else
+                        {
+                            NumberOfState = 3;              // возвращаем состояние к получению задания или получению награды
+                        }
                     break;
                     case 12:
                         driver.FromMissionToFight();                //Mission-- > Mission (Fight begin)
