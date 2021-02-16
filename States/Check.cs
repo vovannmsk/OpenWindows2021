@@ -596,16 +596,26 @@ namespace States
                         botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 4:
+                        botwindow.FirstHero();
+                        Pause(500);
                         otit.GoToOldManMulti();                         // Lostoldos --> OldMan
                         //driver.FromLostoldosToOldman();               // Lostoldos --> OldMan
-                        if (otit.isTaskDone()) TaskCompleted = true;    //на всякий случай
-                        if (otit.isGetTask()) GotTask = true;           //на всякий случай
+                        if (otit.isTaskDone()) TaskCompleted = true; 
+                            else TaskCompleted = false;  
+                        if (otit.isGetTask()) GotTask = true; 
+                            else GotTask = false;         
                         NumberOfState = 3;                              
                     break;
                     case 5:
+                        //перед диалогом с Олдмэном проверяет задание
+                        if (otit.isTaskDone()) TaskCompleted = true;
+                        else TaskCompleted = false;
+                        if (otit.isGetTask()) GotTask = true;
+                        else GotTask = false;
+                        //============================================
                         otit.PressOldMan();                             // OldMan --> OldMan (dialog)
                         //driver.PressOldMan();                       // OldMan --> OldMan (dialog)
-                    break;
+                        break;
                     case 6:
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
                     break;
