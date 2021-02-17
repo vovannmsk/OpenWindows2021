@@ -31,6 +31,9 @@
             this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
             this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
 
+            this.pointIsOpenMap1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 8549475, 0);
+            this.pointIsOpenMap2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 8549475, 0);
+
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
             this.pointOldMan = new Point(531 - 5 + xx, 313 - 5 + yy);
             this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);

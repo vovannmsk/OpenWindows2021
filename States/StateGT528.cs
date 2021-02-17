@@ -34,9 +34,10 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //botwindow.PressMitridat();
-            otit.PressMitridat();
+            otit.PressMitridat();           //баффнулись
+            botwindow.PressEscThreeTimes(); //убрали лишнее с экрана
             //server.OpenMapForState();     //13-02-2021
-            server.TopMenu(6, 2, true);
+            server.TopMenu(6, 2, true);     //вызвали карту
             botwindow.Pause(1000);
             otit.GotoWorkMulti();      //идем к началу маршрута
         }

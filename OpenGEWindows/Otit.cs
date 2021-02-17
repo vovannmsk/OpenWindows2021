@@ -14,6 +14,9 @@ namespace OpenGEWindows
         protected iPointColor pointGetTask2;
         protected Dialog dialog;
         protected Server server;
+        protected iPointColor pointIsOpenMap1;
+        protected iPointColor pointIsOpenMap2;
+
         /// <summary>
         /// номер следующей точки маршрута
         /// </summary>
@@ -47,6 +50,12 @@ namespace OpenGEWindows
                                         }
 
         // ============  методы  ========================
+
+        public bool isOpenMap()
+        {
+            return pointIsOpenMap1.isColor() && pointIsOpenMap2.isColor();
+
+        }
 
         /// <summary>
         /// чтение значения счётчика counterRouteNode из файла

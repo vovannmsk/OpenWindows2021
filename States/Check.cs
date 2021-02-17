@@ -506,12 +506,17 @@ namespace States
                         result = 15;        //улетаем из миссии к Мамуну
                         break;
                     default:                //по умолчанию считаем, что если в бою, то в миссии 
-                                            //(не проверено. как вариант сделать  result = 12; )
-                        NumberOfState = 6;
-                        if (!otit.isTaskDone())
-                            result = 13;    //бежим к следующей точке маршрута с атакой
+                                            
+                        //NumberOfState = 6;
+                        //if (!otit.isTaskDone())
+                        //    result = 13;    //бежим к следующей точке маршрута с атакой
+                        //else
+                        //    result = 14;    //бежим к следующей точке маршрута без атаки
+
+                        if (!otit.isOpenMap())
+                            result = 16; 
                         else
-                            result = 14;    //бежим к следующей точке маршрута без атаки
+                            result = 13;
                         break;
                 }
                 //if (result != 0) return result;
@@ -535,8 +540,9 @@ namespace States
                         if (GotTask) result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
                     default:
-                        NumberOfState = 3;
-                        result = 10;            //OldMan (получение награды) 
+                        //NumberOfState = 3;
+                        //result = 10;            //OldMan (получение награды) 
+                        result = 7;            //нажимаем на кнопку "Ок"
                         break;
                 }
                 //if (result != 0) return result;
@@ -619,6 +625,9 @@ namespace States
                     case 6:
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
                     break;
+                    case 7:
+                        dialog.PressOkButton(1);                      //OldMan (dialog) нажатие по умолчанию (зависли)
+                        break;
                     case 8:
                         otit.TalkMamons();
                         //driver.FromMamonsDialogToLostolods();       //Mamon Dialog --> LosToldos
@@ -670,6 +679,11 @@ namespace States
                         botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
                     break;
+                    case 16:
+                        botwindow.PressEscThreeTimes();             //открываем карту в миссии
+                        server.TopMenu(6, 2);
+                        NumberOfState = 6;
+                        break;
                     //case 17:
                     //    botwindow.PressEsc();                       // нажимаем Esc
                     //    break;
@@ -1016,7 +1030,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 2;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1136,8 +1150,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 0, 0);
+            PointColor point2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
