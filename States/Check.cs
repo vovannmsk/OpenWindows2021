@@ -455,6 +455,7 @@ namespace States
             if (!server.isHwnd()) result = 25;                  // если нет окна с hwnd таким как в файле HWND.txt
             if (server.isLogout()) result = 1;                  // если окно в логауте
             //if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
+            if (result != 0) return result;
 
 
             // Город (Ребольдо или ЛосТолдос)
@@ -476,13 +477,13 @@ namespace States
                         result = 5;
                         break;
                     default:
-                        ////стоим около OldMan 
+                        //стоим в ЛосТолдосе
 
-                        NumberOfState = 2;
+                        //NumberOfState = 2;   18-02-2021
                         result = 4;         // мы в ЛосТолдосе
                         break;
                 }
-                //if (result != 0) return result;
+                if (result != 0) return result;
             }
 
             //в миссии или около Мамута
@@ -519,7 +520,7 @@ namespace States
                             result = 13;
                         break;
                 }
-                //if (result != 0) return result;
+                if (result != 0) return result;
             }
 
             if (dialog.isDialog() && !server.isTown())
@@ -532,7 +533,10 @@ namespace States
                         break;
                     case 3:
                         if (!TaskCompleted)
-                            result = 9;         //OldMan (задание не взято)
+                            if (GotTask)
+                                result = 11;        //Oldman(Dialog) --> Mission
+                            else
+                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
                         else
                             result = 10;        //OldMan (получение награды)
                         break;
@@ -542,10 +546,14 @@ namespace States
                     default:
                         //NumberOfState = 3;
                         //result = 10;            //OldMan (получение награды) 
-                        result = 7;            //нажимаем на кнопку "Ок"
-                        break;
+
+                        //result = 7;            //нажимаем на кнопку "Ок"
+
+                        if (!TaskCompleted)
+                        { }
+                                break;
                 }
-                //if (result != 0) return result;
+                if (result != 0) return result;
             }
 
             if (result == 0 && server.isBarack()) result = 2;                  // если стоят в бараке 
