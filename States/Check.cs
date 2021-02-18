@@ -550,8 +550,13 @@ namespace States
                         //result = 7;            //нажимаем на кнопку "Ок"
 
                         if (!TaskCompleted)
-                        { }
-                                break;
+                            if (GotTask)
+                                result = 11;        //Oldman(Dialog) --> Mission
+                            else
+                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
+                        else
+                            result = 10;        //OldMan (получение награды)
+                        break;
                 }
                 if (result != 0) return result;
             }
@@ -579,16 +584,16 @@ namespace States
                 }
 
                 int numberOfProblem = NumberOfProblemOtite();
-                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
-                {
-                    switch (numberOfProblem)
-                    {
-                        case 3:  //зависли в ЛосТолдосе и не бежим к Олдмену
-                            NumberOfState = 2;
-                            break;
-                    }
-                }
-                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
+                //{
+                //    switch (numberOfProblem)
+                //    {
+                //        case 3:  //зависли в ЛосТолдосе и не бежим к Олдмену
+                //            NumberOfState = 2;
+                //            break;
+                //    }
+                //}
+                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
                 
                 //Random rand = new Random();
