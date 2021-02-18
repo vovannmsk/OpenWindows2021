@@ -50,7 +50,10 @@ namespace OpenGEWindows
                                         }
 
         // ============  методы  ========================
-
+        /// <summary>
+        /// открыта ли карта Alt+Z
+        /// </summary>
+        /// <returns></returns>
         public bool isOpenMap()
         {
             return pointIsOpenMap1.isColor() && pointIsOpenMap2.isColor();

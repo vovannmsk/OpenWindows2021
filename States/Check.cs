@@ -511,7 +511,7 @@ namespace States
                         result = 15;        //улетаем из миссии к Мамуну
                         break;
                     default:                //по умолчанию считаем, что если в бою, то в миссии 
-                                            
+
                         //NumberOfState = 6;
                         //if (!otit.isTaskDone())
                         //    result = 13;    //бежим к следующей точке маршрута с атакой
@@ -519,9 +519,19 @@ namespace States
                         //    result = 14;    //бежим к следующей точке маршрута без атаки
 
                         if (!otit.isOpenMap())
-                            result = 16; 
-                        else
-                            result = 13;
+                        {
+                            if (otit.isTaskDone())
+                                result = 15;   //если карта закрыта и задание уже выполнено
+                            else
+                                result = 16;   //если карта закрыта, то открываем
+                        }
+                        else  // если карта уже открыта, то смотрим далее
+                        {
+                            if (!otit.isTaskDone())
+                                result = 13;    //бежим к следующей точке маршрута с атакой
+                            else
+                                result = 14;    //бежим к следующей точке маршрута без атаки
+                        }
                         break;
                 }
                 if (result != 0) return result;
@@ -1059,6 +1069,10 @@ namespace States
 
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
+
+            Otit otit = new OtitSing(botwindow);
+            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
 
             //Dialog dialog = new DialogSing(botwindow);
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
