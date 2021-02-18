@@ -587,18 +587,23 @@ namespace States
                 }
 
                 int numberOfProblem = NumberOfProblemOtite();
-                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
-                //{
-                //    switch (numberOfProblem)
-                //    {
-                //        case 3:  //зависли в ЛосТолдосе и не бежим к Олдмену
-                //            NumberOfState = 2;
-                //            break;
-                //    }
-                //}
-                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
+                {
+                    if (dialog.isDialog())
+                    {
+                        switch (numberOfProblem)
+                        {
+                            case 3:
+                            case 4:
+                            case 5:
+                                numberOfProblem = 28;
+                                break;
+                        }
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
-                
+
                 //Random rand = new Random();
 
 
@@ -705,6 +710,9 @@ namespace States
                     //    break;
                     case 25:
                         server.ReOpenWindow();
+                        break;
+                    case 28:
+                        server.CloseSandboxieBH();
                         break;
                     case 29:
                         botwindow.CureOneWindow();              // идем в logout
