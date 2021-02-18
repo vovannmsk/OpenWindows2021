@@ -543,6 +543,9 @@ namespace States
                     case 4:
                         if (GotTask) result = 11;            //OldMan (задание взято, переходим в миссию)
                         break;
+                    case 5:
+                        result = 7;            //OldMan (задание взято, переходим в миссию)
+                        break;
                     default:
                         //NumberOfState = 3;
                         //result = 10;            //OldMan (получение награды) 

@@ -850,22 +850,22 @@ namespace Main
             for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
             //DateTime Data1 = DateTime.Now;
-            int Period;
-            int MinTimeOfTurn = 5000;    //минимальное время цикла
-            DateTime Data1;
-            DateTime Data2;
+            //int Period;
+            //int MinTimeOfTurn = 5000;    //минимальное время цикла
+            //DateTime Data1;
+            //DateTime Data2;
 
             while (true)
             {
-                Data1 = DateTime.Now;
+                //Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     if (check[j].IsActiveServer) check[j].problemResolutionOtite();
                 }
-                Data2 = DateTime.Now;
-                Period = (Data2 - Data1).Milliseconds;
-                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
-                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
+                //Data2 = DateTime.Now;
+                //Period = (Data2 - Data1).Milliseconds;
+                //if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                //    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
         }
 
