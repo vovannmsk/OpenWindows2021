@@ -498,10 +498,14 @@ namespace States
                         result = 12;        //стоим в миссии. только что зашли
                         break;
                     case 6:                 // в бою!
-                        if (!otit.isTaskDone())
-                            result = 13;    //бежим к следующей точке маршрута с атакой
-                        else
-                            result = 14;    //бежим к следующей точке маршрута без атаки
+                        if (!otit.isOpenMap()) result = 16;   //если карта закрыта, то открываем
+                        else  // если карта уже открыта, то смотрим далее
+                        {
+                            if (!otit.isTaskDone())
+                                result = 13;    //бежим к следующей точке маршрута с атакой
+                            else
+                                result = 14;    //бежим к следующей точке маршрута без атаки
+                        }
                         break;
                     case 7:
                         result = 15;        //улетаем из миссии к Мамуну
@@ -589,17 +593,7 @@ namespace States
                 int numberOfProblem = NumberOfProblemOtite();
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  //если зависли в каком-либо состоянии, то особые действия
                 {
-                    if (dialog.isDialog())
-                    {
-                        switch (numberOfProblem)
-                        {
-                            case 3:
-                            case 4:
-                            case 5:
-                                numberOfProblem = 28;
-                                break;
-                        }
-                    }
+                    if (dialog.isDialog())  numberOfProblem = 28;
                 }
                 else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
