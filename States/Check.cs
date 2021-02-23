@@ -474,7 +474,14 @@ namespace States
                         break;
                     case 3:             //стоим около OldMan задание не взято
                     case 4:             //стоим около OldMan задание взято
-                        result = 5;
+                        if (otit.isNearOldMan())     //на всякий случай проверяем, стоим ли мы около ОлдМана
+                            result = 5;
+                        else
+                            result = 4;
+                        break;
+                    case 5:
+                    case 6:
+                        result = 29;         // все персы убиты, но выглядит, как будто мы в городе
                         break;
                     default:
                         //стоим в ЛосТолдосе
@@ -1058,7 +1065,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 2;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1071,8 +1078,9 @@ namespace States
             //botwindow.Pause(1000);
 
             Otit otit = new OtitSing(botwindow);
-            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
-            MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
+            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
+            MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
 
             //Dialog dialog = new DialogSing(botwindow);
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
@@ -1182,8 +1190,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 0, 0);
-            PointColor point2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 0, 0);
+            PointColor point1 = new PointColor(951 - 5 + xx, 127 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(951 - 5 + xx, 127 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
@@ -1195,7 +1203,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

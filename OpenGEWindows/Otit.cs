@@ -16,7 +16,7 @@ namespace OpenGEWindows
         protected Server server;
         protected iPointColor pointIsOpenMap1;
         protected iPointColor pointIsOpenMap2;
-
+        protected iPointColor pointIsNearOldMan;
         /// <summary>
         /// номер следующей точки маршрута
         /// </summary>
@@ -58,6 +58,15 @@ namespace OpenGEWindows
         {
             return pointIsOpenMap1.isColor() && pointIsOpenMap2.isColor();
 
+        }
+
+        /// <summary>
+        /// стоим ли мы около ОлдМэна
+        /// </summary>
+        /// <returns>true, если стоим</returns>
+        public bool isNearOldMan()
+        {
+            return pointIsNearOldMan.isColor();
         }
 
         /// <summary>
