@@ -470,7 +470,7 @@ namespace States
                         result = 3;         // мы в Ребольдо
                         break;
                     case 2:
-                        result = 4;         // мы в ЛосТолдосе
+                        result = 4;         // мы в ЛосТолдосе (только что зашли)
                         break;
                     case 3:             //стоим около OldMan задание не взято
                     case 4:             //стоим около OldMan задание взято
@@ -485,9 +485,7 @@ namespace States
                         break;
                     default:
                         //стоим в ЛосТолдосе
-
-                        //NumberOfState = 2;   18-02-2021
-                        result = 4;         // мы в ЛосТолдосе
+                        result = 4;         // мы в ЛосТолдосе (только что зашли)
                         break;
                 }
                 if (result != 0) return result;
