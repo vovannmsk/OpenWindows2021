@@ -503,7 +503,7 @@ namespace States
                         result = 12;        //стоим в миссии. только что зашли
                         break;
                     case 6:                 // в бою!
-                        if (!otit.isOpenMap()) 
+                        if (!otit.isOpenMap())
                             if (otit.isTaskDone())
                                 result = 15;   //если карта закрыта и задание уже выполнено
                             else
@@ -569,11 +569,6 @@ namespace States
                         result = 7;            //OldMan (задание взято, переходим в миссию)
                         break;
                     default:
-                        //NumberOfState = 3;
-                        //result = 10;            //OldMan (получение награды) 
-
-                        //result = 7;            //нажимаем на кнопку "Ок"
-
                         if (!TaskCompleted)
                             if (GotTask)
                                 result = 11;        //Oldman(Dialog) --> Mission
@@ -700,7 +695,7 @@ namespace States
                     case 13:
                         otit.GotoNextPointRouteMulti();             //Mission(Fight)-- > Fight To Next Point
                         //driver.FightNextPoint();                    //Mission(Fight)-- > Fight To Next Point
-                        botParam.HowManyCyclesToSkip = 1;
+                        //botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 14:
                         driver.FightIsFinished();                   // Mission (FightIsFinished) 
