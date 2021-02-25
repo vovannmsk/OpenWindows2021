@@ -5041,7 +5041,6 @@ namespace OpenGEWindows
             Pause(500);
         }
 
-
         /// <summary>
         /// надеть крылья (сначала открываем специнвентарь, а после надевания крыльев закрываем его)  
         /// </summary>
@@ -5309,10 +5308,22 @@ namespace OpenGEWindows
                    new PointColor(62 - 5 + xx, 346 - 5 + yy, 14534290, 0).isColor();
         }
 
+        /// <summary>
+        /// открыть Detail Info у первого героя
+        /// </summary>
         public void OpenDetailInfo()
         {
-            new Point(220 - 5 + xx, 671 - 5 + yy).PressMouseL();
-            Pause(500);
+            if (!isOpenDetailInfo())
+                new Point(220 - 5 + xx, 671 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// экипированы розовые крылья у первого героя
+        /// </summary>
+        /// <returns>true, если экипирпованы</returns>
+        public bool isWearingPinkWings()
+        {
+            return new PointColor(163 - 5 + xx, 363 - 5 + yy, 1579516, 0).isColor();
         }
 
         #endregion

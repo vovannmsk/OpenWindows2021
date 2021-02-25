@@ -62,7 +62,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.Pause(2000);
+            server.OpenDetailInfo();
+            botwindow.Pause(1000);
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isTown();              //вышли из автомата патронов
+            return server.isOpenDetailInfo(); 
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT267(botwindow);
+            return this;
         }
 
         /// <summary>

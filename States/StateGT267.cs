@@ -57,7 +57,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.OpenSpecInventory(2);
+            
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isOpenSpecInventory();
+            return !server.isWearingPinkWings();   //если крылья не экипированы
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT269(botwindow);
+            return new StateGT268(botwindow);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return this;  
+            return new StateGT271(botwindow);   //крылья экипированы, ничего делать не надо, идём в конец цикла
         }
 
         /// <summary>

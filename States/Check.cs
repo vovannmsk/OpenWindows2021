@@ -1185,7 +1185,7 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(62 - 5 + xx, 345 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(163 - 5 + xx, 363 - 5 + yy, 0, 0);
             PointColor point2 = new PointColor(62 - 5 + xx, 346 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
@@ -1198,7 +1198,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
