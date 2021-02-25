@@ -3,24 +3,24 @@
 
 namespace States
 {
-    public class StateGT267 : IState
+    public class StateGT268 : IState
     {
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
         private int tekStateInt;
 
-        public StateGT267()
+        public StateGT268()
         {
 
         }
 
-        public StateGT267(botWindow botwindow)   
+        public StateGT268(botWindow botwindow)   
         {
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.tekStateInt = 267;
+            this.tekStateInt = 268;
         }
 
         /// <summary>

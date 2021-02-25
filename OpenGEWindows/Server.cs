@@ -664,7 +664,14 @@ namespace OpenGEWindows
         Item SteroidLeftPanel = new Item(31, 241, 11690052);
         Item PrincipleLeftPanel = new Item(32, 272, 3226091);
         Item TriumphLeftPanel = new Item(31, 304, 47612);
+        /// <summary>
+        /// розовые крылья
+        /// </summary>
         Item PinkWings = new Item(36, 211, 4870905);
+        /// <summary>
+        /// коробка с розовыми крыльями
+        /// </summary>
+        Item PinkWingsBox = new Item(36, 211, 5144242);
 
         protected iPointColor pointisOpenInventory1;
         protected iPointColor pointisOpenInventory2;
@@ -5024,9 +5031,21 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// открыть коробку с розовыми крыльями (специнвентарь уже открыт)  
+        /// </summary>
+        public void OpenWingsBox()
+        {
+            PuttingItem(PinkWingsBox);
+            Pause(500);
+            AnswerYesOrNo(true);
+            Pause(500);
+        }
+
+
+        /// <summary>
         /// надеть крылья (сначала открываем специнвентарь, а после надевания крыльев закрываем его)  
         /// </summary>
-        public void PutWings()
+        public void PutPinkWings()
         {
             OpenSpecInventory(4);
 

@@ -3,24 +3,24 @@
 
 namespace States
 {
-    public class StateGT267 : IState
+    public class StateGT269 : IState
     {
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
         private int tekStateInt;
 
-        public StateGT267()
+        public StateGT269()
         {
 
         }
 
-        public StateGT267(botWindow botwindow)   
+        public StateGT269(botWindow botwindow)   
         {
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.tekStateInt = 267;
+            this.tekStateInt = 269;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.OpenSpecInventory(2);
+            server.OpenWingsBox();
         }
 
         /// <summary>
@@ -65,7 +65,6 @@ namespace States
         /// </summary>
         public void elseRun()
         {
-            botwindow.PressEscThreeTimes();
         }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isOpenSpecInventory();
+            return true;
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT269(botwindow);
+            return new StateGT270(botwindow);
         }
 
         /// <summary>

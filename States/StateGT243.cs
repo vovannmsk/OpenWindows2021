@@ -57,7 +57,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.PutWings();
+            server.PutPinkWings();
         }
 
         /// <summary>
