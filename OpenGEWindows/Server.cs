@@ -246,7 +246,8 @@ namespace OpenGEWindows
         protected iPointColor pointisBulletOff1;       //если патронов почти нет (красный значок) первый перс
         protected iPointColor pointisBulletOff2;       //если патронов почти нет (красный значок) второй перс
         protected iPointColor pointisBulletOff3;       //если патронов почти нет (красный значок) третий перс
-
+        protected iPointColor pointisAssaultMode1;    
+        protected iPointColor pointisAssaultMode2;
         #endregion
 
         #region inTown
@@ -2168,6 +2169,15 @@ namespace OpenGEWindows
         public bool isBattleMode()
         {
             return pointisBattleMode1.isColor() && pointisBattleMode2.isColor();
+        }
+
+        /// <summary>
+        /// проверяем, включён ли штурмовой режим (Ctrl+Click)
+        /// </summary>
+        /// <returns>true, если включён</returns>
+        public bool isAssaultMode()
+        {
+            return pointisAssaultMode1.isColor() && pointisAssaultMode2.isColor();
         }
 
         ///// <summary>

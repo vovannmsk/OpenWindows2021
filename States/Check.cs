@@ -503,37 +503,40 @@ namespace States
                         result = 12;        //стоим в миссии. только что зашли
                         break;
                     case 6:                 // в бою!
-                        if (!otit.isOpenMap()) result = 16;   //если карта закрыта, то открываем
+                        if (!otit.isOpenMap()) 
+                            if (otit.isTaskDone())
+                                result = 15;   //если карта закрыта и задание уже выполнено
+                            else
+                                result = 16;   //если карта закрыта, но задание еще не выполнено
                         else  // если карта уже открыта, то смотрим далее
                         {
                             if (!otit.isTaskDone())
-                                result = 13;    //бежим к следующей точке маршрута с атакой
+                                if (!server.isAssaultMode()) 
+                                    result = 13;    //бежим к следующей точке маршрута с атакой
+                                else 
+                                    return 0;       //ничего не делаем, так как уже бежим и атакуем
                             else
-                                result = 14;    //бежим к следующей точке маршрута без атаки
+                                result = 14;        //бежим к следующей точке маршрута без атаки
                         }
                         break;
                     case 7:
                         result = 15;        //улетаем из миссии к Мамуну
                         break;
                     default:                //по умолчанию считаем, что если в бою, то в миссии 
-
-                        //NumberOfState = 6;
-                        //if (!otit.isTaskDone())
-                        //    result = 13;    //бежим к следующей точке маршрута с атакой
-                        //else
-                        //    result = 14;    //бежим к следующей точке маршрута без атаки
-
                         if (!otit.isOpenMap())
                         {
                             if (otit.isTaskDone())
                                 result = 15;   //если карта закрыта и задание уже выполнено
                             else
-                                result = 16;   //если карта закрыта, то открываем
+                                result = 16;   //если карта закрыта, но задание еще не выполнено
                         }
                         else  // если карта уже открыта, то смотрим далее
                         {
                             if (!otit.isTaskDone())
-                                result = 13;    //бежим к следующей точке маршрута с атакой
+                                if (!server.isAssaultMode())
+                                    result = 13;    //бежим к следующей точке маршрута с атакой
+                                else
+                                    return 0;       //ничего не делаем, так как уже бежим и атакуем
                             else
                                 result = 14;    //бежим к следующей точке маршрута без атаки
                         }
@@ -1078,12 +1081,11 @@ namespace States
             Otit otit = new OtitSing(botwindow);
             //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
-            MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
+            //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
 
             //Dialog dialog = new DialogSing(botwindow);
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
 
-            //Server server = new ServerSing(botwindow);
             //server.isBottlesOnLeftPanel();
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //Town town = new SingTownArmonia(botwindow);
@@ -1092,7 +1094,7 @@ namespace States
             //Server server = new ServerEuropa2(botwindow);
 
 
-            //MessageBox.Show("Нужный диалог? " + server.isBeginOfMission());
+            MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show("Wild " + server.isWild());
             //MessageBox.Show("Demon " + server.isDemon());
@@ -1188,8 +1190,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(951 - 5 + xx, 127 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(951 - 5 + xx, 127 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(76 - 5 + xx, 511 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(105 - 5 + xx, 511 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
@@ -1200,7 +1202,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color1);
             //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 

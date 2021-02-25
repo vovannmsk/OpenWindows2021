@@ -144,6 +144,8 @@ namespace OpenGEWindows
             this.pointSkillCook = new Point(183 - 5 + xx, 700 - 5 + yy);
             this.pointisBattleMode1 = new PointColor(173 - 5 + xx, 511 - 5 + yy, 8900000, 5);
             this.pointisBattleMode2 = new PointColor(200 - 5 + xx, 511 - 5 + yy, 8900000, 5);
+            this.pointisAssaultMode1 = new PointColor(76 - 5 + xx, 511 - 5 + yy, 10207400, 2);
+            this.pointisAssaultMode2 = new PointColor(105 - 5 + xx, 511 - 5 + yy, 10207400, 2);
 
             //            this.pointisBulletHalf = new PointColor(227 - 5 + xx, 621 - 5 + yy, 5500000, 5);
             this.pointisBulletHalf1 = new PointColor(229 - 5 + xx, 622 - 5 + yy, 5500000, 5);
