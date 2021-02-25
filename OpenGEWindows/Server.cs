@@ -5297,6 +5297,26 @@ namespace OpenGEWindows
 
         #endregion
 
+        #region Detail Info (сведения о персонаже и  просмотр экипировки)
+
+        /// <summary>
+        /// открыт ли Detail Info для первого персонажа?
+        /// </summary>
+        /// <returns>true, если открыт</returns>
+        public bool isOpenDetailInfo()
+        {
+            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14534290, 0).isColor() &&
+                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14534290, 0).isColor();
+        }
+
+        public void OpenDetailInfo()
+        {
+            new Point(220 - 5 + xx, 671 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        #endregion
+
         #endregion
 
         #region Работа со слотами маны

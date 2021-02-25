@@ -1190,20 +1190,20 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(36 - 5 + xx, 211 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(105 - 5 + xx, 511 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(62 - 5 + xx, 345 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(62 - 5 + xx, 346 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
