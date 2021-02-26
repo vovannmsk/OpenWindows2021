@@ -5005,9 +5005,9 @@ namespace OpenGEWindows
             if (new PointColor(559 - 5 + xx, 420 - 5 + yy, 7727344, 0).isColor() ||
                 new PointColor(559 - 5 + xx, 426 - 5 + yy, 7727344, 0).isColor())  //проверка, есть ли запрос на экране
                 if (answer)
-                    new Point(465, 422).PressMouseL();   //да
+                    new Point(465 - 5 + xx, 422 - 5 + yy).PressMouseL();   //да
                 else
-                    new Point(565, 422).PressMouseL();   //нет
+                    new Point(565 - 5 + xx, 422 - 5 + yy).PressMouseL();   //нет
         }
 
         /// <summary>
@@ -5304,8 +5304,8 @@ namespace OpenGEWindows
         /// <returns>true, если открыт</returns>
         public bool isOpenDetailInfo()
         {
-            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14534290, 0).isColor() &&
-                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14534290, 0).isColor();
+            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14534000, 3).isColor() &&
+                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14534000, 3).isColor();
         }
 
         /// <summary>

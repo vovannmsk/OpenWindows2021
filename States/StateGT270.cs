@@ -82,7 +82,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT270(botwindow);
+            return new StateGT271(botwindow);
         }
 
         /// <summary>

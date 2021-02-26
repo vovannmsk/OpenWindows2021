@@ -57,6 +57,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
+            botwindow.PressEscThreeTimes();
             server.OpenSpecInventory(2);
         }
 
