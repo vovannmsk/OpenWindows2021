@@ -1068,27 +1068,27 @@ namespace States
 
             botWindow botwindow = new botWindow(i);
             Server server = new ServerSing(botwindow);
+            //Server server = new ServerEuropa2(botwindow);
+            Otit otit = new OtitSing(botwindow);
+            //Dialog dialog = new DialogSing(botwindow);
+            //Town town = new SingTownArmonia(botwindow);
+            //BHDialog BHdialog = new BHDialogSing(botwindow);
+            //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
+            //Market market = new MarketSing(botwindow);
+            //Pet pet = new PetSing(botwindow);
+
             server.ReOpenWindow();
 
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
-            Otit otit = new OtitSing(botwindow);
-            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
-
-            //Dialog dialog = new DialogSing(botwindow);
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
-
-            //server.isBottlesOnLeftPanel();
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
-            //Town town = new SingTownArmonia(botwindow);
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
-            //server.MoveBottlesToTheLeftPanel();
-            //Server server = new ServerEuropa2(botwindow);
-
-            MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
+            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show("Wild " + server.isWild());
@@ -1098,53 +1098,14 @@ namespace States
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
-
-            //Server server = new ServerAmerica2(botwindow);
-
-            //BHDialog BHdialog = new BHDialogSing(botwindow);
-            //Dialog dialog = new DialogSing(botwindow);
-            //bool ttt = dialog.isDialog();
-            //MessageBox.Show(" " + ttt);
-
-            //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
-            //Market market = new MarketSing(botwindow);
-
-            //            Pet pet = new PetAmerica2(botwindow);
-            //Pet pet = new PetAmerica(botwindow);
-            //MessageBox.Show(" " + pet.isSummonPet());
-
-            //Otit otit = new OtitSing(botwindow);
-            //MessageBox.Show(" " + server.is248Items());
-
-            //server.MissionNotFoundBH();
-            //bool iscolor1 = pet.isActivePet();
-            //MessageBox.Show(" " + iscolor1);
-
-            //bool iscolor1 = kMarket.isSaleIn();
-            //MessageBox.Show(" " + iscolor1);
-
-            //bool iscolor1 = market.isClickPurchase();
-            //MessageBox.Show(" " + iscolor1);
-            //bool iscolor2 = market.isClickSell();
-            //MessageBox.Show(" " + iscolor2);
-
-            //bool iscolor1 = server.isUndead();
-            //MessageBox.Show(" " + iscolor1);
-            //bool ttt;
-            //ttt = BHdialog.isBottonGateBH();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH1();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH2();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH3();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH4();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH5();
-            //MessageBox.Show(" " + ttt);
-            //ttt = BHdialog.isGateBH6();
-            //MessageBox.Show(" " + ttt);
+            //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
+            //MessageBox.Show("Призван пет? " + pet.isSummonPet());
+            //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
+            //MessageBox.Show(" " + pet.isActivePet());
+            //MessageBox.Show(" " + kMarket.isSaleIn());
+            //MessageBox.Show(" " + market.isClickPurchase());
+            //MessageBox.Show(" " + market.isClickSell());
+            //MessageBox.Show(" " + server.isUndead());
 
             //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
             //int[] y = { 0, 0, 0, 0, 0, 340, 340, 340, 340, 340 };
@@ -1185,8 +1146,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(62 - 5 + xx, 345 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(62 - 5 + xx, 346 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(156 - 5 + xx, 208 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(156 - 5 + xx, 209 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
@@ -1197,8 +1158,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
