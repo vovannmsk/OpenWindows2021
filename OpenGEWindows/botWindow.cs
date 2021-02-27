@@ -532,14 +532,12 @@ namespace OpenGEWindows
         /// </summary>
         public void FirstHero()
         {
-            //iPoint pointFirstHeroUp = new Point(155 - 5 + xx, 640 - 5 + yy);       // верхняя точка
-            //iPoint pointFirstHeroDown = new Point(155 - 5 + xx, 682 - 5 + yy);     // нижняя точка
             iPoint pointFirstHeroUp = new Point(213 - 5 + xx, 636 - 5 + yy);       // верхняя точка
             iPoint pointFirstHeroDown = new Point(213 - 5 + xx, 701 - 5 + yy);     // нижняя точка
             pointFirstHeroDown.PressMouseL();  
             pointFirstHeroDown.PressMouseL();
             Pause(500);
-            pointFirstHeroUp.PressMouseL();
+            pointFirstHeroUp.DoubleClickL();
         }
 
         /// <summary>
@@ -547,15 +545,14 @@ namespace OpenGEWindows
         /// </summary>
         public void SecondHero()
         {
-            //iPoint pointSecondHeroUp = new Point(408 - 5 + xx, 640 - 5 + yy);  
-            //iPoint pointSecondHeroDown = new Point(408 - 5 + xx, 682 - 5 + yy);
             iPoint pointSecondHeroUp = new Point(472 - 5 + xx, 636 - 5 + yy);    
             iPoint pointSecondHeroDown = new Point(472 - 5 + xx, 701 - 5 + yy);  
 
             pointSecondHeroDown.PressMouseL();
             pointSecondHeroDown.PressMouseL();
             Pause(500);
-            pointSecondHeroUp.PressMouseL();
+            //pointSecondHeroUp.PressMouseL();
+            pointSecondHeroUp.DoubleClickL();
         }
 
         /// <summary>
@@ -563,15 +560,13 @@ namespace OpenGEWindows
         /// </summary>
         public void ThirdHero()
         {
-            //iPoint pointThirdHeroUp = new Point(663 - 5 + xx, 640 - 5 + yy);    // 670, 635
-            //iPoint pointThirdHeroDown = new Point(663 - 5 + xx, 682 - 5 + yy);    // 670, 664
             iPoint pointThirdHeroUp = new Point(723 - 5 + xx, 636 - 5 + yy);    // 670, 635
             iPoint pointThirdHeroDown = new Point(723 - 5 + xx, 701 - 5 + yy);    // 670, 664
 
             pointThirdHeroDown.PressMouseL();
             pointThirdHeroDown.PressMouseL();
             Pause(500);
-            pointThirdHeroUp.PressMouseL();
+            pointThirdHeroUp.DoubleClickL();
         }
 
         /// <summary>

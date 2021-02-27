@@ -2215,6 +2215,58 @@ namespace OpenGEWindows
         #region inTown
 
         /// <summary>
+        /// проверяем, закончились ли награды в окне Achievement
+        /// </summary>
+        /// <returns>true, если закончились</returns>
+        public bool isEmptyReward()
+
+        {
+            return new PointColor(939 - 5 + xx, 177 - 5 + yy, 5848111, 0).isColor();
+        }
+
+        /// <summary>
+        /// получаем одну награду в окне Achievement (Alt+L)
+        /// </summary>
+        public void ReceiveTheReward()
+        {
+            new Point(939 - 5 + xx, 177 - 5 + yy).PressMouseL();
+            MoveCursorOfMouse();
+            Pause(1000);
+        }
+
+        /// <summary>
+        /// проверяем цвет пиктограммы "Receive The Reward". Если серый, то мы на странице получения наград
+        /// </summary>
+        /// <returns>true, если серый</returns>
+        public bool isReceiveReward()
+
+        {
+            return new PointColor(408 - 5 + xx, 559 - 5 + yy, 10197915, 0).isColor();
+        }
+
+        /// <summary>
+        /// открываем страницу получения награды в Achievement (Alt+L)
+        /// (нажимаем на пиктограмму "Receive The Reward")
+        /// </summary>
+        public void ToBookmarkReceiveTheReward()
+        {
+            new Point(406 - 5 + xx, 559 - 5 + yy).PressMouseLL();
+            MoveCursorOfMouse();
+        }
+
+        /// <summary>
+        /// проверяем, открыто ли окно Achievement (Alt+L)
+        /// </summary>
+        /// <returns>true, если открыто</returns>
+        public bool isOpenAchievement()
+        {
+            //return new PointColor(380 - 5 + xx, 182 - 5 + yy, 8000000, 6).isColor() &&
+            //        new PointColor(380 - 5 + xx, 183 - 5 + yy, 8000000, 6).isColor();
+            return new PointColor(380 - 5 + xx, 182 - 5 + yy, 7000000, 6).isColor() ||
+                    new PointColor(380 - 5 + xx, 182 - 5 + yy, 8000000, 6).isColor();
+        }
+
+        /// <summary>
         /// нажимаем на голову Lucia 
         /// </summary>
         public void PressHeadOfLucia()
@@ -5304,8 +5356,8 @@ namespace OpenGEWindows
         /// <returns>true, если открыт</returns>
         public bool isOpenDetailInfo()
         {
-            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14534000, 3).isColor() &&
-                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14534000, 3).isColor();
+            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14000000, 6).isColor() &&
+                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14000000, 6).isColor();
         }
 
         /// <summary>
@@ -5315,6 +5367,7 @@ namespace OpenGEWindows
         {
             if (!isOpenDetailInfo())
                 new Point(220 - 5 + xx, 671 - 5 + yy).PressMouseL();
+            MoveCursorOfMouse();
         }
 
         /// <summary>

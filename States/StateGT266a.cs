@@ -8,8 +8,8 @@ namespace States
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
-        private Town town;
-        private BulletDialog dialog; 
+        //private Town town;
+        //private BulletDialog dialog; 
         private int tekStateInt;
 
         public StateGT266a()
@@ -22,9 +22,9 @@ namespace States
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.town = server.getTown();
-            BulletDialogFactory bdFactory = new BulletDialogFactory(botwindow);
-            this.dialog = bdFactory.create();
+            //this.town = server.getTown();
+            //BulletDialogFactory bdFactory = new BulletDialogFactory(botwindow);
+            //this.dialog = bdFactory.create();
             this.tekStateInt = 266;
         }
 

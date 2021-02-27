@@ -47,6 +47,12 @@
     <Compile Include="StateDriver.cs" />
     <Compile Include="StateGT266a.cs" />
     <Compile Include="StateGT268.cs" />
+    <Compile Include="StateGT277.cs" />
+    <Compile Include="StateGT276.cs" />
+    <Compile Include="StateGT275.cs" />
+    <Compile Include="StateGT274.cs" />
+    <Compile Include="StateGT273.cs" />
+    <Compile Include="StateGT272.cs" />
     <Compile Include="StateGT271.cs" />
     <Compile Include="StateGT270.cs" />
     <Compile Include="StateGT269.cs" />

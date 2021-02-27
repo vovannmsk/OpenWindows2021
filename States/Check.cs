@@ -1061,7 +1061,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 4;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1079,16 +1079,20 @@ namespace States
 
             server.ReOpenWindow();
 
+
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
-            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
+            //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
+            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
-            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
+            server.OpenDetailInfo();
+            MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show("Wild " + server.isWild());
@@ -1146,8 +1150,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(156 - 5 + xx, 208 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(156 - 5 + xx, 209 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(62 - 5 + xx, 345 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(62 - 5 + xx, 346 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
 
 
@@ -1158,8 +1162,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
