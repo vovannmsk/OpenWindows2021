@@ -622,6 +622,12 @@ namespace OpenGEWindows
         Thing expCard = new Thing(new PointColor(704, 174, 1317005, 0), new PointColor(705, 174, 1317005, 0));
         Thing Honey = new Thing(new PointColor(697, 180, 4289893, 0), new PointColor(703, 180, 4487011, 0));
         Thing Apple = new Thing(new PointColor(697, 180, 7465471, 0), new PointColor(704, 180, 42495, 0));
+        Thing DesapioNecklace = new Thing(new PointColor(704, 183, 16777112, 0), new PointColor(704, 182, 16711143, 0));
+        Thing DesapioGloves = new Thing(new PointColor(700, 181, 14130236, 0), new PointColor(700, 182, 16777177, 0));
+        Thing DesapioBoots = new Thing(new PointColor(697, 183, 8154148, 0), new PointColor(697, 184, 9074735, 0));
+        Thing DesapioBelt = new Thing(new PointColor(700, 182, 12426579, 0), new PointColor(700, 183, 8360599, 0));
+        Thing DesapioEarrings = new Thing(new PointColor(700, 183, 16777215, 0), new PointColor(701, 184, 657680, 0));
+
 
         /// <summary>
         /// структура для поиска вещей в CASH-инвентаре по одной точке

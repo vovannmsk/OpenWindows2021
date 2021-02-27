@@ -1061,7 +1061,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 4;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1091,8 +1091,8 @@ namespace States
             //MessageBox.Show("Диалог??? " + dialog.isDialog());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
-            server.OpenDetailInfo();
-            MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
+            //server.OpenDetailInfo();
+            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show("Wild " + server.isWild());
@@ -1139,7 +1139,7 @@ namespace States
             yy = koordY[i - 1];
             uint color1;
             uint color2;
-            //uint color3;
+            uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
@@ -1150,21 +1150,21 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(62 - 5 + xx, 345 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(62 - 5 + xx, 346 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(348 - 5 + xx, 213 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(195 - 5 + xx, 485 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(195+255 - 5 + xx, 485 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(195+255+255 - 5 + xx, 485 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
-            //color3 = point3.GetPixelColor();
+            color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
-            //MessageBox.Show(" " + color3);
+            MessageBox.Show(" " + color3);
 
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");
