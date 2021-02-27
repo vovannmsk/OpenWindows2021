@@ -5385,6 +5385,58 @@ namespace OpenGEWindows
             return new PointColor(163 - 5 + xx, 363 - 5 + yy, 1579516, 0).isColor();
         }
 
+        /// <summary>
+        /// У i-го героя проверяем, пуст ли слот с ожерельем (Detail info уже открыт)
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если слот пуст</returns>
+        public bool isEmptyNecklace(int i)
+        {
+            return new PointColor(158 + (i - 1) * 255 - 5 + xx, 328 - 5 + yy, 6576231, 0).isColor();
+        }
+
+        /// <summary>
+        /// У i-го героя проверяем, пуст ли слот с серьгой (Detail info уже открыт)
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если слот пуст</returns>
+        public bool isEmptyEarrings(int i)
+        {
+            return new PointColor(196 + (i - 1) * 255 - 5 + xx, 287 - 5 + yy, 6844014, 0).isColor();
+        }
+
+        /// <summary>
+        /// У i-го героя проверяем, пуст ли слот с поясом (Detail info уже открыт)
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если слот пуст</returns>
+        public bool isEmptyBelt(int i)
+        {
+            return new PointColor(196 + (i - 1) * 255 - 5 + xx, 411 - 5 + yy, 9935004, 0).isColor();
+        }
+
+        /// <summary>
+        /// У i-го героя проверяем, пуст ли слот с перчатками (Detail info уже открыт)
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если слот пуст</returns>
+        public bool isEmptyGloves(int i)
+        {
+            return new PointColor(198 + (i - 1) * 255 - 5 + xx, 438 - 5 + yy, 11711155, 0).isColor();
+        }
+
+        /// <summary>
+        /// У i-го героя проверяем, пуст ли слот с ботинками (Detail info уже открыт)
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если слот пуст</returns>
+        public bool isEmptyBoots (int i)
+        {
+            return new PointColor(195 + (i - 1) * 255 - 5 + xx, 485 - 5 + yy, 4079167, 0).isColor();
+        }
+
+
+
         #endregion
 
         #endregion
