@@ -555,8 +555,8 @@ namespace States
             //StateDriverRun(new StateGT152(botwindow), new StateGT161(botwindow));  // летим в Катовию + продажа (нет больше магазина в Катовии)
 
 
-            //StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
-            StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  //   переход к магазину + продажа + выход в город из магазина
+            StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
+            //StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  //   переход к магазину + продажа + выход в город из магазина
             StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
             StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
             StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)

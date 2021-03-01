@@ -22,6 +22,10 @@ namespace OpenGEWindows
             this.pointTraderOnMap = new Point(840 - 5 + xx, 220 - 5 + yy);                    //торговец на карте                         Firearms  Lorch
             this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 728 - 5 + yy);                //кнопка Move на карте
             this.pointHeadTrader = new Point(296 - 5 + xx, 228 - 5 + yy);                     //голова торговца          // проверено
+            this.pointBulletAutomat = new Point(479 - 5 + xx, 299 - 5 + yy);                //автомат с пулями
+            this.PAUSE_TIME_Bullet = 3000;
+            this.pointTraderOnMapBullet = new Point(840 - 5 + xx, 220 - 5 + yy);         //торговец на карте для перехода к патронам     
+
             this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);    //сюда тыкаем, чтобы улететь на торговую улицу   //проверено
             //точки для проверки цвета
             //this.pointOpenMap1 = new PointColor(847 - 5 + xx, 44 - 5 + yy, 16000000, 6);      //проверено

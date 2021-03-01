@@ -134,13 +134,19 @@ namespace OpenGEWindows
 
         /// <summary>
         /// проверяем, является ли товар в первой строке магазина маленькой красной бутылкой
+        /// либо другими красными бутылками
         /// </summary>
-        /// <param name="numberOfString">номер строки, в которой проверяем товар</param>
         /// <returns> true, если в первой строке маленькая красная бутылка </returns>
-        public bool isRedBottle(int numberOfString)
+        public bool isRedBottle()
         {
-            PointColor pointFirstString = new PointColor(147 - 5 + xx, 224 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0);
-            return pointFirstString.isColor();
+            //PointColor pointFirstString = new PointColor(147 - 5 + xx, 224 - 5 + yy, 3360337, 0);
+            //return pointFirstString.isColor();
+            uint Color = new PointColor(149 - 5 + xx, 219 - 5 + yy, 0, 0).GetPixelColor();
+            return  (Color == 5933520) ||       //500 HP     маленькая красная бутылка
+                    (Color == 3947742) ||       //1500 HP
+                    (Color == 2634708) ||       //2500 HP
+                    (Color == 1714255) ||       //Mitridat
+                    (Color == 13667914);        //600 SP
         }
 
         /// <summary>
@@ -326,7 +332,7 @@ namespace OpenGEWindows
                 //case 1381654:     // desapio Boots     
                 //case 3747867:     // desapio Belt
                 //case 3095646:     // desapio Earrings
-                case 482184:     // desapio Token
+                case 482184:      // desapio Token
                 case 47612:       // Triumph Fillers
                 //case 1381654:       // обычное кольцо
                 case 14722118:       // ring crystal
@@ -354,14 +360,17 @@ namespace OpenGEWindows
 
             switch (color)                                             // Хорошая вещь или нет, сверяем по картотеке
             {
-                case 14607342:     // desapio Necklase
-                case 15836741:     // desapio Gloves
-                case 1381654:     // desapio Boots     
-                case 3747867:     // desapio Belt
-                case 3095646:     // desapio Earrings
-                //case 482184:     // desapio Token
+                case 14607342:      // desapio Necklase
+                case 15836741:      // desapio Gloves
+                case 1381654:       // desapio Boots 
+                case 1316118:       // desapio Boots желтые
+                case 3747867:       // desapio Belt
+                case 3095646:       // desapio Earrings
                     if ((color3 == 14978083) || (color3 == 3527902)) result = false;     //смотрим цвет слова Desapio (синий или желтый цвет)            
-                    break;
+                break;
+                case 5933520:
+                    result = false; //маленькая красная бутылка
+                break;
             }
 
             return result;
@@ -388,7 +397,7 @@ namespace OpenGEWindows
             Product currentProduct;
 
             uint count = 0;
-            while (!isRedBottle(1))
+            while (!isRedBottle())
             {
                 currentProduct = new Product(xx, yy, 1);  //создаем структуру "текущий товар" из трёх точек, которые мы берем у товара в первой строке магазина
 
@@ -402,6 +411,7 @@ namespace OpenGEWindows
                 count++;
                 if (count > limit) break;   // защита от бесконечного цикла
             }
+            //DownList();  //список вниз
         }
 
         /// <summary>
