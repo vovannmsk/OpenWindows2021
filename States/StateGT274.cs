@@ -57,6 +57,10 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
+            botwindow.FirstHero();
+            server.OpenDetailInfo(1);
+            server.MoveCursorOfMouse();
+            botwindow.Pause(500);
         }
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return true;
+            return server.isOpenDetailInfo(1);
         }
 
         /// <summary>
@@ -81,7 +85,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return this;
+            return new StateGT275(botwindow);
         }
 
         /// <summary>

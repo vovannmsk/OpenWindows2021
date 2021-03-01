@@ -57,6 +57,10 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
+            server.WearJewerly(1);
+            server.WearJewerly(2);
+            server.WearJewerly(3);
+            botwindow.PressEscThreeTimes();
         }
 
         /// <summary>
@@ -81,7 +85,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return this;
+            return new StateGT277(botwindow);
         }
 
         /// <summary>

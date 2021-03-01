@@ -57,6 +57,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
+            server.OpenInventory(1);
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return true;
+            return server.isOpenInventory();
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return this;
+            return new StateGT276(botwindow);
         }
 
         /// <summary>

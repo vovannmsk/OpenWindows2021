@@ -985,7 +985,6 @@ namespace States
             }
         }
 
-
         /// <summary>
         /// создать новые аккаунты в одном окне бота
         /// </summary>
@@ -1083,6 +1082,7 @@ namespace States
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
+            MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
             //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
             //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
             //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
@@ -1150,8 +1150,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(195 - 5 + xx, 485 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(195+255 - 5 + xx, 485 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(731 - 5 + xx, 91 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(745 - 5 + xx, 91 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(195+255+255 - 5 + xx, 485 - 5 + yy, 0, 0);
 
 
@@ -1162,9 +1162,9 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
-            MessageBox.Show(" " + color3);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color3);
 
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");

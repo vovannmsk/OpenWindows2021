@@ -560,7 +560,8 @@ namespace States
             StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
             StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
             StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)
-
+            botwindow.PressEscThreeTimes();
+            StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
             //закрываем проги в песочнице
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }

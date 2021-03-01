@@ -4779,6 +4779,69 @@ namespace OpenGEWindows
         #region Обычный инвентарь
 
         /// <summary>
+        /// выбор i-го героя
+        /// </summary>
+        /// <param name="i"></param>
+        protected void Hero(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    botwindow.FirstHero();
+                    break;
+                case 2:
+                    botwindow.SecondHero();
+                    break;
+                case 3:
+                    botwindow.ThirdHero();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// надеть всю бижутерию на i-го героя
+        /// </summary>
+        /// <param name="i">номер героя (1,2 или 3)</param>
+        public void WearJewerly(int i)
+        {
+            OpenDetailInfo(i);
+            Hero(i);
+
+            iPoint Inventory = new Point(840 - 5 + xx, 100 - 5 + yy);
+            iPoint DetailInfo = new Point(63 - 5 + xx + (i - 1) * 255, 346 - 5 + yy);
+            if (isEmptyBelt(i))
+            {
+                Inventory.PressMouseLL();
+                UseItem(DesapioBelt);
+                DetailInfo.PressMouseLL();
+            }
+            if (isEmptyBoots(i))
+            {
+                Inventory.PressMouseLL();
+                UseItem(DesapioBoots);
+                DetailInfo.PressMouseLL();
+            }
+            if (isEmptyEarrings(i)) 
+            {
+                Inventory.PressMouseLL(); 
+                UseItem(DesapioEarrings);
+                DetailInfo.PressMouseLL();
+            }
+            if (isEmptyGloves(i)) 
+            { 
+                Inventory.PressMouseLL(); 
+                UseItem(DesapioGloves);
+                DetailInfo.PressMouseLL();
+            }
+            if (isEmptyNecklace(i)) 
+            { 
+                Inventory.PressMouseLL(); 
+                UseItem(DesapioNecklace);
+                DetailInfo.PressMouseLL();
+            }
+        }
+
+        /// <summary>
         /// ищем указанную вещь в инвентаре (инвентарь должен быть открыт на нужной закладке)
         /// </summary>
         /// <param name="thing">искомая вещь</param>
@@ -4816,25 +4879,7 @@ namespace OpenGEWindows
         {
             bool result = false;   //объект в инвентаре пока не найден
 
-            //for (int i = 1; i <= 5; i++)         //строки в инвентаре
-            //{
-            //    for (int j = 1; j <= 8; j++)        // столбцы в инвентаре
-            //    {
-            //        if (!result)         //если вещь уже найдена, то дальше не ищем
-            //        {
-            //            if (CheckThingInCell(i, j, thing))
-            //            {
-            //                UseThingInCell(i, j);
-            //                new Point(1000 - 5 + xx, 500 - 5 + yy).Move();   //убираем мышь в сторону
-            //                result = true;
-            //                Pause(500);
-            //            }
-            //        }
-            //    }
-            //}
-
-            int i, j;
-            if (FindItem(thing, out i, out j))
+            if (FindItem(thing, out int i, out int j))
             {
                 UseThingInCell(i, j);
                 Pause(500);
@@ -4849,7 +4894,7 @@ namespace OpenGEWindows
         /// открыт ли инвентарь?
         /// </summary>
         /// <returns></returns>
-        protected bool isOpenInventory()
+        public bool isOpenInventory()
         {
             return pointisOpenInventory1.isColor() &&
                    pointisOpenInventory2.isColor();
@@ -4861,29 +4906,10 @@ namespace OpenGEWindows
         /// <param name="numberOfbookmark">номер закладки</param>
         public void OpenInventory(int numberOfbookmark)
         {
-            if (!isOpenInventory()) TopMenu(8, 1);
+            if (!isOpenInventory()) TopMenu(8, 1, false);
             Pause(1000);
 
             new Point(713 - 5 + xx + 61 * (numberOfbookmark - 1), 152 - 5 + yy).PressMouseL();
-
-            //switch (numberOfbookmark)
-            //{
-            //    case 1:
-            //        new Point(713 - 5 + xx, 152 - 5 + yy).PressMouseL();     //первая - Equip
-            //        break;
-            //    case 2:
-            //        new Point(782 - 5 + xx, 152 - 5 + yy).PressMouseL();     //вторая - Expand
-            //        break;
-            //    case 3:
-            //        new Point(843 - 5 + xx, 152 - 5 + yy).PressMouseL();     //третья - Misk
-            //        break;
-            //    case 4:
-            //        new Point(902 - 5 + xx, 152 - 5 + yy).PressMouseL();     //четвертая - Quest
-            //        break;
-            //    case 5:
-            //        new Point(871 - 5 + xx, 133 - 5 + yy).PressMouseL();     //пятая - костюмы
-            //        break;
-            //}
         }
 
         /// <summary>
@@ -5301,9 +5327,9 @@ namespace OpenGEWindows
         /// <summary>
         /// перемещаем курсор мыши прочь от специнвентаря и инвентаря
         /// </summary>
-        protected void MoveCursorOfMouse()
+        public void MoveCursorOfMouse()
         {
-            new Point(400 - 5 + xx, 400 - 5 + yy).Move();
+            new Point(754 - 5 + xx, 491 - 5 + yy).Move();
         }
 
         /// <summary>
@@ -5360,19 +5386,19 @@ namespace OpenGEWindows
         /// открыт ли Detail Info для первого персонажа?
         /// </summary>
         /// <returns>true, если открыт</returns>
-        public bool isOpenDetailInfo()
+        public bool isOpenDetailInfo(int i)
         {
-            return new PointColor(62 - 5 + xx, 345 - 5 + yy, 14000000, 6).isColor() &&
-                   new PointColor(62 - 5 + xx, 346 - 5 + yy, 14000000, 6).isColor();
+            return new PointColor(62 - 5 + xx + (i - 1) * 255, 345 - 5 + yy, 14000000, 6).isColor() &&
+                   new PointColor(62 - 5 + xx + (i - 1) * 255, 346 - 5 + yy, 14000000, 6).isColor();
         }
 
         /// <summary>
         /// открыть Detail Info у первого героя
         /// </summary>
-        public void OpenDetailInfo()
+        public void OpenDetailInfo(int i)
         {
-            if (!isOpenDetailInfo())
-                new Point(220 - 5 + xx, 671 - 5 + yy).PressMouseL();
+            if (!isOpenDetailInfo(i))
+                new Point(220 - 5 + xx + (i - 1) * 255, 671 - 5 + yy).PressMouseL();
             MoveCursorOfMouse();
         }
 
@@ -5434,8 +5460,6 @@ namespace OpenGEWindows
         {
             return new PointColor(195 + (i - 1) * 255 - 5 + xx, 485 - 5 + yy, 4079167, 0).isColor();
         }
-
-
 
         #endregion
 

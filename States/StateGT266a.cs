@@ -62,7 +62,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.OpenDetailInfo();
+            server.OpenDetailInfo(1);
             botwindow.Pause(1000);
         }
 
@@ -81,7 +81,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isOpenDetailInfo(); 
+            return server.isOpenDetailInfo(1); 
         }
 
         /// <summary>

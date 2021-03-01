@@ -546,8 +546,10 @@ namespace OpenGEWindows
 
             #region Работа с инвентарем и CASH-инвентарем
 
-                this.pointisOpenInventory1 = new PointColor(731 - 5 + xx, 86 - 5 + yy, 8036794, 0);
-                this.pointisOpenInventory2 = new PointColor(745 - 5 + xx, 86 - 5 + yy, 8036794, 0);
+                //this.pointisOpenInventory1 = new PointColor(731 - 5 + xx, 86 - 5 + yy, 8036794, 0);
+                //this.pointisOpenInventory2 = new PointColor(745 - 5 + xx, 86 - 5 + yy, 8036794, 0);
+            this.pointisOpenInventory1 = new PointColor(731 - 5 + xx, 87 - 5 + yy, 8549475, 0);
+            this.pointisOpenInventory2 = new PointColor(745 - 5 + xx, 87 - 5 + yy, 8549475, 0);
 
             #endregion
         }
