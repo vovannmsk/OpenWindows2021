@@ -462,6 +462,8 @@ namespace States
             if (server.isTown())   
             {
                 if (otit.isGetTask()) GotTask = true;
+                if (otit.isTaskDone()) TaskCompleted = true;     //01-03-2021   не проверено
+
                 botwindow.PressEscThreeTimes();  //чтобы убрать рекламу с экрана
 
                 switch (NumberOfState)
@@ -703,9 +705,12 @@ namespace States
                         NumberOfState = 7;
                     break;
                     case 15:
+                        botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
+                        server.runAway();                           
                         server.Teleport(1);                         // телепорт к Мамуну
                         botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
+                        botwindow.PressEscThreeTimes();             //убираем меню с телепортами
                     break;
                     case 16:
                         botwindow.PressEscThreeTimes();             //открываем карту в миссии
