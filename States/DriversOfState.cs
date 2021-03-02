@@ -548,20 +548,20 @@ namespace States
         {
             //botParam.NumberOfInfinity = globalParam.Infinity;
             //globalParam.Infinity = globalParam.Infinity + 1;
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-
+            // 7 StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow));
             //if (server.is248Items())
 
             //StateDriverRun(new StateGT152(botwindow), new StateGT161(botwindow));  // летим в Катовию + продажа (нет больше магазина в Катовии)
 
 
-            StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
+            // 1 StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
             //StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  //   переход к магазину + продажа + выход в город из магазина
-            StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
-            StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
-            StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)
-            botwindow.PressEscThreeTimes();
-            StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
+            // 2 StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
+            // 3 StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
+            // 4 StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)
+            // 5 botwindow.PressEscThreeTimes();
+            // 6 StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
             //закрываем проги в песочнице
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
@@ -764,7 +764,8 @@ namespace States
         /// </summary>
         public void StateRecovery()
         {
-            StateDriverRun(new StateGT015(botwindow), new StateGT001(botwindow)); 
+//            StateDriverRun(new StateGT015(botwindow), new StateGT001(botwindow));
+            StateDriverRun(new StateGT015(botwindow), new StateGT023(botwindow));  //выставляем до пета (меню пета остается на экране)
 
             //только на время ивента
             //StateDriverRun(new StateGT015(botwindow), new StateGT017(botwindow));   // доходим до ребольдо, получаем подарки
