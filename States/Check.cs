@@ -591,7 +591,6 @@ namespace States
             return result;
         }
 
-
         /// <summary>
         /// разрешение выявленных проблем в добыче Pure Otite
         /// </summary>

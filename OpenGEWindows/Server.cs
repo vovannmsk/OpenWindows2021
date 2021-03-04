@@ -893,7 +893,6 @@ namespace OpenGEWindows
             //return result;
             return botParam.Logins[botParam.NumberOfInfinity];
         }
-
         protected string GetPassword()
         {
             //string result = botParam.Password;
@@ -906,7 +905,6 @@ namespace OpenGEWindows
             //return result;
             return botParam.Passwords[botParam.NumberOfInfinity];
         }
-
         protected void EnterSteamLogin()
         {
             pointSteamLogin2.Drag(pointSteamLogin1); //выделяем старый пароль, если он есть
@@ -931,6 +929,10 @@ namespace OpenGEWindows
             //}
             if (botParam.NumberOfInfinity == 0)  pointSteamSavePassword.PressMouseL(); //если обычный режим бота
         }
+
+        /// <summary>
+        /// ???
+        /// </summary>
         protected void PressSteamOk()
         {
             pointSteamOk.PressMouseL();
@@ -986,7 +988,6 @@ namespace OpenGEWindows
             Pause(4000);
 
         }
-
 
         /// <summary>
         /// плавно перемещаем мышь вдоль нижней панели Виндовс
@@ -4137,11 +4138,11 @@ namespace OpenGEWindows
         /// <param name="strLog"></param>
         public void WriteToLogFileBH(string strLog)
         {
-            StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
-            string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
+            //StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
+            //string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
 
-            writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
-            writer.Close();
+            //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
+            //writer.Close();
         }
 
         /// <summary>
@@ -4176,7 +4177,7 @@ namespace OpenGEWindows
         /// проверка миссии по цвету контрольной точки
         /// </summary>
         /// <returns> номер цвета </returns>
-        public abstract uint ColorOfMissionBH();                                                                    //может быть перенести из синга сюда
+        public abstract uint ColorOfMissionBH();                                        //может быть перенести из синга сюда
 
         /// <summary>
         /// отбегаю в сторону, чтобы бот не стрелял
@@ -4219,19 +4220,17 @@ namespace OpenGEWindows
             //botwindow.setStatusOfAtk(1);
             
             uint color = new PointColor(700 - 30 + xx, 500 - 30 + yy, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
-            //color = color / 1000;
             WriteToLogFileBH("неизвестная миссия!!!, цвет " + color);
 
-            //FightToPoint(1000, 100, 0);    //бежим с атакой в сторону (вдруг зацепим Босса)
 
             //сохраняем скриншот
-            string timeNow = DateTime.Now.ToString(" ddMMMMyyyy HH-mm-ss");
-            Size screenSz = Screen.PrimaryScreen.Bounds.Size;
-            Bitmap screenshot = new Bitmap(screenSz.Width, screenSz.Height);
-            Graphics gr = Graphics.FromImage(screenshot);
-            gr.CopyFromScreen(0, 0, 0, 0, screenSz);
-            string filepath = globalParam.DirectoryOfMyProgram + "\\ScreenShot"+ timeNow + ".bmp" ;
-            screenshot.Save(filepath);    
+            //string timeNow = DateTime.Now.ToString(" ddMMMMyyyy HH-mm-ss");
+            //Size screenSz = Screen.PrimaryScreen.Bounds.Size;
+            //Bitmap screenshot = new Bitmap(screenSz.Width, screenSz.Height);
+            //Graphics gr = Graphics.FromImage(screenshot);
+            //gr.CopyFromScreen(0, 0, 0, 0, screenSz);
+            //string filepath = globalParam.DirectoryOfMyProgram + "\\ScreenShot"+ timeNow + ".bmp" ;
+            //screenshot.Save(filepath);    
         }
 
         /// <summary>
@@ -4364,7 +4363,6 @@ namespace OpenGEWindows
 
             TurnR(24);
         }
-
 
         /// <summary>
         /// поворот, чтобы смотреть более горизонтально (снизу вверх)
