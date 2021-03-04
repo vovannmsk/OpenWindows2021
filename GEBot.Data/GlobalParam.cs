@@ -16,7 +16,7 @@ namespace GEBot.Data
         /// <summary>
         /// если равна true, то цикл похода в ворота Инфинити продолжается
         /// </summary>
-        private bool infinityGate;
+        //private bool infinityGate;
 
         private int nintendo;                           // как зачиповать оружие
         private int startingAccount;                    // номер стартового аккаунта (для заточки, чиповки и проч)

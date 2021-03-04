@@ -361,8 +361,12 @@ namespace States
         /// </summary>
         public void StateMuskPlus()
         {
-            if (server.isTown())
+            //if (server.isTown())
+            //    StateDriverRun(new StateGT304(botwindow), new StateGT307(botwindow));
+
+            if (server.isLogout())
                 StateDriverRun(new StateGT304(botwindow), new StateGT307(botwindow));
+
         }
 
         /// <summary>
