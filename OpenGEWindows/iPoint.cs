@@ -10,7 +10,7 @@
         void PressMouse();
         void PressMouseWheelUp();
         void PressMouseWheelDown();
-        void Pause(int ms);  //
+        //void Pause(int ms);  //
         void DoubleClickL();
         void Drag(iPoint point);
         void Turn(iPoint point);

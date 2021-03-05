@@ -60,7 +60,9 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.PressLucia1();
+            //server.PressLucia1();
+
+            town.PressLucia1();
             botwindow.Pause(2000);
 
         }

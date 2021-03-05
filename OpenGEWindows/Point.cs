@@ -25,21 +25,29 @@ namespace OpenGEWindows
             this.Y = y;
         }
 
+        /// <summary>
+        /// координата X
+        /// </summary>
+        /// <returns></returns>
         public int getX()
         {
             return this.X;
         }
+
+        /// <summary>
+        /// координата Y
+        /// </summary>
+        /// <returns></returns>
         public int getY()
         {
             return this.Y;
         }
 
-
         /// <summary>
         /// Останавливает поток на некоторый период
         /// </summary>
         /// <param name="ms"> ms - период в милисекундах </param>
-        public void Pause(int ms)
+        private void Pause(int ms)
         {
             Thread.Sleep(ms);
         }

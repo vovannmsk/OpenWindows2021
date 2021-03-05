@@ -91,6 +91,16 @@ namespace States
             //botParam.HowManyCyclesToSkip = 0;
         }
 
+
+
+        /// <summary>
+        /// продаем одно окно с ботом (кнопка "Направить все окна на продажу" )
+        /// </summary>
+        public void NewWhiteButton()
+        {
+            driver.StateGotoTrade();
+        }
+
         /// <summary>
         /// возвращает номер телепорта для продажи
         /// </summary>
@@ -1154,8 +1164,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(165 - 5 + xx, 215 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(595 - 5 + xx, 631 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(595 - 5 + xx, 632 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
@@ -1167,7 +1177,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

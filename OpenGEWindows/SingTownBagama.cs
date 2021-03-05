@@ -31,6 +31,10 @@ namespace OpenGEWindows
             this.pointOpenTownTeleport1 = new PointColor(105 - 5 + xx, 296 - 5 + yy, 12000000, 6);             //проверено
             this.pointOpenTownTeleport2 = new PointColor(105 - 5 + xx, 297 - 5 + yy, 13000000, 6);             //проверено
 
+            //для lucia (какашки)
+            this.FirstStringOfMap = new Point(700 - 5 + xx, 167 - 5 + yy);
+            this.NumberOfLuciaOnMap = 0;
+
             DialogFactory tf = new DialogFactory(botwindow);
             this.dialog = tf.createDialog();
             this.globalParam = new GlobalParam();

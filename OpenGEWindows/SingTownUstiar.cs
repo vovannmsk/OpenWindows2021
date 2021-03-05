@@ -37,6 +37,10 @@ namespace OpenGEWindows
             this.dialog = tf.createDialog();
             this.globalParam = new GlobalParam();
 
+            //для lucia (какашки)
+            this.FirstStringOfMap = new Point(700 - 5 + xx, 167 - 5 + yy);
+            this.NumberOfLuciaOnMap = 0;
+
         }
 
         /// <summary>

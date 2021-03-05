@@ -1,28 +1,28 @@
 ﻿using OpenGEWindows;
-
+using System.Windows.Forms;
 
 namespace States
 {
-    public class StateGT322 : IState
+    public class StateGT327 : IState
     {
         private botWindow botwindow;
-        private Server server;
-        private Town town;
+        //private Server server;
+        private Dialog dialog;
         private int tekStateInt;
 
-        public StateGT322()
+        public StateGT327()
         {
 
         }
 
-        public StateGT322(botWindow botwindow)
+        public StateGT327(botWindow botwindow)
         {
             this.botwindow = botwindow;
-            ServerFactory serverFactory = new ServerFactory(botwindow);
-            this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-//            this.town = server.getTownBegin();
-            this.town = server.getTown();
-            this.tekStateInt = 322;
+            //ServerFactory serverFactory = new ServerFactory(botwindow);
+            //this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
+            DialogFactory dialogFactory = new DialogFactory(botwindow);
+            dialog = dialogFactory.createDialog();
+            this.tekStateInt = 327;
         }
 
 
@@ -60,11 +60,11 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            //server.PressLuciaOnMap();
-            town.PressLuciaOnMap();
+            dialog.PressStringDialog(1);
+            dialog.PressOkButton(2);
 
-            botwindow.PressEscThreeTimes();
-            botwindow.Pause(7000);
+            botwindow.Pause(2000);
+
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace States
         /// <returns> true, если получилось перейти к состоянию GT06 </returns>
         public bool isAllCool()          // получилось ли перейти к следующему состоянию. true, если получилось
         {
-            return !town.isOpenMap();     // проверяем, открыта ли карта (метод зависит от города)
+            return true;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT323(botwindow);
+            return new StateGT324(botwindow);
         }
 
         /// <summary>

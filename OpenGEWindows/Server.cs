@@ -2278,7 +2278,6 @@ namespace OpenGEWindows
         /// </summary>
         public void PressHeadOfLucia()
         {
-            //new Point(471 - 5 + xx, 404 - 5 + yy).PressMouseL();
             new Point(349 - 5 + xx, 445 - 5 + yy).PressMouseL();
         }
 

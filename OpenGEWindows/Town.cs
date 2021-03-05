@@ -44,25 +44,31 @@ namespace OpenGEWindows
         #endregion
 
         #region Map
-            protected iPointColor pointOpenMap1;
-            protected iPointColor pointOpenMap2;
-            protected iPointColor pointBookmark1;
-            protected iPointColor pointBookmark2;
-            protected iPoint pointOldManOnMap;
-            protected iPoint pointBookmark;
-            protected iPoint pointTraderOnMap;
-            protected iPoint pointButtonMoveOnMap;
-            protected iPoint pointExitFromTrader;
+
+        protected iPointColor pointOpenMap1;
+        protected iPointColor pointOpenMap2;
+        protected iPointColor pointBookmark1;
+        protected iPointColor pointBookmark2;
+        protected iPoint pointOldManOnMap;
+        protected iPoint pointBookmark;
+        protected iPoint pointTraderOnMap;
+        protected iPoint pointButtonMoveOnMap;
+        protected iPoint pointExitFromTrader;
+        protected iPoint FirstStringOfMap;
+        protected int NumberOfLuciaOnMap;
+        protected iPoint pointLucia1;
+        protected iPoint pointHeadOfLucia;
+
         #endregion
 
         // ======================= Методы ====================================
 
         #region общие
 
-            /// <summary>
-            /// удаляем камеру (поднимаем максимально вверх)                           
-            /// </summary>
-            public void MaxHeight()
+        /// <summary>
+        /// удаляем камеру (поднимаем максимально вверх)                           
+        /// </summary>
+        public void MaxHeight()
             {
                 if (globalParam.Samara)
                 //if (botwindow.getIsServer())
@@ -104,17 +110,17 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region Los Toldos
+        //#region Los Toldos
 
-            /// <summary>
-            /// тыкаем на старого мужика
-            /// </summary>
-            public void PressOldMan1()
-            {
-                pointOldMan1.PressMouseL();
-            }
+        //    /// <summary>
+        //    /// тыкаем на старого мужика
+        //    /// </summary>
+        //    public void PressOldMan1()
+        //    {
+        //        pointOldMan1.PressMouseL();
+        //    }
 
-        #endregion
+        //#endregion
 
         #region Town Teleport (Alt + F3)
 
@@ -207,56 +213,91 @@ namespace OpenGEWindows
 
         #region Map
 
-            /// <summary>
-            /// тыкаем на открытой карте в строчку со старым мужиком
-            /// </summary>
-            public void PressOldManonMap()
+        /// <summary>
+        /// нажимаем на голову Lucia 
+        /// </summary>
+        public void PressHeadOfLucia()
+        {
+            pointHeadOfLucia.PressMouseL();
+            //new Point(349 - 5 + xx, 445 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// нажимаем на место немного в стороне от Lucia 
+        /// </summary>
+        public void PressLucia1()
+        {
+            pointLucia1.PressMouseL();
+        }
+
+        /// <summary>
+        /// нажимаем на Lucia в списке на карте и далее кнопка Move
+        /// </summary>
+        public void PressLuciaOnMap()
+        {
+            MapPressString(NumberOfLuciaOnMap);
+            ClickMoveMap();
+        }
+
+        /// <summary>
+        /// на карте города в списке справа нажимаем на строку с номером N
+        /// </summary>
+        /// <param name="N">номер строки в списке</param>
+        public void MapPressString(int N)
+        {
+            new Point(FirstStringOfMap.getX(), FirstStringOfMap.getY() + (N - 1) * 15).DoubleClickL();
+        }
+
+        /// <summary>
+        /// тыкаем на открытой карте в строчку со старым мужиком
+        /// </summary>
+        public void PressOldManonMap()
             {
                 pointOldManOnMap.DoubleClickL();
             }
 
-            /// <summary>
-            /// открыть вторую закладку в уже открытой карте Alt+Z       
-            /// </summary>
-            public void SecondBookmark()
-            {
-                pointBookmark.PressMouseLL();
+        /// <summary>
+        /// открыть вторую закладку в уже открытой карте Alt+Z       
+        /// </summary>
+        public void SecondBookmark()
+        {
+            pointBookmark.PressMouseLL();
 //                pointBookmark.PressMouseL();
-            }
+        }
 
-            /// <summary>
-            /// переход к торговцу, который стоит рядом с нужным нам торговцем. карта местности Alt+Z открыта 
-            /// </summary>
-            public void GoToTraderMap()
-            {
-                pointTraderOnMap.PressMouseLL();
-            }
+        /// <summary>
+        /// переход к торговцу, который стоит рядом с нужным нам торговцем. карта местности Alt+Z открыта 
+        /// </summary>
+        public void GoToTraderMap()
+        {
+            pointTraderOnMap.PressMouseLL();
+        }
 
-            /// <summary>
-            /// нажимаем на кнопку "Move" в открытой карте Alt+Z             
-            /// </summary>
-            public void ClickMoveMap()
-            {
-                pointButtonMoveOnMap.DoubleClickL();
-            }
+        /// <summary>
+        /// нажимаем на кнопку "Move" в открытой карте Alt+Z             
+        /// </summary>
+        public void ClickMoveMap()
+        {
+            pointButtonMoveOnMap.DoubleClickL();
+        }
 
-            /// <summary>
-            /// проверяет, открыта ли карта Alt+Z в городе                                        
-            /// </summary>
-            /// <returns> true, если карта уже открыта </returns>
-            public bool isOpenMap()
-            {
-                return pointOpenMap1.isColor() && pointOpenMap2.isColor();
-            }
+        /// <summary>
+        /// проверяет, открыта ли карта Alt+Z в городе                                        
+        /// </summary>
+        /// <returns> true, если карта уже открыта </returns>
+        public bool isOpenMap()
+        {
+            return pointOpenMap1.isColor() && pointOpenMap2.isColor();
+        }
 
-            /// <summary>
-            /// проверяет, открыласть ли вторая закладка карты местности (Alt + Z)          
-            /// </summary>
-            /// <returns> true, если вторая закладка открыта </returns>
-            public bool isSecondBookmark()
-            {
-                return ((pointBookmark1.isColor()) && (pointBookmark2.isColor()));
-            }
+        /// <summary>
+        /// проверяет, открыласть ли вторая закладка карты местности (Alt + Z)          
+        /// </summary>
+        /// <returns> true, если вторая закладка открыта </returns>
+        public bool isSecondBookmark()
+        {
+            return ((pointBookmark1.isColor()) && (pointBookmark2.isColor()));
+        }
 
         #endregion
 

@@ -56,6 +56,7 @@
     <Compile Include="StateGT271.cs" />
     <Compile Include="StateGT270.cs" />
     <Compile Include="StateGT269.cs" />
+    <Compile Include="StateGT327.cs" />
     <Compile Include="StateGT533.cs" />
     <Compile Include="StateGT532.cs" />
     <Compile Include="StateGT531.cs" />

@@ -351,8 +351,8 @@ namespace States
         /// </summary>
         public void StateSerendibyteToTrade()
         {
-            server.ReOpenWindow();
-            StateDriverRun(new StateGT151(botwindow), new StateGT152(botwindow));  //летим в город
+            //server.ReOpenWindow();
+            //StateDriverRun(new StateGT151(botwindow), new StateGT152(botwindow));  //летим в город
             StateDriverRun(new StateGT318(botwindow), new StateGT331(botwindow));
         }
 
@@ -750,8 +750,10 @@ namespace States
         public void StateGotoTrade()
         {
             server.ReOpenWindow();
-            StateDriverRun(new StateGT001(botwindow), new StateGT014(botwindow));
-//            StateDriverRun(new StateGT01(botwindow), new StateGT12(botwindow));
+            //StateDriverRun(new StateGT001(botwindow), new StateGT014(botwindow));
+            StateDriverRun(new StateGT001(botwindow), new StateGT003(botwindow));   // с работы в город
+            StateDriverRun(new StateGT318(botwindow), new StateGT330(botwindow));   // меняем какашки на серебряные монеты
+            StateDriverRun(new StateGT003(botwindow), new StateGT014(botwindow));   // продаёмся в магазине
         }
 
         /// <summary>
@@ -892,13 +894,13 @@ namespace States
         }
 
         /// <summary>
-        /// если бот стоит на работе, то он направляется на продажу, а потом обратно
+        /// если бот стоит на работе, то он направляется на продажу
         /// </summary>
         public void StateGotoTradeAndWork()
         {
             
-            if (server.IsActiveServer)
-            {
+            //if (server.IsActiveServer)
+            //{
                 server.ReOpenWindow();
                 botwindow.Pause(1000);
 
@@ -906,38 +908,22 @@ namespace States
                 {
                     //if (server.is248Items())
                     //{
-                        if (botParam.NomerTeleport >= 100)           // продажа в снежке
-                        {
-                            StateGotoTradeKatovia();
-                            botwindow.Pause(2000);
-                        }
-                        else                                         // продажа в городах
-                        {
+                        //if (botParam.NomerTeleport >= 100)           // продажа в снежке
+                        //{
+                        //    StateGotoTradeKatovia();
+                        //    botwindow.Pause(2000);
+                        //}
+                        //else                                         // продажа в городах
+                        //{
                             StateGotoTrade();                       // по паттерну "Состояние".  01-14       (работа-продажа-выгрузка окна)
                             botwindow.Pause(2000);
-                        }
+                        //}
                         //StateGotoWork();            // по паттерну "Состояние".  14-28       (нет окна - логаут - казарма - город - работа)
                         //botwindow.Pause(2000);
                     //}
                 }
-            }
-
-
-
-
-            //if (server.isWork())   //если бот на работе
-            //{
-            //    //StateGotoTrade();                                          // по паттерну "Состояние".  01-14       (работа - продажа - нет окна)
-            //    //botwindow.Pause(2000);
-            //    //StateGotoWork();                                           // по паттерну "Состояние".  14-01       (нет окна - логаут - казарма - город - работа)
-
-            //    //StateDriverRun(new StateGT01(botwindow), new StateGT12(botwindow));
-            //    //server.Logout();
-
-            //    StateDriverRun(new StateGT01(botwindow), new StateGT14(botwindow));
-
             //}
-    }
+        }
 
 
         

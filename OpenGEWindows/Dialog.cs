@@ -9,6 +9,16 @@
         // ============  методы  ========================
 
         /// <summary>
+        /// Диалог у Lucia. Красное слово Serendbite в диалоге
+        /// </summary>
+        /// <returns></returns>
+        public bool isRedSerendbite()
+        {
+            return  new PointColor(595 - 5 + xx, 631 - 5 + yy, 4210916, 0).isColor() &&
+                    new PointColor(595 - 5 + xx, 632 - 5 + yy, 4210916, 0).isColor();
+        }
+
+        /// <summary>
         /// проверяем, находимся ли мы в диалоге
         /// </summary>
         public bool isDialog()

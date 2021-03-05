@@ -9,6 +9,7 @@ namespace States
         private Server server;
         private Dialog dialog;
         private int tekStateInt;
+        private Town town;
 
         public StateGT324()
         {
@@ -20,6 +21,7 @@ namespace States
             this.botwindow = botwindow;
             ServerFactory serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
+            this.town = server.getTown();
             DialogFactory dialogFactory = new DialogFactory(botwindow);
             dialog = dialogFactory.createDialog();
             this.tekStateInt = 324;
@@ -60,9 +62,10 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.PressHeadOfLucia();
-            botwindow.Pause(3000);
+            //server.PressHeadOfLucia();
 
+            town.PressHeadOfLucia();
+            botwindow.Pause(3000);
         }
 
         /// <summary>

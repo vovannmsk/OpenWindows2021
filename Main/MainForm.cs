@@ -309,8 +309,8 @@ namespace Main
         /// </summary>
         private void funcGreen()
         {
-            //Check[] check = new Check[numberOfAcc + 1];
-            //for (int j = startAccount; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+            ////Check[] check = new Check[numberOfAcc + 1];
+            ////for (int j = startAccount; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
             for (int j = startAcc; j <= numberOfAcc; j++)
             {
@@ -386,11 +386,11 @@ namespace Main
         #region New white button (отправляет все окна на продажу)
 
         /// <summary>
-        /// метод продаёт все окна по очереди и потом каждое окно выставляет опят на работу
+        /// метод продаёт все окна по очереди и потом каждое окно выставляет опять на работу
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonGotoTradeTest_Click(object sender, EventArgs e)                                                     //новая белая кнопка (продажа). 
+        private void buttonGotoTradeTest_Click(object sender, EventArgs e)      //новая белая кнопка (продажа). 
         {
             buttonGotoTradeTest.Visible = false;
 
@@ -403,14 +403,20 @@ namespace Main
 
         /// <summary>
         /// метод задает функционал для потока, организуемого White Button (Sale)
-        /// </summary>*
+        /// </summary>
         private void funcNewWhite()
         {
+            Check[] check = new Check[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++) 
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+
             for (int j = startAcc; j <= numberOfAcc; j++)
             {
-                DriversOfState driver = new DriversOfState(j);
-                driver.StateGotoTradeAndWork();
-                
+                if (check[j].IsActiveServer) check[j].NewWhiteButton();
+                //{
+                    //DriversOfState driver = new DriversOfState(j);
+                    //driver.StateGotoTrade(); 
+                //}
             }
         }
         

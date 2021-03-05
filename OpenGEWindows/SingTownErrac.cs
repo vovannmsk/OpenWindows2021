@@ -35,6 +35,10 @@ namespace OpenGEWindows
             this.pointBookmark2 = new PointColor(1001 - 130 + xx, 166 - 130 + yy, 7700000, 5);                    //проверено
             this.pointOpenTownTeleport1 = new PointColor(95 - 5 + xx, 298 - 5 + yy, 13000000, 6);           // работает
             this.pointOpenTownTeleport2 = new PointColor(95 - 5 + xx, 299 - 5 + yy, 13000000, 6);
+            
+            //для lucia (какашки)
+            this.FirstStringOfMap = new Point(815 - 5 + xx, 69 - 5 + yy);
+            this.NumberOfLuciaOnMap = 0;
 
             DialogFactory tf = new DialogFactory(botwindow);
             this.dialog = tf.createDialog();

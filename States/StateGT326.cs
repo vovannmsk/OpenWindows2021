@@ -62,12 +62,7 @@ namespace States
         {
             SendKeys.SendWait("200");                 //вводим количество какашек для обмена
             dialog.PressOkButton(1);
-
-            dialog.PressStringDialog(1);
-            dialog.PressOkButton(2);
-
-            botwindow.Pause(2000);
-
+            botwindow.Pause(1000);
         }
 
         /// <summary>
@@ -75,8 +70,8 @@ namespace States
         /// </summary>
         public void elseRun()
         {
-            botwindow.PressEscThreeTimes();
-            botwindow.Pause(500);
+            dialog.PressOkButton(1);
+            botwindow.Pause(2000);
         }
 
         /// <summary>
@@ -85,7 +80,7 @@ namespace States
         /// <returns> true, если получилось перейти к состоянию GT06 </returns>
         public bool isAllCool()          // получилось ли перейти к следующему состоянию. true, если получилось
         {
-            return true;
+            return !dialog.isRedSerendbite();  //нет красного слова
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT324(botwindow);
+            return new StateGT327(botwindow);
         }
 
         /// <summary>
@@ -103,7 +98,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return this;
+            return new StateGT330(botwindow);
         }
 
         /// <summary>
