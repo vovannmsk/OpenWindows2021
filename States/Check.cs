@@ -1074,7 +1074,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 9;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1083,7 +1083,7 @@ namespace States
             Server server = new ServerSing(botwindow);
             //Server server = new ServerEuropa2(botwindow);
             Otit otit = new OtitSing(botwindow);
-            //Dialog dialog = new DialogSing(botwindow);
+            Dialog dialog = new DialogSing(botwindow);
             //Town town = new SingTownArmonia(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
@@ -1102,7 +1102,7 @@ namespace States
             //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
-            //MessageBox.Show("Диалог??? " + dialog.isDialog());
+            MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.OpenDetailInfo();
