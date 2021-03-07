@@ -36,6 +36,9 @@
             this.pointIsOpenMap1 = new PointColor(156 - 5 + xx, 208 - 5 + yy, 7000000, 6);
             this.pointIsOpenMap2 = new PointColor(156 - 5 + xx, 209 - 5 + yy, 7000000, 6);
 
+            this.pointIsPerfume1 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);   //не готово
+            this.pointIsPerfume2 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);
+
             this.pointIsNearOldMan = new PointColor(951 - 5 + xx, 127 - 5 + yy, 3819200, 0);
 
 

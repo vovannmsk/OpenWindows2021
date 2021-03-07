@@ -17,6 +17,9 @@ namespace OpenGEWindows
         protected iPointColor pointIsOpenMap1;
         protected iPointColor pointIsOpenMap2;
         protected iPointColor pointIsNearOldMan;
+        protected iPointColor pointIsPerfume1;
+        protected iPointColor pointIsPerfume2;
+
         /// <summary>
         /// номер следующей точки маршрута
         /// </summary>
@@ -50,6 +53,24 @@ namespace OpenGEWindows
                                         }
 
         // ============  методы  ========================
+
+        /// <summary>
+        /// проверяем, есть ли доступ в Лос Толдос. Применён ли парфюм в данный момент?
+        /// </summary>
+        /// <returns></returns>
+        public bool isPerfume()
+        {
+            return pointIsPerfume1.isColor() && pointIsPerfume2.isColor();
+        }
+
+        /// <summary>
+        /// применяем парфюм (открываем кэш инвентарь, ищем парфюм,применяем его, подтверждаем)
+        /// </summary>
+        public void PerfumeOn()
+        {
+
+        }
+
         /// <summary>
         /// открыта ли карта Alt+Z
         /// </summary>
