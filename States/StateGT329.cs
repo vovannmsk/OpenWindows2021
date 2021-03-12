@@ -2,7 +2,7 @@
 
 namespace States
 {
-    public class StateGT001 : IState
+    public class StateGT329 : IState
     {
         private botWindow botwindow;
         private Server server;                 
@@ -11,18 +11,18 @@ namespace States
         private int tekStateInt;
 
 
-        public StateGT001()
+        public StateGT329()
         {
 
         }
 
-        public StateGT001(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT329(botWindow botwindow)   //, GotoTrade gototrade)
         {
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.town = server.getTown();
-            this.tekStateInt = 1;
+            this.town = server.getTownBegin();
+            this.tekStateInt = 329;
         }
 
         /// <summary>
@@ -61,7 +61,8 @@ namespace States
 
             //================ переход в тот город, где надо продаться (переход по Alt+W) =================================
             server.runAway();
-            server.TeleportToTownAltW(botwindow.getNomerTeleport());            //метод без ветвлений и циклов
+//            server.TeleportToTownAltW(botwindow.getNomerTeleport());            //метод без ветвлений и циклов
+            server.TeleportToTownAltW(1);            //летим в Ребольдо
 
             botwindow.Pause(3000);
             //ожидание загрузки города
@@ -97,7 +98,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         { 
-            return new StateGT003(botwindow);  //, gototrade);
+            return new StateGT330(botwindow);  
         }
 
         /// <summary>
@@ -106,15 +107,10 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            if (!server.isHwnd()) return new StateGT028(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
-            if (server.isLogout())
-            {
-                return new StateGT015(botwindow);  //коннект и далее
-            }
+            if (!server.isHwnd() || server.isLogout()) 
+                return new StateGT330(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
             else
-            {
                 return this;
-            }
         }
 
         /// <summary>

@@ -779,11 +779,11 @@ namespace States
                         //}
 
                     }
-                    else  
-                    {
-                        //если выскочило сообщение о переполнении кармана, но количество вещей меньше 248, значит надо обменивать какашки на монеты
-                        return 19;
-                    }
+                    //else  
+                    //{
+                    //    //если выскочило сообщение о переполнении кармана, но количество вещей меньше 248, значит надо обменивать какашки на монеты
+                    //    return 19;
+                    //}
                 }
             }
             if (pet.isOpenMenuPet()) { server.WriteToLogFile("открыто меню пет"); return 4; } //если открыто меню с петом, значит пет не выпущен
@@ -826,7 +826,7 @@ namespace States
 
             switch (numberOfProblem)
             {
-                case 1: driver.StateRecovery();
+                case 1: driver.StateRecovery();                 //логаут --> работа
                     break;
                 case 2: botwindow.CureOneWindow();              //закрываем окно
                     break;
@@ -834,9 +834,9 @@ namespace States
                     break;
                 case 4: driver.StateActivePet();
                     break;
-                case 5: driver.StateGotoTradeKatovia();         //Pause(2000);
+                case 5: driver.StateGotoTradeKatovia();         
                     break;
-                case 6: driver.StateGotoTrade();                //Pause(2000);                        // по паттерну "Состояние".  01-14       (работа-продажа-выгрузка окна)
+                case 6: driver.StateGotoTrade();                //работа -> продажа -> выгрузка окна
                     break;
                 case 7: driver.StateExitFromShop2();            //продаемся и закрытие песочницы   09-14
                     break;
@@ -870,9 +870,9 @@ namespace States
                     server.BattleModeOn();         //включаем боевой режим
                     server.TopMenu(9, 2);          //открываем окно с петом (для включения будущей расстановки)
                     break;
-                case 19:
-                    driver.StateSerendibyteToTrade();
-                    break;
+                //case 19:
+                //    driver.StateSerendibyteToTrade();
+                //    break;
                 case 20:
                     server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
                     break;

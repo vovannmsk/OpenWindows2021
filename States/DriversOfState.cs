@@ -750,10 +750,13 @@ namespace States
         public void StateGotoTrade()
         {
             server.ReOpenWindow();
-            //StateDriverRun(new StateGT001(botwindow), new StateGT014(botwindow));
-            StateDriverRun(new StateGT001(botwindow), new StateGT003(botwindow));   // с работы в город
-            //StateDriverRun(new StateGT318(botwindow), new StateGT330(botwindow));   // меняем какашки на серебряные монеты
-            StateDriverRun(new StateGT003(botwindow), new StateGT014(botwindow));   // продаёмся в магазине
+            //StateDriverRun(new StateGT001(botwindow), new StateGT003(botwindow));   // с работы в город
+            ////StateDriverRun(new StateGT318(botwindow), new StateGT330(botwindow));   // меняем какашки на серебряные монеты
+            //StateDriverRun(new StateGT003(botwindow), new StateGT014(botwindow));   // продаёмся в магазине
+            StateDriverRun(new StateGT329(botwindow), new StateGT330(botwindow));   // с работы в Ребольдо
+            StateDriverRun(new StateGT318(botwindow), new StateGT330(botwindow));   // меняем какашки на серебряные монеты
+            StateDriverRun(new StateGT001(botwindow), new StateGT014(botwindow));   // продаёмся в магазине
+
         }
 
         /// <summary>
