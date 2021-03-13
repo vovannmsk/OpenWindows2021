@@ -21,7 +21,8 @@ namespace States
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.town = server.getTown();
+//            this.town = server.getTown();
+            this.town = server.getTownBegin();
             this.tekStateInt = 323;
         }
 
