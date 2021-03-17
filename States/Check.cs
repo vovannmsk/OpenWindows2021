@@ -185,51 +185,33 @@ namespace States
 
             
             //город или БХ
-            if (server.isTown())   //если в городе
+            if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
             {
-                //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
                 if (server.isBH())     //в БХ 
                 {
                     if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
-                    if (statusOfSale == 1)
-                    {
-                        // если нужно бежать продаваться
-                        return 3;                                              ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    }
                     else
-                    {
-                        // если не нужно бежать продаваться и стоим в правильном месте (около ворот Инфинити)
-                        return 4;
-                    }
+                        return 4;   // стоим в правильном месте (около ворот Инфинити)
                 }
                 else   // в городе, но не в БХ
                 {
-                    if (statusOfSale == 1)
-                    {
-                        // если нужно бежать продаваться
-                        return 5;                                              ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    }
-                    else
-                    {
-                        // если не нужно бежать продаваться
-                        return 6;
-                    }
+                    return 6;
                 }
             }
 
-            //магазин
-            if (market.isSale())
-            {
-                if (!server.isTown() || server.isWork()) return 11;        //если стоим в магазине на экране входа, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
-            }
-            if (market.isClickPurchase())
-            {
-                if (!server.isTown() || server.isWork()) return 12;         //если стоим в магазине на закладке Purchase, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
-            }
-            if (market.isClickSell())
-            {
-                if (!server.isTown() || server.isWork()) return 15;         //если стоим в магазине на закладке Purchase, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
-            }
+            ////магазин
+            //if (market.isSale())
+            //{
+            //    if (!server.isTown() || server.isWork()) return 11;        //если стоим в магазине на экране входа, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
+            //}
+            //if (market.isClickPurchase())
+            //{
+            //    if (!server.isTown() || server.isWork()) return 12;         //если стоим в магазине на закладке Purchase, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
+            //}
+            //if (market.isClickSell())
+            //{
+            //    if (!server.isTown() || server.isWork()) return 15;         //если стоим в магазине на закладке Purchase, но не проходит проверка, что мы в городе и что мы на работе (защита от ложных срабатываний)
+            //}
 
             //в миссии
             if (server.isWork())
@@ -798,7 +780,7 @@ namespace States
             if (server.isTown()) return 10;                         //если стоят в городе
             if (mm.isMMSell() || (mm.isMMBuy())) return 11;         //если бот стоит на рынке
             //if (server.isBulletHalf()|| server.isBulletOff()) return 15;      // если заканчиваются экспертные патроны
-            if (server.isWork() && !server.isBattleMode()) return 18;       //если на стоим работе, но не в боевом режиме
+            if (server.isWork() && !server.isBattleMode()) return 18;       //если стоим на работе, но не в боевом режиме
             return 0;
         }
 
@@ -1074,7 +1056,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 9;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1095,14 +1077,19 @@ namespace States
 
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
-
+            
+            MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
+            MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
+            MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
+            MessageBox.Show("Перчаток нет? " + server.isEmptyGloves(1));
+            MessageBox.Show("Ожерелья нет? " + server.isEmptyNecklace(1));
             //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
             //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
             //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
             //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
-            MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
+            //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.OpenDetailInfo();
@@ -1164,7 +1151,7 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(595 - 5 + xx, 631 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(192 - 5 + xx, 450 - 5 + yy, 0, 0);
             PointColor point2 = new PointColor(595 - 5 + xx, 632 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
@@ -1177,7 +1164,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

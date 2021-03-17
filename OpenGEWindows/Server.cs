@@ -2177,7 +2177,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, включён ли боевой режим
+        /// проверяем, включён ли боевой режим (пробел)
         /// </summary>
         /// <returns>true, если включён</returns>
         public bool isBattleMode()
@@ -2203,7 +2203,6 @@ namespace OpenGEWindows
         //    return (pointisBattleModeOff1.isColor() && pointisBattleModeOff2.isColor());
         //}
 
-
         /// <summary>
         /// Переход в боевой режим
         /// </summary>
@@ -2212,8 +2211,11 @@ namespace OpenGEWindows
             iPoint pointBattleMode = new Point(190 - 5 + xx, 530 - 5 + yy);
             if (!isBattleMode())
             {
-                pointBattleMode.PressMouse();  // Кликаю на кнопку "боевой режим"
-                Pause(500);
+                if (!globalParam.Windows10)            //сделал для Наташи, чтобы у нее не нажимался пробел (Боевой режим)
+                {
+                    pointBattleMode.PressMouse();  // Кликаю на кнопку "боевой режим"
+                    Pause(500);
+                }
             }
         }
 
@@ -5445,7 +5447,8 @@ namespace OpenGEWindows
         /// <returns>true, если слот пуст</returns>
         public bool isEmptyGloves(int i)
         {
-            return new PointColor(198 + (i - 1) * 255 - 5 + xx, 438 - 5 + yy, 11711155, 0).isColor();
+//            return new PointColor(198 + (i - 1) * 255 - 5 + xx, 438 - 5 + yy, 11711155, 0).isColor();
+            return new PointColor(192 + (i - 1) * 255 - 5 + xx, 450 - 5 + yy, 3223604, 0).isColor();
         }
 
         /// <summary>
