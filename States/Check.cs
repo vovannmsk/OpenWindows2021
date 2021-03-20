@@ -152,7 +152,7 @@ namespace States
         public int NumberOfProblemBH()
         {
 //            int statusOfSale = globalParam.StatusOfSale;          //не отлажено
-            int statusOfSale = botParam.StatusOfSale;          //не отлажено
+            //int statusOfSale = botParam.StatusOfSale;          //не отлажено
             int statusOfAtk = botParam.StatusOfAtk;
 
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt

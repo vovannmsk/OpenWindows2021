@@ -5369,8 +5369,9 @@ namespace OpenGEWindows
         public bool isBottlesOnLeftPanel()
         {
             return isItemOnLeftPanel(SteroidLeftPanel) &&
-                    isItemOnLeftPanel(PrincipleLeftPanel) &&
-                    isItemOnLeftPanel(TriumphLeftPanel);
+                    isItemOnLeftPanel(PrincipleLeftPanel);
+            // && isItemOnLeftPanel(TriumphLeftPanel);
+
 
             //return  new PointColor(31 - 5 + xx, 241 - 5 + yy, 11690052, 0).isColor() &&
             //        new PointColor(32 - 5 + xx, 272 - 5 + yy, 3226091, 0).isColor() &&
