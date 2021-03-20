@@ -80,7 +80,7 @@ namespace States
                 botwindow.Pause(500); 
                 i++;
             }
-            botwindow.Pause(12000);       //поставил по Колиной просьбе
+            botwindow.Pause(12000);       //поставил по просьбе Наташи
             //botwindow.Pause(1000);       //проба
 
             //server.GetGifts();

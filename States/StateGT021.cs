@@ -105,12 +105,15 @@ namespace States
             if (!server.isHwnd()) return new StateGT028(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
             if (server.isLogout())
             {
-                return new StateGT015(botwindow);  //коннект и далее
+                //                return new StateGT015(botwindow);  //коннект и далее
+                return new StateGT023(botwindow);                  //в конец движка
             }
             else
             {
                 if (!server.isKillHero()) { return this; }          //если никто не убит, то остаемся в этом же состоянии и пытаемся призвать пета вновь
-                else { return new StateGT001(botwindow); }           // если кто-то из героев убит присваиваем конечное состояние, а именно GT01, чтобы на следующем круге реанимировать бота
+                else 
+//                    return new StateGT001(botwindow);            // если кто-то из героев убит присваиваем конечное состояние, а именно GT01, чтобы на следующем круге реанимировать бота
+                    return new StateGT023(botwindow);                  //если убит один из героев, то в конец движка
             }
         }
 

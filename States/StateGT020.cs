@@ -96,7 +96,8 @@ namespace States
             {
                 if (server.isKillHero())
                 {
-                    return new StateGT001(botwindow);                  //если убит один из героев, то в конец движка
+                    //return new StateGT001(botwindow);                  //если убит один из героев, то в конец движка
+                    return new StateGT023(botwindow);                  //если убит один из героев, то в конец движка
                 }
                 else
                 {
@@ -118,7 +119,8 @@ namespace States
             if (!server.isHwnd()) return new StateGT028(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
             if (server.isLogout())
             {
-                return new StateGT015(botwindow);  //коннект и далее
+                //                return new StateGT015(botwindow);  //коннект и далее
+                return new StateGT023(botwindow);                  //в конец движка
             }
             else
             {
