@@ -550,7 +550,6 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            //StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow)); // ReOpen
             StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             botwindow.PressEscThreeTimes();
 

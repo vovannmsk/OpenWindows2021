@@ -263,6 +263,7 @@ namespace OpenGEWindows
                 case 2569782:     // дробь эксп Metal Shell Ammo
                 case 1843234:     // Steel Bolt
                 case 14404589:    // Large Calliber Bullet
+                case 2635075:     // Elemental Sphere (патроны)
                 //=================== пули конец =====================
                 case 5137276:     // сундук деревянный как у сфер древней звезды
                 case 3031912:     // Reinforced Lether
@@ -278,8 +279,12 @@ namespace OpenGEWindows
                 case 6270101:     // Cabosse
                 case 14344416:    // Tough Cotton
                 case 13079681:    // Silk
+                // Чипы
                 case 14278629:    // Chip 100
                 case 14542297:    // Chip Veteran
+                case 1835187:     // экспертные чипы
+                case 16771747:    // мастер чипы
+
                 case 13417421:    // Octopus Arm
                 case 3033453:     // Clear Rum
                 case 4474675:     // Fish Flesh
@@ -289,19 +294,21 @@ namespace OpenGEWindows
                 case 15595262:    // Small Stew обед
                 case 3164547:     // Portable Greate обед
                 case 3303027:     // книга со стойкой
-                case 11906207:    // Crest of Sacred
-                case 5590609:     // Crest of Black Knight
                 case 15526903:    // Elementium
-                case 1835187:     // экспертные чипы
                 case 14146476:    // solarion
                 case 16251642:    // growth booster
                 case 10992324:    // Шахматы 
                 case 7830683:     // Кожа улитки
+                //  ============== Токены =================
                 case 5205119:     // Токен 1
                 case 6848915:     // Токен 2
                 case 12308958:    // Токен 3
                 case 13361389:    // Токен 4
                 case 4345686:     // Токен Экстра
+                case 12436150:     // Токен 1+
+                case 14607593:     // Токен 2+
+                case 15002610:     // Токен 3+
+
                 case 6519909:     // Elemental Jewel
                 case 16435563:    // Spell Key
                 case 12697783:    // Wheel of Time
@@ -314,7 +321,6 @@ namespace OpenGEWindows
                 case 10000596:    // Piece of Naraka Than
                 case 9686241:     // Piece of Naraka He
                 case 5195666:     // Sedative
-                case 2635075:     // Elemental Sphere (патроны)
                 case 1585221:     // Dried Maroon
  //               case 8633037:     // Pure Gold Bar
                 case 1527133:     // Armonia Coin
@@ -327,15 +333,24 @@ namespace OpenGEWindows
                 case 1644826:     // Gift Made (по ивенту)
                 case 1357499:     // суп любой
                 case 8321791:     // Camelianium
-                //case 14607342:     // desapio Necklase
-                //case 15836741:     // desapio Gloves
-                //case 1381654:     // desapio Boots     
-                //case 3747867:     // desapio Belt
-                //case 3095646:     // desapio Earrings
                 case 482184:      // desapio Token
                 case 47612:       // Triumph Fillers
-                //case 1381654:       // обычное кольцо
-                case 14722118:       // ring crystal
+                //case 1381654:   // обычное кольцо
+                case 16367578:    // Expert Stance Book (белый прямоугольник)
+
+                //================ БХ Demonic =====================
+                case 11906207:    // Crest of Sacred
+                case 5590609:     // Crest of Black Knight
+                case 8094315:     // Crest 3
+                case 33557709:    // Crest 4
+                case 8410380:     // Nephthis
+                case 16745983:    // Death Wraith
+                case 131094:      // Will of Cortes
+                case 9103099:     // Revengence
+                case 1381654:     // Branch
+                case 8091251:     // Saurelle
+                case 13879799:    // Shell of Arb
+
                     result = false;
                     break;
                 case 14210771:    // Mega Etr, Io Talt

@@ -1056,7 +1056,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 5;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1077,12 +1077,13 @@ namespace States
 
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
-            
-            MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
-            MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
-            MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
-            MessageBox.Show("Перчаток нет? " + server.isEmptyGloves(1));
-            MessageBox.Show("Ожерелья нет? " + server.isEmptyNecklace(1));
+
+            //MessageBox.Show("логаут? " + server.isLogout());
+            //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
+            //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
+            //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
+            //MessageBox.Show("Перчаток нет? " + server.isEmptyGloves(1));
+            //MessageBox.Show("Ожерелья нет? " + server.isEmptyNecklace(1));
             //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
             //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
             //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
@@ -1145,20 +1146,20 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            //int j = 12;
-            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            int j = 1;
+            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(192 - 5 + xx, 450 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(595 - 5 + xx, 632 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(930 - 5 + xx, 702 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(930 - 5 + xx, 703 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            color2 = point2.GetPixelColor();
-            color3 = point3.GetPixelColor();
+            //color2 = point2.GetPixelColor();
+            //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);

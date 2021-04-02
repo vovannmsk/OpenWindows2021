@@ -748,7 +748,7 @@ namespace OpenGEWindows
         {
             //runClientSteam();
             ReOpenWindow();
-            Pause(100);
+            //Pause(100);
         }
 
 
