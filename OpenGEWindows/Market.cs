@@ -236,18 +236,18 @@ namespace OpenGEWindows
                 case 4448154:     // Green ore                   **
                 case 13865807:    // blue ore                    **
                 case 4670431:     // Red ore                     **
-                case 13291199:    // Diamond Ore                 ** *******************************************************
-                //case 1063140:     // Stone of Philos             **
-                //case 8486756:     // Ice Crystal                 **
-                //case 8633037:     // Pure Gold Bar
-                //case 8289818:     // Gray Feather
-                //case 13068045:    // Blue Stone                
-                //case 13627135:    // Molar                
-                //case 5803426:     // Tangler               
-                //case 12563070:    // Marble               
-                //case 6380581:     // Leather         
-                //case 14210488:    // Spool
-                //case 3223857:     // Nail                        ************************************************************* 
+                case 13291199:    // Diamond Ore                 ** **********************Катовия*****************************
+                case 1063140:     // Stone of Philos             **
+                case 8486756:     // Ice Crystal                 **
+                case 8633037:     // Pure Gold Bar
+                case 8289818:     // Gray Feather
+                case 13068045:    // Blue Stone                
+                case 13627135:    // Molar                
+                case 5803426:     // Tangler               
+                case 12563070:    // Marble               
+                case 6380581:     // Leather         
+                case 14210488:    // Spool
+                case 3223857:     // Nail                        ************************************************************* 
                 case 573951:      // Golden Apple
                 case 4966811:     // Cabbage
                 case 13164006:    // свекла  Beet                **
