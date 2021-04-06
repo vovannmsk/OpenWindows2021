@@ -2,14 +2,14 @@
 
 namespace OpenGEWindows
 {
-    public class Europa2TownAuch : Town
+    public class Europa2TownAuch2 : Town
     {
 
         /// <summary>
         /// конструктор для класса
         /// </summary>
         /// <param name="nomerOfWindow"> номер окна по порядку </param>
-        public Europa2TownAuch(botWindow botwindow)
+        public Europa2TownAuch2(botWindow botwindow)
         {
             this.botwindow = botwindow;
             this.xx = botwindow.getX();
@@ -22,10 +22,6 @@ namespace OpenGEWindows
             this.pointTraderOnMap = new Point(840 - 5 + xx, 220 - 5 + yy);                    //торговец на карте                         Firearms  Lorch
             this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 728 - 5 + yy);                //кнопка Move на карте
             this.pointHeadTrader = new Point(296 - 5 + xx, 228 - 5 + yy);                     //голова торговца          // проверено
-            this.pointBulletAutomat = new Point(479 - 5 + xx, 299 - 5 + yy);                //автомат с пулями
-            this.PAUSE_TIME_Bullet = 3000;
-            this.pointTraderOnMapBullet = new Point(840 - 5 + xx, 220 - 5 + yy);         //торговец на карте для перехода к патронам     
-
             this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);    //сюда тыкаем, чтобы улететь на торговую улицу   //проверено
             //точки для проверки цвета
             //this.pointOpenMap1 = new PointColor(847 - 5 + xx, 44 - 5 + yy, 16000000, 6);      //проверено
@@ -36,12 +32,6 @@ namespace OpenGEWindows
             this.pointBookmark2 = new PointColor(874 - 5 + xx, 41 - 5 + yy, 7700000, 5);      //проверено
             this.pointOpenTownTeleport1 = new PointColor(100 - 5 + xx, 295 - 5 + yy, 13000000, 6);  //проверено
             this.pointOpenTownTeleport2 = new PointColor(100 - 5 + xx, 296 - 5 + yy, 13000000, 6);  //проверено 
-
-            //для lucia (какашки)
-            this.FirstStringOfMap = new Point(815 - 5 + xx, 69 - 5 + yy);
-            this.NumberOfLuciaOnMap = 17;
-            this.pointLucia1 = new Point(519 - 5 + xx, 342 - 5 + yy);       //изменить координаты
-            this.pointHeadOfLucia = new Point(656 - 5 + xx, 285 - 5 + yy);  //изменить координаты
 
             DialogFactory tf = new DialogFactory(botwindow);
             this.dialog = tf.createDialog();

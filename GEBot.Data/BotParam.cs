@@ -44,6 +44,10 @@ namespace GEBot.Data
         private int lengthOfList;
         private int statusOfSale;                       // статус продажи (для BH)
         private int numberOfRoute;
+        /// <summary>
+        /// стадия выполнения миссии Демоник
+        /// </summary>
+        private int stage;
 
         public string Login { get => login; }
         public string[] Logins { get => logins; }
@@ -82,6 +86,14 @@ namespace GEBot.Data
         /// номер маршрута (для добычи отита)
         /// </summary>
         public int NumberOfRoute { get => numberOfRoute; set => numberOfRoute = value; }
+
+        /// <summary>
+        /// стадия выполнения миссии Демоник
+        /// </summary>
+        public int Stage    {  
+                                get { stage = GetStage(); return stage; }
+                                set { stage = value; SetStage(); }
+                            }
 
         ///// <summary>
         ///// номер аккаунта в списке аккаунтов п/п (нумерация с нуля) 
@@ -127,11 +139,27 @@ namespace GEBot.Data
             lengthOfList = logins.Length;
             HowManyCyclesToSkip = 0;
             //infinity = numberOfInfinity;
+            stage = GetStage();
         }
 
-
-
         //===================================== методы ==========================================
+        //===================================== методы ==========================================
+        //===================================== методы ==========================================
+
+        /// <summary>
+        /// читаем значение из файла
+        /// </summary>
+        /// <returns></returns>
+        private int GetStage()
+        { return int.Parse(File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Stage.txt")); }
+
+        /// <summary>
+        /// записываем значение в файл
+        /// </summary>
+        private void SetStage()
+        {
+            File.WriteAllText(directoryOfMyProgram + numberOfWindow + "\\Stage.txt", this.stage.ToString());
+        }
 
         /// <summary>
         /// читаем значение из файла

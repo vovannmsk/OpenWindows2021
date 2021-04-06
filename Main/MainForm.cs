@@ -879,6 +879,63 @@ namespace Main
 
         #endregion
 
+        #region Demonic
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Demonic_Click(object sender, EventArgs e)
+        {
+            Demonic.BackColor = Color.OrangeRed;
+            Thread myDemonic = new Thread(funcDemonic);
+            myDemonic.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой цвета "ForestGreen" (темно-зеленая) Infinity в BH
+        /// </summary>
+        private void funcDemonic()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                //botParam[j].Stage = 1;
+            }
+
+            DateTime Data1 = DateTime.Now;
+
+            while (true)
+            {
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    
+                    if (botParam[j].Stage == 1)
+                    {
+                        check[j].problemResolutionDemStage1();
+                    }
+                    else
+                    {
+                        check[j].problemResolutionDemStage2();
+                    }
+                }
+                DateTime Data2 = DateTime.Now;
+                if ((Data2 - Data1).Seconds < 5)            //если один проход программы был короче 5 сек, 
+                    check[1].Pause(5000 - (Data2 - Data1).Milliseconds);    // то делаем паузу на недостающий промежуток времени
+                Data1 = DateTime.Now;
+            }
+
+
+
+        }
+
+        #endregion
+
     }// END class MainForm 
 }// END namespace OpenGEWindows
 

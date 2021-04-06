@@ -38,6 +38,21 @@ namespace States
 
         #region движки для запуска перехода по состояниям
 
+        #region Demonic
+
+        /// <summary>
+        /// перевод из состояния 101 (BH) в состояние 102 (InfinityGate)
+        /// </summary>
+        public void StateFromBHToGateDem()
+        {
+            //server.WriteToLogFileBH("Движок 101-102 BH-->Gate");
+            StateDriverRun(new StateGT401(botwindow), new StateGT499(botwindow));   // BH-->Gate
+        }
+
+
+        #endregion
+
+
         #region Pure Otite Multi
 
         /// <summary>
@@ -294,6 +309,7 @@ namespace States
             server.WriteToLogFileBH("Движок 216-217 Barack-->Town");
             StateDriverRun(new StateGT216(botwindow), new StateGT217(botwindow));     // Barack-->Town
         }
+
 
         /// <summary>
         /// перевод из состояния 101 (BH) в состояние 102 (InfinityGate)

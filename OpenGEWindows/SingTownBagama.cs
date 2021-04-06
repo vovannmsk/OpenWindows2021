@@ -19,7 +19,7 @@ namespace OpenGEWindows
             //точки для нажимания на них
             this.pointMaxHeight = new Point(538 - 5 + xx, 464 - 5 + yy);
             this.pointBookmark = new Point(800 - 5 + xx, 145 - 5 + yy);
-            this.pointTraderOnMap = new Point(745 - 5 + xx, 288 - 5 + yy);
+            this.pointTraderOnMap = new Point(745 - 5 + xx, 317 - 5 + yy);   // Socket Merchant
             this.pointButtonMoveOnMap = new Point(822 + xx, 631 + yy);   //822, 631);
             this.pointHeadTrader = new Point(611 + xx, 411 + yy);      //611, 411);
             this.pointTownTeleport = new Point(110 + xx, 328 + (TELEPORT_N - 1) * 30 + yy);

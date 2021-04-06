@@ -116,7 +116,9 @@
     <Compile Include="BulletDialogFactory.cs" />
     <Compile Include="BulletDialogSing.cs" />
     <Compile Include="DialogEuropa2.cs" />
+    <Compile Include="Europa2TownAuch2.cs" />
     <Compile Include="Europa2TownFactory.cs" />
+    <Compile Include="Europa2TownReboldo2.cs" />
     <Compile Include="EuropaTownKatovia.cs" />
     <Compile Include="GoldenEggAmerica2.cs" />
     <Compile Include="GoldenEggEuropa2.cs" />

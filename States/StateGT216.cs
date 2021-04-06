@@ -69,6 +69,10 @@ namespace States
             //============ выход в город  ===========
             server.NewPlace();                //начинаем в ребольдо  
 
+            botwindow.Pause(1000);
+            botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку 
+            if (server.isBarackWarningYes()) server.PressYesBarack();
+
             botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
 
             //botwindow.Pause(2000);

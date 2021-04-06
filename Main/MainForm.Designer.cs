@@ -62,6 +62,7 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
+            this.Demonic = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -323,7 +324,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 212);
+            this.tabControl1.Size = new System.Drawing.Size(386, 202);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -343,7 +344,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 220);
+            this.tabPage1.Size = new System.Drawing.Size(378, 177);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
@@ -381,6 +382,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Bisque;
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage2.Controls.Add(this.Demonic);
             this.tabPage2.Controls.Add(this.LoadSteams);
             this.tabPage2.Controls.Add(this.alchemy);
             this.tabPage2.Controls.Add(this.labelEnchanting);
@@ -391,7 +393,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 220);
+            this.tabPage2.Size = new System.Drawing.Size(378, 176);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -437,12 +439,23 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
+            // Demonic
+            // 
+            this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
+            this.Demonic.Location = new System.Drawing.Point(6, 88);
+            this.Demonic.Name = "Demonic";
+            this.Demonic.Size = new System.Drawing.Size(170, 35);
+            this.Demonic.TabIndex = 65;
+            this.Demonic.Text = "Миссия Demonic в БХ";
+            this.Demonic.UseVisualStyleBackColor = false;
+            this.Demonic.Click += new System.EventHandler(this.Demonic_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 212);
+            this.ClientSize = new System.Drawing.Size(386, 202);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -499,6 +512,7 @@
         private System.Windows.Forms.NumericUpDown startAccount;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button PureOtiteMulti;
+        private System.Windows.Forms.Button Demonic;
     }
 }
 

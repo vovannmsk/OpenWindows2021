@@ -132,6 +132,360 @@ namespace States
             return botParam.EndOfList();
         }
 
+        #region  =================================== Demonic Stage 1 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemStage1()
+        {
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (!server.FindWindowGEforBHBool())
+                    {
+                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                    }
+                    else
+                    {
+                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                    }
+                }
+            }
+
+            //ворота
+            if (dialog.isDialog()) return 8;                        //если стоим в воротах Demonic
+
+            //город или БХ
+            if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            {
+                if (server.isBH())     //в БХ 
+                {
+                    //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+                    //else
+                    return 4;   // стоим в правильном месте (около ворот Demonic)
+                }
+                else   // в городе, но не в БХ
+                {
+                    return 6;
+                }
+            }
+
+            //в миссии
+            if (server.isWork())    return 7;
+
+            //Mission Lobby
+            if (server.isMissionLobby()) return 5;
+
+            //Waiting Room
+            if (server.isWaitingRoom()) return 3;
+
+            //в логауте
+            if (server.isLogout()) return 1;               
+
+            //в бараке
+            if (server.isBarack())                         //если стоят в бараке 
+            {
+                //if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ
+                //{ return 16; }
+                //else
+                //{ 
+                return 2;
+                //}
+            }
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionDemStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemStage1();       
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)  
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:  //зависли в логауте
+                        case 23:  //загруженное окно зависло и не смещается на нужное место
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                        case 4:  //зависли в БХ
+                            numberOfProblem = 18; //переходим в стартовый город через системное меню
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:
+                        driver.StateFromBarackToTownBH();           // идем в город     //ок
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        server.MissionStart();
+                        break;
+                    case 4:
+                        driver.StateFromBHToGateDem();              // BH --> Gate Demonic  //ок
+                        break;
+                    case 5:
+                        server.CreatingMission();
+                        break;
+                    case 6:                                         // town --> BH
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 7:
+                        //бафаемся и переходим к стадии 2
+                        server.BuffYHN();
+                        botParam.Stage = 2;
+                        break;
+                    case 8:                                         //Gate --> List of missions
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
+                        dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
+                        break;
+                    case 14:
+                        driver.StateFromMissionToBarackBH();        // в барак 
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 18:
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 22:                                    //Ок
+                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
+                        botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                        break;
+                    case 23:                                    //Ок
+                        botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                        botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        break;
+                    case 24:                                    //Ок
+                        //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
+                        botwindow = new botWindow(numberOfWindow);
+                        ServerFactory serverFactory = new ServerFactory(botwindow);
+                        this.server = serverFactory.create();
+                        this.globalParam = new GlobalParam();
+                        this.botParam = new BotParam(numberOfWindow);
+                        //********************************************************************************************************************
+                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Demonic Stage 2 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemStage2()
+        {
+            //int statusOfAtk = botParam.StatusOfAtk;
+
+            //если нет окна
+            //if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            //{
+            //    if (!server.FindWindowSteamBool())  //если Стима тоже нет
+            //    {
+            //        return 24;
+            //    }
+            //    else    //если Стим уже загружен
+            //    {
+            //        if (!server.FindWindowGEforBHBool())
+            //        {
+            //            return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+            //        }
+            //        else
+            //        {
+            //            return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+            //        }
+            //    }
+            //}
+
+            //город или БХ
+            //if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            //{
+            //    if (server.isBH())     //в БХ 
+            //    {
+            //        //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+            //        //else
+            //        return 4;   // стоим в правильном месте (около ворот Demonic)
+            //    }
+            //    else   // в городе, но не в БХ
+            //    {
+            //        return 6;
+            //    }
+            //}
+
+            //в миссии
+            if (server.isWork())
+            {
+                
+            }
+
+             //в логауте
+            if (server.isLogout()) return 1;               // если окно в логауте
+
+            //в бараке
+            if (server.isBarack())                         //если стоят в бараке 
+            {
+                 return 2;
+            }
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //в миссии, но убиты
+            if (server.isKillAllHero()) return 29;            // если убиты все
+            //if (server.isKillHero()) return 30;               // если убиты не все 
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionDemStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemStage2();
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:  //зависли в логауте
+                        case 23:  //загруженное окно зависло и не смещается на нужное место
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:
+                                                                    // идем обратно в миссию     
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:                                         
+                        
+                        break;
+                    case 4:
+                        
+                        break;
+                    case 5:
+                        
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+                        //бафаемся и переходим к стадии 2
+                        server.BuffYHN();
+                        botParam.Stage = 2;
+                        break;
+                    case 8:                                         //Gate --> List of missions
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
+                        dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
+                        break;
+                    case 14:
+                        driver.StateFromMissionToBarackBH();        // в барак 
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 18:
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 22:                                    //Ок
+                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
+                        botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                        break;
+                    case 23:                                    //Ок
+                        botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                        botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        break;
+                    case 24:                                    //Ок
+                        //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
+                        botwindow = new botWindow(numberOfWindow);
+                        ServerFactory serverFactory = new ServerFactory(botwindow);
+                        this.server = serverFactory.create();
+                        this.globalParam = new GlobalParam();
+                        this.botParam = new BotParam(numberOfWindow);
+                        //********************************************************************************************************************
+                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion
+
         #region Гильдия охотников BH
 
         /// <summary>
@@ -1056,7 +1410,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 5;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -1146,26 +1500,26 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 1;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 1;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(930 - 5 + xx, 702 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(930 - 5 + xx, 703 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(498 - 5 + xx, 164 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(498 - 5 + xx, 165 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

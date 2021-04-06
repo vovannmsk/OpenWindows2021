@@ -663,7 +663,7 @@ namespace OpenGEWindows
         /// журнал с ежедневными наградами
         /// </summary>
         Item Journal = new Item(38, 209, 4390911);
-        //Item Steroid = new Item(36, 211, 11690052);
+        Item Steroid2 = new Item(36, 211, 11690052);
         Item Steroid = new Item(36, 211, 11296065);
         Item Principle = new Item(37, 210, 3226091);
         Item Triumph = new Item(35, 209, 47612);
@@ -2228,7 +2228,6 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>true, если закончились</returns>
         public bool isEmptyReward()
-
         {
             return new PointColor(939 - 5 + xx, 177 - 5 + yy, 5848111, 0).isColor();
         }
@@ -2615,6 +2614,26 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, выскочило ли сообщение, где надо нажать кнопку "Yes"
+        /// </summary>
+        /// <returns> true, если выскочило </returns>
+        public bool isBarackWarningYes()
+        {
+            return  new PointColor(457 - 5 + xx, 422 - 5 + yy, 7925494, 0).isColor() &&
+                    new PointColor(457 - 5 + xx, 423 - 5 + yy, 7925494, 0).isColor();
+        }
+
+        /// <summary>
+        /// Нажимаем кнопку Yes для подтверждения того, что начинаем с города 
+        /// (сообщение возникает после выхода из миссий на мосту или БХ)
+        /// </summary>
+        public void PressYesBarack()
+        {
+            new Point (466 - 5 + xx, 420 - 5 + yy).PressMouseL();   // Нажимаем кнопку Yes
+        }
+
+
+        /// <summary>
         /// проверяем, в бараках ли бот (на стадии выбора группы)
         /// </summary>
         /// <returns> true, если бот в бараках на стадии выбора группы  </returns>
@@ -2648,7 +2667,6 @@ namespace OpenGEWindows
             pointLastPoint.PressMouseR();    // наводим мышку на кнопку Last Point в бараке
             return (pointisBHLastPoint1.isColor() && pointisBHLastPoint2.isColor());
         }
-
 
         /// <summary>
         /// нажать на кнопку "Create" в казарме
@@ -5345,7 +5363,9 @@ namespace OpenGEWindows
             Pause(500);
 
             MoveItemOnLeftPanelFromSpecInventory(Steroid, sdvig, 5);
-            
+
+            MoveItemOnLeftPanelFromSpecInventory(Steroid2, sdvig, 5);
+
             MoveItemOnLeftPanelFromSpecInventory(Principle, sdvig, 6);
             
             MoveItemOnLeftPanelFromSpecInventory(Triumph, sdvig, 7);
@@ -5628,5 +5648,99 @@ namespace OpenGEWindows
         }
 
         #endregion
+
+        #region  Demonic
+
+        /// <summary>
+        /// тыкаем в ворота Demonic (Гильдии Охотников)
+        /// </summary>
+        public void GoToInfinityGateDem()
+        {
+            //MinHeight();
+            new Point(528 - 105 + xx, 316 - 105 + yy).PressMouseL();       
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в Mission Lobby
+        /// </summary>
+        /// <returns>true, если находимся</returns>
+        public bool isMissionLobby()
+        {
+            return  new PointColor(281 - 5 + xx, 110 - 5 + yy, 7925494, 0).isColor() &&
+                    new PointColor(281 - 5 + xx, 111 - 5 + yy, 7925494, 0).isColor();
+        }
+
+        /// <summary>
+        /// создаем миссию
+        /// </summary>
+        public void CreatingMission()
+        {
+            new Point(600 - 5 + xx, 340 - 5 + yy).PressMouseL();
+            Pause(500);
+            new Point(600 - 5 + xx, 612 - 5 + yy).PressMouseL();
+            Pause(1000);
+            new Point(438 - 5 + xx, 397 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в Waiting Room
+        /// </summary>
+        /// <returns>true, если находимся</returns>
+        public bool isWaitingRoom()
+        {
+            return  new PointColor(498 - 5 + xx, 164 - 5 + yy, 13034463, 0).isColor() &&
+                    new PointColor(498 - 5 + xx, 165 - 5 + yy, 13034463, 0).isColor();
+        }
+
+        /// <summary>
+        /// стартуем миссию
+        /// </summary>
+        public void MissionStart()
+        {
+            new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
+        }
+
+        /// <summary>
+        /// бафаемся (Y+H+N)    =========== потом переделать, чтобы разные персы бафались по разному =========
+        /// </summary>
+        public void BuffYHN()
+        {
+            BuffY();
+            BuffH();
+            BuffN();
+        }
+
+        /// <summary>
+        /// бафаемся (Y)
+        /// </summary>
+        public void BuffY()
+        {
+            new Point(182 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся (H)
+        /// </summary>
+        public void BuffH()
+        {
+            new Point(437 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся (N)
+        /// </summary>
+        public void BuffN()
+        {
+            new Point(692 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+
+
+
+        #endregion
+
     }
 }
