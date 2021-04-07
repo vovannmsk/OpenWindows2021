@@ -5737,6 +5737,57 @@ namespace OpenGEWindows
             Pause(500);
         }
 
+        /// <summary>
+        /// нажимаем в бараках на кнопку "Mission Again"
+        /// </summary>
+        public void ReturnToMissionFromBarack()
+        {
+            new Point(330 - 5 + xx, 670 - 5 + yy).PressMouseLL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// проверяем, появилась ли в миссии Demonic желтая надпись сверху, означаюшая окончание миссии
+        /// </summary>
+        /// <returns>true, если появилась</returns>
+        public bool isYellowLabel()
+        {
+            return (
+                    new PointColor(300 - 5 + xx, 145 - 5 + yy, 13034463, 0).isColor() &&
+                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 13034463, 0).isColor()
+                    ) ||    //белая надпись (миссия закончится через 2 минуты )
+                   (
+                    new PointColor(348 - 5 + xx, 168 - 5 + yy, 13034463, 0).isColor() &&
+                    new PointColor(348 - 5 + xx, 169 - 5 + yy, 13034463, 0).isColor()
+                    );      //желтая надпись (сундук появился)
+            //переделать. Цвета не проверены
+        }
+
+        /// <summary>
+        /// атакуем монстров в миссии  (с CTRL)
+        /// </summary>
+        public void AttackTheMonsters(int Direction)
+        {
+            MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
+            AssaultMode();
+            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// переходим в режим атаки с CTRL
+        /// </summary>
+        public void AssaultMode()
+        {
+            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseLL();
+        }
+
+        /// <summary>
+        /// переходим в режим атаки с CTRL
+        /// </summary>
+        public void OpeningTheChest()
+        {
+            new Point(523 - 5 + xx, 350 - 5 + yy).PressMouseLL();
+        }
 
 
 

@@ -919,10 +919,15 @@ namespace Main
                     {
                         check[j].problemResolutionDemStage1();
                     }
-                    else
+                    if (botParam[j].Stage == 2)
                     {
                         check[j].problemResolutionDemStage2();
                     }
+                    if (botParam[j].Stage == 3)
+                    {
+                        //check[j].problemResolutionDemStage3();
+                    }
+
                 }
                 DateTime Data2 = DateTime.Now;
                 if ((Data2 - Data1).Seconds < 5)            //если один проход программы был короче 5 сек, 
