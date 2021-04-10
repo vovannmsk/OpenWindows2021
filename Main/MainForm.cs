@@ -879,7 +879,7 @@ namespace Main
 
         #endregion
 
-        #region Demonic
+        #region  ======================== Demonic ==============================================
 
         /// <summary>
         /// 
@@ -905,13 +905,17 @@ namespace Main
             {
                 check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
                 botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
-                //botParam[j].Stage = 1;
+                botParam[j].Stage = 1;
             }
 
-            DateTime Data1 = DateTime.Now;
+             int Period;
+            int MinTimeOfTurn = 5000;    //минимальное время цикла
+            DateTime Data1;
+            DateTime Data2;
 
             while (true)
             {
+                Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     
@@ -929,10 +933,10 @@ namespace Main
                     }
 
                 }
-                DateTime Data2 = DateTime.Now;
-                if ((Data2 - Data1).Seconds < 5)            //если один проход программы был короче 5 сек, 
-                    check[1].Pause(5000 - (Data2 - Data1).Milliseconds);    // то делаем паузу на недостающий промежуток времени
-                Data1 = DateTime.Now;
+                Data2 = DateTime.Now;
+                Period = (Data2 - Data1).Milliseconds;
+                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
 
 

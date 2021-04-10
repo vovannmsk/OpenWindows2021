@@ -95,7 +95,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return pet.isOpenMenuPet();     //сделать проверку, открыто ли окно с петом Alt+P
+            return pet.isOpenMenuPet();     
             //return true;
         }
 

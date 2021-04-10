@@ -997,32 +997,32 @@ namespace OpenGEWindows
                     process.Start();
 
 
-                    for (int i = 1; i <= 10; i++)
-                    {
-                        Pause(1000);
+                    //for (int i = 1; i <= 10; i++)
+                    //{
+                    //    Pause(1000);
 
-                        //if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
-                        //{
-                        //    OkSystemError();
-                        //}
+                    //    //if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
+                    //    //{
+                    //    //    OkSystemError();
+                    //    //}
 
-                        if (isNewSteam())
-                        {
-                            pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
-                        }
+                    //    if (isNewSteam())
+                    //    {
+                    //        pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
+                    //    }
 
-                        if (isContinueRunning())    //если аккаунт запущен на другом компе
-                        {
-                            NextAccount();
-                            AccountBusy = true;
-                            //                            RemoveSandboxieBH();
-                            CloseSandboxieBH();
-                            botParam.NumberOfInfinity = globalParam.Infinity;
-                            globalParam.Infinity = botParam.NumberOfInfinity + 1;
+                    //    if (isContinueRunning())    //если аккаунт запущен на другом компе
+                    //    {
+                    //        NextAccount();
+                    //        AccountBusy = true;
+                    //        //                            RemoveSandboxieBH();
+                    //        CloseSandboxieBH();
+                    //        botParam.NumberOfInfinity = globalParam.Infinity;
+                    //        globalParam.Infinity = botParam.NumberOfInfinity + 1;
 
-                            break;
-                        }
-                    }
+                    //        break;
+                    //    }
+                    //}
                 }
                 else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
                 {
@@ -1089,7 +1089,9 @@ namespace OpenGEWindows
         public override bool FindWindowSteamBool()
         {
             bool result = false;
-            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
+            string aaa = "Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow";
+//            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
+            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "Steam");
             if (HWND != (UIntPtr)0)
             {
                 result = true;

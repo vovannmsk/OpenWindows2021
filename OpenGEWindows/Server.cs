@@ -2591,8 +2591,10 @@ namespace OpenGEWindows
         public void TeamSelection(int numberTeam)
         {
             pointTeamSelection1.PressMouse();   // Нажимаем кнопку вызова списка групп
-            new Point(70 - 5 + xx, 355 - 5 + (numberTeam - 1) * 15 + yy).PressMouseL();  // выбираем нужную группу персов 
-            pointTeamSelection3.PressMouseL();  // Нажимаем кнопку выбора группы (Select Team) 
+            Pause(500);
+            new Point(70 - 5 + xx, 355 - 5 + (numberTeam - 1) * 15 + yy).PressMouseLL();  // выбираем нужную группу персов 
+            Pause(500);
+            pointTeamSelection3.PressMouseLL();  // Нажимаем кнопку выбора группы (Select Team) 
         }
 
         /// <summary>
@@ -4271,8 +4273,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isBH()
         {
-//            return (isTown() && !pointisBH1.isColor());
-            return (!pointisBH1.isColor());
+            //return (isTown() && !pointisBH1.isColor());
+            return !pointisBH1.isColor();   //нет желтого ободка на миникарте
         }
 
         /// <summary>
@@ -5675,7 +5677,7 @@ namespace OpenGEWindows
         /// </summary>
         public void CreatingMission()
         {
-            new Point(600 - 5 + xx, 340 - 5 + yy).PressMouseL();
+            new Point(600 - 5 + xx, 250 - 5 + yy).PressMouseL();
             Pause(500);
             new Point(600 - 5 + xx, 612 - 5 + yy).PressMouseL();
             Pause(1000);
@@ -5752,15 +5754,16 @@ namespace OpenGEWindows
         /// <returns>true, если появилась</returns>
         public bool isYellowLabel()
         {
-            return (
-                    new PointColor(300 - 5 + xx, 145 - 5 + yy, 13034463, 0).isColor() &&
-                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 13034463, 0).isColor()
-                    ) ||    //белая надпись (миссия закончится через 2 минуты )
-                   (
-                    new PointColor(348 - 5 + xx, 168 - 5 + yy, 13034463, 0).isColor() &&
-                    new PointColor(348 - 5 + xx, 169 - 5 + yy, 13034463, 0).isColor()
-                    );      //желтая надпись (сундук появился)
-            //переделать. Цвета не проверены
+            return false;
+            //return (
+            //        new PointColor(300 - 5 + xx, 145 - 5 + yy, 16711422, 0).isColor() &&
+            //        new PointColor(300 - 5 + xx, 146 - 5 + yy, 16711422, 0).isColor()
+            //        ) ||    //белая надпись (миссия закончится через 2 минуты )
+            //       (
+            //        new PointColor(348 - 5 + xx, 168 - 5 + yy, 7397351, 0).isColor() &&
+            //        new PointColor(348 - 5 + xx, 169 - 5 + yy, 7397351, 0).isColor()
+            //        );      //желтая надпись (сундук появился)
+            ////переделать. Цвета не проверены
         }
 
         /// <summary>
@@ -5789,7 +5792,24 @@ namespace OpenGEWindows
             new Point(523 - 5 + xx, 350 - 5 + yy).PressMouseLL();
         }
 
+        /// <summary>
+        /// проверяем, пробафались ли герои
+        /// </summary>
+        /// <returns>true, если бафы есть</returns>
+        public bool isBuff()
+        {
+            return true;
+        }
 
+        /// <summary>
+        /// проверяем, доступна ли миссия (не доступна, потому что уже ходили сегодня)
+        /// /// </summary>
+        /// <returns>true, если не доступна</returns>
+        public bool isMissionNotAvailable()
+        {
+            return  new PointColor(349 - 5 + xx, 652 - 5 + yy, 13752023, 0).isColor() &&
+                    new PointColor(349 - 5 + xx, 653 - 5 + yy, 13752023, 0).isColor();
+        }
 
         #endregion
 
