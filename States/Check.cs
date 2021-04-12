@@ -41,6 +41,12 @@ namespace States
         /// направление движения (1 - вправо, -1 - влево)
         /// </summary>
         private int DirectionOfMovement;
+        /// <summary>
+        /// информация о том, какие герои в нашей команде: Hero[1] - первый герой, Hero[2] - второй, Hero[3] - третий
+        /// 0 - герой не определён, 1 - мушкетёр или Берка(Флинт), 2 - Бернелли (Superior Blaster), 3 - М.Лорч, 4 - Джайна
+        /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
+        /// </summary>
+        private int[] Hero;
 
         private bool isActiveServer;
 
@@ -94,6 +100,7 @@ namespace States
             this.isActiveServer = server.IsActiveServer;
             //botParam.HowManyCyclesToSkip = 0;
             DirectionOfMovement = 1;
+            Hero = new int[4] {0,0,0,0};
         }
 
 
@@ -284,6 +291,9 @@ namespace States
                         server.BuffYHN();                           //можно делать на стадии 2
                         server.MaxHeight(7);                        //можно не делать. на стадии 2 есть подъем камепы на 1 шаг
                         driver.StateActivePetDem();                //сделать свой вариант вызова пета специально для Демоник!!!!!!
+                        Hero[1] = server.WhatsHero(1);
+                        Hero[2] = server.WhatsHero(2);
+                        Hero[3] = server.WhatsHero(3);
                         botParam.Stage = 2;
                         break;
                     case 8:                                         //Gate --> List of missions
@@ -1578,8 +1588,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(349 - 5 + xx, 652 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(349 - 5 + xx, 653 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(26 - 5 + xx, 696 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(24+255 - 5 + xx, 690 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 

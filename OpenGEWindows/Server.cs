@@ -5792,11 +5792,33 @@ namespace OpenGEWindows
             new Point(523 - 5 + xx, 350 - 5 + yy).PressMouseLL();
         }
 
+
         /// <summary>
         /// проверяем, пробафались ли герои
         /// </summary>
         /// <returns>true, если бафы есть</returns>
         public bool isBuff()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// проверяем, пробафались ли герои
+        /// </summary>
+        /// <returns>true, если бафы есть</returns>
+        public bool isBuff(bool ff)
+        {
+            //return true;
+            return isBuff(1, ff) && isBuff(2, ff) && isBuff(3, ff);
+        }
+
+        /// <summary>
+        /// проверяем, пробафался ли герой номер Number
+        /// </summary>
+        /// <param name="number">номер героя</param>
+        /// <param name="ff">если ff = true, то сразу бафаемся, если бафа нет</param>
+        /// <returns></returns>
+        public bool isBuff(int number, bool ff)
         {
             return true;
         }
@@ -5810,6 +5832,127 @@ namespace OpenGEWindows
             return  new PointColor(349 - 5 + xx, 652 - 5 + yy, 13752023, 0).isColor() &&
                     new PointColor(349 - 5 + xx, 653 - 5 + yy, 13752023, 0).isColor();
         }
+
+        /// <summary>
+        /// вычисляем, какой герой стоит в команде на i-м месте
+        /// </summary>
+        /// <param name="i">номер места в команде</param>
+        /// <returns></returns>
+        public int WhatsHero(int i)
+        {
+            int result = 0;
+
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor()) result = 1;     //любой с флинтом
+            if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
+            if (new PointColor(18 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
+            if (new PointColor(24 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 9371642, 0).isColor()) result = 4;    //Джайна
+            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
+                                                                                                                //C.Daria
+            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 693 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
+            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
+
+            return result;
+        }
+
+        /// <summary>
+        /// бафаем i-го героя
+        /// </summary>
+        /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
+        /// <param name="i"></param>
+        public void Buff(int typeOfHero, int i)
+        {
+            switch (typeOfHero)
+            {
+                case 1:
+                    BuffMusk(i);
+                    break;
+                case 2:
+                    BuffBernelli(i);
+                    break;
+                case 3:
+                    BuffLorch(i);
+                    break;
+                case 4:
+                    BuffJaina(i);
+                    break;
+                case 5:
+                    BuffBarell(i);
+                    break;
+                case 6:
+                    BuffCDaria(i);
+                    break;
+                case 7:
+                    BuffTom(i);
+                    break;
+                case 8:
+                    BuffMoon(i);
+                    break;
+                case 9:
+                    break;
+                case 0:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// бафаем мушкетера или Бернелли с флинтом на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffMusk(int i)
+        { 
+        
+        }
+
+        /// <summary>
+        /// бафаем Бернелли с супериор бластер на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffBernelli(int i)
+        { 
+        
+        }
+
+        /// <summary>
+        /// бафаем М Лорча на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffLorch(int i)
+        { }
+
+        /// <summary>
+        /// бафаем Джайну на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffJaina(int i)
+        { }
+
+        /// <summary>
+        /// бафаем молодого Барреля на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffBarell(int i)
+        { }
+
+        /// <summary>
+        /// бафаем коммандера Дарью на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffCDaria(int i)
+        { }
+
+        /// <summary>
+        /// бафаем Тома на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffTom(int i)
+        { }
+
+        /// <summary>
+        /// бафаем Муна на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffMoon(int i)
+        { }
 
         #endregion
 
