@@ -1504,6 +1504,9 @@ namespace States
 
             botWindow botwindow = new botWindow(i);
             Server server = new ServerSing(botwindow);
+            //server.Buff(server.WhatsHero(1), 1);
+            //server.Buff(server.WhatsHero(2), 2);
+            //server.Buff(server.WhatsHero(3), 3);
             //Server server = new ServerEuropa2(botwindow);
             //Otit otit = new OtitSing(botwindow);
             //Dialog dialog = new DialogSing(botwindow);
@@ -1593,8 +1596,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(182 - 5 + xx + (2 - 1) * 255, 699 - 5 + xx, 0, 0);
-            PointColor point2 = new PointColor(182 - 5 + xx + (2 - 1) * 255, 700 - 5 + xx, 0, 0);
+            PointColor point1 = new PointColor(155 - 5 + xx + (1 - 1) * 255, 583 - 5 + xx, 0, 0);
+            PointColor point2 = new PointColor(156 - 5 + xx + (1 - 1) * 255, 583 - 5 + xx, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 

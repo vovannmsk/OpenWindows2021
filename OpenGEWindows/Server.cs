@@ -5859,12 +5859,12 @@ namespace OpenGEWindows
         {
             int result = 0;
 
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor())
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor())    //флинлок
             { 
                 //проверяем Y
                 if (new PointColor(182 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 13951211, 0).isColor())
                     result = 1;     //мушкетер с флинтом
-                if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor())
+                if (new PointColor(182 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 3706355, 0).isColor())
                     result = 10;   //Бернелли с флинтом
             }
             if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
@@ -5888,19 +5888,19 @@ namespace OpenGEWindows
             switch (typeOfHero)
             {
                 case 1:
-                    BuffMusk(i);
+                    BuffMusk(i);  //*
                     break;
                 case 2:
-                    BuffBernelli(i);
+                    BuffBernelliBlaster(i);   //*
                     break;
                 case 3:
-                    BuffLorch(i);
+                    BuffLorch(i); //*
                     break;
                 case 4:
-                    BuffJaina(i);
+                    BuffJaina(i);  //*
                     break;
                 case 5:
-                    BuffBarell(i);
+                    BuffBarell(i);  //*
                     break;
                 case 6:
                     BuffCDaria(i);
@@ -5909,13 +5909,94 @@ namespace OpenGEWindows
                     BuffTom(i);
                     break;
                 case 8:
-                    BuffMoon(i);
+                    BuffMoon(i);  //*
                     break;
                 case 9:
+                    break;
+                case 10:
+                    BuffBernelliFlint(i);   //*
                     break;
                 case 0:
                     break;
             }
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Marchen" /Moon/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindMarchen(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (    new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 2433305, 0).isColor() &&
+                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 2433305, 0).isColor()
+                   )    result = true;
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Reload Bullet" /Moon/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindReloadBullet(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + xx, 464572, 0).isColor() &&
+                        new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + xx, 397755, 0).isColor()
+                    ) result = true;
+            return result;
+        }
+
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Mysophoia" /Jaina/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindMysophoia(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + xx, 16767324, 0).isColor() &&
+                        new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + xx, 16767324, 0).isColor()
+                    ) result = true;
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Bullet Apilicion" /М Лорч/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindBulletApilicon(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + xx, 7967538, 0).isColor() &&
+                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 7572528, 0).isColor()
+                    ) result = true;
+
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Share Flint" /М Лорч/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindShareFlint(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (new PointColor(75 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + xx, 8257280, 0).isColor() &&
+                        new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + xx, 79995136, 0).isColor()
+                    ) result = true;
+
+            return result;
         }
 
         /// <summary>
@@ -5967,6 +6048,37 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Marksmanship" / Bernelli /
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindMarksmanship(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + xx, 13133369, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 592 - 5 + xx, 13067318, 0).isColor()
+                   ) result = true;
+
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Hound" / Bernelli Blaster /
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindHound(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + xx, 6319302, 0).isColor() &&
+                        new PointColor(77 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + xx, 5858504, 0).isColor()
+                   ) result = true;
+            return result;
+        }
+
+        /// <summary>
         /// бафаем мушкетера или Бернелли с флинтом на i-м месте
         /// </summary>
         /// <param name="i"></param>
@@ -5979,9 +6091,19 @@ namespace OpenGEWindows
         /// бафаем Бернелли с супериор бластер на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffBernelli(int i)
-        { 
-        
+        private void BuffBernelliBlaster(int i)
+        {
+            if (!FindMarksmanship(i)) BuffY(i);
+            if (!FindHound(i)) BuffQ(i);
+        }
+
+        /// <summary>
+        /// бафаем Бернелли с Flintlock на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffBernelliFlint(int i)
+        {
+            if (!FindMarksmanship(i)) BuffY(i);
         }
 
         /// <summary>
@@ -5989,14 +6111,19 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i"></param>
         private void BuffLorch(int i)
-        { }
+        {
+            if (!FindBulletApilicon(i)) BuffY(i); 
+            if (!FindShareFlint(i)) BuffW(i);
+        }
 
         /// <summary>
         /// бафаем Джайну на i-м месте
         /// </summary>
         /// <param name="i"></param>
         private void BuffJaina(int i)
-        { }
+        {
+            if (!FindMysophoia(i)) BuffY(i);
+        }
 
         /// <summary>
         /// бафаем молодого Барреля на i-м месте
@@ -6027,7 +6154,10 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i"></param>
         private void BuffMoon(int i)
-        { }
+        {
+            if (!FindReloadBullet(i)) BuffY(i);
+            if (!FindMarchen(i)) BuffQ(i);
+        }
 
         #endregion
 
