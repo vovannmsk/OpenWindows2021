@@ -287,10 +287,10 @@ namespace States
                         break;
                     case 7:
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
-                        server.BattleModeOn();
-                        server.BuffYHN();                           //можно делать на стадии 2
-                        server.MaxHeight(7);                        //можно не делать. на стадии 2 есть подъем камепы на 1 шаг
-                        driver.StateActivePetDem();                //сделать свой вариант вызова пета специально для Демоник!!!!!!
+                        server.BattleModeOn();                      //пробел
+                        //server.BuffYHN();                         //можно делать на стадии 2
+                        //server.MaxHeight(7);                      //можно не делать. на стадии 2 есть подъем камеры на 1 шаг
+                        driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
@@ -354,19 +354,21 @@ namespace States
             //в миссии
             if (server.isWork())
             {
-                if (!server.isBuff()) return 4;
+                //if (!server.isBuff()) return 4;
 
                 if (!server.isAssaultMode())
                 {
-                    return 3;
+                    return 3;   //если нет режима атаки
                 }
                 else
                 {
-                    //если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
-                    if (server.isYellowLabel()) return 29;
+                    return 4;   //если атакуем с Ctrl, то обновляем бафы
+
+                    ////если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
+                    //if (server.isYellowLabel()) return 29;
                 }
-                //если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
-                if (server.isYellowLabel()) return 29;
+                ////если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
+                //if (server.isYellowLabel()) return 29;
             }
 
             //в БХ вылетели, значит миссия закончена
@@ -430,7 +432,7 @@ namespace States
                     case 5:
                         server.RemoveSandboxieBH();
                         break;
-                    case 29:
+                    case 29:                                                //если все убиты, значит мисс
                         //server.ReturnToMissionFromBarack();                          // идем из барака обратно в миссию     
                         //botParam.HowManyCyclesToSkip = 2;
                         server.RemoveSandboxieBH();
@@ -440,7 +442,10 @@ namespace States
                         server.AttackTheMonsters(DirectionOfMovement);
                         break;
                     case 4:
-                        server.BuffYHN();
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+
                         break;
                     case 6:
 
@@ -1588,8 +1593,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(26 - 5 + xx, 696 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(24+255 - 5 + xx, 690 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(182 - 5 + xx + (2 - 1) * 255, 699 - 5 + xx, 0, 0);
+            PointColor point2 = new PointColor(182 - 5 + xx + (2 - 1) * 255, 700 - 5 + xx, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 

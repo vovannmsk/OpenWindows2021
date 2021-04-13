@@ -5702,40 +5702,57 @@ namespace OpenGEWindows
             new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
         }
 
-        /// <summary>
-        /// бафаемся (Y+H+N)    =========== потом переделать, чтобы разные персы бафались по разному =========
+         /// <summary>
+        /// бафаемся умением Q (i-й герой)
         /// </summary>
-        public void BuffYHN()
+        public void BuffQ(int i)
         {
-            BuffY();
-            BuffH();
-            BuffN();
-        }
-
-        /// <summary>
-        /// бафаемся (Y)
-        /// </summary>
-        public void BuffY()
-        {
-            new Point(182 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            new Point(27 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
             Pause(500);
         }
 
         /// <summary>
-        /// бафаемся (H)
+        /// бафаемся умением W (i-й герой)
         /// </summary>
-        public void BuffH()
+        public void BuffW(int i)
         {
-            new Point(437 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            new Point(58 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
             Pause(500);
         }
 
         /// <summary>
-        /// бафаемся (N)
+        /// бафаемся умением E (i-й герой)
         /// </summary>
-        public void BuffN()
+        public void BuffE(int i)
         {
-            new Point(692 - 5 + xx, 699 - 5 + yy).PressMouseL();
+            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся умением R (i-й герой)
+        /// </summary>
+        public void BuffR(int i)
+        {
+            new Point(120 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся умением T (i-й герой)
+        /// </summary>
+        public void BuffT(int i)
+        {
+            new Point(151 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся рабочим умением Y (i-й герой)
+        /// </summary>
+        public void BuffY(int i)
+        {
+            new Point(182 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
             Pause(500);
         }
 
@@ -5793,35 +5810,35 @@ namespace OpenGEWindows
         }
 
 
-        /// <summary>
-        /// проверяем, пробафались ли герои
-        /// </summary>
-        /// <returns>true, если бафы есть</returns>
-        public bool isBuff()
-        {
-            return true;
-        }
+        ///// <summary>
+        ///// проверяем, пробафались ли герои
+        ///// </summary>
+        ///// <returns>true, если бафы есть</returns>
+        //public bool isBuff()
+        //{
+        //    return true;
+        //}
 
-        /// <summary>
-        /// проверяем, пробафались ли герои
-        /// </summary>
-        /// <returns>true, если бафы есть</returns>
-        public bool isBuff(bool ff)
-        {
-            //return true;
-            return isBuff(1, ff) && isBuff(2, ff) && isBuff(3, ff);
-        }
+        ///// <summary>
+        ///// проверяем, пробафался ли герой 
+        ///// </summary>
+        ///// <returns>true, если бафы есть</returns>
+        //public bool isBuff(bool ff)
+        //{
+        //    //return true;
+        //    return isBuff(1, ff) && isBuff(2, ff) && isBuff(3, ff);
+        //}
 
-        /// <summary>
-        /// проверяем, пробафался ли герой номер Number
-        /// </summary>
-        /// <param name="number">номер героя</param>
-        /// <param name="ff">если ff = true, то сразу бафаемся, если бафа нет</param>
-        /// <returns></returns>
-        public bool isBuff(int number, bool ff)
-        {
-            return true;
-        }
+        ///// <summary>
+        ///// проверяем, пробафался ли герой номер Number
+        ///// </summary>
+        ///// <param name="number">номер героя</param>
+        ///// <param name="ff">если ff = true, то сразу бафаемся, если бафа нет</param>
+        ///// <returns></returns>
+        //public bool isBuff(int number, bool ff)
+        //{
+        //    return true;
+        //}
 
         /// <summary>
         /// проверяем, доступна ли миссия (не доступна, потому что уже ходили сегодня)
@@ -5842,7 +5859,14 @@ namespace OpenGEWindows
         {
             int result = 0;
 
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor()) result = 1;     //любой с флинтом
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor())
+            { 
+                //проверяем Y
+                if (new PointColor(182 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 13951211, 0).isColor())
+                    result = 1;     //мушкетер с флинтом
+                if (new PointColor(28 - 5 + xx + (i - 1) * 255, 691 - 5 + yy, 806655, 0).isColor())
+                    result = 10;   //Бернелли с флинтом
+            }
             if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
             if (new PointColor(18 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
             if (new PointColor(24 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 9371642, 0).isColor()) result = 4;    //Джайна
@@ -5895,12 +5919,60 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Concentration"
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindConcentracion(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + xx, 16777215, 0).isColor() &&
+                        new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + xx, 16777215, 0).isColor()
+                    ) result = true;
+
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Drunken" / Barrell /
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindDrunken(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + xx, 10861754, 0).isColor() &&
+                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + xx, 11124411, 0).isColor()
+                   ) result = true;
+
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Shooting Promoted" / Barrell /
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        private bool FindShootingPromoted(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (    new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + xx, 2503088, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + xx, 1976470, 0).isColor()
+                   ) result = true;
+
+            return result;
+        }
+
+        /// <summary>
         /// бафаем мушкетера или Бернелли с флинтом на i-м месте
         /// </summary>
         /// <param name="i"></param>
         private void BuffMusk(int i)
-        { 
-        
+        {
+            if (!FindConcentracion(i)) BuffY(i);
         }
 
         /// <summary>
@@ -5931,7 +6003,10 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i"></param>
         private void BuffBarell(int i)
-        { }
+        {
+            if (!FindDrunken(i)) BuffY(i);
+            if (!FindShootingPromoted(i)) BuffW(i);
+        }
 
         /// <summary>
         /// бафаем коммандера Дарью на i-м месте

@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GEBot.Data",
+    "\\Main"
   ],
+  "SelectedNode": "\\Main\\Main.csproj",
   "PreviewInSolutionExplorer": true
 }
