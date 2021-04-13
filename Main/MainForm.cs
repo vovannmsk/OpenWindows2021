@@ -894,7 +894,7 @@ namespace Main
         }
 
         /// <summary>
-        /// метод задает функционал для потока, организуемого кнопкой цвета "ForestGreen" (темно-зеленая) Infinity в BH
+        /// метод задает функционал для потока, организуемого кнопкой Demonic в BH
         /// </summary>
         private void funcDemonic()
         {
@@ -908,8 +908,8 @@ namespace Main
                 botParam[j].Stage = 1;
             }
 
-             int Period;
-            int MinTimeOfTurn = 5000;    //минимальное время цикла
+            int Period;
+            int MinTimeOfTurn = 3000;    //минимальное время цикла
             DateTime Data1;
             DateTime Data2;
 

@@ -184,8 +184,8 @@ namespace OpenGEWindows
             //this.pointisBattleMode2 = new PointColor(200 - 5 + xx, 511 - 5 + yy, 8900000, 5);
             this.pointisBattleMode1 = new PointColor(172 - 5 + xx, 511 - 5 + yy, 10000000, 6);
             this.pointisBattleMode2 = new PointColor(201 - 5 + xx, 511 - 5 + yy, 10000000, 6);
-            this.pointisAssaultMode1 = new PointColor( 76 - 5 + xx, 511 - 5 + yy, 10207400, 2);
-            this.pointisAssaultMode2 = new PointColor(105 - 5 + xx, 511 - 5 + yy, 10207400, 2);
+            this.pointisAssaultMode1 = new PointColor(76 - 5 + xx, 521 - 5 + yy, 6000000, 6);
+            this.pointisAssaultMode2 = new PointColor(76 - 5 + xx, 522 - 5 + yy, 6000000, 6);
 
 
             //this.pointisBattleModeOff1 = new PointColor(173 - 5 + xx, 511 - 5 + yy, 8900000, 5);

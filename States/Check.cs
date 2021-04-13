@@ -288,12 +288,15 @@ namespace States
                     case 7:
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         server.BattleModeOn();                      //пробел
-                        //server.BuffYHN();                         //можно делать на стадии 2
                         //server.MaxHeight(7);                      //можно не делать. на стадии 2 есть подъем камеры на 1 шаг
-                        driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 2);
+                        driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
+                        //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
                         botParam.Stage = 2;
                         break;
                     case 8:                                         //Gate --> List of missions
@@ -301,7 +304,9 @@ namespace States
                         dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
                         break;
                     case 10:                                         //миссия не доступна на сегодня
-                        server.RemoveSandboxieBH();
+                        server.GotoBarack();
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
                         break;
                     case 14:
                         driver.StateFromMissionToBarackBH();        // в барак 
@@ -354,7 +359,8 @@ namespace States
             //в миссии
             if (server.isWork())
             {
-                //if (!server.isBuff()) return 4;
+                //если белая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
+                if (server.isWhiteLabel()) return 10;
 
                 if (!server.isAssaultMode())
                 {
@@ -363,12 +369,8 @@ namespace States
                 else
                 {
                     return 4;   //если атакуем с Ctrl, то обновляем бафы
-
-                    ////если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
-                    //if (server.isYellowLabel()) return 29;
                 }
-                ////если желтая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
-                //if (server.isYellowLabel()) return 29;
+                
             }
 
             //в БХ вылетели, значит миссия закончена
@@ -406,61 +408,48 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemStage2();
 
-                //если зависли в каком-либо состоянии, то особые действия
-                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
-                //{
-                //    switch (numberOfProblem)
-                //    {
-                //        case 1:  //зависли в логауте
-                //        case 23:  //загруженное окно зависло и не смещается на нужное место
-                //            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
-                //            break;
-                //    }
-                //}
-                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
-
                 Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
-                    case 1:
-                        server.RemoveSandboxieBH();
+                    case 1:                                             //в логауте (при переходе в барак можем попасть в логаут)
+                        driver.StateFromLogoutToBarackBH();             // Logout-->Barack   
+                        botParam.HowManyCyclesToSkip = 1;
+                        //server.RemoveSandboxieBH();
                         break;
-                    case 2:
-                        server.RemoveSandboxieBH();
+                    case 2:                                             //в бараках
+                        server.ReturnToMissionFromBarack();                          // идем из барака обратно в миссию     
+                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
                         break;
-                    case 5:
-                        server.RemoveSandboxieBH();
+                    case 3:                                                 //уже не атакуем
+                        DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
+                        server.AttackTheMonsters(DirectionOfMovement);      //атакуем
                         break;
-                    case 29:                                                //если все убиты, значит мисс
-                        //server.ReturnToMissionFromBarack();                          // идем из барака обратно в миссию     
-                        //botParam.HowManyCyclesToSkip = 2;
-                        server.RemoveSandboxieBH();
-                        break;
-                    case 3:
-                        DirectionOfMovement = -1 * DirectionOfMovement;
-                        server.AttackTheMonsters(DirectionOfMovement);
-                        break;
-                    case 4:
+                    case 4:                                                 //пробуем пробафаться
                         server.Buff(Hero[1], 1);
                         server.Buff(Hero[2], 2);
                         server.Buff(Hero[3], 3);
-
                         break;
-                    case 6:
-
+                    case 5:                                         //если стоим в БХ, значит миссия окончена 
+                        botParam.Stage = 1; 
+                        server.RemoveSandboxieBH();
                         break;
-                    case 7:
-                        
-                        break;
-                    case 8:
-
+                    case 10:                                            //если белая надпись вверху
+                        server.ReturnToMissionFromBarack();             // идем из барака обратно в миссию, чтобы нажать на сундук
+                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
                         break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
-                    case 18:
-                       
+                    case 29:                                            //если все убиты, значит мисс
+                        server.ReturnToMissionFromBarack();             // идем из барака обратно в миссию, чтобы нажать на сундук
+                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
                         break;
                 }
             }
@@ -483,23 +472,25 @@ namespace States
             //в миссии
             if (server.isWork())
             {
-                if (server.isRouletteBH()) return 4;
+                if (server.isRouletteBH()) 
+                    return 4;
                 else
                     return 3;
             }
 
-            //в БХ
-            if (server.isBH()) return 5;
+            //в городе или в БХ
+            if (server.isTown())
+            {
+                if (server.isBH()) return 5;        //в БХ
+                else return 6;                      //в стартовом городе
+            }
 
             //в логауте
             if (server.isLogout()) return 1;                    // если окно в логауте
 
             //в бараке
             if (server.isBarack()) return 2;                    //если стоят в бараке 
-            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
-
-            //если в городе
-            if (server.isTown()) return 10;
+            //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
             return 0;
@@ -521,47 +512,38 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemStage3();
 
-                //если зависли в каком-либо состоянии, то особые действия
-                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
-                //{
-                //    switch (numberOfProblem)
-                //    {
-                //        case 1:  //зависли в логауте
-                //            break;
-                //    }
-                //}
-                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
-
                 Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
-                    case 1:
+                    case 1:                                         //в логауте
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 2:
-                        server.ReturnToMissionFromBarack();                          // идем из барака обратно в миссию     
+                    case 2:                                         //в бараках
+                        driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
                         botParam.HowManyCyclesToSkip = 2;
+                        //server.RemoveSandboxieBH();               //закрываем песочницу
+                        //botParam.Stage = 1;
                         break;
-                    case 3:
-                        //тыкаем в сундук и запускаем рулетку
-                        server.OpeningTheChest();
+                    case 3:                                         //в миссии, но рулетка не крутится
+                        server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         break;
-                    case 4:
-
-
+                    case 4:                                         //крутится рулетка
+                        Pause(5000);
+                        server.GotoBarack();
+                        botParam.HowManyCyclesToSkip = 2;
+                        //server.RemoveSandboxieBH();                 //закрываем песочницу
+                        //botParam.Stage = 1;
+                        //сюда можно будет запихнуть прохождение ворот с фесо
                         break;
-                    case 5:
+                    case 5:                                         // в БХ
                         server.systemMenu(3, true);                 // переход в стартовый город
                         botParam.HowManyCyclesToSkip = 3;
                         break;
-                    case 10:
+                    case 6:                                         // в городе
                         server.RemoveSandboxieBH();                 //закрываем песочницу
-
-                        break;
-                    case 17:                                        // в бараках на стадии выбора группы
-                        botwindow.PressEsc();                       // нажимаем Esc
+                        botParam.Stage = 1;
                         break;
                 }
             }
@@ -1518,7 +1500,9 @@ namespace States
 
             server.ReOpenWindow();
 
-
+            MessageBox.Show("баф3? " + server.FindConcentracion(3));
+            MessageBox.Show("баф1? " + server.FindConcentracion(1));
+            MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
@@ -1578,6 +1562,10 @@ namespace States
             //server.TurnL(1); 
             //server.TurnUp();
 
+            //Hero[1] = server.WhatsHero(1);
+            //Hero[2] = server.WhatsHero(2);
+            //Hero[3] = server.WhatsHero(3);
+            //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
 
 
             int xx, yy;
@@ -1596,8 +1584,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(155 - 5 + xx + (1 - 1) * 255, 583 - 5 + xx, 0, 0);
-            PointColor point2 = new PointColor(156 - 5 + xx + (1 - 1) * 255, 583 - 5 + xx, 0, 0);
+            PointColor point1 = new PointColor(79 - 5 + xx, 582 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(79 - 5 + xx, 583 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
