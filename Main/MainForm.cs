@@ -909,7 +909,7 @@ namespace Main
             }
 
             int Period;
-            int MinTimeOfTurn = 3000;    //минимальное время цикла
+            int MinTimeOfTurn = 2000;    //минимальное время цикла
             DateTime Data1;
             DateTime Data2;
 
@@ -929,7 +929,7 @@ namespace Main
                     }
                     if (botParam[j].Stage == 3)
                     {
-                        //check[j].problemResolutionDemStage3();
+                        check[j].problemResolutionDemStage3();
                     }
 
                 }

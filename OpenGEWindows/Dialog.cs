@@ -40,7 +40,7 @@
         }
 
         /// <summary>
-        /// нажать указанную строку в диалоге. Отсчет с низу вверх
+        /// нажать указанную строку в диалоге. Отсчет снизу вверх
         /// </summary>
         /// <param name="number"></param>
         public abstract void PressStringDialog(int number);

@@ -374,7 +374,7 @@ namespace States
             }
 
             //в БХ вылетели, значит миссия закончена
-            if (server.isTown() && server.isBH()) return 5;
+            //if (server.isTown() && server.isBH()) return 5;
 
 
              //в логауте
@@ -418,7 +418,7 @@ namespace States
                         //server.RemoveSandboxieBH();
                         break;
                     case 2:                                             //в бараках
-                        server.ReturnToMissionFromBarack();                          // идем из барака обратно в миссию     
+                        server.ReturnToMissionFromBarack();                 // идем из барака обратно в миссию     
                         botParam.HowManyCyclesToSkip = 2;
                         botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
@@ -432,21 +432,22 @@ namespace States
                         server.Buff(Hero[2], 2);
                         server.Buff(Hero[3], 3);
                         break;
-                    case 5:                                         //если стоим в БХ, значит миссия окончена 
-                        botParam.Stage = 1; 
-                        server.RemoveSandboxieBH();
-                        break;
-                    case 10:                                            //если белая надпись вверху
-                        server.ReturnToMissionFromBarack();             // идем из барака обратно в миссию, чтобы нажать на сундук
+                    //case 5:                                         //если стоим в БХ, значит миссия окончена 
+                    //    botParam.Stage = 1; 
+                    //    server.RemoveSandboxieBH();
+                    //    break;
+                    case 10:                                        //если белая надпись вверху
+                        botwindow.Pause(5000);                      //пауза, чтобы успеть собрать добычу
+                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         botParam.HowManyCyclesToSkip = 2;
-                        botParam.Stage = 3;
+                        //botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
-                    case 29:                                            //если все убиты, значит мисс
-                        server.ReturnToMissionFromBarack();             // идем из барака обратно в миссию, чтобы нажать на сундук
+                    case 29:                                        //если все убиты
+                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         botParam.HowManyCyclesToSkip = 2;
                         botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
@@ -469,6 +470,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemStage3()
         {
+            //если диалог (он получается, если тыкнуть в ворота)
+            if (dialog.isDialog()) return 7;
+
             //в миссии
             if (server.isWork())
             {
@@ -530,7 +534,7 @@ namespace States
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         break;
                     case 4:                                         //крутится рулетка
-                        Pause(5000);
+                        botwindow.Pause(5000);
                         server.GotoBarack();
                         botParam.HowManyCyclesToSkip = 2;
                         //server.RemoveSandboxieBH();                 //закрываем песочницу
@@ -544,6 +548,10 @@ namespace States
                     case 6:                                         // в городе
                         server.RemoveSandboxieBH();                 //закрываем песочницу
                         botParam.Stage = 1;
+                        break;
+                    case 7:                                         // в диалоге
+                        dialog.PressStringDialog(1);
+                        dialog.PressOkButton(1);
                         break;
                 }
             }
@@ -1500,9 +1508,12 @@ namespace States
 
             server.ReOpenWindow();
 
-            MessageBox.Show("баф3? " + server.FindConcentracion(3));
-            MessageBox.Show("баф1? " + server.FindConcentracion(1));
-            MessageBox.Show("баф2? " + server.FindConcentracion(2));
+            MessageBox.Show("баф3? " + server.FindMarchen(3));
+            MessageBox.Show("баф2? " + server.FindMarchen(2));
+            MessageBox.Show("баф1? " + server.FindMarchen(1));
+            //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
+            //MessageBox.Show("баф1? " + server.FindConcentracion(1));
+            //MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
@@ -1584,8 +1595,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(79 - 5 + xx, 582 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(79 - 5 + xx, 583 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(80 - 5 + xx + 4 * 15 + (3 - 1) * 255, 583 - 5 + xx, 0, 0);
+            PointColor point2 = new PointColor(81 - 5 + xx + 4 * 15 + (3 - 1) * 255, 583 - 5 + xx, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 

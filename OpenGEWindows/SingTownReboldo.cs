@@ -40,7 +40,7 @@ namespace OpenGEWindows
 
             //для lucia (какашки)
             this.FirstStringOfMap = new Point(815 - 5 + xx, 69 - 5 + yy);
-            this.NumberOfLuciaOnMap = 17;
+            this.NumberOfLuciaOnMap = 18;
             this.pointLucia1 = new Point(471 - 5 + xx, 404 - 5 + yy);
             this.pointHeadOfLucia = new Point(349 - 5 + xx, 445 - 5 + yy);
 

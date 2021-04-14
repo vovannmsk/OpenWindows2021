@@ -5708,6 +5708,7 @@ namespace OpenGEWindows
         public void BuffQ(int i)
         {
             new Point(27 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            MoveCursorOfMouse();
             //Pause(500);
         }
 
@@ -5717,7 +5718,7 @@ namespace OpenGEWindows
         public void BuffW(int i)
         {
             new Point(58 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            //Pause(500);
+            MoveCursorOfMouse();            //Pause(500);
         }
 
         /// <summary>
@@ -5726,7 +5727,7 @@ namespace OpenGEWindows
         public void BuffE(int i)
         {
             new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            //Pause(500);
+            MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5735,7 +5736,7 @@ namespace OpenGEWindows
         public void BuffR(int i)
         {
             new Point(120 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            //Pause(500);
+            MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5744,7 +5745,7 @@ namespace OpenGEWindows
         public void BuffT(int i)
         {
             new Point(151 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            //Pause(500);
+            MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5753,7 +5754,7 @@ namespace OpenGEWindows
         public void BuffY(int i)
         {
             new Point(182 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            //Pause(500);
+            MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5889,13 +5890,13 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindMarchen(int i)
+        public bool FindMarchen(int i)
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 2433305, 0).isColor() &&
-                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 2433305, 0).isColor()
+                if (    new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 787682, 0).isColor() &&
+                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 1906639, 0).isColor()
                    )    result = true;
             return result;
         }
@@ -5905,7 +5906,7 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindReloadBullet(int i)
+        public bool FindReloadBullet(int i)
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
