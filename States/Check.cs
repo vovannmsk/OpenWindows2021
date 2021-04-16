@@ -288,23 +288,28 @@ namespace States
                     case 7:
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         server.BattleModeOn();                      //пробел
-                        //server.MaxHeight(7);                      //можно не делать. на стадии 2 есть подъем камеры на 1 шаг
+                        
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
                         server.Buff(Hero[1], 1);
                         server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 2);
+                        server.Buff(Hero[3], 3);
                         driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
                         //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
+                        server.MaxHeight(7);                      //
                         botParam.Stage = 2;
                         break;
                     case 8:                                         //Gate --> List of missions
                         dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
                         dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
                         break;
-                    case 10:                                         //миссия не доступна на сегодня
+                    case 10:                                         //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);
+                        botwindow.Pause(2000);
                         server.GotoBarack();
+                        botwindow.Pause(6000);
+                        botwindow.PressEscThreeTimes();
                         botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
@@ -421,7 +426,7 @@ namespace States
                         server.ReturnToMissionFromBarack();                 // идем из барака обратно в миссию     
                         botParam.HowManyCyclesToSkip = 2;
                         botParam.Stage = 3;
-                        //server.RemoveSandboxieBH();
+                         //server.RemoveSandboxieBH();
                         break;
                     case 3:                                                 //уже не атакуем
                         DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
@@ -431,6 +436,10 @@ namespace States
                         server.Buff(Hero[1], 1);
                         server.Buff(Hero[2], 2);
                         server.Buff(Hero[3], 3);
+                        server.BattleModeOn();
+                        //if (Hero[1] == 1) server.BuffE(1);
+                        //if (Hero[2] == 1) server.BuffE(2);
+                        //if (Hero[3] == 1) server.BuffE(3);
                         break;
                     //case 5:                                         //если стоим в БХ, значит миссия окончена 
                     //    botParam.Stage = 1; 
@@ -439,7 +448,7 @@ namespace States
                     case 10:                                        //если белая надпись вверху
                         botwindow.Pause(5000);                      //пауза, чтобы успеть собрать добычу
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 5;
                         //botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
@@ -448,7 +457,7 @@ namespace States
                         break;
                     case 29:                                        //если все убиты
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 5;
                         botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
@@ -536,7 +545,7 @@ namespace States
                     case 4:                                         //крутится рулетка
                         botwindow.Pause(5000);
                         server.GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 5;
                         //server.RemoveSandboxieBH();                 //закрываем песочницу
                         //botParam.Stage = 1;
                         //сюда можно будет запихнуть прохождение ворот с фесо
@@ -1508,9 +1517,12 @@ namespace States
 
             server.ReOpenWindow();
 
-            MessageBox.Show("баф3? " + server.FindMarchen(3));
-            MessageBox.Show("баф2? " + server.FindMarchen(2));
-            MessageBox.Show("баф1? " + server.FindMarchen(1));
+            //MessageBox.Show("баф3? " + server.FindHound(3));
+            //MessageBox.Show("баф2? " + server.FindHound(2));
+            //MessageBox.Show("баф1? " + server.FindHound(1));
+            //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
+            //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
+            //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
             //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
@@ -1573,11 +1585,12 @@ namespace States
             //server.TurnL(1); 
             //server.TurnUp();
 
-            //Hero[1] = server.WhatsHero(1);
-            //Hero[2] = server.WhatsHero(2);
-            //Hero[3] = server.WhatsHero(3);
+            Hero[1] = server.WhatsHero(1);
+            Hero[2] = server.WhatsHero(2);
+            Hero[3] = server.WhatsHero(3);
             //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
 
+            server.Buff(Hero[1], 1);
 
             int xx, yy;
             xx = koordX[i - 1];
@@ -1595,8 +1608,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(80 - 5 + xx + 4 * 15 + (3 - 1) * 255, 583 - 5 + xx, 0, 0);
-            PointColor point2 = new PointColor(81 - 5 + xx + 4 * 15 + (3 - 1) * 255, 583 - 5 + xx, 0, 0);
+            PointColor point1 = new PointColor(25 - 5 + xx + (1 - 1) * 255, 701 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(25 - 5 + xx + (2 - 1) * 255, 701 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
@@ -1607,8 +1620,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

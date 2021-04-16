@@ -5783,9 +5783,10 @@ namespace OpenGEWindows
         /// </summary>
         public void AttackTheMonsters(int Direction)
         {
-            MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
+            //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
             AssaultMode();
-            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
+//            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
+            new Point(525 + Direction * 350 - 5 + xx, 392 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -5828,7 +5829,7 @@ namespace OpenGEWindows
                 //проверяем Y
                 if (new PointColor(182 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 13951211, 0).isColor())
                     result = 1;     //мушкетер с флинтом
-                if (new PointColor(182 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 3706355, 0).isColor())
+                if (new PointColor(182 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 11251395, 0).isColor())
                     result = 10;   //Бернелли с флинтом
             }
             if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
@@ -5838,6 +5839,8 @@ namespace OpenGEWindows
                                                                                                                 //C.Daria
             if (new PointColor(23 - 5 + xx + (i - 1) * 255, 693 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
+            if (new PointColor(25 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
+
 
             return result;
         }
@@ -5867,7 +5870,7 @@ namespace OpenGEWindows
                     BuffBarell(i);  //*
                     break;
                 case 6:
-                    BuffCDaria(i);
+                    BuffCDaria(i);   //47
                     break;
                 case 7:
                     BuffTom(i);
@@ -5876,6 +5879,7 @@ namespace OpenGEWindows
                     BuffMoon(i);  //*
                     break;
                 case 9:
+                    BuffMisa(i);
                     break;
                 case 10:
                     BuffBernelliFlint(i);   //*
@@ -6026,7 +6030,7 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindMarksmanship(int i)
+        public bool FindMarksmanship(int i)
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
@@ -6043,7 +6047,7 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindHound(int i)
+        public bool FindHound(int i)
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
@@ -6133,6 +6137,17 @@ namespace OpenGEWindows
         {
             if (!FindReloadBullet(i)) BuffY(i);
             if (!FindMarchen(i)) BuffQ(i);
+        }
+
+        /// <summary>
+        /// бафаем Мису на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffMisa(int i)
+        {
+            //if (!FindWindUp(i)) 
+                BuffY(i);
+            
         }
 
         #endregion

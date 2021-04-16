@@ -59,10 +59,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ChangingAccounts = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Demonic = new System.Windows.Forms.Button();
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.Demonic = new System.Windows.Forms.Button();
+            this.DemonicStage2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -308,7 +309,7 @@
             // 
             this.labelEnchanting.AutoSize = true;
             this.labelEnchanting.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelEnchanting.Location = new System.Drawing.Point(22, 144);
+            this.labelEnchanting.Location = new System.Drawing.Point(214, 176);
             this.labelEnchanting.MaximumSize = new System.Drawing.Size(300, 20);
             this.labelEnchanting.Name = "labelEnchanting";
             this.labelEnchanting.Size = new System.Drawing.Size(154, 20);
@@ -324,7 +325,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 202);
+            this.tabControl1.Size = new System.Drawing.Size(386, 228);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -344,7 +345,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 177);
+            this.tabPage1.Size = new System.Drawing.Size(378, 176);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
@@ -382,6 +383,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Bisque;
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage2.Controls.Add(this.DemonicStage2);
             this.tabPage2.Controls.Add(this.Demonic);
             this.tabPage2.Controls.Add(this.LoadSteams);
             this.tabPage2.Controls.Add(this.alchemy);
@@ -393,9 +395,20 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 176);
+            this.tabPage2.Size = new System.Drawing.Size(378, 202);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
+            // 
+            // Demonic
+            // 
+            this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
+            this.Demonic.Location = new System.Drawing.Point(6, 88);
+            this.Demonic.Name = "Demonic";
+            this.Demonic.Size = new System.Drawing.Size(170, 35);
+            this.Demonic.TabIndex = 65;
+            this.Demonic.Text = "Миссия Demonic в БХ";
+            this.Demonic.UseVisualStyleBackColor = false;
+            this.Demonic.Click += new System.EventHandler(this.Demonic_Click);
             // 
             // LoadSteams
             // 
@@ -424,7 +437,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 186);
+            this.tabPage3.Size = new System.Drawing.Size(378, 176);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -439,23 +452,23 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // Demonic
+            // DemonicStage2
             // 
-            this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
-            this.Demonic.Location = new System.Drawing.Point(6, 88);
-            this.Demonic.Name = "Demonic";
-            this.Demonic.Size = new System.Drawing.Size(170, 35);
-            this.Demonic.TabIndex = 65;
-            this.Demonic.Text = "Миссия Demonic в БХ";
-            this.Demonic.UseVisualStyleBackColor = false;
-            this.Demonic.Click += new System.EventHandler(this.Demonic_Click);
+            this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
+            this.DemonicStage2.Location = new System.Drawing.Point(6, 129);
+            this.DemonicStage2.Name = "DemonicStage2";
+            this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
+            this.DemonicStage2.TabIndex = 66;
+            this.DemonicStage2.Text = "Demonic. Стадия 2 и далее";
+            this.DemonicStage2.UseVisualStyleBackColor = false;
+            this.DemonicStage2.Click += new System.EventHandler(this.DemonicStage2_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 202);
+            this.ClientSize = new System.Drawing.Size(386, 228);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -513,6 +526,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button PureOtiteMulti;
         private System.Windows.Forms.Button Demonic;
+        private System.Windows.Forms.Button DemonicStage2;
     }
 }
 

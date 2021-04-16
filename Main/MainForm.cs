@@ -882,7 +882,7 @@ namespace Main
         #region  ======================== Demonic ==============================================
 
         /// <summary>
-        /// 
+        /// миссия демоник в БХ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -908,14 +908,14 @@ namespace Main
                 botParam[j].Stage = 1;
             }
 
-            int Period;
-            int MinTimeOfTurn = 2000;    //минимальное время цикла
-            DateTime Data1;
-            DateTime Data2;
+            //int Period;
+            //int MinTimeOfTurn = 2000;    //минимальное время цикла
+            //DateTime Data1;
+            //DateTime Data2;
 
             while (true)
             {
-                Data1 = DateTime.Now;
+                //Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     
@@ -933,14 +933,67 @@ namespace Main
                     }
 
                 }
-                Data2 = DateTime.Now;
-                Period = (Data2 - Data1).Milliseconds;
-                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
-                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
+                //Data2 = DateTime.Now;
+                //Period = (Data2 - Data1).Milliseconds;
+                //if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                //    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
 
 
 
+        }
+
+        #endregion
+
+
+        #region Demonic Stage 2-3
+
+        /// <summary>
+        /// миссия демоник в БХ. начало со стадии 2
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DemonicStage2_Click(object sender, EventArgs e)
+        {
+            Demonic.BackColor = Color.OrangeRed;
+            Thread myDemonic2 = new Thread(funcDemonic2);
+            myDemonic2.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой Demonic в BH
+        /// </summary>
+        private void funcDemonic2()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 2;
+            }
+
+            while (true)
+            {
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].Stage == 1)
+                    {
+                        check[j].problemResolutionDemStage1();
+                    }
+                    if (botParam[j].Stage == 2)
+                    {
+                        check[j].problemResolutionDemStage2();
+                    }
+                    if (botParam[j].Stage == 3)
+                    {
+                        check[j].problemResolutionDemStage3();
+                    }
+
+                }
+            }
         }
 
         #endregion
