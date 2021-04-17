@@ -937,6 +937,8 @@ namespace Main
                 //Period = (Data2 - Data1).Milliseconds;
                 //if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
                 //    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
+                if (botParam[startAcc].Stage == 1) check[startAcc].Pause(7000);
+                if (botParam[startAcc].Stage == 3) check[startAcc].Pause(5000);
             }
 
 

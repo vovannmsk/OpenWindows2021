@@ -431,6 +431,7 @@ namespace States
                     case 3:                                                 //уже не атакуем
                         DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      //атакуем
+                        Pause(1000);
                         break;
                     case 4:                                                 //пробуем пробафаться
                         server.Buff(Hero[1], 1);
@@ -448,7 +449,8 @@ namespace States
                     case 10:                                        //если белая надпись вверху
                         botwindow.Pause(5000);                      //пауза, чтобы успеть собрать добычу
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 5;
+                        botwindow.Pause(5000);                      //пауза, чтобы успеть войти в барак
+                        //botParam.HowManyCyclesToSkip = 5;
                         //botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
@@ -457,8 +459,9 @@ namespace States
                         break;
                     case 29:                                        //если все убиты
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 5;
-                        botParam.Stage = 3;
+                        botwindow.Pause(5000);                      //пауза, чтобы успеть войти в барак
+//                        botParam.HowManyCyclesToSkip = 5;
+                        //botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
                         break;
                 }
@@ -510,7 +513,7 @@ namespace States
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ
+        /// разрешение выявленных проблем в БХ Демоник стадия 3
         /// </summary>
         public void problemResolutionDemStage3()
         {
@@ -541,6 +544,8 @@ namespace States
                         break;
                     case 3:                                         //в миссии, но рулетка не крутится
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
+                        //server.MaxHeight(7);
+                        botwindow.Pause(5000);
                         break;
                     case 4:                                         //крутится рулетка
                         botwindow.Pause(5000);
