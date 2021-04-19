@@ -382,17 +382,17 @@ namespace States
                 //если белая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
                 if (server.isWhiteLabel()) return 10;
 
-                if (!server.isAssaultMode())
-                {
+                //if (!server.isAssaultMode())
+                //{
                     return 3;   //если нет режима атаки
-                }
-                else
-                {
-                    //if (server.isBoss()) 
-                    //    return 5;
-                    //else 
-                    return 4;   //если атакуем с Ctrl, то обновляем бафы
-                }
+                //}
+                //else
+                //{
+                //    //if (server.isBoss()) 
+                //    //    return 5;
+                //    //else 
+                //    return 4;   //если атакуем с Ctrl, то обновляем бафы
+                //}
                 
             }
 
