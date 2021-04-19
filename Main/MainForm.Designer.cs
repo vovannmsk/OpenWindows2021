@@ -257,7 +257,6 @@
             this.numberOfAccounts.Name = "numberOfAccounts";
             this.numberOfAccounts.Size = new System.Drawing.Size(43, 26);
             this.numberOfAccounts.TabIndex = 57;
-            this.numberOfAccounts.ValueChanged += new System.EventHandler(this.numberOfAccouts_ValueChanged);
             this.numberOfAccounts.Leave += new System.EventHandler(this.numberOfAccouts_Leave);
             // 
             // GoldenEggFruit

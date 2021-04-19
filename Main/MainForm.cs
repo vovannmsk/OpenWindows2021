@@ -806,17 +806,6 @@ namespace Main
 
         #endregion
 
-        public void labelNomer_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void numberOfAccouts_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// изменяет значение переменной startAcc при изменении счетчика в главной форме
         /// (присваиваем переменной класса значение, выбранное пользователем в форме)
