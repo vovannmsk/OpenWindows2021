@@ -901,13 +901,24 @@ namespace Main
             //int MinTimeOfTurn = 2000;    //минимальное время цикла
             //DateTime Data1;
             //DateTime Data2;
-            int result;
 
+            //int result;
+
+            int infinity = botParam[startAcc].NumberOfInfinity;
             while (true)
             {
                 //Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
+                    if (botParam[j].NumberOfInfinity != infinity)
+                    { 
+                        infinity = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    //MessageBox.Show("Infinity " + botParam[j].NumberOfInfinity);
+
                     if (check[j].IsActiveServer)
                     {
                         if (botParam[j].Stage == 1)
