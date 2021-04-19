@@ -936,11 +936,12 @@ namespace Main
                     }
                     else
                     {
-                        result = globalParam.Infinity;
-                        if (result >= 424) result = 0;  //если дошли до последнего подготовленного аккаунта, то идём в начала списка
-                                                        //в качестве альтернативы тут можно сделать присвоение FAlse какому-нибудь глоб параметру, чтобы остановить общий цикл
-                        botParam[j].NumberOfInfinity = result;
-                        globalParam.Infinity = result + 1;
+                        check[j].RemoveSandboxie();
+                        //result = globalParam.Infinity;
+                        //if (result >= 424) result = 0;  //если дошли до последнего подготовленного аккаунта, то идём в начала списка
+                        //                                //в качестве альтернативы тут можно сделать присвоение FAlse какому-нибудь глоб параметру, чтобы остановить общий цикл
+                        //botParam[j].NumberOfInfinity = result;
+                        //globalParam.Infinity = result + 1;
                         check[j] = new Check(j);
                         botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
                         botParam[j].Stage = 1;
