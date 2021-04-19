@@ -912,24 +912,38 @@ namespace Main
             //int MinTimeOfTurn = 2000;    //минимальное время цикла
             //DateTime Data1;
             //DateTime Data2;
+            int result;
 
             while (true)
             {
                 //Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
-                    
-                    if (botParam[j].Stage == 1)
+                    if (check[j].IsActiveServer)
                     {
-                        check[j].problemResolutionDemStage1();
+                        if (botParam[j].Stage == 1)
+                        {
+                            check[j].problemResolutionDemStage1();
+                        }
+                        if (botParam[j].Stage == 2)
+                        {
+                            check[j].problemResolutionDemStage2();
+                        }
+                        if (botParam[j].Stage == 3)
+                        {
+                            check[j].problemResolutionDemStage3();
+                        }
                     }
-                    if (botParam[j].Stage == 2)
+                    else
                     {
-                        check[j].problemResolutionDemStage2();
-                    }
-                    if (botParam[j].Stage == 3)
-                    {
-                        check[j].problemResolutionDemStage3();
+                        result = globalParam.Infinity;
+                        if (result >= 424) result = 0;  //если дошли до последнего подготовленного аккаунта, то идём в начала списка
+                                                        //в качестве альтернативы тут можно сделать присвоение FAlse какому-нибудь глоб параметру, чтобы остановить общий цикл
+                        botParam[j].NumberOfInfinity = result;
+                        globalParam.Infinity = result + 1;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
                     }
 
                 }

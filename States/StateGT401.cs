@@ -73,7 +73,7 @@ namespace States
 
             botwindow.ActiveAllBuffBH();
             botwindow.PressEscThreeTimes();
-            server.QuickCure();           //"пьём" патроны в ячейке под буквой i
+            server.AddBullets();           
 
             //if (server.isBulletOff())
             //    server.WriteToLogFileBH("Нет патронов. Аккаунт №" + botParam.NumberOfInfinity);

@@ -2462,6 +2462,17 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// "пьём" патроны. Применение коробок патронов в трёх ячейках с маной
+        /// </summary>
+        public void AddBullets()
+        {
+            pointMana1.PressMouseL();
+            pointMana2.PressMouseL();
+            pointMana3.PressMouseL();
+        }
+
+
+        /// <summary>
         /// "быстрое лечение". Применение коробок патронов в ячейках с маной
         /// </summary>
         public void QuickCure()
@@ -5885,6 +5896,105 @@ namespace OpenGEWindows
                     BuffBernelliFlint(i);   //*
                     break;
                 case 0:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// ппроверяем, кто в прицеле
+        /// </summary>
+        /// <returns>true, если в прицеле босс</returns>
+        public bool isBoss ()
+        {
+            //return true;
+            //return false;
+            //проверяем букву D в слове Демоник
+            //по сути тут проверка того, есть ли кто в прицеле
+            return      new PointColor(456 - 5 + xx, 103 - 5 + yy, 12434870, 1).isColor() ||
+                        new PointColor(456 - 5 + xx, 103 - 5 + yy, 4000000, 6).isColor() ||
+                        new PointColor(456 - 5 + xx, 103 - 5 + yy, 7314875, 0).isColor() ||
+                        new PointColor(456 - 5 + xx, 103 - 5 + yy, 7462629, 0).isColor();
+
+        }
+
+        /// <summary>
+        /// если скилл i-го мушкетёра T готов к использованию
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool isSkillMuskT (int i)
+        {
+            return new PointColor(152 - 5 + xx + ( i - 1 ) * 255, 704 - 5 + yy, 12491137, 0).isColor();
+        }
+
+        /// <summary>
+        /// если скилл i-го мушкетёра W готов к использованию
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool isSkillMuskW(int i)
+        {
+            return new PointColor(63 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 3119530, 0).isColor();
+        }
+
+        /// <summary>
+        /// если скилл i-го мушкетёра E готов к использованию
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool isSkillMuskE(int i)
+        {
+            return new PointColor(84 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 4094905, 0).isColor();
+        }
+
+
+        /// <summary>
+        /// бафаем i-го героя
+        /// </summary>
+        /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
+        /// <param name="i">номер героя</param>
+        public void Skill (int typeOfHero, int i)
+        {
+            switch (typeOfHero)
+            {
+                case 1:
+                    if (isSkillMuskE(i))   //если готов скилл
+                        BuffE(i);
+                    if (isSkillMuskT(i))   //если готов скилл
+                        BuffT(i);
+                    if (isSkillMuskW(i))   //если готов скилл
+                        BuffW(i);
+                    break;
+                case 2:
+                    //BuffBernelliBlaster(i);   //*
+                    break;
+                case 3:
+                    //BuffLorch(i); //*
+                    break;
+                case 4:
+                    //BuffJaina(i);  //*
+                    break;
+                case 5:
+                    //BuffBarell(i);  //*
+                    break;
+                case 6:
+                    //BuffCDaria(i);   //47
+                    break;
+                case 7:
+                    //BuffTom(i);
+                    break;
+                case 8:
+                    //BuffMoon(i);  //*
+                    break;
+                case 9:
+                    //BuffMisa(i);
+                    break;
+                case 10:
+                    //BuffBernelliFlint(i);   //*
+                    break;
+                case 0:
+                    break;
+                default:
                     break;
             }
         }

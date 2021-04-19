@@ -144,6 +144,19 @@ namespace States
             return botParam.EndOfList();
         }
 
+        /// <summary>
+        /// закрываем песочницу и переходим к следующему аккаунту
+        /// </summary>
+        public void RemoveSandboxie()
+        {
+            server.RemoveSandboxieBH();
+            //botwindow = new botWindow(numberOfWindow);
+            //ServerFactory serverFactory = new ServerFactory(botwindow);
+            //this.server = serverFactory.create();
+            //this.globalParam = new GlobalParam();
+            //this.botParam = new BotParam(numberOfWindow);
+        }
+
         #region  =================================== Demonic Stage 1 ==============================================
 
         /// <summary>
@@ -155,21 +168,22 @@ namespace States
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
-                if (!server.FindWindowSteamBool())  //если Стима тоже нет
-                {
-                    return 24;
-                }
-                else    //если Стим уже загружен
-                {
-                    if (!server.FindWindowGEforBHBool())
-                    {
-                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
-                    }
-                    else
-                    {
-                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
-                    }
-                }
+                return 21;
+                //if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                //{
+                //    return 24;
+                //}
+                //else    //если Стим уже загружен
+                //{
+                //    if (!server.FindWindowGEforBHBool())
+                //    {
+                //        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                //    }
+                //    else
+                //    {
+                //        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                //    }
+                //}
             }
 
             //ворота
@@ -207,18 +221,11 @@ namespace States
             if (server.isWork())    return 7;
 
             //в логауте
-            if (server.isLogout()) return 1;               
+            if (server.isLogout()) return 1;
 
             //в бараке
-            if (server.isBarack())                         //если стоят в бараке 
-            {
-                //if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ
-                //{ return 16; }
-                //else
-                //{ 
-                return 2;
-                //}
-            }
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
 
             //если проблем не найдено
@@ -274,7 +281,7 @@ namespace States
                         server.MissionStart();
                         break;
                     case 4:
-                        driver.StateFromBHToGateDem();              // BH --> Gate Demonic  //ок
+                        driver.StateFromBHToGateDem();              // BH --> Gate Demonic  (бафы + патроны)
                         break;
                     case 5:
                         server.CreatingMission();
@@ -287,8 +294,8 @@ namespace States
                         break;
                     case 7:
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                        if (!botwindow.isCommandMode()) botwindow.CommandMode();
                         server.BattleModeOn();                      //пробел
-                        
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
@@ -324,25 +331,33 @@ namespace States
                         server.systemMenu(3, true);                 // переход в стартовый город
                         botParam.HowManyCyclesToSkip = 3;
                         break;
-                    case 22:                                    //Ок
-                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
-                        botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
-                    case 23:                                    //Ок
-                        botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
-                        botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                    case 21:                                        // нет окна
+                        server.ReOpenWindow();                      // 
+                        //botParam.HowManyCyclesToSkip = 3;
                         break;
-                    case 24:                                    //Ок
-                        //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
-                        botwindow = new botWindow(numberOfWindow);
-                        ServerFactory serverFactory = new ServerFactory(botwindow);
-                        this.server = serverFactory.create();
-                        this.globalParam = new GlobalParam();
-                        this.botParam = new BotParam(numberOfWindow);
-                        //********************************************************************************************************************
-                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                        botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
-                        break;
+                    //case 22:                                    //Ок
+                    //    server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
+                    //    botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                    //    break;
+                    //case 23:                                    //Ок
+                    //    botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                    //    botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                    //    break;
+                    //case 24:                                    //Ок
+                    //    //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
+                    //    botwindow = new botWindow(numberOfWindow);
+                    //    ServerFactory serverFactory = new ServerFactory(botwindow);
+                    //    this.server = serverFactory.create();
+                    //    this.globalParam = new GlobalParam();
+                    //    this.botParam = new BotParam(numberOfWindow);
+                    //    //********************************************************************************************************************
+                    //    server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                    //    botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                    //    break;
                 }
             }
             else
@@ -373,6 +388,9 @@ namespace States
                 }
                 else
                 {
+                    //if (server.isBoss()) 
+                    //    return 5;
+                    //else 
                     return 4;   //если атакуем с Ctrl, то обновляем бафы
                 }
                 
@@ -388,6 +406,7 @@ namespace States
             //в бараке
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
 
             //в миссии, но убиты
             if (server.isKillAllHero()) return 29;              // если убиты все
@@ -398,7 +417,7 @@ namespace States
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ
+        /// разрешение выявленных проблем в Demonic
         /// </summary>
         public void problemResolutionDemStage2()
         {
@@ -425,15 +444,21 @@ namespace States
                     case 2:                                             //в бараках
                         server.ReturnToMissionFromBarack();                 // идем из барака обратно в миссию     
                         botParam.HowManyCyclesToSkip = 2;
+                        server.MoveCursorOfMouse();
                         botParam.Stage = 3;
                          //server.RemoveSandboxieBH();
                         break;
                     case 3:                                                 //уже не атакуем
                         DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      //атакуем
-                        Pause(1000);
+                        Pause(1500);
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+                        server.BattleModeOn();
                         break;
                     case 4:                                                 //пробуем пробафаться
+                        
                         server.Buff(Hero[1], 1);
                         server.Buff(Hero[2], 2);
                         server.Buff(Hero[3], 3);
@@ -442,10 +467,20 @@ namespace States
                         //if (Hero[2] == 1) server.BuffE(2);
                         //if (Hero[3] == 1) server.BuffE(3);
                         break;
-                    //case 5:                                         //если стоим в БХ, значит миссия окончена 
-                    //    botParam.Stage = 1; 
-                    //    server.RemoveSandboxieBH();
-                    //    break;
+                    case 5:                                         //если в миссии и в прицеле босс, то скилляем 
+                        //обновляем баффы, если надо
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+
+                        //int number = rand.Next(1, 3);
+                        //сделать выбор персонажа через rnd и им скиловать
+                        //server.Skill(Hero[number], number);
+                        //server.Skill(Hero[1], 1);
+                        //server.Skill(Hero[2], 2);
+                        //server.Skill(Hero[3], 3);
+                        server.BattleModeOn();
+                        break;
                     case 10:                                        //если белая надпись вверху
                         botwindow.Pause(5000);                      //пауза, чтобы успеть собрать добычу
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
@@ -456,6 +491,9 @@ namespace States
                         break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 20:
+                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
                         break;
                     case 29:                                        //если все убиты
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
@@ -505,7 +543,9 @@ namespace States
             if (server.isLogout()) return 1;                    // если окно в логауте
 
             //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
+
             //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
@@ -567,6 +607,10 @@ namespace States
                         dialog.PressStringDialog(1);
                         dialog.PressOkButton(1);
                         break;
+                    case 20:
+                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+
                 }
             }
             else
@@ -1534,7 +1578,7 @@ namespace States
             //MessageBox.Show(" " + botwindow.getNomerTeleport());
             //botwindow.Pause(1000);
 
-            //MessageBox.Show("в БХ? " + server.isBH());
+            //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
             //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
@@ -1590,12 +1634,12 @@ namespace States
             //server.TurnL(1); 
             //server.TurnUp();
 
-            Hero[1] = server.WhatsHero(1);
-            Hero[2] = server.WhatsHero(2);
-            Hero[3] = server.WhatsHero(3);
+            //Hero[1] = server.WhatsHero(1);
+            //Hero[2] = server.WhatsHero(2);
+            //Hero[3] = server.WhatsHero(3);
             //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
 
-            server.Buff(Hero[1], 1);
+            //server.Buff(Hero[1], 1);
 
             int xx, yy;
             xx = koordX[i - 1];
@@ -1613,8 +1657,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(25 - 5 + xx + (1 - 1) * 255, 701 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(25 - 5 + xx + (2 - 1) * 255, 701 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(300 - 5 + xx, 145 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(300 - 5 + xx, 146 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
 
 
@@ -1625,8 +1669,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
