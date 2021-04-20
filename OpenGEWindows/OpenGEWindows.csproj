@@ -160,6 +160,7 @@
     <Compile Include="SingTownKatovia.cs" />
     <Compile Include="Europa2TownReboldo.cs" />
     <Compile Include="Europa2TownViron.cs" />
+    <Compile Include="SingTownCoimbra.cs" />
     <Compile Include="SingTownViron.cs" />
     <Compile Include="SingTownUstiar.cs" />
     <Compile Include="SingTownCastilia.cs" />

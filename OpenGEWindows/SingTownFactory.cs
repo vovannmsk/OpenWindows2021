@@ -28,10 +28,10 @@
                     //=================== ребольдо =======================================
                     town = new SingTownReboldo(botwindow);
                     break;
-                //case 2:
-                //    //=================== Коимбра =======================================
-                //    town = new SingTownCoimbra(nomerOfWindow);
-                //    break;
+                case 2:
+                    //=================== Коимбра =======================================
+                    town = new SingTownCoimbra(botwindow);
+                    break;
                 case 3:
                     //=================== Ош ============================================
                     town = new SingTownAuch(botwindow);
