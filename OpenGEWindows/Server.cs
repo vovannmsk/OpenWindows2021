@@ -5706,6 +5706,17 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, появился ли сундук в миссии
+        /// </summary>
+        /// <returns>true, если находимся</returns>
+        public bool isTreasureChest()
+        {
+            return  new PointColor(832 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(838 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(835 - 5 + xx, 664 - 5 + yy, 14900000, 5).isColor();
+        }
+
+        /// <summary>
         /// стартуем миссию
         /// </summary>
         public void MissionStart()
@@ -5765,6 +5776,15 @@ namespace OpenGEWindows
         public void BuffY(int i)
         {
             new Point(182 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            MoveCursorOfMouse();
+        }
+
+        /// <summary>
+        /// переключаем чат на пятую закладку
+        /// </summary>
+        public void FifthBookmark()
+        {
+            new Point(914 - 5 + xx, 703 - 5 + yy).PressMouseLL();
             MoveCursorOfMouse();
         }
 

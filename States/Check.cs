@@ -296,6 +296,7 @@ namespace States
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         if (!botwindow.isCommandMode()) botwindow.CommandMode();
                         server.BattleModeOn();                      //пробел
+                        server.FifthBookmark();
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
@@ -379,8 +380,9 @@ namespace States
             //в миссии
             if (server.isWork())
             {
-                //если белая надпись сверху, значит появился сундук и надо идти в барак и далее стадия 3
-                if (server.isWhiteLabel()) return 10;
+                //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
+                if (//server.isWhiteLabel() || 
+                    server.isTreasureChest()) return 10;
 
                 //if (!server.isAssaultMode())
                 //{
@@ -1646,7 +1648,7 @@ namespace States
             yy = koordY[i - 1];
             uint color1;
             uint color2;
-            //uint color3;
+            uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
@@ -1657,21 +1659,21 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(300 - 5 + xx, 145 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(300 - 5 + xx, 146 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(165 - 5 + xx, 216 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(832 - 5 + xx, 655 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(838 - 5 + xx, 655 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(835 - 5 + xx, 663 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
-            //color3 = point3.GetPixelColor();
+            color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
-            //MessageBox.Show(" " + color3);
+            MessageBox.Show(" " + color3);
 
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");
