@@ -381,7 +381,7 @@ namespace States
             if (server.isWork())
             {
                 //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
-                if (//server.isWhiteLabel() || 
+                if (server.isWhiteLabel() || 
                     server.isTreasureChest()) return 10;
 
                 //if (!server.isAssaultMode())
@@ -483,10 +483,12 @@ namespace States
                         //server.Skill(Hero[3], 3);
                         server.BattleModeOn();
                         break;
-                    case 10:                                        //если белая надпись вверху
-                        botwindow.Pause(5000);                      //пауза, чтобы успеть собрать добычу
+                    case 10:
+                        //если белая надпись вверху
+                        server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        botwindow.Pause(7000);                      //пауза, чтобы успеть собрать добычу
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botwindow.Pause(5000);                      //пауза, чтобы успеть войти в барак
+                        botwindow.Pause(6000);                      //пауза, чтобы успеть войти в барак
                         //botParam.HowManyCyclesToSkip = 5;
                         //botParam.Stage = 3;
                         //server.RemoveSandboxieBH();
