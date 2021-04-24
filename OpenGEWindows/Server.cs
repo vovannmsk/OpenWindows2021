@@ -2105,7 +2105,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isKillHero()
         {
-            return (pointisKillHero1.isColor() || pointisKillHero2.isColor() || pointisKillHero3.isColor());
+            return pointisKillHero1.isColor() || pointisKillHero2.isColor() || pointisKillHero3.isColor();
         }
 
         /// <summary>

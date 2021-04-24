@@ -414,6 +414,9 @@ namespace States
             if (server.isKillAllHero()) return 29;              // если убиты все
             //if (server.isKillHero()) return 30;               // если убиты не все 
 
+            //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
+            if (server.isTown() && server.isBH() && !server.isKillHero()) return 29;
+
             //если проблем не найдено
             return 0;
         }
