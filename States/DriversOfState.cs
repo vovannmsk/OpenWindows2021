@@ -580,7 +580,7 @@ namespace States
             StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
             botwindow.PressEscThreeTimes();
 
-            if (botParam.NomerTeleport==1)        //если надо продаваться в Ребольдо, то перелетать не надо и начинаем с Состояния 003
+            if (botParam.NomerTeleport == 1)        //если надо продаваться в Ребольдо, то перелетать не надо и начинаем с Состояния 003
                 StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
             else
                 StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
