@@ -63,7 +63,7 @@ namespace States
             town.GoToTraderMapBullet();
 
             ////тыкаем "Move"
-            town.ClickMoveMap();
+            //town.ClickMoveMap();
 
             // закрываем все окна
             botwindow.PressEscThreeTimes();

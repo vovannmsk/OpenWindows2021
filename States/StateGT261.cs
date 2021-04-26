@@ -64,9 +64,8 @@ namespace States
             //town.MaxHeight();
             //botwindow.Pause(1000);
 
-            // ============= Кликаю на кнопку городского телепорта, чтобы перелететь на фиксированную точку (торговую улицу)==============
-            town.TownTeleportW();   //метод без while
-            botwindow.Pause(2000);  //время чтобы долететь до точки
+            town.TownTeleportBullets();   
+            //botwindow.Pause(2000);  //время чтобы долететь до точки
         }
 
         /// <summary>

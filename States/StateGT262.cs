@@ -59,9 +59,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            // ============= открыть карту через верхнее меню ============================================================
-            server.OpenMapForState();   // без проверок и while
-            botwindow.Pause(1500);
+            server.OpenMapForState();   
+            //botwindow.Pause(1500);
         }
 
         /// <summary>

@@ -16,21 +16,21 @@ namespace OpenGEWindows
             this.xx = botwindow.getX();
             this.yy = botwindow.getY();
             this.PAUSE_TIME = 6000;
-            this.TELEPORT_N = 1;   //номер городского телепорта
+            this.TELEPORT_N = 1;   
+            this.TELEPORT_bullets = 2;
             //точки для нажимания на них
-            this.pointMaxHeight = new Point(545 - 5 + xx, 500 - 5 + yy);                      //проверено
-            this.pointBookmark = new Point(880 - 5 + xx, 48 - 5 + yy);                        //вторая закладка карты   //проверено
-            this.pointTraderOnMap = new Point(880 - 5 + xx, 369 - 5 + yy);                    //торговец на карте                          ===========постоянная коррекция  шаг 15
-            this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 728 - 5 + yy);                //кнопка Move на карте
-//            this.pointHeadTrader = new Point(91 - 5 + xx, 182 - 5 + yy);                     //голова торговца          //проверено
-            this.pointHeadTrader = new Point(137 - 5 + xx, 198 - 5 + yy);                     //голова торговца          //проверено
-            this.pointBulletAutomat = new Point(425 - 5 + xx, 348 - 5 + yy);                //автомат с пулями  //не отлажено
+            this.pointMaxHeight = new Point(545 - 5 + xx, 500 - 5 + yy);                
+            this.pointBookmark = new Point(880 - 5 + xx, 48 - 5 + yy);                  //вторая закладка карты  
+            this.pointTraderOnMap = new Point(880 - 5 + xx, 369 - 5 + yy);              //торговец на карте  ==== коррекция  шаг 15
+            this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 728 - 5 + yy);          //кнопка Move на карте
+            this.pointHeadTrader = new Point(137 - 5 + xx, 198 - 5 + yy);               //голова торговца          //проверено
+            this.pointBulletAutomat = new Point(257 - 5 + xx, 384 - 5 + yy);            //автомат с пулями  
             this.PAUSE_TIME_Bullet = 3000;
-            this.pointTraderOnMapBullet = new Point(880 - 5 + xx, 310 - 5 + yy);//торговец на карте для перехода к патронам//не отлажено
+            //            this.pointTraderOnMapBullet = new Point(840 - 5 + xx, 235 - 5 + yy);
+            this.pointTraderOnMapBullet = new Point(627 - 5 + xx, 436 - 5 + yy);
 
-            //this.pointSellOnMenu = new Point(520 + xx, 654 + yy);
-            //this.pointOkOnMenu = new Point(907 - 5 + xx, 679 - 5 + yy);
-            this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);    //сюда тыкаем, чтобы улететь на торговую улицу   //проверено
+            this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);   
+            this.pointTownTeleportBullets = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_bullets - 1) * 30 + yy);
             //точки для проверки цвета
             this.pointOpenMap1 = new PointColor(794 - 5 + xx, 30 - 5 + yy, 7000000, 6);       //проверено
             this.pointOpenMap2 = new PointColor(795 - 5 + xx, 30 - 5 + yy, 7000000, 6);       //проверено

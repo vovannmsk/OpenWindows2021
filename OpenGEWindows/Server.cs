@@ -1550,7 +1550,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Открыть карту местности (Alt + Z) для группы классов StateGT (паттерн Состояние)
+        /// Открыть карту местности (Alt + Z). Без проверок  
         /// </summary>
         public void OpenMapForState()
         {

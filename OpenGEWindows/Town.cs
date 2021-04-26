@@ -20,10 +20,19 @@ namespace OpenGEWindows
         #endregion
 
         #region Town Teleport
-            protected int TELEPORT_N;   //номер городского телепорта
-            protected iPoint pointTownTeleport;
-            protected iPointColor pointOpenTownTeleport1;
-            protected iPointColor pointOpenTownTeleport2;
+        /// <summary>
+        /// номер городского телепорта для продажи
+        /// </summary>
+        protected int TELEPORT_N;   
+        /// <summary>
+        /// номер городского телепорта для патронов
+        /// </summary>
+        protected int TELEPORT_bullets;
+        protected iPoint pointTownTeleport;
+        protected iPoint pointTownTeleportBullets;
+        protected iPointColor pointOpenTownTeleport1;
+        protected iPointColor pointOpenTownTeleport2;
+
         #endregion
 
         #region Shop
@@ -39,6 +48,9 @@ namespace OpenGEWindows
 
         protected iPoint pointBulletAutomat;
         protected int PAUSE_TIME_Bullet;
+        /// <summary>
+        /// торговец на карте для перехода к патронам
+        /// </summary>
         protected iPoint pointTraderOnMapBullet;
 
         #endregion
@@ -124,22 +136,31 @@ namespace OpenGEWindows
 
         #region Town Teleport (Alt + F3)
 
-            /// <summary>
-            /// проверяет, открыт ли городской телепорт (Alt + F3)                             
-            /// </summary>
-            /// <returns> true, если телепорт  (Alt + F3) открыт </returns>
-            public bool isOpenTownTeleport()
-            {
-                return ((pointOpenTownTeleport1.isColor()) & (pointOpenTownTeleport2.isColor()));
-            }
+        /// <summary>
+        /// проверяет, открыто ли меню городского телепорта (Alt + F3)                             
+        /// </summary>
+        /// <returns> true, если телепорт  (Alt + F3) открыт </returns>
+        public bool isOpenTownTeleport()
+        {
+            return ((pointOpenTownTeleport1.isColor()) & (pointOpenTownTeleport2.isColor()));
+        }
 
-            /// <summary>
-            /// перелететь по городскому телепорту на торговую улицу                            
-            /// </summary>
-            public void TownTeleportW()
-            {
-                pointTownTeleport.PressMouse();
-            }
+        /// <summary>
+        /// перелететь по городскому телепорту поближе к торговцу                            
+        /// </summary>
+        public void TownTeleportW()
+        {
+            pointTownTeleport.PressMouse();
+        }
+
+
+        /// <summary>
+        /// перелететь по городскому телепорту поближе к аппарату с патронами                  
+        /// </summary>
+        public void TownTeleportBullets()
+        {
+            pointTownTeleportBullets.PressMouse();
+        }
 
         /// <summary>
         /// перелететь по городскому телепорту в указанное место
@@ -176,7 +197,8 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToTraderMapBullet()
         {
-            pointTraderOnMapBullet.PressMouseLL();
+            //pointTraderOnMapBullet.PressMouseLL();
+            pointTraderOnMapBullet.DoubleClickL();
         }
 
         #endregion
