@@ -868,7 +868,7 @@ namespace Main
 
         #endregion
 
-        #region  ======================== Demonic ==============================================
+        #region  ======================== Demonic Solo ==============================================
 
         /// <summary>
         /// миссия демоник в БХ
@@ -963,7 +963,7 @@ namespace Main
         #endregion
 
 
-        #region Demonic Stage 2-3
+        #region Demonic Multi 
 
         /// <summary>
         /// миссия демоник в БХ. начало со стадии 2
@@ -973,14 +973,14 @@ namespace Main
         private void DemonicStage2_Click(object sender, EventArgs e)
         {
             Demonic.BackColor = Color.OrangeRed;
-            Thread myDemonic2 = new Thread(funcDemonic2);
-            myDemonic2.Start();
+            Thread myDemonicMulti = new Thread(funcDemonicMulti);
+            myDemonicMulti.Start();
         }
 
         /// <summary>
         /// метод задает функционал для потока, организуемого кнопкой Demonic в BH
         /// </summary>
-        private void funcDemonic2()
+        private void funcDemonicMulti()
         {
             Check[] check = new Check[numberOfAcc + 1];
             BotParam[] botParam = new BotParam[numberOfAcc + 1];
@@ -989,26 +989,31 @@ namespace Main
             {
                 check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
                 botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
-                botParam[j].Stage = 2;
+                botParam[j].Stage = 1;
             }
 
             while (true)
             {
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
-                    if (botParam[j].Stage == 1)
+                    switch (botParam[j].Stage)
                     {
-                        check[j].problemResolutionDemStage1();
+                        case 1:
+                            check[j].problemResolutionDemMultiStage1();
+                            break;
+                        case 2:
+                            check[j].problemResolutionDemMultiStage2();
+                            break;
+                        case 3:
+                            check[j].problemResolutionDemMultiStage3();
+                            break;
                     }
-                    if (botParam[j].Stage == 2)
-                    {
-                        check[j].problemResolutionDemStage2();
-                    }
-                    if (botParam[j].Stage == 3)
-                    {
-                        check[j].problemResolutionDemStage3();
-                    }
-
+                    //if (botParam[j].Stage == 1)
+                    //    check[j].problemResolutionDemMultiStage1();
+                    //if (botParam[j].Stage == 2)
+                    //    check[j].problemResolutionDemMultiStage2();
+                    //if (botParam[j].Stage == 3)
+                    //    check[j].problemResolutionDemMultiStage3();
                 }
             }
         }

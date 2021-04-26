@@ -157,7 +157,7 @@ namespace States
             //this.botParam = new BotParam(numberOfWindow);
         }
 
-        #region  =================================== Demonic Stage 1 ==============================================
+        #region  =================================== Demonic Solo Stage 1 ==============================================
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -369,7 +369,7 @@ namespace States
 
         #endregion
 
-        #region  =================================== Demonic Stage 2 ==============================================
+        #region  =================================== Demonic Solo Stage 2 ==============================================
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -519,7 +519,7 @@ namespace States
 
         #endregion
 
-        #region  =================================== Demonic Stage 3 ==============================================
+        #region  =================================== Demonic Solo Stage 3 ==============================================
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -627,6 +627,483 @@ namespace States
         }
 
         #endregion
+
+
+        #region  =================================== Demonic Multi Stage 1 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemMultiStage1()
+        {
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                return 21;
+                //if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                //{
+                //    return 24;
+                //}
+                //else    //если Стим уже загружен
+                //{
+                //    if (!server.FindWindowGEforBHBool())
+                //    {
+                //        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                //    }
+                //    else
+                //    {
+                //        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                //    }
+                //}
+            }
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                if (server.isMissionNotAvailable())
+                    return 10;
+                else
+                    return 8;                        //если стоим в воротах Demonic и миссия доступна
+            }
+
+
+            //Mission Lobby
+            if (server.isMissionLobby()) return 5;
+
+            //Waiting Room
+            if (server.isWaitingRoom()) return 3;
+
+            //город или БХ
+            if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            {
+                if (server.isBH())     //в БХ 
+                {
+                    //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+                    //else
+                    return 4;   // стоим в правильном месте (около ворот Demonic)
+                }
+                else   // в городе, но не в БХ
+                {
+                    return 6;
+                }
+            }
+
+            //в миссии
+            if (server.isWork()) return 7;
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionDemMultiStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemMultiStage1();
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        //case 1:  //зависли в логауте
+                        //case 23:  //загруженное окно зависло и не смещается на нужное место
+                        //    numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                        //    break;
+                        case 4:  //зависли в БХ
+                            numberOfProblem = 18; //переходим в стартовый город через системное меню
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:
+                        driver.StateFromBarackToTownBH();           // идем в город     //ок
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        server.MissionStart();
+                        break;
+                    case 4:
+                        driver.StateFromBHToGateDem();              // BH --> Gate Demonic  (бафы + патроны)
+                        break;
+                    case 5:
+                        server.CreatingMission();
+                        break;
+                    case 6:                                         // town --> BH
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 7:
+                        //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                        if (!botwindow.isCommandMode()) botwindow.CommandMode();
+                        server.BattleModeOn();                      //пробел
+                        server.FifthBookmark();
+                        Hero[1] = server.WhatsHero(1);
+                        Hero[2] = server.WhatsHero(2);
+                        Hero[3] = server.WhatsHero(3);
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+                        driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
+                        //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
+                        server.MaxHeight(7);                      //
+                        botParam.Stage = 2;
+                        break;
+                    case 8:                                         //Gate --> List of missions
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
+                        dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
+                        break;
+                    case 10:                                         //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);
+                        botwindow.Pause(2000);
+                        server.GotoBarack();
+                        botwindow.Pause(6000);
+                        botwindow.PressEscThreeTimes();
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
+                        break;
+                    case 14:
+                        driver.StateFromMissionToBarackBH();        // в барак 
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 18:
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 21:                                        // нет окна
+                        server.ReOpenWindow();                      // 
+                        //botParam.HowManyCyclesToSkip = 3;
+                        break;
+                        //case 22:                                    //Ок
+                        //    server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
+                        //    botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                        //    break;
+                        //case 23:                                    //Ок
+                        //    botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                        //    botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        //    break;
+                        //case 24:                                    //Ок
+                        //    //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
+                        //    botwindow = new botWindow(numberOfWindow);
+                        //    ServerFactory serverFactory = new ServerFactory(botwindow);
+                        //    this.server = serverFactory.create();
+                        //    this.globalParam = new GlobalParam();
+                        //    this.botParam = new BotParam(numberOfWindow);
+                        //    //********************************************************************************************************************
+                        //    server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        //    botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                        //    break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Demonic Multi Stage 2 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemMultiStage2()
+        {
+            //в миссии
+            if (server.isWork())
+            {
+                //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
+                if (server.isWhiteLabel() ||
+                    server.isTreasureChest()) return 10;
+
+                //if (!server.isAssaultMode())
+                //{
+                return 3;   //если нет режима атаки
+                            //}
+                            //else
+                            //{
+                            //    //if (server.isBoss()) 
+                            //    //    return 5;
+                            //    //else 
+                            //    return 4;   //если атакуем с Ctrl, то обновляем бафы
+                            //}
+
+            }
+
+            //в БХ вылетели, значит миссия закончена
+            //if (server.isTown() && server.isBH()) return 5;
+
+
+            //в логауте
+            if (server.isLogout()) return 1;                    // если окно в логауте
+
+            //в бараке
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
+
+            //в миссии, но убиты
+            if (server.isKillAllHero()) return 29;              // если убиты все
+            //if (server.isKillHero()) return 30;               // если убиты не все 
+
+            //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
+            if (server.isTown() && server.isBH() && !server.isKillHero()) return 29;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Demonic
+        /// </summary>
+        public void problemResolutionDemMultiStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemMultiStage2();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                             //в логауте (при переходе в барак можем попасть в логаут)
+                        driver.StateFromLogoutToBarackBH();             // Logout-->Barack   
+                        botParam.HowManyCyclesToSkip = 1;
+                        //server.RemoveSandboxieBH();
+                        break;
+                    case 2:                                             //в бараках
+                        server.ReturnToMissionFromBarack();                 // идем из барака обратно в миссию     
+                        botParam.HowManyCyclesToSkip = 2;
+                        server.MoveCursorOfMouse();
+                        botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
+                        break;
+                    case 3:                                                 //уже не атакуем
+                        DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
+                        server.AttackTheMonsters(DirectionOfMovement);      //атакуем
+                        Pause(1500);
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+                        server.BattleModeOn();
+                        break;
+                    case 4:                                                 //пробуем пробафаться
+
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+                        server.BattleModeOn();
+                        //if (Hero[1] == 1) server.BuffE(1);
+                        //if (Hero[2] == 1) server.BuffE(2);
+                        //if (Hero[3] == 1) server.BuffE(3);
+                        break;
+                    case 5:                                         //если в миссии и в прицеле босс, то скилляем 
+                        //обновляем баффы, если надо
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
+
+                        //int number = rand.Next(1, 3);
+                        //сделать выбор персонажа через rnd и им скиловать
+                        //server.Skill(Hero[number], number);
+                        //server.Skill(Hero[1], 1);
+                        //server.Skill(Hero[2], 2);
+                        //server.Skill(Hero[3], 3);
+                        server.BattleModeOn();
+                        break;
+                    case 10:
+                        //если белая надпись вверху
+                        server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        botwindow.Pause(7000);                      //пауза, чтобы успеть собрать добычу
+                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        botwindow.Pause(6000);                      //пауза, чтобы успеть войти в барак
+                        //botParam.HowManyCyclesToSkip = 5;
+                        //botParam.Stage = 3;
+                        //server.RemoveSandboxieBH();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 20:
+                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 29:                                        //если все убиты
+                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        botwindow.Pause(5000);                      //пауза, чтобы успеть войти в барак
+                                                                    //                        botParam.HowManyCyclesToSkip = 5;
+                                                                    //botParam.Stage = 3;
+                                                                    //server.RemoveSandboxieBH();
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Demonic Multi Stage 3 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemMultiStage3()
+        {
+            //если диалог (он получается, если тыкнуть в ворота)
+            if (dialog.isDialog()) return 7;
+
+            //в миссии
+            if (server.isWork())
+            {
+                if (server.isRouletteBH())
+                    return 4;
+                else
+                    return 3;
+            }
+
+            //в городе или в БХ
+            if (server.isTown())
+            {
+                if (server.isBH()) return 5;        //в БХ
+                else return 6;                      //в стартовом городе
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;                    // если окно в логауте
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+
+            //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадия 3
+        /// </summary>
+        public void problemResolutionDemMultiStage3()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ReOpenWindow();
+                    Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemMultiStage3();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:                                         //в бараках
+                        driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
+                        botParam.HowManyCyclesToSkip = 2;
+                        //server.RemoveSandboxieBH();               //закрываем песочницу
+                        //botParam.Stage = 1;
+                        break;
+                    case 3:                                         //в миссии, но рулетка не крутится
+                        server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
+                        //server.MaxHeight(7);
+                        botwindow.Pause(5000);
+                        break;
+                    case 4:                                         //крутится рулетка
+                        botwindow.Pause(5000);
+                        server.GotoBarack();
+                        botParam.HowManyCyclesToSkip = 5;
+                        //server.RemoveSandboxieBH();                 //закрываем песочницу
+                        //botParam.Stage = 1;
+                        //сюда можно будет запихнуть прохождение ворот с фесо
+                        break;
+                    case 5:                                         // в БХ
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 6:                                         // в городе
+                        server.RemoveSandboxieBH();                 //закрываем песочницу
+                        botParam.Stage = 1;
+                        break;
+                    case 7:                                         // в диалоге
+                        dialog.PressStringDialog(1);
+                        dialog.PressOkButton(1);
+                        break;
+                    case 20:
+                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion
+
+
+
+
+
 
         #region Гильдия охотников BH
 

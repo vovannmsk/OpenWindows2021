@@ -59,11 +59,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ChangingAccounts = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.DemonicStage2 = new System.Windows.Forms.Button();
             this.Demonic = new System.Windows.Forms.Button();
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.DemonicStage2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -344,7 +344,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 176);
+            this.tabPage1.Size = new System.Drawing.Size(378, 202);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
@@ -398,6 +398,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
+            // DemonicStage2
+            // 
+            this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
+            this.DemonicStage2.Location = new System.Drawing.Point(6, 129);
+            this.DemonicStage2.Name = "DemonicStage2";
+            this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
+            this.DemonicStage2.TabIndex = 66;
+            this.DemonicStage2.Text = "Demonic. Много окон";
+            this.DemonicStage2.UseVisualStyleBackColor = false;
+            this.DemonicStage2.Click += new System.EventHandler(this.DemonicStage2_Click);
+            // 
             // Demonic
             // 
             this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
@@ -405,7 +416,7 @@
             this.Demonic.Name = "Demonic";
             this.Demonic.Size = new System.Drawing.Size(170, 35);
             this.Demonic.TabIndex = 65;
-            this.Demonic.Text = "Миссия Demonic в БХ";
+            this.Demonic.Text = "Demonic. Одно окно";
             this.Demonic.UseVisualStyleBackColor = false;
             this.Demonic.Click += new System.EventHandler(this.Demonic_Click);
             // 
@@ -436,7 +447,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 176);
+            this.tabPage3.Size = new System.Drawing.Size(378, 202);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -450,17 +461,6 @@
             this.PureOtiteMulti.Text = "Чистый Отит (много окон)";
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
-            // 
-            // DemonicStage2
-            // 
-            this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
-            this.DemonicStage2.Location = new System.Drawing.Point(6, 129);
-            this.DemonicStage2.Name = "DemonicStage2";
-            this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
-            this.DemonicStage2.TabIndex = 66;
-            this.DemonicStage2.Text = "Demonic. Стадия 2 и далее";
-            this.DemonicStage2.UseVisualStyleBackColor = false;
-            this.DemonicStage2.Click += new System.EventHandler(this.DemonicStage2_Click);
             // 
             // MainForm
             // 
