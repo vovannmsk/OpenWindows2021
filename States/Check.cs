@@ -737,14 +737,15 @@ namespace States
                 {
                     case 1:
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 2:
                         driver.StateFromBarackToTownBH();           // идем в город     //ок
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 4;  //2
                         break;
                     case 3:                                         // старт миссии      //ок
                         server.MissionStart();
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 4:
                         driver.StateFromBHToGateDem();              // BH --> Gate Demonic  (бафы + патроны)
@@ -756,9 +757,9 @@ namespace States
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
                         server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 2;  //1
                         break;
-                    case 7:
+                    case 7:         //пытаюсь сократить время на эту операцию (не бафаюсь и ускорение выпуска пета)
                         //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         if (!botwindow.isCommandMode()) botwindow.CommandMode();
                         server.BattleModeOn();                      //пробел
@@ -766,31 +767,33 @@ namespace States
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
+
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
                         driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
-                        //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
-                        server.MaxHeight(7);                      //
+                        server.MaxHeight(7);                      
                         botParam.Stage = 2;
                         break;
                     case 8:                                         //Gate --> List of missions
                         dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
                         dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
                         break;
-                    case 10:                                         //миссия не доступна на сегодня (уже прошли)
+                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         dialog.PressOkButton(1);
-                        botwindow.Pause(2000);
+                        botwindow.Pause(1000);  //2000
                         server.GotoBarack();
-                        botwindow.Pause(6000);
-                        botwindow.PressEscThreeTimes();
+                        //botwindow.Pause(6000);
+                        //botwindow.PressEscThreeTimes();
                         botParam.Stage = 3;
-                        //server.RemoveSandboxieBH();
                         break;
-                    case 14:
-                        driver.StateFromMissionToBarackBH();        // в барак 
-                        botParam.HowManyCyclesToSkip = 1;
-                        break;
+                    //case 14:
+                    //    //driver.StateFromMissionToBarackBH();      // в барак 
+                    //    botwindow.ClickSpaceBH();                   //переходим в боевой режим. Если есть в кого стрелять, то стреляем. 
+                    //    server.GotoBarack(true);                    //если не в кого стрелять, уходим в барак
+
+                    //    botParam.HowManyCyclesToSkip = 1;
+                    //    break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
@@ -802,10 +805,10 @@ namespace States
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
-                    case 21:                                        // нет окна
-                        server.ReOpenWindow();                      // 
-                        //botParam.HowManyCyclesToSkip = 3;
-                        break;
+                    //case 21:                                        // нет окна
+                    //    server.ReOpenWindow();                      // 
+                    //    //botParam.HowManyCyclesToSkip = 3;
+                    //    break;
                     case 22:                                    //Ок
                         server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
                         botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов

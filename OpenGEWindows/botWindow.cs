@@ -622,21 +622,19 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// нажимаем пробел (переход в боевой режим)
+        /// нажимаем пробел RRL (переход в боевой режим)
         /// </summary>
         public void ClickSpace()
         {
-            iPoint pointBattleMode = new Point(190 - 5 + xx, 530 - 5 + yy);    //  185, 525
-            pointBattleMode.PressMouse();  // Кликаю на кнопку "боевой режим"
+            new Point(190 - 5 + xx, 530 - 5 + yy).PressMouse();  // Кликаю на кнопку "боевой режим"
         }
 
         /// <summary>
-        /// нажимаем пробел (переход в боевой режим)
+        /// нажимаем пробел левой кнопкой мыши (переход в боевой режим)
         /// </summary>
         public void ClickSpaceBH()
         {
-            iPoint pointBattleMode = new Point(190 - 5 + xx, 530 - 5 + yy);    //  185, 525
-            pointBattleMode.PressMouseL();  // Кликаю на кнопку "боевой режим"
+            new Point(190 - 5 + xx, 530 - 5 + yy).PressMouseL();  // Кликаю на кнопку "боевой режим"
         }
 
         /// <summary>

@@ -4707,7 +4707,7 @@ namespace OpenGEWindows
             for (int i = 1; i <= n; i++)
             {
                 new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelUp();
-                Pause(500);
+                //Pause(500); 
             }
         }
 

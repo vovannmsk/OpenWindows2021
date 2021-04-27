@@ -54,8 +54,8 @@ namespace States
         /// </summary>
         public void StateActivePetDem()
         {
-            //server.WriteToLogFileBH("Движок 101-102 BH-->Gate");
-            StateDriverRun(new StateGT018(botwindow), new StateGT024(botwindow));   
+            //StateDriverRun(new StateGT018(botwindow), new StateGT024(botwindow));
+            StateDriverRun(new StateGT402(botwindow), new StateGT499(botwindow));    //активируем пета
         }
 
         #endregion

@@ -1002,10 +1002,14 @@ namespace Main
                 infinity[j] = botParam[j].NumberOfInfinity;
             }
 
-           
-            //int infinity = botParam[startAcc].NumberOfInfinity;
+            int Period;
+            int MinTimeOfTurn = 4000;    //минимальное время цикла
+            DateTime Data1, Data2;
+
+
             while (true)
             {
+                Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
@@ -1037,16 +1041,11 @@ namespace Main
                         botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
                         botParam[j].Stage = 1;
                     }
-
-                    //if (botParam[j].Stage == 1)
-                    //    check[j].problemResolutionDemMultiStage1();
-                    //if (botParam[j].Stage == 2)
-                    //    check[j].problemResolutionDemMultiStage2();
-                    //if (botParam[j].Stage == 3)
-                    //    check[j].problemResolutionDemMultiStage3();
                 }
-                if (botParam[startAcc].Stage == 1) check[startAcc].Pause(7000);
-                if (botParam[startAcc].Stage == 3) check[startAcc].Pause(5000);
+                Data2 = DateTime.Now;
+                Period = (Data2 - Data1).Milliseconds;
+                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
         }
 
