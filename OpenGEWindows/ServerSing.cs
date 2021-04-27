@@ -1089,9 +1089,8 @@ namespace OpenGEWindows
         public override bool FindWindowSteamBool()
         {
             bool result = false;
-            string aaa = "Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow";
-//            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
-            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "Steam");
+            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
+//            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "Steam");
             if (HWND != (UIntPtr)0)
             {
                 result = true;

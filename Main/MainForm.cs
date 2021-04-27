@@ -412,11 +412,8 @@ namespace Main
 
             for (int j = startAcc; j <= numberOfAcc; j++)
             {
-                if (check[j].IsActiveServer) check[j].NewWhiteButton();
-                //{
-                    //DriversOfState driver = new DriversOfState(j);
-                    //driver.StateGotoTrade(); 
-                //}
+                if (check[j].IsActiveServer) 
+                    new DriversOfState(j).StateGotoTrade(); 
             }
         }
         
@@ -921,18 +918,30 @@ namespace Main
 
                     if (check[j].IsActiveServer)
                     {
-                        if (botParam[j].Stage == 1)
+                        switch (botParam[j].Stage)
                         {
-                            check[j].problemResolutionDemStage1();
+                            case 1:
+                                check[j].problemResolutionDemStage1();
+                                break;
+                            case 2:
+                                check[j].problemResolutionDemStage2();
+                                break;
+                            case 3:
+                                check[j].problemResolutionDemStage3();
+                                break;
                         }
-                        if (botParam[j].Stage == 2)
-                        {
-                            check[j].problemResolutionDemStage2();
-                        }
-                        if (botParam[j].Stage == 3)
-                        {
-                            check[j].problemResolutionDemStage3();
-                        }
+                        //if (botParam[j].Stage == 1)
+                        //{
+                        //    check[j].problemResolutionDemStage1();
+                        //}
+                        //if (botParam[j].Stage == 2)
+                        //{
+                        //    check[j].problemResolutionDemStage2();
+                        //}
+                        //if (botParam[j].Stage == 3)
+                        //{
+                        //    check[j].problemResolutionDemStage3();
+                        //}
                     }
                     else
                     {
@@ -963,16 +972,16 @@ namespace Main
         #endregion
 
 
-        #region Demonic Multi 
+        #region  ======================== Demonic Multi =============================================
 
         /// <summary>
-        /// миссия демоник в БХ. начало со стадии 2
+        /// миссия демоник в БХ. Много окон
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DemonicStage2_Click(object sender, EventArgs e)
         {
-            Demonic.BackColor = Color.OrangeRed;
+            DemonicStage2.BackColor = Color.OrangeRed;
             Thread myDemonicMulti = new Thread(funcDemonicMulti);
             myDemonicMulti.Start();
         }
@@ -984,30 +993,51 @@ namespace Main
         {
             Check[] check = new Check[numberOfAcc + 1];
             BotParam[] botParam = new BotParam[numberOfAcc + 1];
-
+            int[] infinity = new int [numberOfAcc + 1];
             for (int j = startAcc; j <= numberOfAcc; j++)
             {
                 check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
                 botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
                 botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
             }
 
+           
+            //int infinity = botParam[startAcc].NumberOfInfinity;
             while (true)
             {
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
-                    switch (botParam[j].Stage)
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
                     {
-                        case 1:
-                            check[j].problemResolutionDemMultiStage1();
-                            break;
-                        case 2:
-                            check[j].problemResolutionDemMultiStage2();
-                            break;
-                        case 3:
-                            check[j].problemResolutionDemMultiStage3();
-                            break;
+                        infinity [j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
                     }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionDemMultiStage1();
+                                break;
+                            case 2:
+                                check[j].problemResolutionDemMultiStage2();
+                                break;
+                            case 3:
+                                check[j].problemResolutionDemMultiStage3();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+
                     //if (botParam[j].Stage == 1)
                     //    check[j].problemResolutionDemMultiStage1();
                     //if (botParam[j].Stage == 2)
@@ -1015,6 +1045,8 @@ namespace Main
                     //if (botParam[j].Stage == 3)
                     //    check[j].problemResolutionDemMultiStage3();
                 }
+                if (botParam[startAcc].Stage == 1) check[startAcc].Pause(7000);
+                if (botParam[startAcc].Stage == 3) check[startAcc].Pause(5000);
             }
         }
 

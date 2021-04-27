@@ -103,46 +103,44 @@ namespace States
             Hero = new int[4] {0,0,0,0};
         }
 
+        ///// <summary>
+        ///// продаем одно окно с ботом (кнопка "Направить все окна на продажу" )
+        ///// </summary>
+        //public void NewWhiteButton()
+        //{
+        //    driver.StateGotoTrade();
+        //}
 
+        ///// <summary>
+        ///// возвращает номер телепорта для продажи
+        ///// </summary>
+        ///// <returns></returns>
+        //public int getNumberTeleport()
+        //{
+        //    return botwindow.getNomerTeleport();
+        //}
 
-        /// <summary>
-        /// продаем одно окно с ботом (кнопка "Направить все окна на продажу" )
-        /// </summary>
-        public void NewWhiteButton()
-        {
-            driver.StateGotoTrade();
-        }
+        ///// <summary>
+        ///// если находимся на алхимическом столе, то true
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool isAlchemy()
+        //{
+        //    return server.isAlchemy();
+        //}
 
-        /// <summary>
-        /// возвращает номер телепорта для продажи
-        /// </summary>
-        /// <returns></returns>
-        public int getNumberTeleport()
-        {
-            return botwindow.getNomerTeleport();
-        }
+        ///// <summary>
+        ///// выполняет действия по открытию окна с игрой
+        ///// </summary>
+        //public void OpenWindow ()
+        //{
+        //    server.ReOpenWindow();
+        //}
 
-        /// <summary>
-        /// если находимся на алхимическом столе, то true
-        /// </summary>
-        /// <returns></returns>
-        public bool isAlchemy()
-        {
-            return server.isAlchemy();
-        }
-
-        /// <summary>
-        /// выполняет действия по открытию окна с игрой
-        /// </summary>
-        public void OpenWindow ()
-        {
-            server.ReOpenWindow();
-        }
-
-        public bool EndOfList()
-        {
-            return botParam.EndOfList();
-        }
+        //public bool EndOfList()
+        //{
+        //    return botParam.EndOfList();
+        //}
 
         /// <summary>
         /// закрываем песочницу и переходим к следующему аккаунту
@@ -150,11 +148,6 @@ namespace States
         public void RemoveSandboxie()
         {
             server.RemoveSandboxieBH();
-            //botwindow = new botWindow(numberOfWindow);
-            //ServerFactory serverFactory = new ServerFactory(botwindow);
-            //this.server = serverFactory.create();
-            //this.globalParam = new GlobalParam();
-            //this.botParam = new BotParam(numberOfWindow);
         }
 
         #region  =================================== Demonic Solo Stage 1 ==============================================
@@ -640,22 +633,23 @@ namespace States
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
-                return 21;
-                //if (!server.FindWindowSteamBool())  //если Стима тоже нет
-                //{
-                //    return 24;
-                //}
-                //else    //если Стим уже загружен
-                //{
-                //    if (!server.FindWindowGEforBHBool())
-                //    {
-                //        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
-                //    }
-                //    else
-                //    {
-                //        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
-                //    }
-                //}
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (!server.FindWindowGEforBHBool())
+                    {
+                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                    }
+                    else
+                    {
+                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                    }
+                }
             }
 
             //ворота
@@ -812,25 +806,25 @@ namespace States
                         server.ReOpenWindow();                      // 
                         //botParam.HowManyCyclesToSkip = 3;
                         break;
-                        //case 22:                                    //Ок
-                        //    server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
-                        //    botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
-                        //    break;
-                        //case 23:                                    //Ок
-                        //    botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
-                        //    botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
-                        //    break;
-                        //case 24:                                    //Ок
-                        //    //поменялся номер инфинити в файле Инфинити.txt в папке, поэтому надо заново создать botwindow, server и проч *******
-                        //    botwindow = new botWindow(numberOfWindow);
-                        //    ServerFactory serverFactory = new ServerFactory(botwindow);
-                        //    this.server = serverFactory.create();
-                        //    this.globalParam = new GlobalParam();
-                        //    this.botParam = new BotParam(numberOfWindow);
-                        //    //********************************************************************************************************************
-                        //    server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                        //    botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
-                        //    break;
+                    case 22:                                    //Ок
+                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
+                        botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                        break;
+                    case 23:                                    //Ок
+                        server.ReOpenWindow();
+                        //botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
+                        botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу и надо заново проинициализировать основные объекты
+                        botwindow = new botWindow(numberOfWindow);
+                        ServerFactory serverFactory = new ServerFactory(botwindow);
+                        this.server = serverFactory.create();
+                        this.globalParam = new GlobalParam();
+                        this.botParam = new BotParam(numberOfWindow);
+                        //************************ запускаем стим ************************************************************
+                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        botParam.HowManyCyclesToSkip = rand.Next(1, 6);        //пропускаем следующие циклы (от одного до шести)
+                        break;
                 }
             }
             else
@@ -1108,24 +1102,11 @@ namespace States
         #region Гильдия охотников BH
 
         /// <summary>
-        /// начальные присваивания переменной Инфинити для БХ
-        /// </summary>
-        public void InitialAssignment()
-        {
-            botParam.NumberOfInfinity = globalParam.Infinity;
-            globalParam.InfinityPlusOne();
-            //globalParam.Infinity = globalParam.Infinity + 1;
-        }
-
-
-        /// <summary>
         /// проверяем, если ли проблемы при работе в БХ и возвращаем номер проблемы
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemBH()
         {
-//            int statusOfSale = globalParam.StatusOfSale;          //не отлажено
-            //int statusOfSale = botParam.StatusOfSale;          //не отлажено
             int statusOfAtk = botParam.StatusOfAtk;
 
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
