@@ -5724,7 +5724,7 @@ namespace OpenGEWindows
         /// <summary>
         /// проверяем, появился ли сундук в миссии
         /// </summary>
-        /// <returns>true, если находимся</returns>
+        /// <returns>true, если появился</returns>
         public bool isTreasureChest()
         {
             return  new PointColor(832 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
@@ -5798,7 +5798,7 @@ namespace OpenGEWindows
         /// <summary>
         /// переключаем чат на пятую закладку
         /// </summary>
-        public void FifthBookmark()
+        public void ChatFifthBookmark()
         {
             new Point(914 - 5 + xx, 703 - 5 + yy).PressMouseLL();
             MoveCursorOfMouse();
@@ -6298,6 +6298,25 @@ namespace OpenGEWindows
                 BuffY(i);
             
         }
+
+        /// <summary>
+        /// появились ворота вместо сундука?
+        /// </summary>
+        /// <returns>true, если появились</returns>
+        public bool isGate()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// появились вторые ворота (с фесом)?
+        /// </summary>
+        /// <returns>true, если появились</returns>
+        public bool isSecondGate()
+        {
+            return false;
+        }
+
 
         #endregion
 
