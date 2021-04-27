@@ -740,9 +740,9 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Перемещает окно с ботом в заданные координаты. Если окно есть, то result = true, а если вылетело окно, то result = false. не учитываются ширина и высота окна
+        /// существует ли окно с указанным Hwnd? (Попутно перемещает окно с ботом в заданные координаты)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true, если окно с заданным Hwnd существует</returns>
         public bool isHwnd()
         {
             return SetPosition();
@@ -1058,7 +1058,13 @@ namespace OpenGEWindows
         public abstract void runClient();
         public abstract UIntPtr FindWindowGE();
         //public abstract UIntPtr FindWindowSteam();
+
+        /// <summary>
+        /// найден ли Steam в текущей песочнице?
+        /// </summary>
+        /// <returns>true, если Steam найден</returns>
         public abstract bool FindWindowSteamBool();
+
         public abstract void OrangeButton();
         //public abstract bool isActive();
 
@@ -4091,6 +4097,11 @@ namespace OpenGEWindows
 
         public abstract void runClientBH();
         //public abstract UIntPtr FindWindowGEforBH();
+
+        /// <summary>
+        /// найдено ли окно ГЭ в текущей песочнице?
+        /// </summary>
+        /// <returns>true, если найдено</returns>
         public abstract bool FindWindowGEforBHBool();
 
         /// <summary>
@@ -5665,6 +5676,11 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
+        /// запуск клиента игры для Demonic
+        /// </summary>
+        public abstract void RunClientDem();
+
+        /// <summary>
         /// тыкаем в ворота Demonic (Гильдии Охотников)
         /// </summary>
         public void GoToInfinityGateDem()
@@ -5724,7 +5740,7 @@ namespace OpenGEWindows
             new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
         }
 
-         /// <summary>
+        /// <summary>
         /// бафаемся умением Q (i-й герой)
         /// </summary>
         public void BuffQ(int i)
@@ -5803,10 +5819,10 @@ namespace OpenGEWindows
         /// <returns>true, если появилась</returns>
         public bool isWhiteLabel()
         {
-            return (
+            return 
                     new PointColor(300 - 5 + xx, 145 - 5 + yy, 16711422, 0).isColor() &&
-                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 16711422, 0).isColor()
-                    );    //белая надпись (миссия закончится через 2 минуты )
+                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 16711422, 0).isColor();   
+                    //белая надпись (миссия закончится через 2 минуты )
         }
 
         /// <summary>

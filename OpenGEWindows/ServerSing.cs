@@ -1051,9 +1051,9 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
-        /// найдено ли окно с ГЭ ??
+        /// найдено ли окно ГЭ в текущей песочнице?
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true, если найдено</returns>
         public override bool FindWindowGEforBHBool()
         {
             bool result = false;
@@ -1083,7 +1083,7 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
-        /// поиск новых окон Steam
+        /// поиск окна Steam в текущей песочнице
         /// </summary>
         /// <returns>true, если найден стим для текущего окна</returns>
         public override bool FindWindowSteamBool()
@@ -1141,6 +1141,24 @@ namespace OpenGEWindows
         }
 
         #endregion
+
+
+        /// <summary>
+        /// запуск клиента игры для Demonic
+        /// </summary>
+        public override void RunClientDem()
+        {
+            #region для песочницы
+
+            //запускаем steam в песочнице (вариант 1)
+            Process process = new Process();
+            process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -applaunch 663090 -silent";
+            //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            process.Start();
+
+            #endregion
+        }
 
     }
 }

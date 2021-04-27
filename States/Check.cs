@@ -643,11 +643,11 @@ namespace States
                 {
                     if (!server.FindWindowGEforBHBool())
                     {
-                        return 22;    //если нет окна с нужным HWND и, если не найдено окно с любым другим hwnd не равным нулю
+                        return 22;                  //если нет окна ГЭ в текущей песочнице
                     }
                     else
                     {
-                        return 23;  //нашли другое окно с заданными параметрами (открыли новое окно на предыдущем этапе программы)
+                        return 23;                  //нашли окно ГЭ в текущей песочнице и перезаписали Hwnd
                     }
                 }
             }
@@ -658,7 +658,7 @@ namespace States
                 if (server.isMissionNotAvailable())
                     return 10;
                 else
-                    return 8;                        //если стоим в воротах Demonic и миссия доступна
+                    return 8;                       //если стоим в воротах Demonic и миссия доступна
             }
 
 
@@ -708,8 +708,9 @@ namespace States
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
-                    server.ReOpenWindow();
-                    Pause(500);
+
+                    //server.ReOpenWindow();
+                    //Pause(500);
                 }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
@@ -809,14 +810,14 @@ namespace States
                     //    server.ReOpenWindow();                      // 
                     //    //botParam.HowManyCyclesToSkip = 3;
                     //    break;
-                    case 22:                                    //Ок
-                        server.runClientBH();                   // если нет окна ГЭ, то запускаем его   //Ок
-                        botParam.HowManyCyclesToSkip = rand.Next(5, 8);       //пропускаем следующие 5-8 циклов
+                    case 22:                                    
+                        server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                        botParam.HowManyCyclesToSkip = rand.Next(2, 4);       //пропускаем следующие 5-8 циклов
                         break;
-                    case 23:                                    //Ок
-                        server.ReOpenWindow();
+                    case 23:                                    //есть окно стим
+                        //server.ReOpenWindow();                      // 
                         //botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
-                        botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        //botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
                         break;
                     case 24:                //если нет стима, значит удалили песочницу и надо заново проинициализировать основные объекты
                         botwindow = new botWindow(numberOfWindow);

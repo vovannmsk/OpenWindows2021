@@ -727,5 +727,22 @@ namespace OpenGEWindows
 
         #endregion
 
+        /// <summary>
+        /// запуск клиента игры для Demonic
+        /// </summary>
+        public override void RunClientDem()
+        {
+            #region для песочницы
+
+            //запускаем steam в песочнице (вариант 1)
+            Process process = new Process();
+            process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -applaunch 663090 -silent";
+            //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            process.Start();
+
+            #endregion
+        }
+
     }
 }
