@@ -63,7 +63,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            if (!pet.isActivePet()) pet.ActivePet();
+            if (!pet.isActivePet() && !pet.isNoFoodPet()) pet.ActivePet();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return pet.isActivePet();     //если активирован пет, то дальше
+            return pet.isActivePet() || pet.isNoFoodPet();     //если активирован пет или нет еды, то дальше
         }
 
         /// <summary>

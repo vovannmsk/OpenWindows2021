@@ -65,17 +65,6 @@ namespace Main
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
-        /// <summary>
-        /// присваиваем переменной класса значение, выбранное пользователем в форме
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void numberOfAccouts_Leave(object sender, EventArgs e)
-        {
-            numberOfAcc = (int)this.numberOfAccounts.Value;
-        }
-
-
         #region Light Coral Button "Увеличение казармы"
 
         /// <summary>
@@ -825,6 +814,28 @@ namespace Main
             startAcc = (int)this.startAccount.Value;
         }
 
+
+        /// <summary>
+        /// присваиваем переменной класса значение, выбранное пользователем в форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numberOfAccouts_Leave(object sender, EventArgs e)
+        {
+            numberOfAcc = (int)this.numberOfAccounts.Value;
+        }
+
+        /// <summary>
+        /// присваиваем переменной класса значение, выбранное пользователем в форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numberOfAccouts_ValueChanged(object sender, EventArgs e)
+        {
+            numberOfAcc = (int)this.numberOfAccounts.Value;
+        }
+
+
         #region Silver Button (Pure Otite Multi)
 
         private void PureOtiteMulti_Click(object sender, EventArgs e)
@@ -1038,7 +1049,7 @@ namespace Main
                     {
                         check[j].RemoveSandboxie();
                         check[j] = new Check(j);
-                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j] = new BotParam(j);
                         botParam[j].Stage = 1;
                     }
                 }

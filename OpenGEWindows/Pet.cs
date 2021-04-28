@@ -25,6 +25,17 @@
         #region Pet
 
         /// <summary>
+        /// нет еды у пета
+        /// </summary>
+        /// <returns> true, если нету </returns>
+        public bool isNoFoodPet()
+        {
+            return  new PointColor(494 - 5 + xx, 301 - 5 + yy, 13000000, 6).isColor() &&
+                    new PointColor(494 - 5 + xx, 310 - 5 + yy, 13000000, 6).isColor() &&
+                    new PointColor(499 - 5 + xx, 310 - 5 + yy, 13000000, 6).isColor();
+        }
+
+        /// <summary>
         /// выбираем первого пета и нажимаем кнопку Summon в меню пет
         /// </summary>
         public void buttonSummonPet()
@@ -58,13 +69,13 @@
         }
 
         /// <summary>
-        /// проверяет, активирован ли пет (зависит от сервера)
+        /// активирован ли пет?
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true, если активирован</returns>
         public bool isActivePet()
         {
            // return ((pointisActivePet1.isColor() && pointisActivePet2.isColor()) || (pointisActivePet3.isColor() && pointisActivePet4.isColor())); //две точки от обычной еды и две точки от периодической еды на месяц
-            return ((pointisActivePet1.isColor() && pointisActivePet2.isColor())); //две точки от обычной еды 
+            return pointisActivePet1.isColor() && pointisActivePet2.isColor(); //две точки от обычной еды 
         }
 
         /// <summary>

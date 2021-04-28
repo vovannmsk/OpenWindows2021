@@ -751,11 +751,11 @@ namespace OpenGEWindows
         /// <summary>
         /// активируем окно
         /// </summary>
-        private void ActiveWindow()
+        public void ActiveWindow()
         {
             ShowWindow(botParam.Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
             SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
-            //BringWindowToTop(databot.hwnd);                                    // Делает окно активным и Перемещает окно в верхний список Z порядка     
+            //BringWindowToTop(botParam.Hwnd);                                  // Делает окно активным и Перемещает окно в верхний список Z порядка     
 
             SetPosition();                                                      //перемещаем окно в заданные для него координаты
         }
@@ -1413,6 +1413,7 @@ namespace OpenGEWindows
         #endregion
 
         #region Pet (перенесено в другой класс Pet)
+
 
         /// <summary>
         /// выбираем первого пета и нажимаем кнопку Summon в меню пет

@@ -64,7 +64,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-                pet.buttonSummonPet();
+            pet.buttonSummonPet();
         }
 
         /// <summary>

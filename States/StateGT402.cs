@@ -90,7 +90,7 @@ namespace States
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
             if (pet.isSummonPet()) return new StateGT405(botwindow);
-            if (pet.isActivePet())
+            if (pet.isActivePet() || pet.isNoFoodPet())
             {
                 botwindow.PressEscThreeTimes();
                 return new StateGT499(botwindow);             // если пет уже активирован, то идем в конец цикла

@@ -710,6 +710,7 @@ namespace States
                     //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
 
                     //server.ReOpenWindow();
+                    server.ActiveWindow();
                     //Pause(500);
                 }
 
@@ -742,7 +743,7 @@ namespace States
                         break;
                     case 2:
                         driver.StateFromBarackToTownBH();           // идем в город     //ок
-                        botParam.HowManyCyclesToSkip = 4;  //2
+                        botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     case 3:                                         // старт миссии      //ок
                         server.MissionStart();
@@ -812,7 +813,7 @@ namespace States
                     //    break;
                     case 22:                                    
                         server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                        botParam.HowManyCyclesToSkip = rand.Next(2, 4);       //пропускаем следующие 5-8 циклов
+                        botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 5-8 циклов
                         break;
                     case 23:                                    //есть окно стим
                         //server.ReOpenWindow();                      // 
@@ -887,6 +888,7 @@ namespace States
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     //server.ReOpenWindow();
+                    server.ActiveWindow();
                     //Pause(500);
                 }
 
@@ -1020,8 +1022,9 @@ namespace States
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
-                    server.ReOpenWindow();
-                    Pause(500);
+                    server.ActiveWindow(); 
+                    //server.ReOpenWindow();
+                    //Pause(500);
                 }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
@@ -2112,9 +2115,9 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(755 - 5 + xx, 395 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(775 - 5 + xx, 395 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(735 - 5 + xx, 395 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(494 - 5 + xx, 301 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(494 - 5 + xx, 310 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(499 - 5 + xx, 310 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
