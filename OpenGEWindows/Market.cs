@@ -337,6 +337,7 @@ namespace OpenGEWindows
                 case 47612:       // Triumph Fillers
                 //case 1381654:   // обычное кольцо
                 case 16367578:    // Expert Stance Book (белый прямоугольник)
+                case 7255958:     // Character Ring Crystal (светло-зеленый)
 
                 //================ БХ Demonic =====================
                 case 11906207:    // Crest of Sacred

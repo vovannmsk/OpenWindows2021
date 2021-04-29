@@ -652,6 +652,9 @@ namespace States
                 }
             }
 
+            //служба Steam
+            if (server.isSteamService())    return 11;
+
             //ворота
             if (dialog.isDialog())
             {
@@ -789,6 +792,9 @@ namespace States
                         //botwindow.PressEscThreeTimes();
                         botParam.Stage = 3;
                         break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
                     //case 14:
                     //    //driver.StateFromMissionToBarackBH();      // в барак 
                     //    botwindow.ClickSpaceBH();                   //переходим в боевой режим. Если есть в кого стрелять, то стреляем. 
@@ -849,6 +855,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage2()
         {
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
             //в миссии
             if (server.isWork())
             {
@@ -858,6 +867,10 @@ namespace States
                 else
                     return 3;   //если миссия не закончилась, то атакуем
             }
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
 
             //в логауте
             if (server.isLogout()) return 1;                    // если окно в логауте
@@ -946,6 +959,9 @@ namespace States
                         //botwindow.Pause(6000);                      //пауза, чтобы успеть войти в барак
                         botParam.HowManyCyclesToSkip = 2;
                         break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
@@ -974,6 +990,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage3()
         {
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
             //если диалог (он получается, если тыкнуть в ворота)
             if (dialog.isDialog()) return 7;
 
@@ -1072,6 +1091,9 @@ namespace States
                         break;
                     case 9:                                         // появились ворота с фесо
                         break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
                     case 20:
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
@@ -1086,11 +1108,6 @@ namespace States
         }
 
         #endregion
-
-
-
-
-
 
         #region Гильдия охотников BH
 
@@ -2024,6 +2041,8 @@ namespace States
 
             server.ReOpenWindow();
 
+
+            MessageBox.Show("Стим? " + server.isSteamService());
             //MessageBox.Show("баф3? " + server.FindHound(3));
             //MessageBox.Show("баф2? " + server.FindHound(2));
             //MessageBox.Show("баф1? " + server.FindHound(1));
@@ -2109,27 +2128,27 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            //int j = 1;
-            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            int j = 10;
+            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(494 - 5 + xx, 301 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(494 - 5 + xx, 310 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(499 - 5 + xx, 310 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(494 - 5 + xx, 301 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(494 - 5 + xx, 310 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(499 - 5 + xx, 310 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            color2 = point2.GetPixelColor();
-            color3 = point3.GetPixelColor();
+            //color2 = point2.GetPixelColor();
+            //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
-            MessageBox.Show(" " + color3);
+            //MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color3);
 
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");

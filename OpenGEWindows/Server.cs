@@ -5677,6 +5677,25 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
+        /// появилось ли напоминание об установке службы Steam
+        /// </summary>
+        /// <returns>true, если появилось</returns>
+        public bool isSteamService()
+        {
+            return new PointColor(1380, 451, 2000000, 6).isColor() &&
+                    new PointColor(1380, 452, 2000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// закрываем уведомление об установке службы Steam
+        /// </summary>
+        public void CloseSteam()
+        {
+            new Point(1380, 451).PressMouseLL();
+            new Point(1043, 560).PressMouseL();
+        }
+
+        /// <summary>
         /// запуск клиента игры для Demonic
         /// </summary>
         public abstract void RunClientDem();
