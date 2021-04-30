@@ -2707,6 +2707,11 @@ namespace OpenGEWindows
         public void barackLastPoint()
         {
             pointLastPoint.PressMouseL();
+            botwindow.Pause(1000);
+            botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку 
+
+            if (isBarackWarningYes()) PressYesBarack();
+            botwindow.Pause(500);
         }
 
         /// <summary>
