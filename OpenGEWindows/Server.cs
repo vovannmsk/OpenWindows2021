@@ -821,6 +821,26 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// открыто ли окно Стим?
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenSteamWindow()
+        {
+            return  new PointColor(1900, 450, 2000000, 6).isColor() && 
+                    new PointColor(1901, 450, 2000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// скрыть окно Steam
+        /// </summary>
+        public void CloseSteamWindow()
+        {
+            //new Point(1898, 428).PressMouseL();
+            new Point(1898, 460).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
         /// проверяем, открыто ли окно Стим для ввода логина и пароля
         /// </summary>
         /// <returns></returns>
@@ -2105,6 +2125,16 @@ namespace OpenGEWindows
                 //(pointisBoxOverflow1.isColor() && pointisBoxOverflow2.isColor()) ||     //всплывающее окно на экране
                  pointisBoxOverflow3.isColor() && pointisBoxOverflow4.isColor();          //оранжевая надпись (эта строка)
         }
+
+        /// <summary>
+        /// убит ли первый герой?
+        /// </summary>
+        /// <returns>true, если убит</returns>
+        public bool isKillFirstHero()
+        {
+            return pointisKillHero1.isColor();
+        }
+
 
         /// <summary>
         /// функция проверяет, убит ли хоть один герой из пати (проверка проходит на карте)
@@ -5747,9 +5777,18 @@ namespace OpenGEWindows
         /// <returns>true, если появился</returns>
         public bool isTreasureChest()
         {
-            return  new PointColor(832 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
+            return  (new PointColor(832 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
                     new PointColor(838 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
-                    new PointColor(835 - 5 + xx, 664 - 5 + yy, 14900000, 5).isColor();
+                    new PointColor(835 - 5 + xx, 664 - 5 + yy, 14900000, 5).isColor())
+                    ||
+                    (new PointColor(832 - 5 + xx, 617 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(838 - 5 + xx, 617 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(835 - 5 + xx, 626 - 5 + yy, 14900000, 5).isColor())
+                    ||
+                    (new PointColor(832 - 5 + xx, 598 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(838 - 5 + xx, 598 - 5 + yy, 15500000, 5).isColor() &&
+                    new PointColor(835 - 5 + xx, 607 - 5 + yy, 14900000, 5).isColor())
+                    ;
         }
 
         /// <summary>
@@ -5960,21 +5999,45 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// ппроверяем, кто в прицеле
+        /// есть ли кто в прицеле?
         /// </summary>
-        /// <returns>true, если в прицеле босс</returns>
-        public bool isBoss ()
+        /// <returns>true, если кто-то есть в прицеле</returns>
+        public bool isBossOrMob ()
         {
-            //return true;
-            //return false;
             //проверяем букву D в слове Демоник
-            //по сути тут проверка того, есть ли кто в прицеле
             return      new PointColor(456 - 5 + xx, 103 - 5 + yy, 12434870, 1).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 4000000, 6).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7314875, 0).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7462629, 0).isColor();
 
         }
+
+        /// <summary>
+        /// есть ли моб Demonic Enhance в прицеле?
+        /// </summary>
+        /// <returns>true, если в прицеле моб</returns>
+        public bool isMob()
+        {
+            //проверяем букву E и h в слове Enhance
+            return     (new PointColor(521 - 5 + xx, 100 - 5 + yy, 13355979, 0).isColor() &&
+                        new PointColor(521 - 5 + xx, 109 - 5 + yy, 13355979, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 100 - 5 + yy, 13355979, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 109 - 5 + yy, 13355979, 0).isColor())
+                        ||
+                       (new PointColor(521 - 5 + xx, 100 - 5 + yy, 7776457, 0).isColor() &&
+                        new PointColor(521 - 5 + xx, 109 - 5 + yy, 7776457, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 100 - 5 + yy, 7776457, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 109 - 5 + yy, 7776457, 0).isColor())
+                        ||
+                       (new PointColor(521 - 5 + xx, 100 - 5 + yy, 7925494, 0).isColor() &&
+                        new PointColor(521 - 5 + xx, 109 - 5 + yy, 7925494, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 100 - 5 + yy, 7925494, 0).isColor() &&
+                        new PointColor(532 - 5 + xx, 109 - 5 + yy, 7925494, 0).isColor())
+                       ;
+
+        }
+
+
 
         /// <summary>
         /// если скилл i-го мушкетёра T готов к использованию
@@ -6017,12 +6080,13 @@ namespace OpenGEWindows
             switch (typeOfHero)
             {
                 case 1:
-                    if (isSkillMuskE(i))   //если готов скилл
-                        BuffE(i);
+                    //Муха
+                    //if (isSkillMuskE(i))   //если готов скилл
+                    //    BuffE(i);
                     if (isSkillMuskT(i))   //если готов скилл
                         BuffT(i);
-                    if (isSkillMuskW(i))   //если готов скилл
-                        BuffW(i);
+                    //if (isSkillMuskW(i))   //если готов скилл
+                    //    BuffW(i);
                     break;
                 case 2:
                     //BuffBernelliBlaster(i);   //*

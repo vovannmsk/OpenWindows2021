@@ -8,6 +8,10 @@ namespace States
     public class Check
     {
         /// <summary>
+        /// если равна 1, то надо идти в барак
+        /// </summary>
+        private int GoBarack;
+        /// <summary>
         /// номер проблемы на предыдущем цикле
         /// </summary>
         private int prevProblem;
@@ -70,6 +74,7 @@ namespace States
 
         public Check(int numberOfWindow)
         {
+            GoBarack = 0;
             numberOfState = 0;
             taskCompleted = false;
             gotTask = false;
@@ -652,6 +657,9 @@ namespace States
                 }
             }
 
+            //если открыто окно Стим в правом нижнем углу
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+
             //служба Steam
             if (server.isSteamService())    return 11;
 
@@ -764,19 +772,15 @@ namespace States
                         server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
-                    case 7:         //пытаюсь сократить время на эту операцию (не бафаюсь и ускорение выпуска пета)
-                        //бафаемся, поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                    case 7:                                     // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         if (!botwindow.isCommandMode()) botwindow.CommandMode();
-                        server.BattleModeOn();                      //пробел
+                        //server.BattleModeOn();                      //пробел
                         server.ChatFifthBookmark();
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
 
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
-                        driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
+                        driver.StateActivePetDem();                 
                         server.MaxHeight(7);                      
                         botParam.Stage = 2;
                         break;
@@ -855,17 +859,23 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage2()
         {
+            //если открыто окно Стим в правом нижнем углу
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+
             //служба Steam
             if (server.isSteamService()) return 11;
 
             //в миссии
-            if (server.isWork())
+            if (server.isWork() || server.isKillFirstHero())
             {
                 //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
                 if (server.isWhiteLabel() ||
                     server.isTreasureChest()) return 10;
                 else
-                    return 3;   //если миссия не закончилась, то атакуем
+                //    if (server.isBossOrMob() && !server.isMob())
+                //    return 4;   //если босс в прицеле, то скилляем
+                //else
+                    return 3;
             }
 
             //служба Steam
@@ -931,11 +941,16 @@ namespace States
                         server.Buff(Hero[3], 3);
                         //server.BattleModeOn();
                         break;
-                    case 4:                                                 // пробуем пробафаться
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
-                        //server.BattleModeOn();
+                    case 4:                                                 // скилуем
+
+                        //int number = rand.Next(1, 3);
+                        //сделать выбор персонажа через rnd и им скиловать
+                        //server.Skill(Hero[number], number);
+
+                        server.Skill(Hero[1], 1);
+                        server.Skill(Hero[2], 2);
+                        server.Skill(Hero[3], 3);
+                        
                         break;
                     case 5:                                                 // если в миссии и в прицеле босс, то скилляем 
                         //обновляем баффы, если надо
@@ -990,6 +1005,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage3()
         {
+            //если открыто окно Стим в правом нижнем углу
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+
             //служба Steam
             if (server.isSteamService()) return 11;
 
@@ -1000,17 +1018,18 @@ namespace States
             if (server.isWork())
             {
                 if (server.isGate())                //если сундука уже нет, а появились ворота
+                {
                     if (server.isSecondGate())      //появились вторые ворота (с фесом)?
                         return 9;
                     else
                         return 8;                   //ворота с фесом не появились
-                if (server.isRouletteBH())
-                    return 4;
+                }
+
+                if (server.isRouletteBH() || GoBarack == 1)
+                    return 4;                       //надо идти в барак
                 else
-                    return 3;
+                    return 3;                       //надо тыкать в сундук
             }
-
-
 
             //в городе или в БХ
             if (server.isTown())
@@ -1065,6 +1084,7 @@ namespace States
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         //server.MaxHeight(7);
                         botParam.HowManyCyclesToSkip = 1;
+                        GoBarack = 1;
                         break;
                     case 4:                                         //крутится рулетка
                         //botwindow.Pause(5000);
@@ -1835,14 +1855,14 @@ namespace States
             mm.SellProduct();
         }
 
-        /// <summary>
-        /// поиск новых окон с игрой для кнопки "Найти окна"
-        /// </summary>
-        /// <returns></returns>
-        public UIntPtr FindWindow()
-        {
-            return server.FindWindowGE();
-        }
+        ///// <summary>
+        ///// поиск новых окон с игрой для кнопки "Найти окна"
+        ///// </summary>
+        ///// <returns></returns>
+        //public UIntPtr FindWindow()
+        //{
+        //    return server.FindWindowGE();
+        //}
 
         /// <summary>
         /// пауза в милисекундах
@@ -1862,14 +1882,14 @@ namespace States
             server.ReOpenWindow();
         }
 
-        /// <summary>
-        /// проверка, находится ли окно в состоянии Logout
-        /// </summary>
-        /// <returns></returns>
-        public bool isLogout()
-        {
-            return server.isLogout();
-        }
+        ///// <summary>
+        ///// проверка, находится ли окно в состоянии Logout
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool isLogout()
+        //{
+        //    return server.isLogout();
+        //}
 
         /// <summary>
         /// оранжевая кнопка. разные действия по серверам . не удалять
@@ -2040,9 +2060,10 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
+            //если открыто окно Стим в правом нижнем углу
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-
-            MessageBox.Show("Стим? " + server.isSteamService());
+            //MessageBox.Show("Стим открыт? " + server.isOpenSteamWindow());
             //MessageBox.Show("баф3? " + server.FindHound(3));
             //MessageBox.Show("баф2? " + server.FindHound(2));
             //MessageBox.Show("баф1? " + server.FindHound(1));
@@ -2123,31 +2144,31 @@ namespace States
             yy = koordY[i - 1];
             uint color1;
             uint color2;
-            uint color3;
+            //uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
 
-            int j = 10;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 10;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(494 - 5 + xx, 301 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(494 - 5 + xx, 310 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(499 - 5 + xx, 310 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(1900 - 5 + xx, 450 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(1901 - 5 + xx, 450 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 
