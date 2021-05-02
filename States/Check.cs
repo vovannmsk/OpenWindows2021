@@ -658,7 +658,7 @@ namespace States
             }
 
             //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
 
             //служба Steam
             if (server.isSteamService())    return 11;
@@ -714,6 +714,7 @@ namespace States
         /// </summary>
         public void problemResolutionDemMultiStage1()
         {
+            GoBarack = 0;
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
@@ -860,7 +861,7 @@ namespace States
         public int NumberOfProblemDemMultiStage2()
         {
             //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -891,7 +892,7 @@ namespace States
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
 
             //в миссии, но убиты
-            if (server.isKillAllHero()) return 29;              // если убиты все
+            //if (server.isKillAllHero()) return 29;              // если убиты все
             //if (server.isKillHero()) return 30;               // если убиты не все 
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
@@ -995,7 +996,7 @@ namespace States
             }
         }
 
-        #endregion
+        #endregion ======================================================================================================
 
         #region  =================================== Demonic Multi Stage 3 ==============================================
 
@@ -1006,7 +1007,7 @@ namespace States
         public int NumberOfProblemDemMultiStage3()
         {
             //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1127,7 +1128,7 @@ namespace States
             }
         }
 
-        #endregion
+        #endregion =======================================================================================================
 
         #region Гильдия охотников BH
 

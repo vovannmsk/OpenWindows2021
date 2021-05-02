@@ -149,6 +149,7 @@ namespace OpenGEWindows
                     runMouse(dx, dy, MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTDOWN, 0);
                     Pause(50);
                     runMouse(dx, dy, MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_LEFTUP, 0);
+                    Pause(50);
                     break;
 
                 case 2:     // перемещаем мышь и нажимаем правую кнопку

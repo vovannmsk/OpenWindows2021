@@ -5908,7 +5908,8 @@ namespace OpenGEWindows
         /// </summary>
         public void AssaultMode()
         {
-            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseLL();
+//            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseLL();
+            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
