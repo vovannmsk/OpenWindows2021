@@ -369,7 +369,7 @@ namespace OpenGEWindows
         /// определяет, анализируется ли нужный товар либо данный товар можно продавать (проверяем только оружие и броню /до красной бутылки/)
         /// </summary>
         /// <param name="color"> цвет полностью определяет товар, который поступает на анализ </param>
-        /// <returns> true, если анализируемый товар нужный и его нельзя продавать </returns>
+        /// <returns> true, если анализируемый товар нужно продавать </returns>
         public bool NeedToSellProduct2(uint color, uint color3)
         {
             bool result = true;   //по умолчанию вещь надо продавать, поэтому true
@@ -382,11 +382,27 @@ namespace OpenGEWindows
                 case 1316118:       // desapio Boots желтые
                 case 3747867:       // desapio Belt
                 case 3095646:       // desapio Earrings
-                    if ((color3 == 14978083) || (color3 == 3527902)) result = false;     //смотрим цвет слова Desapio (синий или желтый цвет)            
+                    if ((color3 == 14978083) || (color3 == 3527902) || (color3 == 7040364)) result = false;     //смотрим цвет слова Desapio (синий или желтый цвет)            
                 break;
                 case 5933520:
                     result = false; //маленькая красная бутылка
-                break;
+                    break;
+                case 857126:        //Elite Le Noir and Le Noir
+                    if (new PointColor(151 - 5 + xx, 209 - 5 + yy, 16712191, 0).isColor())  //Elite Le Noir розовая точка
+                        result = false;     
+                    break;
+                case 5859699:       // Divine Lute
+                case 1906191:       // Divine Slayer
+                case 13953779:      // Divine Sabre
+                case 8231339:       // Divine Knuckle
+                case 9546436:       // Divine Dagger
+                //case 1381654:      // Divine Rapier
+                case 6056324:       // IAR-323
+                case 1648992:       //Elite Le Blanc (Leather, Coat, Robe)
+                case 329476:        //General Plate
+                case 15981491:      //Elite Schvarlier Armor
+                    result = false;
+                    break;
             }
 
             return result;
