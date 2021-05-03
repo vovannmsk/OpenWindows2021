@@ -247,6 +247,7 @@ namespace OpenGEWindows
                 case 12563070:    // Marble               
                 case 6380581:     // Leather         
                 case 14210488:    // Spool
+                case 11464703:      //Snow Silk
                 case 3223857:     // Nail                        ************************************************************* 
                 case 573951:      // Golden Apple
                 case 4966811:     // Cabbage
@@ -255,10 +256,10 @@ namespace OpenGEWindows
                 case 5131077:     // Black Sap               
                 case 15575073:    // Blue sap               
                 case 4143156:     // bulk of Coal                **
-//                case 9472397:     // Steel piece                 **
+                case 9472397:     // Steel piece                 **
                 case 7187897:     // Mustang ore
                 //=================== пули ===========================
-                
+                case 10931953:    // Psychic Sphere
                 case 11258069:    // пули эксп Steel Bullet
                 case 2569782:     // дробь эксп Metal Shell Ammo
                 case 1843234:     // Steel Bolt
@@ -280,7 +281,7 @@ namespace OpenGEWindows
                 case 14344416:    // Tough Cotton
                 case 13079681:    // Silk
                 // Чипы
-                case 14278629:    // Chip 100
+                case 14278629:    // Chip 100 и ниже
                 case 14542297:    // Chip Veteran
                 case 1835187:     // экспертные чипы
                 case 16771747:    // мастер чипы
@@ -288,7 +289,7 @@ namespace OpenGEWindows
                 case 13417421:    // Octopus Arm
                 case 3033453:     // Clear Rum
                 case 4474675:     // Fish Flesh
-                case 10931953:    // Psychic Sphere
+                
                 case 656906:      // magocal orb
                 case 13748687:    // Ressurection Potion
                 case 15595262:    // Small Stew обед
@@ -335,10 +336,15 @@ namespace OpenGEWindows
                 case 8321791:     // Camelianium
                 case 482184:      // desapio Token
                 case 47612:       // Triumph Fillers
-                //case 1381654:   // обычное кольцо
                 case 16367578:    // Expert Stance Book (белый прямоугольник)
                 case 7255958:     // Character Ring Crystal (светло-зеленый)
-
+                case 8175072:       //Dragon Heart
+                case 5145944:       //Scale Of Siren
+                case 13957608:      //Seed of Raff
+                case 1316028:       //Arch Heart
+                case 7966641:       //Recipe перчи
+                case 16777210:      //Рецепт Хрома
+                case 14605266:      //Рецепт Армония+Страта
                 //================ БХ Demonic =====================
                 case 11906207:    // Crest of Sacred
                 case 5590609:     // Crest of Black Knight
@@ -348,9 +354,10 @@ namespace OpenGEWindows
                 case 16745983:    // Death Wraith
                 case 131094:      // Will of Cortes
                 case 9103099:     // Revengence
-                case 1381654:     // Branch
+                case 1381654:     // Branch + обычное кольцо + рецепт ботинок
                 case 8091251:     // Saurelle
                 case 13879799:    // Shell of Arb
+                case 171761:        // желтая коробка с петом
 
                     result = false;
                     break;

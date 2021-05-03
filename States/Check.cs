@@ -663,6 +663,9 @@ namespace States
             //служба Steam
             if (server.isSteamService())    return 11;
 
+            //случайно зашли в Expedition Merchant в городе
+            if (server.isExpedMerch()) return 12;
+
             //ворота
             if (dialog.isDialog())
             {
@@ -800,6 +803,10 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
+                    case 12:                                         // закрыть магазин
+                        server.CloseExpMerch();
+                        break;
+
                     //case 14:
                     //    //driver.StateFromMissionToBarackBH();      // в барак 
                     //    botwindow.ClickSpaceBH();                   //переходим в боевой режим. Если есть в кого стрелять, то стреляем. 
@@ -2061,86 +2068,87 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
-            //если открыто окно Стим в правом нижнем углу
-            //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isExpedMerch()) server.CloseExpMerch();
+                //если открыто окно Стим в правом нижнем углу
+                //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-            //MessageBox.Show("Стим открыт? " + server.isOpenSteamWindow());
-            //MessageBox.Show("баф3? " + server.FindHound(3));
-            //MessageBox.Show("баф2? " + server.FindHound(2));
-            //MessageBox.Show("баф1? " + server.FindHound(1));
-            //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
-            //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
-            //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
-            //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
-            //MessageBox.Show("баф1? " + server.FindConcentracion(1));
-            //MessageBox.Show("баф2? " + server.FindConcentracion(2));
-            //MessageBox.Show(" " + botwindow.getNomerTeleport());
-            //botwindow.Pause(1000);
+                //MessageBox.Show("Стим открыт? " + server.isOpenSteamWindow());
+                //MessageBox.Show("баф3? " + server.FindHound(3));
+                //MessageBox.Show("баф2? " + server.FindHound(2));
+                //MessageBox.Show("баф1? " + server.FindHound(1));
+                //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
+                //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
+                //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
+                //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
+                //MessageBox.Show("баф1? " + server.FindConcentracion(1));
+                //MessageBox.Show("баф2? " + server.FindConcentracion(2));
+                //MessageBox.Show(" " + botwindow.getNomerTeleport());
+                //botwindow.Pause(1000);
 
-            //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
-            //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
-            //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
-            //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
-            //MessageBox.Show("Перчаток нет? " + server.isEmptyGloves(1));
-            //MessageBox.Show("Ожерелья нет? " + server.isEmptyNecklace(1));
-            //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
-            //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
-            //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
-            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
-            //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
-            //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
-            //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
-            //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
-            //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
-            //server.OpenDetailInfo();
-            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
-            //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
-            //MessageBox.Show("Undead " + server.isUndead());
-            //MessageBox.Show("Wild " + server.isWild());
-            //MessageBox.Show("Demon " + server.isDemon());
-            //MessageBox.Show("Human " + server.isHuman());
-            //MessageBox.Show("isLogout " + server.isLogout());
-            //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
-            //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
-            //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
-            //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
-            //MessageBox.Show("Призван пет? " + pet.isSummonPet());
-            //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
-            //MessageBox.Show(" " + pet.isActivePet());
-            //MessageBox.Show(" " + kMarket.isSaleIn());
-            //MessageBox.Show(" " + market.isClickPurchase());
-            //MessageBox.Show(" " + market.isClickSell());
-            //MessageBox.Show(" " + server.isUndead());
+                //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
+                //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
+                //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
+                //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
+                //MessageBox.Show("Перчаток нет? " + server.isEmptyGloves(1));
+                //MessageBox.Show("Ожерелья нет? " + server.isEmptyNecklace(1));
+                //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
+                //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
+                //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
+                //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+                //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
+                //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
+                //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
+                //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
+                //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
+                //server.OpenDetailInfo();
+                //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
+                //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
+                //MessageBox.Show("Undead " + server.isUndead());
+                //MessageBox.Show("Wild " + server.isWild());
+                //MessageBox.Show("Demon " + server.isDemon());
+                //MessageBox.Show("Human " + server.isHuman());
+                //MessageBox.Show("isLogout " + server.isLogout());
+                //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
+                //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
+                //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
+                //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
+                //MessageBox.Show("Призван пет? " + pet.isSummonPet());
+                //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
+                //MessageBox.Show(" " + pet.isActivePet());
+                //MessageBox.Show(" " + kMarket.isSaleIn());
+                //MessageBox.Show(" " + market.isClickPurchase());
+                //MessageBox.Show(" " + market.isClickSell());
+                //MessageBox.Show(" " + server.isUndead());
 
-            //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
-            //int[] y = { 0, 0, 0, 0, 0, 340, 340, 340, 340, 340 };
+                //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
+                //int[] y = { 0, 0, 0, 0, 0, 340, 340, 340, 340, 340 };
 
-            //int[] aa = new int[17] { 0, 1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 2104613 };
-            //bool ff = aa.Contains(725272);
-            //int tt = Array.IndexOf(aa, 7272);
-            //MessageBox.Show(" " + ff + " " + tt);
+                //int[] aa = new int[17] { 0, 1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 2104613 };
+                //bool ff = aa.Contains(725272);
+                //int tt = Array.IndexOf(aa, 7272);
+                //MessageBox.Show(" " + ff + " " + tt);
 
-            //server.FightToPoint(997 + 25, 160 + 25, 3);
-            //server.Turn180();
-            //server.TurnUp();
-            //server.Turn90R();
-            //server.TurnL(1);
-            //server.FightToPoint(595, 125, 3);
-            //server.TurnDown();
-            //server.TurnR(1);
-            //server.FightToPoint(545, 110, 3);
+                //server.FightToPoint(997 + 25, 160 + 25, 3);
+                //server.Turn180();
+                //server.TurnUp();
+                //server.Turn90R();
+                //server.TurnL(1);
+                //server.FightToPoint(595, 125, 3);
+                //server.TurnDown();
+                //server.TurnR(1);
+                //server.FightToPoint(545, 110, 3);
 
-            //server.TurnL(1); 
-            //server.TurnUp();
+                //server.TurnL(1); 
+                //server.TurnUp();
 
-            //Hero[1] = server.WhatsHero(1);
-            //Hero[2] = server.WhatsHero(2);
-            //Hero[3] = server.WhatsHero(3);
-            //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
+                //Hero[1] = server.WhatsHero(1);
+                //Hero[2] = server.WhatsHero(2);
+                //Hero[3] = server.WhatsHero(3);
+                //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
 
-            //server.Buff(Hero[1], 1);
+                //server.Buff(Hero[1], 1);
 
-            int xx, yy;
+                int xx, yy;
             xx = koordX[i - 1];
             yy = koordY[i - 1];
             uint color1;
@@ -2150,15 +2158,15 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 1;
+            int j = 11;
             PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(1900 - 5 + xx, 450 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(1901 - 5 + xx, 450 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(843 - 5 + xx, 608 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(843 - 5 + xx, 609 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 

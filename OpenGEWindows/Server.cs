@@ -5712,6 +5712,25 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
+        /// находимся в Expedition Merchant ?
+        /// </summary>
+        /// <returns></returns>
+        public bool isExpedMerch()
+        {
+            return new PointColor(843 - 5 + xx, 608 - 5 + yy, 7925494, 0).isColor() &&
+                    new PointColor(843 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor();
+        }
+
+        /// <summary>
+        /// закрываем магазин Exped Merch
+        /// </summary>
+        public void CloseExpMerch()
+        {
+            new Point(843 - 5 + xx, 608 - 5 + yy).PressMouseL();
+        }
+
+
+        /// <summary>
         /// появилось ли напоминание об установке службы Steam
         /// </summary>
         /// <returns>true, если появилось</returns>

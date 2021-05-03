@@ -64,12 +64,6 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             server.WriteToLogFileBH("11a");
-            //server.Botton_Sell();             // Нажимаем на кнопку Sell
-            //botwindow.Pause(1500);
-            //server.Button_Close();            // Нажимаем на кнопку Close
-            //town.ExitFromTrader();               // дополнительные нажатия при выходе из магазина
-            //botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
-            //botwindow.Pause(2000);
 
             market.Botton_Sell();             // Нажимаем на кнопку Sell
             botwindow.Pause(1500);
