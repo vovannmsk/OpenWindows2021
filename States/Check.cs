@@ -757,7 +757,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 2:
-                        driver.StateFromBarackToTownBH();           // идем в город     //ок
+                        driver.StateFromBarackToTownBH();           // barack --> town
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     case 3:                                         // старт миссии      //ок
@@ -778,7 +778,7 @@ namespace States
                         break;
                     case 7:                                     // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         if (!botwindow.isCommandMode()) botwindow.CommandMode();
-                        //server.BattleModeOn();                      //пробел
+                        server.BattleModeOnDem();                   //пробел
                         server.ChatFifthBookmark();
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
@@ -795,9 +795,8 @@ namespace States
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         dialog.PressOkButton(1);
                         botwindow.Pause(1000);  //2000
-                        server.GotoBarack();
-                        //botwindow.Pause(6000);
-                        //botwindow.PressEscThreeTimes();
+                        //server.GotoBarack();
+                        server.GotoSavePoint();
                         botParam.Stage = 3;
                         break;
                     case 11:                                         // закрыть службу Стим
@@ -817,10 +816,11 @@ namespace States
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
-                    case 18:
-                        server.systemMenu(3, true);                 // переход в стартовый город
-                        botParam.HowManyCyclesToSkip = 3;
-                        break;
+                    //case 18:
+                    //    //server.systemMenu(3, true);                 // переход в стартовый город
+                    //    server.GotoSavePoint();
+                    //    botParam.HowManyCyclesToSkip = 3;
+                    //    break;
                     case 20:
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
@@ -897,10 +897,6 @@ namespace States
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
-
-            //в миссии, но убиты
-            //if (server.isKillAllHero()) return 29;              // если убиты все
-            //if (server.isKillHero()) return 30;               // если убиты не все 
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
             if (server.isTown() && server.isBH() && !server.isKillHero()) return 29;

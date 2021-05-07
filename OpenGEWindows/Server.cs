@@ -1610,6 +1610,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// Идем в начальный город через верхнее меню 
+        /// </summary>
+        public void GotoSavePoint()
+        {
+            systemMenu(3);
+        }
+
+        /// <summary>
         /// Идем в казармы через верхнее меню 
         /// </summary>
         /// <param name="status"> false, если без проверки открытия системного меню </param>
@@ -2250,10 +2258,18 @@ namespace OpenGEWindows
             {
                 if (!globalParam.Windows10)            //сделал для Наташи, чтобы у нее не нажимался пробел (Боевой режим)
                 {
-                    pointBattleMode.PressMouse();  // Кликаю на кнопку "боевой режим"
+                    pointBattleMode.PressMouseL();  // Кликаю на кнопку "боевой режим"
                     Pause(500);
                 }
             }
+        }
+
+        /// <summary>
+        /// Переход в боевой режим для Демоника
+        /// </summary>
+        public void BattleModeOnDem()
+        {
+            new Point(190 - 5 + xx, 530 - 5 + yy).PressMouseL();  // Кликаю на кнопку "боевой режим"
         }
 
         #endregion
