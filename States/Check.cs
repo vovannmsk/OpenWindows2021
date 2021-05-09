@@ -944,6 +944,14 @@ namespace States
                         server.Buff(Hero[2], 2);
                         server.Buff(Hero[3], 3);
                         //server.BattleModeOn();
+
+                        //выбор главного героя через rnd и им скилуем
+                        int nn = rand.Next(1, 4);
+                        server.ActiveHeroDem(nn);
+                        if (server.isBossOrMob() && !server.isMob())
+                        {
+                            server.Skill(Hero[nn], nn);
+                        }
                         break;
                     case 4:                                                 // скилуем
 

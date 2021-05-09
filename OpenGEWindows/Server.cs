@@ -5728,6 +5728,16 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
+        /// делаем главным (активным) в команде указанного героя
+        /// </summary>
+        /// <param name="N">номер героя</param>
+        public void ActiveHeroDem(int N)
+        {
+            new Point(213 + (N-1) * 250 - 5 + xx, 636 - 5 + yy).DoubleClickL();
+            MoveCursorOfMouse();
+        }
+
+        /// <summary>
         /// находимся в Expedition Merchant ?
         /// </summary>
         /// <returns></returns>
@@ -6112,7 +6122,7 @@ namespace OpenGEWindows
 
 
         /// <summary>
-        /// бафаем i-го героя
+        /// скилуем i-м героем (пока скилуем только мухами)
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
