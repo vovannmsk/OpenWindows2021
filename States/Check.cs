@@ -2029,14 +2029,14 @@ namespace States
             server.serverSelection();
         }
 
-        /// <summary>
-        /// номер аккаунта, номер логина по порядку
-        /// </summary>
-        /// <returns></returns>
-        public string NumberOfInfinity()
-        {
-            return botParam.NumberOfInfinity.ToString();
-        }
+        ///// <summary>
+        ///// номер аккаунта, номер логина по порядку
+        ///// </summary>
+        ///// <returns></returns>
+        //public string NumberOfInfinity()
+        //{
+        //    return botParam.NumberOfInfinity.ToString();
+        //}
 
 
         /// <summary>
@@ -2064,11 +2064,11 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
-            if (server.isExpedMerch()) server.CloseExpMerch();
+            //if (server.isLogout()) server.CloseExpMerch();
                 //если открыто окно Стим в правом нижнем углу
                 //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-                //MessageBox.Show("Стим открыт? " + server.isOpenSteamWindow());
+                MessageBox.Show("логаут? " + server.isLogout());
                 //MessageBox.Show("баф3? " + server.FindHound(3));
                 //MessageBox.Show("баф2? " + server.FindHound(2));
                 //MessageBox.Show("баф1? " + server.FindHound(1));
@@ -2154,7 +2154,7 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 11;
+            int j = 10;
             PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии

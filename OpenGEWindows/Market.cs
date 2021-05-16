@@ -239,7 +239,7 @@ namespace OpenGEWindows
                 case 13291199:    // Diamond Ore                 ** **********************Катовия*****************************
                 case 1063140:     // Stone of Philos             **
                 case 8486756:     // Ice Crystal                 **
-                case 8633037:     // Pure Gold Bar
+                //case 8633037:     // Pure Gold Bar
                 case 8289818:     // Gray Feather
                 case 13068045:    // Blue Stone                
                 case 13627135:    // Molar                
@@ -323,7 +323,6 @@ namespace OpenGEWindows
                 case 9686241:     // Piece of Naraka He
                 case 5195666:     // Sedative
                 case 1585221:     // Dried Maroon
- //               case 8633037:     // Pure Gold Bar
                 case 1527133:     // Armonia Coin
                 case 1023705:     // Violet's Vaucher
                 case 5002080:     // Карточка кэш персонажа 1
@@ -358,6 +357,7 @@ namespace OpenGEWindows
                 case 8091251:     // Saurelle
                 case 13879799:    // Shell of Arb
                 case 171761:        // желтая коробка с петом
+                case 1:             // Simbol of Naraka
 
                     result = false;
                     break;
@@ -407,7 +407,7 @@ namespace OpenGEWindows
                 case 6056324:       // IAR-323
                 case 1648992:       //Elite Le Blanc (Leather, Coat, Robe)
                 case 329476:        //General Plate
-                case 15981491:      //Elite Schvarlier Armor
+                //case 15981491:      //Elite Schvarlier Armor
                     result = false;
                     break;
             }
