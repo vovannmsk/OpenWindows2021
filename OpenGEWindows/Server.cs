@@ -1633,10 +1633,10 @@ namespace OpenGEWindows
         public void systemMenu(int number)
         {
             //if (!isOpenTopMenu(13))
-                TopMenu(13);
-            Pause(1000);
-            iPoint pointCurrentMenu = new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy);
-            pointCurrentMenu.PressMouse();
+            TopMenu(13);
+            Pause(500);
+            new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy).PressMouse();
+            botwindow.PressEsc(); //убираем системное меню
         }
 
         /// <summary>
@@ -5942,10 +5942,10 @@ namespace OpenGEWindows
             //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
             AssaultMode();
 //            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
-            if (new PointColor(525 + Direction * 500 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
-                new Point(525 + Direction * 500 - 5 + xx, 420 - 5 + yy).PressMouseL();   //350 392
+            if (new PointColor(525 + Direction * 500 - 5 + xx, 400 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+                new Point(525 + Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
             else
-                new Point(525 - Direction * 500 - 5 + xx, 420 - 5 + yy).PressMouseL();
+                new Point(525 - Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();
         }
 
         /// <summary>

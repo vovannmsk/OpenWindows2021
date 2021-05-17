@@ -1013,14 +1013,14 @@ namespace Main
                 infinity[j] = botParam[j].NumberOfInfinity;
             }
 
-            int Period;
-            int MinTimeOfTurn = 4000;    //минимальное время цикла
-            DateTime Data1, Data2;
+            //int Period;
+            //int MinTimeOfTurn = 1000;    //минимальное время цикла
+            //DateTime Data1, Data2;
 
 
             while (true)
             {
-                Data1 = DateTime.Now;
+                //Data1 = DateTime.Now;
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
@@ -1053,10 +1053,10 @@ namespace Main
                         botParam[j].Stage = 1;
                     }
                 }
-                Data2 = DateTime.Now;
-                Period = (Data2 - Data1).Milliseconds;
-                if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
-                    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
+                //Data2 = DateTime.Now;
+                //Period = (Data2 - Data1).Milliseconds;
+                //if (Period < MinTimeOfTurn)         //если один проход программы был короче минимально разрешенного времени цикла, 
+                //    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
         }
 

@@ -6,7 +6,17 @@ using GEBot.Data;
 namespace States
 {
     public class Check
-    {
+    {   
+        /// <summary>
+        /// если никакой Steam не грузится, то переменная = 0. Значит можно грузить новый Стим.
+        /// </summary>
+        private static int IsItAlreadyPossibleToUploadNewSteam = 0;
+
+        /// <summary>
+        /// если никакой бот не грузится, то переменная = 0. Если грузится, то переменная равна номеру окна (numberOfWindow)
+        /// </summary>
+        private static int IsItAlreadyPossibleToUploadNewWindow = 0;
+
         /// <summary>
         /// если равна 1, то надо идти в барак
         /// </summary>
@@ -74,6 +84,7 @@ namespace States
 
         public Check(int numberOfWindow)
         {
+            
             GoBarack = 0;
             numberOfState = 0;
             taskCompleted = false;
@@ -656,6 +667,11 @@ namespace States
                     }
                 }
             }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow)
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
 
             //если открыто окно Стим в правом нижнем углу
             if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
@@ -816,11 +832,11 @@ namespace States
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
-                    //case 18:
-                    //    //server.systemMenu(3, true);                 // переход в стартовый город
-                    //    server.GotoSavePoint();
-                    //    botParam.HowManyCyclesToSkip = 3;
-                    //    break;
+                    case 18:
+                        //server.systemMenu(3, true);                 // переход в стартовый город
+                        server.GotoSavePoint();
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
                     case 20:
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
@@ -829,9 +845,14 @@ namespace States
                     //    server.ReOpenWindow();                      // 
                     //    //botParam.HowManyCyclesToSkip = 3;
                     //    break;
-                    case 22:                                    
-                        server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                        botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 5-8 циклов
+                    case 22:
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 5-8 циклов
+                            IsItAlreadyPossibleToUploadNewSteam = 0;
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
                         break;
                     case 23:                                    //есть окно стим
                         //server.ReOpenWindow();                      // 
@@ -840,14 +861,19 @@ namespace States
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (не факт, что это нужно)
-                        botwindow = new botWindow(numberOfWindow);
-                        ServerFactory serverFactory = new ServerFactory(botwindow);
-                        this.server = serverFactory.create();
-                        this.globalParam = new GlobalParam();
-                        this.botParam = new BotParam(numberOfWindow);
-                        //************************ запускаем стим ************************************************************
-                        server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                        botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от одного до шести)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            //botParam.HowManyCyclesToSkip = 1;
+                            IsItAlreadyPossibleToUploadNewSteam = 1;
+                        }
                         break;
                 }
             }
