@@ -5942,10 +5942,10 @@ namespace OpenGEWindows
             //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
             AssaultMode();
 //            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
-            if (new PointColor(525 + Direction * 350 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
-                new Point(525 + Direction * 350 - 5 + xx, 392 - 5 + yy).PressMouseL();
+            if (new PointColor(525 + Direction * 500 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+                new Point(525 + Direction * 500 - 5 + xx, 420 - 5 + yy).PressMouseL();   //350 392
             else
-                new Point(525 - Direction * 350 - 5 + xx, 392 - 5 + yy).PressMouseL();
+                new Point(525 - Direction * 500 - 5 + xx, 420 - 5 + yy).PressMouseL();
         }
 
         /// <summary>

@@ -357,7 +357,15 @@ namespace OpenGEWindows
                 case 8091251:     // Saurelle
                 case 13879799:    // Shell of Arb
                 case 171761:        // желтая коробка с петом
-                case 1:             // Simbol of Naraka
+                case 8999482:       // Simbol of Naraka
+                case 9867973:       // страта нож
+                case 10987435:      // divine polearm
+                case 10998261:      // divine special Braslet
+                case 4089968:       // Divine Fire Br
+                case 13030879:      // Divine Ice Br
+                case 1908255:       // рецепт Enhanted Will of Argus
+                case 1644569:       // рецепт Shadow of Argus
+
 
                     result = false;
                     break;
@@ -398,16 +406,24 @@ namespace OpenGEWindows
                     if (new PointColor(151 - 5 + xx, 209 - 5 + yy, 16712191, 0).isColor())  //Elite Le Noir розовая точка
                         result = false;     
                     break;
+                case 9867973:       // страта нож
+
+                //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
                 case 1906191:       // Divine Slayer
                 case 13953779:      // Divine Sabre
                 case 8231339:       // Divine Knuckle
                 case 9546436:       // Divine Dagger
-                //case 1381654:      // Divine Rapier
+                case 10987435:      // divine polearm
+                case 10998261:      // divine special Braslet
+                case 4089968:       // Divine Fire Br
+                case 13030879:      // Divine Ice Br
+                case 1381398:       // Divine Light Br
+
                 case 6056324:       // IAR-323
-                case 1648992:       //Elite Le Blanc (Leather, Coat, Robe)
-                case 329476:        //General Plate
-                //case 15981491:      //Elite Schvarlier Armor
+                case 1648992:       // Elite Le Blanc (Leather, Coat, Robe)
+                case 329476:        // General Plate
+                //case 15981491:    // Elite Schvarlier Armor
                     result = false;
                     break;
             }
