@@ -966,6 +966,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         server.MoveCursorOfMouse();
                         botParam.Stage = 3;
+                        DirectionOfMovement = 1;        //необходимо для стадии 4
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
@@ -1058,16 +1059,17 @@ namespace States
             //в миссии
             if (server.isWork())
             {
-                if (server.isGate())                //если сундука уже нет, а появились ворота
+                if (server.isGate() || GoBarack == 1 || server.isRouletteBH())     //если сундука уже нет, а появились ворота
+                                                                                   //(либо уже тыкали в сундук)
+                                                                                   //либо крутится рулетка
                 {
                     if (server.isSecondGate())      //появились вторые ворота (с фесом)?
                         return 9;
                     else
-                        return 8;                   //ворота с фесом не появились
+                        return 4;                   //ворота с фесом не появились и надо идти в барак
                 }
-
-                if (server.isRouletteBH() || GoBarack == 1)
-                    return 4;                       //надо идти в барак
+                //if (server.isRouletteBH() || GoBarack == 1)
+                //    return 4;                       //надо идти в барак
                 else
                     return 3;                       //надо тыкать в сундук
             }
@@ -1102,14 +1104,10 @@ namespace States
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     server.ActiveWindow(); 
-                    //server.ReOpenWindow();
-                    //Pause(500);
                 }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemMultiStage3();
-
-                Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -1144,11 +1142,14 @@ namespace States
                         dialog.PressOkButton(1);
                         botParam.HowManyCyclesToSkip = 2;
                         break;
-                    case 8:                                         // появились ворота вместо сундука
-                        server.GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
+                    //case 8:                                         // появились ворота вместо сундука
+                    //    server.GotoBarack();
+                    //    botParam.HowManyCyclesToSkip = 2;
+                    //    break;
                     case 9:                                         // появились ворота с фесо
+                        //тыкаем в ворота с фесо и далее стадия 4
+                        server.PressOnFesoGate();
+                        botParam.Stage = 4;
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
@@ -1177,30 +1178,13 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage4()
         {
-            //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
-
-            //служба Steam
-            if (server.isSteamService()) return 11;
-
-            //если диалог (он получается, если тыкнуть в ворота)
+            //если диалог, то выбрать вход в комнату с фесо
             if (dialog.isDialog()) return 7;
 
             //в миссии
             if (server.isWork())
             {
-                if (server.isGate())                //если сундука уже нет, а появились ворота
-                {
-                    if (server.isSecondGate())      //появились вторые ворота (с фесом)?
-                        return 9;
-                    else
-                        return 8;                   //ворота с фесом не появились
-                }
-
-                if (server.isRouletteBH() || GoBarack == 1)
-                    return 4;                       //надо идти в барак
-                else
-                    return 3;                       //надо тыкать в сундук
+                return 3;        
             }
 
             //в городе или в БХ
@@ -1217,7 +1201,6 @@ namespace States
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
 
-            //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
             return 0;
@@ -1228,8 +1211,8 @@ namespace States
         /// </summary>
         public void problemResolutionDemMultiStage4()
         {
-            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
-            {
+            //if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            //{
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
                     server.ActiveWindow();
@@ -1238,61 +1221,30 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemMultiStage4();
 
-                Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
                     case 1:                                         //в логауте
-                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
-                        botParam.HowManyCyclesToSkip = 1;
-                        break;
                     case 2:                                         //в бараках
-                        driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
-                    case 3:                                         //в миссии, но рулетка не крутится
-                        server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
-                        botParam.HowManyCyclesToSkip = 1;
-                        GoBarack = 1;
-                        break;
-                    case 4:                                         //крутится рулетка или уже тыкали в сундук
-                        server.GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
                     case 5:                                         // в БХ
-                        server.systemMenu(3, true);                 // переход в стартовый город
-                        botParam.HowManyCyclesToSkip = 3;
-                        break;
                     case 6:                                         // в городе
-                        server.RemoveSandboxieBH();                 //закрываем песочницу
-                        botParam.Stage = 1;
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.Stage = 3;
                         break;
-                    case 7:                                         // в диалоге ворот (выйти в БХ или остаться на месте)
+                    case 3:                                         //в комнате с фесо
+                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                        server.AttackTheMonsters2(DirectionOfMovement);     // атакуем с CTRL и подбираем лут
+                        break;
+                    case 7:                                         // в диалоге ворот (зайти в комнату с фесо)
                         dialog.PressStringDialog(1);
                         dialog.PressOkButton(1);
-                        botParam.HowManyCyclesToSkip = 2;
+                        //botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 8:                                         // появились ворота вместо сундука
-                        server.GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
-                    case 9:                                         // появились ворота с фесо
-                        break;
-                    case 11:                                         // закрыть службу Стим
-                        server.CloseSteam();
-                        break;
-                    case 20:
-                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
-                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
-                        break;
-
                 }
-            }
-            else
-            {
-                botParam.HowManyCyclesToSkip--;
-            }
+            //}
+            //else
+            //{
+            //    botParam.HowManyCyclesToSkip--;
+            //}
         }
 
         #endregion =======================================================================================================
@@ -2321,27 +2273,27 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 2;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 2;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(843 - 5 + xx, 608 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(843 - 5 + xx, 609 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(552 - 5 + xx, 435 - 5 + xx, 0, 0);
+            PointColor point2 = new PointColor(552 - 5 + xx, 436 - 5 + xx, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

@@ -6444,14 +6444,50 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// появились вторые ворота (с фесом)?
+        /// появились вторые ворота (с фесом)? /проверка по надписи "Generous Room"/
         /// </summary>
         /// <returns>true, если появились</returns>
         public bool isSecondGate()
         {
-            return false;
+            //return false;
+            return new PointColor(552 - 5 + xx, 435 - 5 + xx, 0, 0).isColor() &&
+                    new PointColor(552 - 5 + xx, 436 - 5 + xx, 0, 0).isColor();
         }
 
+        /// <summary>
+        /// тыкаем в ворота с фесом
+        /// </summary>
+        public void PressOnFesoGate()
+        {
+            new Point(539 - 5 + xx, 399 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// атакуем монстров в миссии (с CTRL) или подбираем фесо
+        /// </summary>
+        public void AttackTheMonsters2(int Direction)
+        {
+            if (Direction == -1)  //если идем влево, то мочим всех
+            {
+                AssaultMode();
+                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();   
+            }
+            else  //если идем направо, то собираем лут
+            {
+                DropSelectionMode();
+                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
+            }
+        }
+
+        /// <summary>
+        /// режим подбора дропа (сундук)
+        /// </summary>
+        public void DropSelectionMode()
+        {
+            new Point(123 - 5 + xx, 526 - 5 + yy).PressMouseL();    //нажимаем на сундук (иконка подбора)
+            Pause(200);
+
+        }
 
         #endregion
 
