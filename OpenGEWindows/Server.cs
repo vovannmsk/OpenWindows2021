@@ -5822,7 +5822,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, появился ли сундук в миссии
+        /// появился ли сундук в миссии? /проверка по сообщению в чате/
         /// </summary>
         /// <returns>true, если появился</returns>
         public bool isTreasureChest()

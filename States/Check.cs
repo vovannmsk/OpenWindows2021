@@ -753,10 +753,10 @@ namespace States
                 {
                     switch (numberOfProblem)
                     {
-                        //case 1:  //зависли в логауте
-                        //case 23:  //загруженное окно зависло и не смещается на нужное место
-                        //    numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
-                        //    break;
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
                         case 4:  //зависли в БХ
                             numberOfProblem = 18; //переходим в стартовый город через системное меню
                             break;
@@ -858,6 +858,7 @@ namespace States
                         //server.ReOpenWindow();                      // 
                         //botwindow.ActiveWindowBH();             // если новое окно открыто, но еще не поставлено на своё место, то ставим
                         //botParam.HowManyCyclesToSkip = 1;       //пропускаем следующий цикл (на всякий случай)
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //не факт, что надо
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (не факт, что это нужно)
@@ -875,6 +876,10 @@ namespace States
                             IsItAlreadyPossibleToUploadNewSteam = 1;
                         }
                         break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        break;
+
                 }
             }
             else
@@ -1007,9 +1012,7 @@ namespace States
                     case 10:
                         //если белая надпись вверху
                         server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
-                        //botwindow.Pause(7000);                      //пауза, чтобы успеть собрать добычу
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        //botwindow.Pause(6000);                      //пауза, чтобы успеть войти в барак
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 11:                                         // закрыть службу Стим
@@ -1120,12 +1123,10 @@ namespace States
                         break;
                     case 3:                                         //в миссии, но рулетка не крутится
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
-                        //server.MaxHeight(7);
                         botParam.HowManyCyclesToSkip = 1;
                         GoBarack = 1;
                         break;
-                    case 4:                                         //крутится рулетка
-                        //botwindow.Pause(5000);
+                    case 4:                                         //крутится рулетка или уже тыкали в сундук
                         server.GotoBarack();
                         botParam.HowManyCyclesToSkip = 2;
                         break;
@@ -1166,6 +1167,137 @@ namespace States
         }
 
         #endregion =======================================================================================================
+
+
+        #region  =================================== Demonic Multi Stage 4 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemMultiStage4()
+        {
+            //если открыто окно Стим в правом нижнем углу
+            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если диалог (он получается, если тыкнуть в ворота)
+            if (dialog.isDialog()) return 7;
+
+            //в миссии
+            if (server.isWork())
+            {
+                if (server.isGate())                //если сундука уже нет, а появились ворота
+                {
+                    if (server.isSecondGate())      //появились вторые ворота (с фесом)?
+                        return 9;
+                    else
+                        return 8;                   //ворота с фесом не появились
+                }
+
+                if (server.isRouletteBH() || GoBarack == 1)
+                    return 4;                       //надо идти в барак
+                else
+                    return 3;                       //надо тыкать в сундук
+            }
+
+            //в городе или в БХ
+            if (server.isTown())
+            {
+                if (server.isBH()) return 5;        //в БХ
+                else return 6;                      //в стартовом городе
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;                    // если окно в логауте
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+
+            //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадии 4
+        /// </summary>
+        public void problemResolutionDemMultiStage4()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemDemMultiStage4();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:                                         //в бараках
+                        driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:                                         //в миссии, но рулетка не крутится
+                        server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
+                        botParam.HowManyCyclesToSkip = 1;
+                        GoBarack = 1;
+                        break;
+                    case 4:                                         //крутится рулетка или уже тыкали в сундук
+                        server.GotoBarack();
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 5:                                         // в БХ
+                        server.systemMenu(3, true);                 // переход в стартовый город
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 6:                                         // в городе
+                        server.RemoveSandboxieBH();                 //закрываем песочницу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 7:                                         // в диалоге ворот (выйти в БХ или остаться на месте)
+                        dialog.PressStringDialog(1);
+                        dialog.PressOkButton(1);
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 8:                                         // появились ворота вместо сундука
+                        server.GotoBarack();
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 9:                                         // появились ворота с фесо
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion =======================================================================================================
+
+
 
         #region Гильдия охотников BH
 
