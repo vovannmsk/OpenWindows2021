@@ -345,7 +345,7 @@ namespace OpenGEWindows
                 case 11906207:    // Crest of Sacred
                 case 5590609:     // Crest of Black Knight
                 case 8094315:     // Crest 3
-                case 33557709:    // Crest 4
+                case 3355709:       // Crest of Dark Priest
                 case 8410380:     // Nephthis
                 case 16745983:    // Death Wraith
                 case 131094:      // Will of Cortes
@@ -411,12 +411,15 @@ namespace OpenGEWindows
                         result = false;     
                     break;
                 case 9867973:       // страта нож
+                case 11465468:      // страта пушка
+
                 //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
                 case 1906191:       // Divine Slayer
                 case 13953779:      // Divine Sabre
                 case 8231339:       // Divine Knuckle
                 case 9546436:       // Divine Dagger
+                case 8493226:       // Divine Main-Gauch
                 case 10987435:      // divine polearm
                 case 10998261:      // divine special Braslet
                 case 4089968:       // Divine Fire Br
