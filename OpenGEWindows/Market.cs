@@ -341,9 +341,6 @@ namespace OpenGEWindows
                 case 5145944:       //Scale Of Siren
                 case 13957608:      //Seed of Raff
                 case 1316028:       //Arch Heart
-                case 7966641:       //Recipe перчи
-                case 16777210:      //Рецепт Хрома
-                case 14605266:      //Рецепт Армония+Страта
                 //================ БХ Demonic =====================
                 case 11906207:    // Crest of Sacred
                 case 5590609:     // Crest of Black Knight
@@ -353,7 +350,7 @@ namespace OpenGEWindows
                 case 16745983:    // Death Wraith
                 case 131094:      // Will of Cortes
                 case 9103099:     // Revengence
-                case 1381654:     // Branch + обычное кольцо + рецепт ботинок
+                //case 1381654:     // Branch       //повтор числа
                 case 8091251:     // Saurelle
                 case 13879799:    // Shell of Arb
                 case 171761:        // желтая коробка с петом
@@ -363,8 +360,15 @@ namespace OpenGEWindows
                 case 10998261:      // divine special Braslet
                 case 4089968:       // Divine Fire Br
                 case 13030879:      // Divine Ice Br
-                case 1908255:       // рецепт Enhanted Will of Argus
-                case 1644569:       // рецепт Shadow of Argus
+                case 1381654:       // коричневый рецепт в 1-й строке
+                case 1644569:       // коричневый рецепт в 2-й строке
+                case 1842205:       // коричневый рецепт в 3-й строке
+                case 1908255:       // коричневый рецепт в 4-й строке
+                case 1974048:       // коричневый рецепт в 5-й строке
+                case 2105634:       // коричневый рецепт в 6-й строке
+                case 7966641:       //Recipe перчи
+                case 16777210:      //Рецепт Хрома
+                case 14605266:      //Рецепт Армония + Страта + Elite Bristia
 
 
                     result = false;
@@ -407,7 +411,6 @@ namespace OpenGEWindows
                         result = false;     
                     break;
                 case 9867973:       // страта нож
-
                 //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
                 case 1906191:       // Divine Slayer

@@ -5941,11 +5941,14 @@ namespace OpenGEWindows
         {
             //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
             AssaultMode();
-//            new Point(525 + Direction * 240 - 5 + xx, 392 - 5 + yy).PressMouseL();
-            if (new PointColor(525 + Direction * 500 - 5 + xx, 400 - 5 + yy, 0, 0).GetPixelColor() > 400000)
-                new Point(525 + Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
+            //if (new PointColor(525 + Direction * 500 - 5 + xx, 400 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+            //    new Point(525 + Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
+            //else
+            //    new Point(525 - Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();
+            if (new PointColor(525 + Direction * 200 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
             else
-                new Point(525 - Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();
+                new Point(525 - Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -6183,8 +6186,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 787682, 0).isColor() &&
-                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 1906639, 0).isColor()
+                if (    new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + yy, 787682, 0).isColor() &&
+                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + yy, 1906639, 0).isColor()
                    )    result = true;
             return result;
         }
@@ -6199,8 +6202,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + xx, 464572, 0).isColor() &&
-                        new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + xx, 397755, 0).isColor()
+                if (new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 464572, 0).isColor() &&
+                        new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 397755, 0).isColor()
                     ) result = true;
             return result;
         }
@@ -6215,8 +6218,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + xx, 16767324, 0).isColor() &&
-                        new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + xx, 16767324, 0).isColor()
+                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 16767324, 0).isColor() &&
+                        new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 16767324, 0).isColor()
                     ) result = true;
             return result;
         }
@@ -6231,8 +6234,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + xx, 7967538, 0).isColor() &&
-                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 7572528, 0).isColor()
+                if (new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + yy, 7967538, 0).isColor() &&
+                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + yy, 7572528, 0).isColor()
                     ) result = true;
 
             return result;
@@ -6248,8 +6251,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(75 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + xx, 8257280, 0).isColor() &&
-                        new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + xx, 7995136, 0).isColor()
+                if (new PointColor(75 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 8257280, 0).isColor() &&
+                        new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 7995136, 0).isColor()
                     ) result = true;
 
             return result;
@@ -6268,8 +6271,8 @@ namespace OpenGEWindows
                 if (    
                         //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + xx, 16777215, 0).isColor() &&
                         //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + xx, 16777215, 0).isColor()
-                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + xx, 5390673, 0).isColor() &&
-                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + xx, 5521228, 0).isColor()
+                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + yy, 5390673, 0).isColor() &&
+                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + yy, 5521228, 0).isColor()
                     ) result = true;
 
             return result;
@@ -6285,8 +6288,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + xx, 10861754, 0).isColor() &&
-                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + xx, 11124411, 0).isColor()
+                if (    new PointColor(73 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + yy, 10861754, 0).isColor() &&
+                        new PointColor(74 - 5 + xx + j * 15 + (i - 1) * 255, 580 - 5 + yy, 11124411, 0).isColor()
                    ) result = true;
 
             return result;
@@ -6302,8 +6305,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + xx, 2503088, 0).isColor() &&
-                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + xx, 1976470, 0).isColor()
+                if (    new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + yy, 2503088, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 581 - 5 + yy, 1976470, 0).isColor()
                    ) result = true;
 
             return result;
@@ -6319,8 +6322,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + xx, 13133369, 0).isColor() &&
-                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 592 - 5 + xx, 13067318, 0).isColor()
+                if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 13133369, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 592 - 5 + yy, 13067318, 0).isColor()
                    ) result = true;
 
             return result;
@@ -6336,8 +6339,8 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + xx, 6319302, 0).isColor() &&
-                        new PointColor(77 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + xx, 5858504, 0).isColor()
+                if (new PointColor(76 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + yy, 6319302, 0).isColor() &&
+                        new PointColor(77 - 5 + xx + j * 15 + (i - 1) * 255, 584 - 5 + yy, 5858504, 0).isColor()
                    ) result = true;
             return result;
         }
@@ -6450,8 +6453,10 @@ namespace OpenGEWindows
         public bool isSecondGate()
         {
             //return false;
-            return new PointColor(552 - 5 + xx, 435 - 5 + xx, 0, 0).isColor() &&
-                    new PointColor(552 - 5 + xx, 436 - 5 + xx, 0, 0).isColor();
+            return new PointColor(552 - 5 + xx, 435 - 5 + yy, 0, 0).isColor() &&
+                    new PointColor(552 - 5 + xx, 436 - 5 + yy, 0, 0).isColor();
+
+            // ЦВЕТ ТОЧЕК НАДО УКАЗАТЬ
         }
 
         /// <summary>
