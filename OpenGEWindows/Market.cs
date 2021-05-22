@@ -369,6 +369,7 @@ namespace OpenGEWindows
                 case 7966641:       //Recipe перчи
                 case 16777210:      //Рецепт Хрома
                 case 14605266:      //Рецепт Армония + Страта + Elite Bristia
+                case 12236467:      //Pet Box Piece
 
 
                     result = false;
