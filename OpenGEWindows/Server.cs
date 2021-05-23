@@ -5934,21 +5934,41 @@ namespace OpenGEWindows
                     //белая надпись (миссия закончится через 2 минуты )
         }
 
+        ///// <summary>
+        ///// атакуем монстров в миссии  (с CTRL) старый вариант
+        ///// </summary>
+        //public void AttackTheMonsters(int Direction)
+        //{
+        //    //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
+        //    AssaultMode();
+        //    //if (new PointColor(525 + Direction * 500 - 5 + xx, 400 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+        //    //    new Point(525 + Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
+        //    //else
+        //    //    new Point(525 - Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();
+        //    if (new PointColor(525 + Direction * 200 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
+        //        new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
+        //    else
+        //        new Point(525 - Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
+        //}
+
         /// <summary>
         /// атакуем монстров в миссии  (с CTRL)
         /// </summary>
         public void AttackTheMonsters(int Direction)
         {
-            //MaxHeight(1); //если убили и мы прошли через бараки, то камера низко. А так мы ее немного поднимаем.
-            AssaultMode();
-            //if (new PointColor(525 + Direction * 500 - 5 + xx, 400 - 5 + yy, 0, 0).GetPixelColor() > 400000)
-            //    new Point(525 + Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
-            //else
-            //    new Point(525 - Direction * 500 - 5 + xx, 400 - 5 + yy).PressMouseL();
-            if (new PointColor(525 + Direction * 200 - 5 + xx, 392 - 5 + yy, 0, 0).GetPixelColor() > 400000)
-                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();   //*350 -5 , 392-5
-            else
-                new Point(525 - Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
+            int x = 525 + Direction * 200 - 5 + xx;
+            int y = 382 - 5 + yy;
+            do
+            {
+                y += 10; if (y > 432 - 5 + yy) break;
+
+                AssaultMode();
+                if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место,
+                    Direction = -Direction;                                     //то меняем направление тыка                     
+                new Point(x, y).PressMouseL();
+
+            }
+            while (!isAssaultMode()); //выходим из цикла, если получилось перейти в боевой режим
         }
 
         /// <summary>
