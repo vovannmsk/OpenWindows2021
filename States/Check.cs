@@ -1123,6 +1123,7 @@ namespace States
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         botParam.HowManyCyclesToSkip = 1;
                         GoBarack = 1;
+                        server.MaxHeight(3);                        //чтобы было видно вторые ворота
                         break;
                     case 4:                                         //крутится рулетка или уже тыкали в сундук
                         server.GotoBarack();
@@ -2186,9 +2187,9 @@ namespace States
                 //если открыто окно Стим в правом нижнем углу
                 //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-                //MessageBox.Show("логаут? " + server.isLogout());
-                //MessageBox.Show("барак? " + server.isBarack());
-            //MessageBox.Show("баф3? " + server.FindHound(3));
+            //MessageBox.Show("есть первые ворота? " + server.isGate());
+            //MessageBox.Show("моб? " + server.isMob());
+            //MessageBox.Show("первые ворота? " + server.isGate());
             //MessageBox.Show("баф2? " + server.FindHound(2));
             //MessageBox.Show("баф1? " + server.FindHound(1));
             //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
@@ -2273,15 +2274,15 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 12;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 12;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(552 - 5 + xx, 435 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(552 - 5 + xx, 436 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
@@ -2293,7 +2294,7 @@ namespace States
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

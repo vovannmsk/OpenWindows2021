@@ -5985,7 +5985,7 @@ namespace OpenGEWindows
         /// </summary>
         public void OpeningTheChest()
         {
-            new Point(523 - 5 + xx, 350 - 5 + yy).PressMouseLL();
+            new Point(523 - 5 + xx, 350 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -6035,40 +6035,44 @@ namespace OpenGEWindows
         /// <param name="i"></param>
         public void Buff(int typeOfHero, int i)
         {
-            switch (typeOfHero)
+            if (!isTreasureChest() && !isWhiteLabel())      //бафаемся, только в том случае, если не появился сундук
+                                                            //чтобы лишние записи не появились в чате
             {
-                case 1:
-                    BuffMusk(i);  //*
-                    break;
-                case 2:
-                    BuffBernelliBlaster(i);   //*
-                    break;
-                case 3:
-                    BuffLorch(i); //*
-                    break;
-                case 4:
-                    BuffJaina(i);  //*
-                    break;
-                case 5:
-                    BuffBarell(i);  //*
-                    break;
-                case 6:
-                    BuffCDaria(i);   //47
-                    break;
-                case 7:
-                    BuffTom(i);
-                    break;
-                case 8:
-                    BuffMoon(i);  //*
-                    break;
-                case 9:
-                    BuffMisa(i);
-                    break;
-                case 10:
-                    BuffBernelliFlint(i);   //*
-                    break;
-                case 0:
-                    break;
+                switch (typeOfHero)
+                {
+                    case 1:
+                        BuffMusk(i);  //*
+                        break;
+                    case 2:
+                        BuffBernelliBlaster(i);   //*
+                        break;
+                    case 3:
+                        BuffLorch(i); //*
+                        break;
+                    case 4:
+                        BuffJaina(i);  //*
+                        break;
+                    case 5:
+                        BuffBarell(i);  //*
+                        break;
+                    case 6:
+                        BuffCDaria(i);   //47
+                        break;
+                    case 7:
+                        BuffTom(i);
+                        break;
+                    case 8:
+                        BuffMoon(i);  //*
+                        break;
+                    case 9:
+                        BuffMisa(i);
+                        break;
+                    case 10:
+                        BuffBernelliFlint(i);   //*
+                        break;
+                    case 0:
+                        break;
+                }
             }
         }
 
@@ -6463,7 +6467,8 @@ namespace OpenGEWindows
         /// <returns>true, если появились</returns>
         public bool isGate()
         {
-            return false;
+            return  new PointColor(599 - 5 + xx, 397 - 5 + yy, 5700000, 5).isColor() &&
+                    new PointColor(599 - 5 + xx, 398 - 5 + yy, 5700000, 5).isColor();
         }
 
         /// <summary>
@@ -6472,7 +6477,6 @@ namespace OpenGEWindows
         /// <returns>true, если появились</returns>
         public bool isSecondGate()
         {
-            //return false;
             return new PointColor(552 - 5 + xx, 435 - 5 + yy, 0, 0).isColor() &&
                     new PointColor(552 - 5 + xx, 436 - 5 + yy, 0, 0).isColor();
 

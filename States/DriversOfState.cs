@@ -574,7 +574,7 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             botwindow.PressEscThreeTimes();
 
             //StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию

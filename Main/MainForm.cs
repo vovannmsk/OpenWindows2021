@@ -688,18 +688,19 @@ namespace Main
         #region Гильдия охотников BH
 
         /// <summary>
-        /// Кнопка BH
+        /// Кнопка BH (ворота инфинити)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BH_Click(object sender, EventArgs e)
         {
-            BH.Visible = false;
+            //BH.Visible = false;
 
+            BH.BackColor = Color.OrangeRed;
             Thread myBH = new Thread(funcBH);
             myBH.Start();
 
-            BH.Visible = true;
+            //BH.Visible = true;
         }
 
         /// <summary>
@@ -836,10 +837,16 @@ namespace Main
         }
 
 
-        #region Silver Button (Pure Otite Multi)
+        #region ====================== Silver Button (Pure Otite Multi) ============================
 
+        /// <summary>
+        /// Кнопка "Отит много окон"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PureOtiteMulti_Click(object sender, EventArgs e)
         {
+            PureOtiteMulti.BackColor = Color.OrangeRed;
             Thread myThreadSilverMulti = new Thread(funcSilverMulti);
             myThreadSilverMulti.Start();
         }
@@ -871,8 +878,6 @@ namespace Main
                 //    check[startAcc].Pause(MinTimeOfTurn - Period);           // то делаем паузу на недостающий промежуток времени
             }
         }
-
-
 
         #endregion
 
@@ -1014,7 +1019,7 @@ namespace Main
             }
 
             //int Period;
-            //int MinTimeOfTurn = 1000;    //минимальное время цикла
+            //int MinTimeOfTurn = 5000;    //минимальное время цикла
             //DateTime Data1, Data2;
 
 
