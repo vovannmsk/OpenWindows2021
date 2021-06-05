@@ -1636,7 +1636,8 @@ namespace OpenGEWindows
             TopMenu(13);
             Pause(500);
             new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy).PressMouse();
-            botwindow.PressEsc(); //убираем системное меню
+            if (number == 4 || number == 6 || number == 7)
+                botwindow.PressEsc(); //убираем системное меню
         }
 
         /// <summary>

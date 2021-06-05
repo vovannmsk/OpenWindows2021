@@ -8,14 +8,11 @@ namespace States
     /// </summary>
     public class DriversOfState
     {
-        private botWindow botwindow;
-        private Server server;
-        private Otit otit;
-        //        private Check check;
-        private BotParam botParam;
-        private GlobalParam globalParam;
-
-
+        private readonly botWindow botwindow;
+        private readonly Server server;
+        private readonly Otit otit;
+        private readonly BotParam botParam;
+        private readonly GlobalParam globalParam;
 
         public DriversOfState()
         { 
@@ -542,7 +539,7 @@ namespace States
             if (!server.isHwnd())   //если окно еще не загружено, то грузим и идём в миссию
             {
                 botParam.NumberOfInfinity = globalParam.Infinity;
-                globalParam.Infinity = globalParam.Infinity + 1;
+                globalParam.Infinity++;
                 StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
 
                 StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // временно поставил эту строку   // закрываем проги в песочнице
@@ -591,6 +588,7 @@ namespace States
             //botwindow.PressEscThreeTimes();
 
             //закрываем проги в песочнице
+            
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 

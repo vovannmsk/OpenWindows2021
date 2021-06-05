@@ -360,6 +360,11 @@ namespace OpenGEWindows
                 case 10998261:      // divine special Braslet
                 case 4089968:       // Divine Fire Br
                 case 13030879:      // Divine Ice Br
+                case 13953779:      // Divine sabre
+                case 9546436:      // Divine dagger
+                case 5534089:      // Divine javelin
+                case 9677245:      // Divine crecent
+                case 5733765:      // Divine broom stick
                 case 1381654:       // коричневый рецепт в 1-й строке
                 case 1644569:       // коричневый рецепт в 2-й строке
                 case 1842205:       // коричневый рецепт в 3-й строке
@@ -411,8 +416,12 @@ namespace OpenGEWindows
                     if (new PointColor(151 - 5 + xx, 209 - 5 + yy, 16712191, 0).isColor())  //Elite Le Noir розовая точка
                         result = false;     
                     break;
+
                 case 9867973:       // страта нож
                 case 11465468:      // страта пушка
+                //case 1381654:       //sabre+hammer+rapier
+                case 6381165:       //braslet of lighting
+                case 2500205:       //controller
 
                 //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
@@ -426,6 +435,12 @@ namespace OpenGEWindows
                 case 4089968:       // Divine Fire Br
                 case 13030879:      // Divine Ice Br
                 case 1381398:       // Divine Light Br
+                case 5534089:      // Divine javelin
+                case 9677245:      // Divine crecent
+                case 5733765:      // Divine broom stick
+                case 5921627:       //divine staff
+                case 13553878:      //divine sword
+                case 2305329:       //divine pistol
 
                 case 6056324:       // IAR-323
                 case 1648992:       // Elite Le Blanc (Leather, Coat, Robe)
