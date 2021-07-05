@@ -1805,7 +1805,7 @@ namespace States
                     case 15:
                         botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
                         server.runAway();                           
-                        server.Teleport(1);                         // телепорт к Мамуну
+                        server.Teleport(1,true);                    // телепорт к Мамуну   //раньше true не было (01-07-2021)
                         botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
                         botwindow.PressEscThreeTimes();             //убираем меню с телепортами
@@ -2174,7 +2174,7 @@ namespace States
             //server.Buff(server.WhatsHero(2), 2);
             //server.Buff(server.WhatsHero(3), 3);
             //Server server = new ServerEuropa2(botwindow);
-            //Otit otit = new OtitSing(botwindow);
+            Otit otit = new OtitSing(botwindow);
             //Dialog dialog = new DialogSing(botwindow);
             //Town town = new SingTownArmonia(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
@@ -2210,8 +2210,8 @@ namespace States
             //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
             //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
             //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
-            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
-            //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
+            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
             //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
@@ -2282,18 +2282,18 @@ namespace States
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
             //PointColor point1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            color2 = point2.GetPixelColor();
+            //color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color1);
             //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 

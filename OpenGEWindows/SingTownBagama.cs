@@ -16,6 +16,7 @@ namespace OpenGEWindows
             this.yy = botwindow.getY();
             this.PAUSE_TIME = 6000;
             this.TELEPORT_N = 3;   //номер городского телепорта
+            this.TELEPORT_bullets = 3;
             //точки для нажимания на них
             this.pointMaxHeight = new Point(538 - 5 + xx, 464 - 5 + yy);
             this.pointBookmark = new Point(800 - 5 + xx, 145 - 5 + yy);
@@ -26,7 +27,8 @@ namespace OpenGEWindows
             this.PAUSE_TIME_Bullet = 5000;
             this.pointTraderOnMapBullet = new Point(745 - 5 + xx, 317 - 5 + yy);         //торговец на карте для перехода к патронам     
             this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);    //сюда тыкаем, чтобы улететь на торговую улицу   
-//            this.pointTownTeleport = new Point(110 + xx, 328 + (TELEPORT_N - 1) * 30 + yy);
+            this.pointTownTeleportBullets = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_bullets - 1) * 30 + yy);
+            
             //точки для проверки цвета
             this.pointOpenMap1 = new PointColor(695 - 5 + xx, 143 - 5 + yy, 16700000, 5);                       //проверено
             this.pointOpenMap2 = new PointColor(695 - 5 + xx, 144 - 5 + yy, 16700000, 5);                       //проверено

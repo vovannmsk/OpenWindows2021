@@ -422,6 +422,8 @@ namespace OpenGEWindows
                 //case 1381654:       //sabre+hammer+rapier
                 case 6381165:       //braslet of lighting
                 case 2500205:       //controller
+                case 5592493:       //страта rapier
+                case 197122:        //страта sword
 
                 //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
