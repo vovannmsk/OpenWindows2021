@@ -3,24 +3,28 @@
 
 namespace States
 {
-    public class StateGT316 : IState
+    public class StateGT503 : IState
     {
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
+        private Pet pet;
+        private PetFactory petFactory;
         private int tekStateInt;
 
-        public StateGT316()
+        public StateGT503()
         {
 
         }
 
-        public StateGT316(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT503(botWindow botwindow)   //, GotoTrade gototrade)
         {
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.tekStateInt = 16;
+            this.petFactory = new PetFactory(botwindow);
+            this.pet = petFactory.createPet();
+            this.tekStateInt = 503;
         }
 
         /// <summary>
@@ -57,35 +61,23 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.WriteToLogFileBH("Казарма");
-            //============ выбор персонажей  ===========
-            
-            server.TeamSelection(2);
+            botwindow.PressMitridat();            //пьем митридат
+
+            //botwindow.Pause(500);
+            //server.GoToChannel();                                                            //новое 30-06-2017
+            //botwindow.Pause(500);
+
+
+            botwindow.ClickSpace();     // К бою!!!!!!!! 
             botwindow.Pause(1000);
 
-            //============ выбор канала ===========
-            botwindow.SelectChannel(1);
-            //botwindow.Pause(1000);
+            server.TopMenu(9, 2);   //открываем верхнее меню пункт "пет"
 
-            //============ выход в город  ===========
-            server.NewPlace();                //начинаем в ребольдо  
-            
-            botwindow.Pause(1000);
-            new Point(500, 500).Move();
-            if (server.isBarackWarningYes()) server.PressYesBarack();
+            //int i = 0;
+            //while ((!pet.isOpenMenuPet()) & (i < 10))         //ожидание загрузки меню пета
+            //{ botwindow.Pause(300); i++; }
 
-            new Point(500, 500).Move();  //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
-
-            botwindow.Pause(2000);
-            int i = 0;
-            while ((i < 50) && (!server.isTown()))      // ожидание загрузки города
-            { 
-                botwindow.Pause(500); 
-                i++;
-            }
-
-            botwindow.Pause(5000);
-            botwindow.PressEscThreeTimes();
+            botwindow.Pause(1000);                                                              
         }
 
         /// <summary>
@@ -93,7 +85,8 @@ namespace States
         /// </summary>
         public void elseRun()
         {
-            ///???
+            botwindow.PressEscThreeTimes();
+            botwindow.Pause(500);
         }
 
         /// <summary>
@@ -102,8 +95,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-//            return ((server.isTown()) || (server.isTown_2()));   //GT16   проверка по двум стойкам
-            return !server.isBarack();
+            return pet.isOpenMenuPet();     //сделать проверку, открыто ли окно с петом Alt+P
+            //return true;
         }
 
         /// <summary>
@@ -112,14 +105,21 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            //if (botwindow.getBullet() == 0)
-            //{
-                return new StateGT317(botwindow);              //если не надо покупать патроны
-            //}
-            //else
-            //{
-            //    return new StateGT16a(botwindow);           // если надо покупать патроны
-            //}
+            if (pet.isActivePet())
+            {
+                if (server.isKillHero())
+                {
+                    return new StateGT001(botwindow);                  //если убит один из героев, то в конец движка
+                }
+                else
+                {
+                    return new StateGT023(botwindow);             // если пет уже активирован, то идем на расстановку
+                }
+            }
+            else
+            {
+                return new StateGT020(botwindow);             //если пет не активирован, то идем обычным порядком
+            }
         }
 
         /// <summary>

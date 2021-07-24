@@ -1803,12 +1803,14 @@ namespace States
                         NumberOfState = 7;
                     break;
                     case 15:
-                        botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
-                        server.runAway();                           
-                        server.Teleport(1,true);                    // телепорт к Мамуну   //раньше true не было (01-07-2021)
+                        //botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
+                        //server.runAway();                           
+                        //server.Teleport(1,true);                    // телепорт к Мамуну   //раньше true не было (01-07-2021)
+                        //botwindow.PressEscThreeTimes();             //убираем меню с телепортами
+
+                        driver.TeleportToMamut();
                         botParam.HowManyCyclesToSkip = 1;
                         NumberOfState = 1;
-                        botwindow.PressEscThreeTimes();             //убираем меню с телепортами
                     break;
                     case 16:
                         botwindow.PressEscThreeTimes();             //открываем карту в миссии
@@ -2174,7 +2176,7 @@ namespace States
             //server.Buff(server.WhatsHero(2), 2);
             //server.Buff(server.WhatsHero(3), 3);
             //Server server = new ServerEuropa2(botwindow);
-            Otit otit = new OtitSing(botwindow);
+            //Otit otit = new OtitSing(botwindow);
             //Dialog dialog = new DialogSing(botwindow);
             //Town town = new SingTownArmonia(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
@@ -2184,11 +2186,12 @@ namespace States
 
             server.ReOpenWindow();
             //if (server.isLogout()) server.CloseExpMerch();
-                //если открыто окно Стим в правом нижнем углу
-                //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            //если открыто окно Стим в правом нижнем углу
+            //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
             //MessageBox.Show("есть первые ворота? " + server.isGate());
             //MessageBox.Show("моб? " + server.isMob());
+            MessageBox.Show("меню открыто? " + server.isOpenWarpList());
             //MessageBox.Show("первые ворота? " + server.isGate());
             //MessageBox.Show("баф2? " + server.FindHound(2));
             //MessageBox.Show("баф1? " + server.FindHound(1));
@@ -2210,8 +2213,8 @@ namespace States
             //MessageBox.Show("Открыто окно Inventory? " + server.isOpenInventory());
             //MessageBox.Show("Открыто окно Achievement? " + server.isOpenAchievement());
             //MessageBox.Show("На странице получения наград? " + server.isReceiveReward());
-            MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
-            MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
+            //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
+            //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
             //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
@@ -2274,27 +2277,27 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            int j = 1;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 1;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(485 - 5 + xx, 126 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(485 - 5 + xx, 127 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

@@ -3,24 +3,24 @@
 
 namespace States
 {
-    public class StateGT316 : IState
+    public class StateGT500 : IState
     {
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
         private int tekStateInt;
 
-        public StateGT316()
+        public StateGT500()
         {
 
         }
 
-        public StateGT316(botWindow botwindow)   //, GotoTrade gototrade)
+        public StateGT500(botWindow botwindow)   //, GotoTrade gototrade)
         {
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.tekStateInt = 16;
+            this.tekStateInt = 500;
         }
 
         /// <summary>
@@ -57,35 +57,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.WriteToLogFileBH("Казарма");
-            //============ выбор персонажей  ===========
-            
-            server.TeamSelection(2);
-            botwindow.Pause(1000);
-
-            //============ выбор канала ===========
-            botwindow.SelectChannel(1);
-            //botwindow.Pause(1000);
-
-            //============ выход в город  ===========
-            server.NewPlace();                //начинаем в ребольдо  
-            
-            botwindow.Pause(1000);
-            new Point(500, 500).Move();
-            if (server.isBarackWarningYes()) server.PressYesBarack();
-
-            new Point(500, 500).Move();  //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
-
-            botwindow.Pause(2000);
-            int i = 0;
-            while ((i < 50) && (!server.isTown()))      // ожидание загрузки города
-            { 
-                botwindow.Pause(500); 
-                i++;
-            }
-
-            botwindow.Pause(5000);
-            botwindow.PressEscThreeTimes();
+            botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
+            server.runAway();
         }
 
         /// <summary>
@@ -93,7 +66,8 @@ namespace States
         /// </summary>
         public void elseRun()
         {
-            ///???
+            botwindow.PressEscThreeTimes();
+            botwindow.Pause(500);
         }
 
         /// <summary>
@@ -102,8 +76,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-//            return ((server.isTown()) || (server.isTown_2()));   //GT16   проверка по двум стойкам
-            return !server.isBarack();
+            return true;
         }
 
         /// <summary>
@@ -112,14 +85,7 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            //if (botwindow.getBullet() == 0)
-            //{
-                return new StateGT317(botwindow);              //если не надо покупать патроны
-            //}
-            //else
-            //{
-            //    return new StateGT16a(botwindow);           // если надо покупать патроны
-            //}
+            return new StateGT501(botwindow);    
         }
 
         /// <summary>
@@ -128,15 +94,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            if (!server.isHwnd()) return new StateGT028(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
-            if (server.isLogout())
-            {
-                return new StateGT015(botwindow);  //коннект и далее
-            }
-            else
-            {
-                return this;
-            }
+            return this;
         }
 
         /// <summary>

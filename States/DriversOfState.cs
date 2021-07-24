@@ -59,6 +59,14 @@ namespace States
 
 
         #region Pure Otite Multi
+        
+        /// <summary>
+        /// Town --> Mamut
+        /// </summary>
+        public void TeleportToMamut()
+        {
+            StateDriverRun(new StateGT500(botwindow), new StateGT533(botwindow));
+        }
 
         /// <summary>
         /// Town --> Mamut
@@ -574,24 +582,26 @@ namespace States
             StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             botwindow.PressEscThreeTimes();
 
-            //StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
-            //botwindow.PressEscThreeTimes();
+            StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
+            botwindow.PressEscThreeTimes();
 
-            //if (botParam.NomerTeleport == 1)        //если надо продаваться в Ребольдо, то перелетать не надо и начинаем с Состояния 003
-            //    StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
-            //else
-            //    StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
+            if (botParam.NomerTeleport == 1)        //если надо продаваться в Ребольдо, то перелетать не надо и начинаем с Состояния 003
+                StateDriverRun(new StateGT003(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
+            else
+                StateDriverRun(new StateGT001(botwindow), new StateGT012(botwindow));  // переход к магазину + продажа + выход в город из магазина
 
-            //StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
-            //StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
-            //StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)
-            //botwindow.PressEscThreeTimes();
+            StateDriverRun(new StateGT260(botwindow), new StateGT267(botwindow));  //   переход к аппарату патронов+покупка патронов+выход в город
+            StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
+            StateDriverRun(new StateGT271(botwindow), new StateGT274(botwindow));  //   получение наград в Achievement (Alt+L)
+            botwindow.PressEscThreeTimes();
 
             //закрываем проги в песочнице
 
 
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
+
+
 
         /// <summary>
         ///                // коралл кнопка (алхимия)

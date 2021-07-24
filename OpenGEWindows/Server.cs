@@ -1555,7 +1555,7 @@ namespace OpenGEWindows
                     result = (pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor());
                     break;
                 case 12:
-                    result = (pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor());
+                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
                     break;
                 case 13:
                     result = (pointisOpenTopMenu131.isColor() && pointisOpenTopMenu132.isColor());
@@ -1565,6 +1565,12 @@ namespace OpenGEWindows
                     break;
             }
             return result;
+        }
+
+        public bool isOpenWarpList()
+        {
+            return new PointColor(485 - 5 + xx, 126 - 5 + yy, 13034463, 0).isColor()
+                && new PointColor(485 - 5 + xx, 127 - 5 + yy, 13034463, 0).isColor(); 
         }
 
         /// <summary>
@@ -1774,6 +1780,30 @@ namespace OpenGEWindows
             Pause(500);
 
             pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
+        }
+
+        /// <summary>
+        /// тыкаем в первую строчку списка телепортов (меню телепортов уже открыто)
+        /// </summary>
+        public void Teleport1()
+        {
+            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 180 - 5  + yy);    //    тыкаем в указанную строчку телепорта 
+
+            pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
+            Pause(500);
+
+            pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
+        }
+
+
+
+        /// <summary>
+        /// нажимаем на кнопку "Телепорт" в верхнем меню (для лучшей надёжности)
+        /// </summary>
+        public void TopMenuTeleport()
+        {
+            iPoint pointMenu = new Point(705 - 5 + xx, 55 - 5 + yy);
+            pointMenu.PressMouseL();
         }
 
         public abstract void Teleport(int numberOfLine);
