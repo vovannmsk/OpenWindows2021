@@ -8,6 +8,7 @@ namespace States
         private botWindow botwindow;
         private Server server;
         private ServerFactory serverFactory;
+        private Town town; 
         private int tekStateInt;
 
         public StateGT275()
@@ -20,6 +21,7 @@ namespace States
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
+            this.town = server.getTown();
             this.tekStateInt = 275;
         }
 
@@ -57,6 +59,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
+            town.MaxHeight();
+            botwindow.Pause(1000);
             server.OpenInventory(1);
         }
 

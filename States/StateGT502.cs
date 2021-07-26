@@ -63,7 +63,7 @@ namespace States
         {
             server.Teleport1();
 
-            botwindow.Pause(3000);
+            botwindow.Pause(7000);
         }
 
         /// <summary>
