@@ -971,20 +971,40 @@ namespace States
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
-                        //Pause(1500);
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
-                        //server.BattleModeOn();
 
-                        //выбор главного героя через rnd и им скилуем
-                        int nn = rand.Next(1, 4);
-                        server.ActiveHeroDem(nn);
-                        if (server.isBossOrMob() && !server.isMob())
+                        //бафаемся. Если бафались мушкетеры, то result = true
+                        bool result =   server.Buff(Hero[1], 1) || 
+                                        server.Buff(Hero[2], 2) || 
+                                        server.Buff(Hero[3], 3);
+
+                        //если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
+                        //а потом пробел
+                        if (server.isBossOrMob() && !result)
                         {
-                            server.Skill(Hero[nn], nn);
-                        }
-                        break;
+                            server.Skill(Hero[1], 1);
+                            server.Skill(Hero[2], 2);
+                            server.Skill(Hero[3], 3);
+
+                            Pause(500);
+                            server.BattleModeOnDem();
+                        }    
+
+                            //вариант 2 (основной)
+                            //server.Buff(Hero[1], 1);
+                            //server.Buff(Hero[2], 2);
+                            //server.Buff(Hero[3], 3);
+                            ////server.BattleModeOn();
+
+                            ////выбор главного героя через rnd и им скилуем
+                            //int nn = rand.Next(1, 4);
+                            //server.ActiveHeroDem(nn);
+                            //if (server.isBossOrMob() && !server.isMob())
+                            //{
+                            //    server.Skill(Hero[nn], nn);
+                            //}
+
+
+                            break;
                     case 4:                                                 // скилуем
 
                         //int number = rand.Next(1, 3);

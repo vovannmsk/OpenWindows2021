@@ -6060,19 +6060,20 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// бафаем i-го героя
+        /// бафаем i-го героя (если бафали муху, то возвращаем true)
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i"></param>
-        public void Buff(int typeOfHero, int i)
+        public bool Buff(int typeOfHero, int i)
         {
+            bool result = false;
             if (!isTreasureChest() && !isWhiteLabel())      //бафаемся, только в том случае, если не появился сундук
                                                             //чтобы лишние записи не появились в чате
             {
                 switch (typeOfHero)
                 {
                     case 1:
-                        BuffMusk(i);  //*
+                        result = BuffMusk(i);  //*
                         break;
                     case 2:
                         BuffBernelliBlaster(i);   //*
@@ -6105,6 +6106,7 @@ namespace OpenGEWindows
                         break;
                 }
             }
+            return result;
         }
 
         /// <summary>
@@ -6190,10 +6192,13 @@ namespace OpenGEWindows
             {
                 case 1:
                     //Муха
+
                     //if (isSkillMuskE(i))   //если готов скилл
-                    //    BuffE(i);
-                    if (isSkillMuskT(i))   //если готов скилл
-                        BuffT(i);
+                        BuffE(i);
+
+                    //if (isSkillMuskT(i))   //если готов скилл
+                    //    BuffT(i);
+
                     //if (isSkillMuskW(i))   //если готов скилл
                     //    BuffW(i);
                     break;
@@ -6404,9 +6409,15 @@ namespace OpenGEWindows
         /// бафаем мушкетера или Бернелли с флинтом на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMusk(int i)
+        private bool BuffMusk(int i)
         {
-            if (!FindConcentracion(i)) BuffY(i);
+            bool result = false;
+            if (!FindConcentracion(i))
+            {
+                BuffY(i);
+                result = true;
+            }
+            return result;
         }
 
         /// <summary>
