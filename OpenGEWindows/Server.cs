@@ -5453,7 +5453,8 @@ namespace OpenGEWindows
         /// </summary>
         public void MoveCursorOfMouse()
         {
-            new Point(754 - 5 + xx, 491 - 5 + yy).Move();
+            //new Point(754 - 5 + xx, 491 - 5 + yy).Move();
+            new Point(670 - 5 + xx, 640 - 5 + yy).Move();
         }
 
         /// <summary>
@@ -5886,7 +5887,7 @@ namespace OpenGEWindows
         public void BuffQ(int i)
         {
             new Point(27 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            MoveCursorOfMouse();
+            //MoveCursorOfMouse();
             //Pause(500);
         }
 
@@ -5896,7 +5897,8 @@ namespace OpenGEWindows
         public void BuffW(int i)
         {
             new Point(58 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            MoveCursorOfMouse();            //Pause(500);
+            //MoveCursorOfMouse();            
+            //Pause(500);
         }
 
         /// <summary>
@@ -5905,7 +5907,7 @@ namespace OpenGEWindows
         public void BuffE(int i)
         {
             new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            MoveCursorOfMouse();
+            //MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5914,7 +5916,7 @@ namespace OpenGEWindows
         public void BuffR(int i)
         {
             new Point(120 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            MoveCursorOfMouse();
+            //MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -5923,7 +5925,7 @@ namespace OpenGEWindows
         public void BuffT(int i)
         {
             new Point(151 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
-            MoveCursorOfMouse();
+            //MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -6192,10 +6194,13 @@ namespace OpenGEWindows
             {
                 case 1:
                     //Муха
+                    if (isMob())
+                        BuffE(i);
+                    else
+                        BuffT(i);
 
                     //if (isSkillMuskE(i))   //если готов скилл
-                        BuffE(i);
-
+                    //BuffE(i);
                     //if (isSkillMuskT(i))   //если готов скилл
                     //    BuffT(i);
 
