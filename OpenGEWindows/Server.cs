@@ -2174,6 +2174,27 @@ namespace OpenGEWindows
             return pointisKillHero1.isColor();
         }
 
+        /// <summary>
+        /// функция проверяет, убит ли i-й герой из пати (проверка проходит на карте)
+        /// </summary>
+        /// <returns></returns>
+        public bool isKillHero(int i)
+        {
+            bool result = false;
+            switch (i)
+                {
+                case 1:
+                    result = pointisKillHero1.isColor();
+                    break;
+                case 2:
+                    result = pointisKillHero2.isColor();
+                    break;
+                case 3:
+                    result = pointisKillHero3.isColor();
+                    break;
+                }
+            return result;
+        }
 
         /// <summary>
         /// функция проверяет, убит ли хоть один герой из пати (проверка проходит на карте)
@@ -5906,7 +5927,8 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffE(int i)
         {
-            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+//            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).DoubleClickL();
             //MoveCursorOfMouse();
         }
 
@@ -5924,7 +5946,7 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffT(int i)
         {
-            new Point(151 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            new Point(151 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).DoubleClickL();
             //MoveCursorOfMouse();
         }
 
@@ -6339,6 +6361,7 @@ namespace OpenGEWindows
                         new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 582 - 5 + yy, 5390673, 0).isColor() &&
                         new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 583 - 5 + yy, 5521228, 0).isColor()
                     ) result = true;
+            if (isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф концентрации 
 
             return result;
         }
