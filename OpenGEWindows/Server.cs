@@ -6094,6 +6094,7 @@ namespace OpenGEWindows
             if (!isTreasureChest() && !isWhiteLabel())      //бафаемся, только в том случае, если не появился сундук
                                                             //чтобы лишние записи не появились в чате
             {
+                MoveCursorOfMouse();
                 switch (typeOfHero)
                 {
                     case 1:
@@ -6231,9 +6232,13 @@ namespace OpenGEWindows
                     break;
                 case 2:
                     //BuffBernelliBlaster(i);   //*
+                    if (!isMob())
+                        BuffT(i);
                     break;
                 case 3:
                     //BuffLorch(i); //*
+                    if (!isMob())
+                        BuffT(i);
                     break;
                 case 4:
                     //BuffJaina(i);  //*
@@ -6255,6 +6260,10 @@ namespace OpenGEWindows
                     break;
                 case 10:
                     //BuffBernelliFlint(i);   //*
+                    if (isMob())
+                        BuffE(i);
+                    else
+                        BuffT(i);
                     break;
                 case 0:
                     break;
@@ -6434,7 +6443,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// бафаем мушкетера или Бернелли с флинтом на i-м месте
+        /// бафаем мушкетера или Бернелли с флинтом на i-м месте /ТРЕБУЕТ ПЕРЕДЕЛКИ  - У БЕРНЕЛЛИ БАФФ НЕ КОНЦЕНТРАЦИЯ/
         /// </summary>
         /// <param name="i"></param>
         private bool BuffMusk(int i)

@@ -976,12 +976,14 @@ namespace States
                         bool result =   server.Buff(Hero[1], 1) || 
                                         server.Buff(Hero[2], 2) || 
                                         server.Buff(Hero[3], 3);
-                        server.MoveCursorOfMouse();
+                        //
 
                         //если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
                         //а потом пробел
-                        if (server.isBossOrMob() && !result)
+                        //if (server.isBossOrMob() && !result)
+                        if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
                         {
+                            server.MoveCursorOfMouse();
                             server.Skill(Hero[1], 1);
                             server.Skill(Hero[2], 2);
                             server.Skill(Hero[3], 3);
