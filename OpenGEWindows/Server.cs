@@ -6240,9 +6240,11 @@ namespace OpenGEWindows
                     break;
                 case 5:
                     //BuffBarell(i);  //*
+                    BuffT(i);
                     break;
                 case 6:
                     //BuffCDaria(i);   //47
+                    BuffT(i);
                     break;
                 case 7:
                     //BuffTom(i);
@@ -6252,6 +6254,7 @@ namespace OpenGEWindows
                     break;
                 case 9:
                     //BuffMisa(i);
+                    BuffT(i);  //скилуем самым крутым скиллом
                     break;
                 case 10:
                     //BuffBernelliFlint(i);   //*
@@ -6527,7 +6530,8 @@ namespace OpenGEWindows
         private void BuffMisa(int i)
         {
             //if (!FindWindUp(i)) 
-                BuffY(i);
+                //BuffY(i);
+                // не бафаем Мису, бафф снижает меткость
             
         }
 
