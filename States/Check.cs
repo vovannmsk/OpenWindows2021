@@ -973,6 +973,7 @@ namespace States
                         server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
 
                         //бафаемся. Если бафались мушкетеры, то result = true
+                        server.MoveCursorOfMouse();
                         bool result =   server.Buff(Hero[1], 1) || 
                                         server.Buff(Hero[2], 2) || 
                                         server.Buff(Hero[3], 3);
@@ -980,35 +981,34 @@ namespace States
 
                         //если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
                         //а потом пробел
-                        //if (server.isBossOrMob() && !result)
-                        if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
+                        if (server.isBossOrMob() && !result)
+                        //if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
                         {
                             server.MoveCursorOfMouse();
                             server.Skill(Hero[1], 1);
                             server.Skill(Hero[2], 2);
                             server.Skill(Hero[3], 3);
                             server.MoveCursorOfMouse();
+                        }
+                        Pause(500);
+                        server.BattleModeOnDem();
 
-                            Pause(500);
-                            server.BattleModeOnDem();
-                        }    
+                        //вариант 2 (основной)
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
+                        ////server.BattleModeOn();
 
-                            //вариант 2 (основной)
-                            //server.Buff(Hero[1], 1);
-                            //server.Buff(Hero[2], 2);
-                            //server.Buff(Hero[3], 3);
-                            ////server.BattleModeOn();
-
-                            ////выбор главного героя через rnd и им скилуем
-                            //int nn = rand.Next(1, 4);
-                            //server.ActiveHeroDem(nn);
-                            //if (server.isBossOrMob() && !server.isMob())
-                            //{
-                            //    server.Skill(Hero[nn], nn);
-                            //}
+                        ////выбор главного героя через rnd и им скилуем
+                        //int nn = rand.Next(1, 4);
+                        //server.ActiveHeroDem(nn);
+                        //if (server.isBossOrMob() && !server.isMob())
+                        //{
+                        //    server.Skill(Hero[nn], nn);
+                        //}
 
 
-                            break;
+                        break;
                     case 4:                                                 // скилуем
 
                         //int number = rand.Next(1, 3);
@@ -2301,27 +2301,27 @@ namespace States
             //int y = 292;
             //int i = 4;
 
-            //int j = 1;
-            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            int j = 1;
+            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(485 - 5 + xx, 126 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(485 - 5 + xx, 127 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(485 - 5 + xx, 126 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(485 - 5 + xx, 127 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            color2 = point2.GetPixelColor();
+            //color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

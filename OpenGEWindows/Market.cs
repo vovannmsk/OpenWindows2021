@@ -419,11 +419,12 @@ namespace OpenGEWindows
 
                 case 9867973:       // страта нож
                 case 11465468:      // страта пушка
-                //case 1381654:       //sabre+hammer+rapier
+                //case 1381654:     //strata sabre+hammer+rapier
                 case 6381165:       //braslet of lighting
                 case 2500205:       //controller
                 case 5592493:       //страта rapier
                 case 197122:        //страта sword
+                case 2499685:       //strata javelin
 
                 //case 1381654:     // Divine Rapier
                 case 5859699:       // Divine Lute
@@ -443,6 +444,7 @@ namespace OpenGEWindows
                 case 5921627:       //divine staff
                 case 13553878:      //divine sword
                 case 2305329:       //divine pistol
+                case 11980777:      //divine Enciclopedia
 
                 case 6056324:       // IAR-323
                 case 1648992:       // Elite Le Blanc (Leather, Coat, Robe)

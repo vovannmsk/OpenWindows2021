@@ -2706,9 +2706,11 @@ namespace OpenGEWindows
         /// </summary>
         public void TeamSelection(int numberTeam)
         {
-            pointTeamSelection1.PressMouse();   // Нажимаем кнопку вызова списка групп
+//            pointTeamSelection1.PressMouse();   // Нажимаем кнопку вызова списка групп
+            pointTeamSelection1.DoubleClickL();   // Нажимаем кнопку вызова списка групп
             Pause(500);
-            new Point(70 - 5 + xx, 355 - 5 + (numberTeam - 1) * 15 + yy).PressMouseLL();  // выбираем нужную группу персов 
+//            new Point(70 - 5 + xx, 355 - 5 + (numberTeam - 1) * 15 + yy).PressMouseLL();  // выбираем нужную группу персов 
+            new Point(70 - 5 + xx, 355 - 5 + (numberTeam - 1) * 15 + yy).DoubleClickL();  // выбираем нужную группу персов 
             Pause(500);
             pointTeamSelection3.PressMouseLL();  // Нажимаем кнопку выбора группы (Select Team) 
         }
@@ -6009,13 +6011,17 @@ namespace OpenGEWindows
         /// <summary>
         /// атакуем монстров в миссии  (с CTRL)
         /// </summary>
+        /// <param name="Direction"> направление движения (влево или вправо)</param>
         public void AttackTheMonsters(int Direction)
         {
-            int x = 525 + Direction * 200 - 5 + xx;
-            int y = 382 - 5 + yy;
+            int DeltaX = 200; //амплитуда движения героев по оси Х
+            int DeltaY = 30;  //амплитуда движения героев по оси Y
+            int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
+            int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
+                                                          // немного смещаться вверх-вниз
             do
             {
-                y += 10; if (y > 432 - 5 + yy) break;
+                y += 10; if (y > 432 - 5 + yy + Direction * DeltaY) break;
 
                 AssaultMode();
                 if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место,

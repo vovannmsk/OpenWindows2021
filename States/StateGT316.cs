@@ -74,7 +74,7 @@ namespace States
             new Point(500, 500).Move();
             if (server.isBarackWarningYes()) server.PressYesBarack();
 
-            new Point(500, 500).Move();  //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
+            new Point(500, 500).Move();  //убираем мышку в сторону, чтобы она не загараживала нужную точку для isTown
 
             botwindow.Pause(2000);
             int i = 0;
@@ -84,7 +84,7 @@ namespace States
                 i++;
             }
 
-            botwindow.Pause(5000);
+            //botwindow.Pause(5000);              //для Наташи
             botwindow.PressEscThreeTimes();
         }
 
