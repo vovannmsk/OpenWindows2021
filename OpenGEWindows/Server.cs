@@ -6217,13 +6217,14 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
-        public void Skill (int typeOfHero, int i)
+        /// <param name="isMobs"true, если в прицеле мобы</param>
+        public void Skill (int typeOfHero, int i, bool isMobs)
         {
             switch (typeOfHero)
             {
                 case 1:
                     //Муха
-                    if (isMob())
+                    if (isMobs)
                         BuffE(i);
                     else
                         BuffT(i);
@@ -6238,12 +6239,12 @@ namespace OpenGEWindows
                     break;
                 case 2:
                     //BuffBernelliBlaster(i);   //*
-                    if (!isMob())
+                    if (!isMobs)
                         BuffT(i);
                     break;
                 case 3:
                     //BuffLorch(i); //*
-                    if (!isMob())
+                    if (!isMobs)
                         BuffT(i);
                     break;
                 case 4:
@@ -6269,7 +6270,7 @@ namespace OpenGEWindows
                     break;
                 case 10:
                     //BuffBernelliFlint(i);   //*
-                    if (isMob())
+                    if (isMobs)
                         BuffE(i);
                     else
                         BuffT(i);

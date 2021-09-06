@@ -984,13 +984,14 @@ namespace States
                         if (server.isBossOrMob() && !result)
                         //if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
                         {
-                            server.MoveCursorOfMouse();
-                            server.Skill(Hero[1], 1);
-                            server.Skill(Hero[2], 2);
-                            server.Skill(Hero[3], 3);
-                            server.MoveCursorOfMouse();
+                            bool isMobs = server.isMob();   
+                            //server.MoveCursorOfMouse();
+                            server.Skill(Hero[1], 1, isMobs);
+                            server.Skill(Hero[2], 2, isMobs);
+                            server.Skill(Hero[3], 3, isMobs);
+                            //server.MoveCursorOfMouse();
                         }
-                        Pause(500);
+                        //Pause(500);
                         server.BattleModeOnDem();
 
                         //вариант 2 (основной)
@@ -1015,9 +1016,9 @@ namespace States
                         //сделать выбор персонажа через rnd и им скиловать
                         //server.Skill(Hero[number], number);
 
-                        server.Skill(Hero[1], 1);
-                        server.Skill(Hero[2], 2);
-                        server.Skill(Hero[3], 3);
+                        //server.Skill(Hero[1], 1);
+                        //server.Skill(Hero[2], 2);
+                        //server.Skill(Hero[3], 3);
                         
                         break;
                     case 5:                                                 // если в миссии и в прицеле босс, то скилляем 
@@ -1037,6 +1038,7 @@ namespace States
                     case 10:
                         //если белая надпись вверху
                         server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        Pause(5000);
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         botParam.HowManyCyclesToSkip = 2;
                         break;
@@ -2295,7 +2297,7 @@ namespace States
             xx = koordX[i - 1];
             yy = koordY[i - 1];
             uint color1;
-            uint color2;
+            //uint color2;
             //uint color3;
             //int x = 483;
             //int y = 292;
