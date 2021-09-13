@@ -5841,6 +5841,7 @@ namespace OpenGEWindows
         public void GoToInfinityGateDem()
         {
             //MinHeight();
+            botwindow.FirstHero();
             new Point(528 - 105 + xx, 316 - 105 + yy).PressMouseL();       
         }
 
@@ -6019,6 +6020,7 @@ namespace OpenGEWindows
             int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
             int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
                                                           // немного смещаться вверх-вниз
+            bool IsBoss;
             do
             {
                 y += 10; if (y > 432 - 5 + yy + Direction * DeltaY) break;
@@ -6027,9 +6029,9 @@ namespace OpenGEWindows
                 if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место,
                     Direction = -Direction;                                     //то меняем направление тыка                     
                 new Point(x, y).PressMouseL();
-
+                IsBoss = isBossOrMob() && (!isMob());    //определяем босса так: в прицеле кто-то есть, но это не моб
             }
-            while (!isAssaultMode()); //выходим из цикла, если получилось перейти в боевой режим
+            while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим
         }
 
         /// <summary>
