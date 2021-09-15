@@ -30,11 +30,11 @@ namespace OpenGEWindows
             this.botwindow = botwindow;
             this.numberOfWindow = botwindow.getNumberWindow();
             BotParam botParam = new BotParam(numberOfWindow);
-            param = botParam.Parametrs[botParam.NumberOfInfinity];
-
+            //            param = botParam.Parametrs[botParam.NumberOfInfinity];
+            this.param = botParam.Param;
         }
 
-        
+
 
 
         public Server create()

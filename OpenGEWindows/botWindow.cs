@@ -138,7 +138,8 @@ namespace OpenGEWindows
 
         public string getParam()
         {
-            return botParam.Parametrs[botParam.NumberOfInfinity];
+            //return botParam.Parametrs[botParam.NumberOfInfinity];
+            return botParam.Param;
         }
 
         public int getKanal()

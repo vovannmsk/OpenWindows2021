@@ -25,8 +25,14 @@ namespace GEBot.Data
         private int x;
         private int y;
         //********отключаем временно для проверки*********************************************************
-        //private string param;              // синг, америка или европа
-        private string[] parametrs;              // список параметров: синг, америка или европа
+        /// <summary>
+        /// текущий сервер: синг, америка или европа
+        /// </summary>
+        private string param;
+        /// <summary>
+        /// список параметров: синг, америка или европа
+        /// </summary>
+        private string[] parametrs;              
         private UIntPtr hwnd;
         private int kanal;
         /// <summary>
@@ -38,6 +44,9 @@ namespace GEBot.Data
         private int[] triangleY;
         //private int bullet;                     //пока не используется
         private int statusOfAtk;
+        /// <summary>
+        /// номер бота в списке ботов (хранится в файле Инфинити.txt)
+        /// </summary>
         private int numberOfInfinity;
         //private bool infinity;
         private int howManyCyclesToSkip;           //сколько пропустить циклов. Для БХ 
@@ -48,13 +57,22 @@ namespace GEBot.Data
         /// стадия выполнения миссии Демоник
         /// </summary>
         private int stage;
-
-        public string Login { get => login; }
+        /// <summary>
+        /// текущий логин
+        /// </summary>
+        public string Login { get => LoginFromFile(); }
         public string[] Logins { get => logins; }
-        public string Password { get => password; }
+        /// <summary>
+        /// текущий пароль
+        /// </summary>
+        public string Password { get => PasswordFromFile(); }
         public string[] Passwords { get => passwords; }
         public int X { get => x; }
         public int Y { get => y; }
+        /// <summary>
+        /// текущий сервер: синг, америка или европа
+        /// </summary>
+        public string Param { get => ParamFromFile(); }
         public string[] Parametrs { get => parametrs; }
 //        public UIntPtr Hwnd { get => hwnd; set { hwnd = value; SetHwnd(); } }
         public UIntPtr Hwnd { get { hwnd = Hwnd_in_file(); return hwnd; }        set { hwnd = value; SetHwnd(); } }
@@ -93,15 +111,14 @@ namespace GEBot.Data
         public int Stage    {  
                                 get { stage = GetStage(); return stage; }
                                 set { stage = value; SetStage(); }
-                            }
+        }
 
         ///// <summary>
         ///// номер аккаунта в списке аккаунтов п/п (нумерация с нуля) 
         ///// </summary>
         //public static int Infinity { get => infinity; set => infinity = value; }
 
-        //********отключаем временно для проверки****
-        //public string Param { get { return parametrs[numberOfInfinity]; } } 
+        
 
         //public bool Infinity { get => infinity; set => infinity = value; }
 
@@ -119,16 +136,14 @@ namespace GEBot.Data
 
             this.x = Koord_X();
             this.y = Koord_Y();
+            numberOfInfinity = NumberFromFile();
             login = LoginFromFile();
             logins = LoginsFromFile();
             password = PasswordFromFile();
             passwords = PasswordsFromFile();
             hwnd = Hwnd_in_file();
+            param = ParamFromFile();
             parametrs = ParametrsFromFile();
-            numberOfInfinity = NumberFromFile();
-            //if (infinity) { param = parametrs[numberOfInfinity]; } else { param = parametrs[0]; }
-            //********отключаем временно для проверки*********************************************************
-            //param = parametrs[numberOfInfinity];
             kanal = Channal();
             nomerTeleport = NomerTeleporta();     
             nameOfFamily = LoadNameOfFamily();
@@ -229,6 +244,17 @@ namespace GEBot.Data
         }
 
         /// <summary>
+        /// прочитать из файла текущий параметр (америка, европа, синг)
+        /// </summary>
+        /// <returns>список параметров</returns>
+        private string ParamFromFile()
+        {
+            string[] result = File.ReadAllLines(directoryOfMyProgram + numberOfWindow + "\\Параметр.txt");
+            return result[numberOfInfinity];
+        }
+
+
+        /// <summary>
         /// прочитать из файла список параметров
         /// </summary>
         /// <returns>список параметров</returns>
@@ -244,9 +270,9 @@ namespace GEBot.Data
         { File.WriteAllText(directoryOfMyProgram + numberOfWindow + "\\Инфинити.txt", numberOfInfinity.ToString()); }
 
         /// <summary>
-        /// прочитать из файла номер инфинити (номер строки с логином и паролем в файле Логины.txt и Пароли.txt)
+        /// прочитать из файла номер инфинити (номер бота в списке ботов)
         /// </summary>
-        /// <returns>номер строки с логином и паролем в файле Логины.txt и Пароли.txt</returns>
+        /// <returns>номер бота в списке ботов</returns> 
         private int NumberFromFile()   // каталог и номер окна
         {
             return int.Parse(File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt"));
@@ -313,10 +339,11 @@ namespace GEBot.Data
         /// функция возвращает логин бота
         /// </summary>
         /// <returns></returns>
-        private string LoginFromFile()   // каталог и номер окна
+        private string LoginFromFile()   
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Логины.txt");
-            return result[0];
+            //return result[0];    //старый ненужный вариант
+            return result[numberOfInfinity];
             //return File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Логины.txt");
         }
 
@@ -327,7 +354,8 @@ namespace GEBot.Data
         private string PasswordFromFile()   // каталог и номер окна
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
-            return result[0];
+            //return result[0];
+            return result[numberOfInfinity];
             //return File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
         }
 

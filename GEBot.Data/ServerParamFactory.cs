@@ -17,7 +17,8 @@
         public ServerParamFactory(int numberOfWindow)
         {
             BotParam botParam = new BotParam(numberOfWindow);
-            param = botParam.Parametrs[botParam.NumberOfInfinity];
+            //param = botParam.Parametrs[botParam.NumberOfInfinity];
+            param = botParam.Param;
         }
         public ServerParam create()
         {

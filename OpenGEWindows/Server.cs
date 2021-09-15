@@ -901,29 +901,23 @@ namespace OpenGEWindows
             //}
         }
 
+        /// <summary>
+        /// возвращает действующий логин
+        /// </summary>
+        /// <returns></returns>
         protected string GetLogin()
         {
-            //string result = botParam.Login;
-            //if (globalParam.Infinity)
-            //{
-            //    //если ходим в Инфинити вместо обычного ботоводства, 
-            //    //то здесь надо написать выбор логина из списка
-            //    result = botParam.Logins[botParam.NumberOfInfinity];   //получили логин
-            //}
-            //return result;
-            return botParam.Logins[botParam.NumberOfInfinity];
+            //return botParam.Logins[botParam.NumberOfInfinity];
+            return botParam.Login;
         }
+        /// <summary>
+        /// возвращает действующий пароль
+        /// </summary>
+        /// <returns></returns>
         protected string GetPassword()
         {
-            //string result = botParam.Password;
-            //if (globalParam.Infinity)
-            //{
-            //    //если ходим в Инфинити вместо обычного ботоводства, 
-            //    //то здесь надо написать выбор пароля из списка
-            //    result = botParam.Passwords[botParam.NumberOfInfinity];   //получили пароль
-            //}
-            //return result;
-            return botParam.Passwords[botParam.NumberOfInfinity];
+            //return botParam.Passwords[botParam.NumberOfInfinity];
+            return botParam.Password;
         }
         protected void EnterSteamLogin()
         {
@@ -1026,12 +1020,19 @@ namespace OpenGEWindows
         /// </summary>
         public void RemoveSandboxieBH()
         {
+            //старый рабочий вариант
+            //int result = globalParam.Infinity;
+            //if (result >= 424) result = 0;  //если дошли до последнего подготовленного аккаунта, то идём в начало списка
+            ////в качестве альтернативы тут можно сделать присвоение FAlse какому-нибудь глоб параметру, чтобы остановить общий цикл
+
+            //новый вариант
             int result = globalParam.Infinity;
-            if (result >= 424) result = 0;  //если дошли до последнего подготовленного аккаунта, то идём в начала списка
-            //в качестве альтернативы тут можно сделать присвоение FAlse какому-нибудь глоб параметру, чтобы остановить общий цикл
+            if (result >= globalParam.DemonicTo + 1) result = globalParam.DemonicFrom;  //если дошли до последнего подготовленного аккаунта,
+                                                                                        //то идём в начало отведённого списка
+
+            // общий кусок кода
             botParam.NumberOfInfinity = result;
             globalParam.Infinity = result + 1;
-
             CloseSandboxieBH();
             MoveMouseDown();
         }

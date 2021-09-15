@@ -25,6 +25,8 @@ namespace GEBot.Data
         private int totalNumberOfAccounts;              // всего аккаунтов ботов
         private int statusOfSale;                       // статус продажи (для BH)
         private bool windows10;                         // какая винда на компе. true, если Windows 10
+        private int demonicFrom;                        // ходим в демоник ботами с этого номера 
+        private int demonicTo;                          // ходим в демоник ботами до этого номера
         private string directoryOfMyProgram;
         //  private const string KATALOG_MY_PROGRAM = "C:\\!! Суперпрограмма V&K\\";
 
@@ -41,11 +43,22 @@ namespace GEBot.Data
             this.totalNumberOfAccounts = KolvoAkk();
             this.statusOfSale = GetStatusOfSale();
             this.windows10 = IsWindow10();
+            this.demonicFrom = GetDemonicFrom();
+            this.demonicTo = GetDemonicTo();
             infinity = InfinityInFile();
         }
 
 
         //  ============ Свойства ====================================================
+        /// <summary>
+        /// ходим в демоник ботами с этого номера
+        /// </summary>
+        public int DemonicFrom { get => demonicFrom; }
+
+        /// <summary>
+        /// ходим в демоник ботами до этого номера
+        /// </summary>
+        public int DemonicTo { get => demonicTo; }
 
         /// <summary>
         /// номер аккаунта в списке аккаунтов п/п (нумерация с нуля) 
@@ -95,6 +108,22 @@ namespace GEBot.Data
             Infinity = infinity + 1;
             //Infinity++;        //вариант 2
         }
+
+
+
+        /// <summary>
+        /// читаем из файла значение параметра demonicFrom
+        /// </summary>
+        /// <returns></returns>
+        private int GetDemonicFrom()
+        { return int.Parse(File.ReadAllText(directoryOfMyProgram + "\\ДемоникОт.txt")); }
+
+        /// <summary>
+        /// читаем из файла значение параметра demonicTo
+        /// </summary>
+        /// <returns></returns>
+        private int GetDemonicTo()
+        { return int.Parse(File.ReadAllText(directoryOfMyProgram + "\\ДемоникДо.txt")); }
 
 
         /// <summary>

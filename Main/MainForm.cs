@@ -1026,6 +1026,8 @@ namespace Main
             while (true)
             {
                 //Data1 = DateTime.Now;
+
+                // j - номер окна с ботом
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
                     if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
