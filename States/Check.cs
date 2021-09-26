@@ -753,8 +753,12 @@ namespace States
                 {
                     switch (numberOfProblem)
                     {
+                        //case 24:
+                        //    numberOfProblem = 32;  //закрываем песочницу без перехода к следующему аккаунту
+                        //    break;
+
                         case 1:     //зависли в логауте
-                        case 23:    //загруженное окно зависло и не смещается на нужное место
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
                             numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
                             break;
                         case 4:  //зависли в БХ
@@ -878,6 +882,11 @@ namespace States
                         break;
                     case 31:
                         server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        //IsItAlreadyPossibleToUploadNewSteam = 0;
+                        //IsItAlreadyPossibleToUploadNewWindow = 0; 
+                        break;
+                    case 32:
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
                         break;
 
                 }

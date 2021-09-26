@@ -1148,7 +1148,7 @@ namespace OpenGEWindows
 
 
         /// <summary>
-        /// запуск клиента игры для Demonic
+        /// запуск клиента игры для миссии Demonic в Гильдии Охотников
         /// </summary>
         public override void RunClientDem()
         {

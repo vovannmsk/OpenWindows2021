@@ -250,6 +250,10 @@ namespace GEBot.Data
         private string ParamFromFile()
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + numberOfWindow + "\\Параметр.txt");
+            if (result[numberOfInfinity].Length == 0)    //если искомое значение оказалось пустым, то читаем массив из файла еще раз (надеюсь поможет)
+            {
+                result = File.ReadAllLines(directoryOfMyProgram + numberOfWindow + "\\Параметр.txt");
+            }
             return result[numberOfInfinity];
         }
 
@@ -275,7 +279,11 @@ namespace GEBot.Data
         /// <returns>номер бота в списке ботов</returns> 
         private int NumberFromFile()   // каталог и номер окна
         {
-            return int.Parse(File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt"));
+            string result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt");
+            if (result.Length == 0)    //получили из файла пустую строку
+            { result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt"); }    //читаем еще раз
+            
+            return int.Parse(result);
         }
 
         /// <summary>
@@ -343,6 +351,11 @@ namespace GEBot.Data
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Логины.txt");
             //return result[0];    //старый ненужный вариант
+            if (result[numberOfInfinity].Length == 0)    //если искомое значение оказалось пустым, то читаем массив из файла еще раз (надеюсь поможет)
+            {
+                result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Логины.txt");
+            }
+
             return result[numberOfInfinity];
             //return File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Логины.txt");
         }
@@ -355,6 +368,11 @@ namespace GEBot.Data
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
             //return result[0];
+            if (result[numberOfInfinity].Length == 0)    //если искомое значение оказалось пустым, то читаем массив из файла еще раз (надеюсь поможет)
+            {
+                result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
+            }
+
             return result[numberOfInfinity];
             //return File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
         }
