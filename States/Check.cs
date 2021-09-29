@@ -2213,7 +2213,7 @@ namespace States
             //Server server = new ServerEuropa2(botwindow);
             //Otit otit = new OtitSing(botwindow);
             //Dialog dialog = new DialogSing(botwindow);
-            //Town town = new SingTownArmonia(botwindow);
+            Town town = new SingTownReboldo(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
             //Market market = new MarketSing(botwindow);
@@ -2226,7 +2226,7 @@ namespace States
 
             //MessageBox.Show("есть первые ворота? " + server.isGate());
             //MessageBox.Show("моб? " + server.isMob());
-            MessageBox.Show("меню открыто? " + server.isOpenWarpList());
+            //MessageBox.Show("меню открыто? " + server.isOpenWarpList());
             //MessageBox.Show("первые ворота? " + server.isGate());
             //MessageBox.Show("баф2? " + server.FindHound(2));
             //MessageBox.Show("баф1? " + server.FindHound(1));
@@ -2236,7 +2236,12 @@ namespace States
             //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
-            //MessageBox.Show(" " + botwindow.getNomerTeleport());
+            //MessageBox.Show(" " + botwindow.isCommandMode());
+            //MessageBox.Show(" " + server.isLogout());
+            //MessageBox.Show(" " + town.isOpenTownTeleport());
+            //MessageBox.Show(" " + pet.isOpenMenuPet());
+            //MessageBox.Show(" " + pet.isSummonPet());
+            //MessageBox.Show(" " + pet.isActivePet());
             //botwindow.Pause(1000);
 
             //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
@@ -2306,33 +2311,33 @@ namespace States
             xx = koordX[i - 1];
             yy = koordY[i - 1];
             uint color1;
-            //uint color2;
+            uint color2;
             //uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
 
-            int j = 1;
-            PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //int j = 1;
+            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            //PointColor point1 = new PointColor(485 - 5 + xx, 126 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(485 - 5 + xx, 127 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(154 - 5 + xx, 224 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(154 - 5 + xx, 225 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
-            //color2 = point2.GetPixelColor();
+            color2 = point2.GetPixelColor();
             //color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

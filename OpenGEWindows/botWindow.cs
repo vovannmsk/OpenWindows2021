@@ -45,7 +45,7 @@ namespace OpenGEWindows
         //private System.DateTime timeMitridat = System.DateTime.Now;
 
         private iPoint pointButtonClose;
-        private iPoint pointOneMode;
+        private iPoint pointMode;
 
 
         //enum TypeLoadUserData {txt, db}
@@ -96,7 +96,7 @@ namespace OpenGEWindows
 
             // точки для тыканья. универсально для всех серверов
             this.pointButtonClose = new Point(850 - 5 + xx, 625 - 5 + yy);   //(848, 620);
-            this.pointOneMode = new Point(123 - 5 + xx, 489 - 5 + yy);    // 118, 484
+            this.pointMode = new Point(135 - 5 + xx, 501 - 5 + yy);    
         }
 
         // ============================== методы ============================================
@@ -576,8 +576,7 @@ namespace OpenGEWindows
         /// <returns> true, если командный режим включен </returns>
         public bool isCommandMode()
         {
-            iPointColor pointCommandMode = new PointColor(123 - 5 + xx, 479 - 5 + yy, 8000000, 6);
-            return pointCommandMode.isColor2();
+            return new PointColor(127 - 5 + xx, 484 - 5 + yy, 9000000, 6).isColor();
         }
 
         /// <summary>
@@ -585,26 +584,29 @@ namespace OpenGEWindows
         /// </summary>
         public void OneMode()
         {
-            if (isCommandMode())
-            {
-                // если включен командный режим, то надо нажать 1 раз
-                pointOneMode.PressMouse();
-                //PressMouse(118, 484); 
+            // если включен командный режим, то надо нажать на кнопку 1 раз
+            if (isCommandMode()) 
+            { 
+                pointMode.PressMouse();
+                new Point(147 - 5 + xx, 504 - 5 + yy).Move(); 
             }
-            else
-            {   // если включен одиночный режим, то надо нажать два раза (в командный режим и обратно)
-                pointOneMode.PressMouse();
-                //PressMouse(118, 484);
-                Pause(500);
-                //PressMouse(118, 484);
-                pointOneMode.PressMouse();
-            }
-        }
 
-        /// <summary>
-        /// закрыть карту Alt+Z
-        /// </summary>
-        private void CloseMap()
+
+
+                //else
+                //{   // если включен одиночный режим, то надо нажать два раза (в командный режим и обратно)
+                //    pointOneMode.PressMouse();
+                //    //PressMouse(118, 484);
+                //    Pause(500);
+                //    //PressMouse(118, 484);
+                //    pointOneMode.PressMouse();
+                //}
+            }
+
+            /// <summary>
+            /// закрыть карту Alt+Z
+            /// </summary>
+            private void CloseMap()
         {
             PressEscThreeTimes();
         }
@@ -614,11 +616,10 @@ namespace OpenGEWindows
         /// </summary>
         public void CommandMode()
         {
-            if (!isCommandMode())
-            {   // если включен одиночный режим
-                pointOneMode.PressMouse();
-                //PressMouse(118, 484);
-                Pause(500);
+            if (!isCommandMode())       // если не включен командный режим
+            {
+                pointMode.PressMouse();    //нажимаем на кнопку 1 раз
+                new Point(147 - 5 + xx, 504 - 5 + yy).Move(); 
             }
         }
 

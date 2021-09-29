@@ -14,8 +14,8 @@
         /// <returns></returns>
         public bool isRedSerendbite()
         {
-            return  new PointColor(595 - 5 + xx, 631 - 5 + yy, 4210000, 4).isColor() &&
-                    new PointColor(595 - 5 + xx, 632 - 5 + yy, 4210000, 4).isColor();
+            return  new PointColor(553 - 5 + xx, 638 - 5 + yy, 4670000, 4).isColor() &&
+                    new PointColor(553 - 5 + xx, 639 - 5 + yy, 4670000, 4).isColor();
         }
 
         /// <summary>

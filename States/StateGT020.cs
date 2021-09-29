@@ -83,7 +83,10 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return ((!pet.isSummonPet()) || (pet.isActivePet()));
+            //bool ppp = !pet.isSummonPet();
+            //bool ppp1 = pet.isActivePet();
+            //int ttt=1;
+            return (!pet.isSummonPet()) || pet.isActivePet();
         }
 
         /// <summary>

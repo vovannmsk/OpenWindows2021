@@ -48,10 +48,14 @@ namespace OpenGEWindows
             /// <param name="numderOfString">номер строки в магазине, где берется товар</param>
             public Product(int xx, int yy, int numberOfString)
             {
-                color1 =    new PointColor(149 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
-                color2 =    new PointColor(146 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
-                color3 =    new PointColor(165 - 5 + xx, 214 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
-                colorMega = new PointColor(174 - 5 + xx, 214 - 5 + yy + (numberOfString - 1) * 27, 10000000, 7).isColor();          //буква M в слове Mega (для отлова МегаРесурсов)
+                //color1 =    new PointColor(149 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                //color2 =    new PointColor(146 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                //color3 =    new PointColor(165 - 5 + xx, 214 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                //colorMega = new PointColor(174 - 5 + xx, 214 - 5 + yy + (numberOfString - 1) * 27, 10000000, 7).isColor();          //буква M в слове Mega (для отлова МегаРесурсов)
+                color1 = new PointColor(154 - 5 + xx, 224 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                color2 = new PointColor(151 - 5 + xx, 224 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                color3 = new PointColor(170 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                colorMega = new PointColor(179 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 10000000, 7).isColor();          //буква M в слове Mega (для отлова МегаРесурсов)
             }
 
             /// <summary>

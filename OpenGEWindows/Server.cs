@@ -1516,7 +1516,10 @@ namespace OpenGEWindows
         {
             //return pointIsCurrentChannel1.isColor() && pointIsCurrentChannel2.isColor();
             //return pointIsCurrentChannel1.GetPixelColor() == pointIsCurrentChannel2.GetPixelColor();  //если цвета в обоих точках совпадают, значит это первый канал
-            return ( pointIsCurrentChannel1.isColor() || pointIsCurrentChannel3.isColor() ) && ( pointIsCurrentChannel2.isColor() || pointIsCurrentChannel4.isColor() );
+            //return  ( pointIsCurrentChannel1.isColor() || pointIsCurrentChannel3.isColor() ) && 
+            //        ( pointIsCurrentChannel2.isColor() || pointIsCurrentChannel4.isColor() );
+            return pointIsCurrentChannel1.isColor() && pointIsCurrentChannel2.isColor();
+
         }
 
         /// <summary>
@@ -1556,7 +1559,7 @@ namespace OpenGEWindows
                     result = (pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor());
                     break;
                 case 12:
-                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
+                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();  //РАБОТАЕТ 29-09-21
                     break;
                 case 13:
                     result = (pointisOpenTopMenu131.isColor() && pointisOpenTopMenu132.isColor());
@@ -2541,7 +2544,7 @@ namespace OpenGEWindows
             uint color1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
             uint color2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
 
-            return ((this.arrayOfColorsIsTown1.Contains(color1)) && (this.arrayOfColorsIsTown2.Contains(color2)));                // проверяем, есть ли цвет контрольной точки в массивах цветов
+            return this.arrayOfColorsIsTown1.Contains(color1) && this.arrayOfColorsIsTown2.Contains(color2);                // проверяем, есть ли цвет контрольной точки в массивах цветов
         }
 
         /// <summary>

@@ -20,29 +20,29 @@ namespace OpenGEWindows
             this.TELEPORT_bullets = 2;
             //точки для нажимания на них
             this.pointMaxHeight = new Point(545 - 5 + xx, 500 - 5 + yy);                      //проверено
-            this.pointBookmark = new Point(880 - 5 + xx, 48 - 5 + yy);                        //вторая закладка карты   //проверено
-            this.pointTraderOnMap = new Point(880 - 5 + xx, 310 - 5 + yy);                    //торговец на карте                          ===========постоянная коррекция  шаг 15
-            this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 728 - 5 + yy);                //кнопка Move на карте
+            this.pointBookmark = new Point(880 - 5 + xx, 53 - 5 + yy);                        //вторая закладка карты   //проверено
+            this.pointTraderOnMap = new Point(880 - 5 + xx, 315 - 5 + yy);                    //торговец на карте //проверено  ===постоянная коррекция  шаг 15
+            this.pointButtonMoveOnMap = new Point(930 - 5 + xx, 733 - 5 + yy);                //кнопка Move на карте
             this.pointHeadTrader = new Point(365 - 5 + xx, 474 - 5 + yy);                     //голова торговца          //проверено
             this.pointBulletAutomat = new Point(425 - 5 + xx, 348 - 5 + yy);                //автомат с пулями
             this.PAUSE_TIME_Bullet = 3000;
-            this.pointTraderOnMapBullet = new Point(880 - 5 + xx, 310 - 5 + yy);      //торговец на карте для перехода к патронам     
+            this.pointTraderOnMapBullet = new Point(880 - 5 + xx, 315 - 5 + yy);      //торговец на карте для перехода к патронам     //проверено
 
-            this.pointTownTeleport = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_N - 1) * 30 + yy);   
-            this.pointTownTeleportBullets = new Point(115 - 5 + xx, 333 - 5 + (TELEPORT_bullets - 1) * 30 + yy);
+            this.pointTownTeleport = new Point(115 - 5 + xx, 338 - 5 + (TELEPORT_N - 1) * 30 + yy);   
+            this.pointTownTeleportBullets = new Point(115 - 5 + xx, 338 - 5 + (TELEPORT_bullets - 1) * 30 + yy);
             //точки для проверки цвета
-            this.pointOpenMap1 = new PointColor(794 - 5 + xx, 45 - 5 + yy, 16700000, 5);       //проверено
-            this.pointOpenMap2 = new PointColor(794 - 5 + xx, 46 - 5 + yy, 16700000, 5);       //проверено
-            this.pointBookmark1 = new PointColor(870 - 5 + xx, 41 - 5 + yy, 7700000, 5);       //проверено
-            this.pointBookmark2 = new PointColor(871 - 5 + xx, 41 - 5 + yy, 7700000, 5);       //проверено
-            this.pointOpenTownTeleport1 = new PointColor(100 - 5 + xx, 295 - 5 + yy, 13000000, 5);  //проверено
-            this.pointOpenTownTeleport2 = new PointColor(100 - 5 + xx, 296 - 5 + yy, 13000000, 5);  //проверено
+            this.pointOpenMap1 = new PointColor(799 - 5 + xx, 51 - 5 + yy, 16700000, 5);       //проверено
+            this.pointOpenMap2 = new PointColor(799 - 5 + xx, 52 - 5 + yy, 16700000, 5);       //проверено
+            this.pointBookmark1 = new PointColor(870 - 5 + xx, 46 - 5 + yy, 7700000, 5);       //проверено
+            this.pointBookmark2 = new PointColor(871 - 5 + xx, 46 - 5 + yy, 7700000, 5);       //проверено
+            this.pointOpenTownTeleport1 = new PointColor(104 - 5 + xx, 289 - 5 + yy, 8000000, 5);  //коричневая полоска    //проверено
+            this.pointOpenTownTeleport2 = new PointColor(105 - 5 + xx, 289 - 5 + yy, 8000000, 5);  //                       //проверено
 
             //для lucia (какашки)
-            this.FirstStringOfMap = new Point(815 - 5 + xx, 69 - 5 + yy);
-            this.NumberOfLuciaOnMap = 16;    //номер строки на первой закладке для Lucia
-            this.pointLucia1 = new Point(471 - 5 + xx, 404 - 5 + yy);
-            this.pointHeadOfLucia = new Point(349 - 5 + xx, 445 - 5 + yy);
+            this.FirstStringOfMap = new Point(815 - 5 + xx, 74 - 5 + yy);   //проверено
+            this.NumberOfLuciaOnMap = 16;    //номер строки на первой закладке для Lucia    //проверено
+            this.pointLucia1 = new Point(471 - 5 + xx, 404 - 5 + yy);   
+            this.pointHeadOfLucia = new Point(351 - 5 + xx, 455 - 5 + yy);
 
             DialogFactory tf = new DialogFactory(botwindow);
             this.dialog = tf.createDialog();

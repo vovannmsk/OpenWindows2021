@@ -95,6 +95,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
+
             return pet.isOpenMenuPet();     
             //return true;
         }

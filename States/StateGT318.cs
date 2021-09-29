@@ -56,7 +56,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.systemMenu(1);   //открываем меню с выбором каналов
+            server.systemMenu(1);   //открываем меню с выбором каналов. 
             botwindow.Pause(1500);
         }
 
