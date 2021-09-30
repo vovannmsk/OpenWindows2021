@@ -693,15 +693,17 @@ namespace States
 
 
             //Mission Lobby
-            if (server.isMissionLobby()) return 5;
+            if (server.isMissionLobby()) return 5;      //сделано
 
             //Waiting Room
             if (server.isWaitingRoom()) return 3;
 
             //город или БХ
-            if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            if (server.isTown() && 
+                !server.isBattleMode() && 
+                !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
             {
-                if (server.isBH())     //в БХ 
+                if (server.isBH())     //в БХ     //проверка сделана
                 {
                     //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
                     //else
@@ -773,11 +775,11 @@ namespace States
                 switch (numberOfProblem)
                 {
                     case 1:
-                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 2:
-                        driver.StateFromBarackToTownBH();           // barack --> town
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     case 3:                                         // старт миссии      //ок
@@ -1895,8 +1897,8 @@ namespace States
             {
                 if (numberTeleport > 0)                            // (телепорт = 0, тогда не нужно продавать)
                 {
-                    if (server.is248Items())                       //проверяем реально ли карман переполнился
-                    {
+                    //if (server.is248Items())                       //проверяем реально ли карман переполнился
+                    //{
                         //if (numberTeleport >= 100)                 // продажа в снежке
                         //    {  server.WriteToLogFile("Продажа в снежке"); return 5; }
                         //else                                 
@@ -1904,7 +1906,7 @@ namespace States
                             server.WriteToLogFile("Продажа не в снежке"); return 6; // продажа в городах
                         //}
 
-                    }
+                    //}
                     //else  
                     //{
                     //    //если выскочило сообщение о переполнении кармана, но количество вещей меньше 248, значит надо обменивать какашки на монеты
@@ -2216,7 +2218,7 @@ namespace States
             Town town = new SingTownReboldo(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
-            //Market market = new MarketSing(botwindow);
+            Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
@@ -2237,7 +2239,7 @@ namespace States
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.isCommandMode());
-            //MessageBox.Show(" " + server.isLogout());
+            MessageBox.Show(" " + server.isMissionLobby());
             //MessageBox.Show(" " + town.isOpenTownTeleport());
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
@@ -2278,6 +2280,7 @@ namespace States
             //MessageBox.Show(" " + market.isClickPurchase());
             //MessageBox.Show(" " + market.isClickSell());
             //MessageBox.Show(" " + server.isUndead());
+            //MessageBox.Show(" " + market.isRedBottle());
 
             //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
             //int[] y = { 0, 0, 0, 0, 0, 340, 340, 340, 340, 340 };
@@ -2312,33 +2315,33 @@ namespace States
             yy = koordY[i - 1];
             uint color1;
             uint color2;
-            //uint color3;
+            uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
 
             //int j = 1;
-            //PointColor point1 = new PointColor(149 - 5 + xx, 219 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
+            //PointColor point1 = new PointColor(154 - 5 + xx, 224 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(154 - 5 + xx, 224 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(154 - 5 + xx, 225 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(532 - 5 + xx, 100 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(33 - 5 + xx, 696 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(33 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
-            //color3 = point3.GetPixelColor();
+            color3 = point3.GetPixelColor();
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
-            //MessageBox.Show(" " + color3);
+            MessageBox.Show(" " + color3);
 
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");

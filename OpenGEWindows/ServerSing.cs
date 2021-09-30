@@ -165,8 +165,8 @@ namespace OpenGEWindows
 
             this.pointisBoxOverflow1 = new PointColor(522 - 5 + xx, 434 - 5 + yy, 7700000, 5);        //проверка всплывающего окна
             this.pointisBoxOverflow2 = new PointColor(522 - 5 + xx, 435 - 5 + yy, 7700000, 5);
-            this.pointisBoxOverflow3 = new PointColor(379 - 5 + xx, 497 - 5 + yy, 5600000, 5);          //проверка оранжевой надписи
-            this.pointisBoxOverflow4 = new PointColor(379 - 5 + xx, 498 - 5 + yy, 5600000, 5);
+            this.pointisBoxOverflow3 = new PointColor(385 - 5 + xx, 497 - 5 + yy, 5000000, 6);          //проверка оранжевой надписи
+            this.pointisBoxOverflow4 = new PointColor(385 - 5 + xx, 508 - 5 + yy, 5000000, 6);
 
             //this.arrayOfColorsIsWork1 = new uint[16] { 11051, 1721, 7644, 2764, 16777, 4278, 5138, 3693, 66, 5068, 15824, 8756, 3291, 5400, 2569, 3291 };
             //this.arrayOfColorsIsWork2 = new uint[16] { 10919, 2106, 16711, 7243, 3560, 5401, 9747, 10258, 0, 9350, 15767, 8162, 1910, 3624, 3616, 1910 };
@@ -280,23 +280,25 @@ namespace OpenGEWindows
             #region Barack
 
             this.sdvigY = 0;
-            this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                              //выбор канала в меню Alt+F2
+            this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                              //выбор канала 
             this.pointisBarack1 = new PointColor(53 - 5 + xx, 154 - 5 + yy, 2400000, 5);            //зеленый цвет в слове Barracks  
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
             this.pointisBarack3 = new PointColor(42 - 5 + xx, 61 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
             this.pointisBarack4 = new PointColor(42 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено
-            this.pointisBarack5 = new PointColor(105 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //страница создания нового персонажа
-            this.pointisBarack6 = new PointColor(106 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //
-            this.pointToBarack = new Point(943 - 5 + xx, 656 - 5 + yy);                             // 
+            //this.pointisBarack5 = new PointColor(105 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //страница создания нового персонажа
+            //this.pointisBarack6 = new PointColor(106 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //
+            this.pointisBarack5 = new PointColor(907 - 5 + xx, 658 - 5 + yy, 7661036, 0);            //страница создания нового персонажа
+            this.pointisBarack6 = new PointColor(907 - 5 + xx, 659 - 5 + yy, 7661036, 0);            //
+            this.pointToBarack = new Point(945 - 5 + xx, 660 - 5 + yy);                             // кнопка "To Barack" на странице создания перса
 
             this.pointisBarackTeamSelection1 = new PointColor(15 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //Team Selection
             this.pointisBarackTeamSelection2 = new PointColor(16 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //
-            this.pointTeamSelection1 = new Point(140 - 5 + xx, 533 - 5 + yy);                   //проверено
+            this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
-            this.pointTeamSelection3 = new Point(50 - 5 + xx, 620 - 5 + yy);                   //проверено
-            this.pointButtonLogoutFromBarack = new Point(785 - 5 + xx, 700 - 5 + yy);               //кнопка логаут в казарме
-            //this.pointChooseChannel = new Point(820 - 5 + xx, 382 - 5 + yy);                       //переход из меню Alt+Q в меню Alt+F2 (нажатие кнопки Choose a channel)
-            this.pointEnterChannel = new Point(646 - 5 + xx, 409 - 5 + yy + (botwindow.getKanal() - 2) * 15);                        //выбор канала в меню Alt+F2
+            this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено
+            this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx, 705 - 5 + yy);               //кнопка логаут в казарме
+            //this.pointChooseChannel = new Point(820 - 5 + xx, 382 - 5 + yy);                       // нажатие кнопки Choose a channel
+            this.pointEnterChannel = new Point(646 - 5 + xx, 409 - 5 + yy + (botwindow.getKanal() - 2) * 15);    //выбор канала 
             this.pointNewPlace = new Point(85 + xx, 670 + yy);
             this.pointLastPoint = new Point(210 - 5 + xx, 670 - 5 + yy);
             this.pointisBHLastPoint1 = new PointColor(101 - 30 + xx, 527 - 30 + yy, 11000000, 6);            
@@ -528,7 +530,7 @@ namespace OpenGEWindows
 
                 this.pointGateInfinityBH = new Point(410 - 5 + xx, 430 - 5 + yy);
                 //this.pointGateInfinityBH = new Point(892 - 30 + xx, 573 - 30 + yy);
-                this.pointisBH1 = new PointColor(985 - 30 + xx, 91 - 30 + yy, 10353000, 3);             // желтый ободок на миникарте (в BH миникарты нет)
+                this.pointisBH1 = new PointColor(991 - 5 + xx, 199 - 5 + yy, 10420000, 4);             // желтый ободок на миникарте (в BH миникарты нет)
                 this.pointisBH3 = new PointColor(963 - 5 + xx, 47 - 5 + yy, 6600000, 5);                // верхняя желтая часть колонны
                 this.pointisBH2 = new PointColor(1020 - 5 + xx, 216 - 5 + yy, 5744852, 0);              //
 

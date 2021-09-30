@@ -72,7 +72,7 @@ namespace States
             botwindow.Pause(1000);
             botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку 
 
-            if (server.isBarackWarningYes()) server.PressYesBarack();
+            if (server.isBarackWarningYes()) server.PressYesBarack();    //сделано
             botwindow.Pause(500);
 
             botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown

@@ -54,7 +54,7 @@ namespace OpenGEWindows
                 //colorMega = new PointColor(174 - 5 + xx, 214 - 5 + yy + (numberOfString - 1) * 27, 10000000, 7).isColor();          //буква M в слове Mega (для отлова МегаРесурсов)
                 color1 = new PointColor(154 - 5 + xx, 224 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
                 color2 = new PointColor(151 - 5 + xx, 224 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
-                color3 = new PointColor(170 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
+                color3 = new PointColor(170 - 5 + xx, 218 - 5 + yy + (numberOfString - 1) * 27, 3360337, 0).GetPixelColor();
                 colorMega = new PointColor(179 - 5 + xx, 219 - 5 + yy + (numberOfString - 1) * 27, 10000000, 7).isColor();          //буква M в слове Mega (для отлова МегаРесурсов)
             }
 
@@ -140,12 +140,10 @@ namespace OpenGEWindows
         /// проверяем, является ли товар в первой строке магазина маленькой красной бутылкой
         /// либо другими красными бутылками
         /// </summary>
-        /// <returns> true, если в первой строке маленькая красная бутылка </returns>
+        /// <returns> true, если в первой строке маленькая красная бутылка или другие аналоги</returns>
         public bool isRedBottle()
         {
-            //PointColor pointFirstString = new PointColor(147 - 5 + xx, 224 - 5 + yy, 3360337, 0);
-            //return pointFirstString.isColor();
-            uint Color = new PointColor(149 - 5 + xx, 219 - 5 + yy, 0, 0).GetPixelColor();
+            uint Color = new PointColor(154 - 5 + xx, 224 - 5 + yy, 0, 0).GetPixelColor();
             return  (Color == 5933520) ||       //500 HP     маленькая красная бутылка
                     (Color == 3947742) ||       //1500 HP
                     (Color == 2634708) ||       //2500 HP
@@ -179,24 +177,24 @@ namespace OpenGEWindows
         private void DownList()
         {
 //          if (botwindow.getIsServer())
-            if (globalParam.Samara)
-            {
-                // вариант 1. нажатие на стрелку вниз в магазине   (для самарских серверов)
-                iPoint pointArrowDown = new Point(507 - 5 + botwindow.getX(), 549 - 5 + botwindow.getY());
-                pointArrowDown.PressMouseL();
-            }
-            else
-            {
+            //if (globalParam.Samara)
+            //{
+            //    // вариант 1. нажатие на стрелку вниз в магазине   (для самарских серверов)
+            //    iPoint pointArrowDown = new Point(507 - 5 + botwindow.getX(), 549 - 5 + botwindow.getY());
+            //    pointArrowDown.PressMouseL();
+            //}
+            //else
+            //{
                 // вариант 2. колесик вниз
                 pointAddProduct.PressMouseWheelDown();
-            }
+            //}
         }
 
         /// <summary>
         /// определяет, анализируется ли нужный товар либо данный товар можно продавать
         /// </summary>
         /// <param name="color"> цвет полностью определяет товар, который поступает на анализ </param>
-        /// <returns> true, если анализируемый товар нужный и его нельзя продавать </returns>
+        /// <returns> true, если анализируемый товар нужно продавать </returns>
         public bool NeedToSellProduct(uint color, bool pointMega)
         {
             bool result = true;   //по умолчанию вещь надо продавать, поэтому true
@@ -294,7 +292,7 @@ namespace OpenGEWindows
                 case 3033453:     // Clear Rum
                 case 4474675:     // Fish Flesh
                 
-                case 656906:      // magocal orb
+                case 656906:      // magical orb
                 case 13748687:    // Ressurection Potion
                 case 15595262:    // Small Stew обед
                 case 3164547:     // Portable Greate обед
@@ -411,7 +409,11 @@ namespace OpenGEWindows
                 case 1316118:       // desapio Boots желтые
                 case 3747867:       // desapio Belt
                 case 3095646:       // desapio Earrings
-                    if ((color3 == 14978083) || (color3 == 3527902) || (color3 == 7040364)) result = false;     //смотрим цвет слова Desapio (синий или желтый цвет)            
+                    //далее смотрим точку на букве D в слове Desapio (левая верхняя точка)
+                    if ((color3 == 14978083) ||     //синий
+                        (color3 == 3527902)  ||     //желтый
+                        (color3 == 7040364))        //серый
+                        result = false;     //смотрим цвет слова Desapio (синий или желтый цвет)            
                 break;
                 case 5933520:
                     result = false; //маленькая красная бутылка
@@ -494,7 +496,7 @@ namespace OpenGEWindows
                     Pause(250);  //пауза, чтобы ГЕ успела выполнить нажатие. Можно и увеличить  
                 }
                 count++;
-                if (count > limit) break;   // защита от бесконечного цикла
+                if ((count > limit) || isRedBottle()) break;   // защита от бесконечного цикла
             }
             //DownList();  //список вниз
         }
