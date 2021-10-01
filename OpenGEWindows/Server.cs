@@ -1573,8 +1573,9 @@ namespace OpenGEWindows
 
         public bool isOpenWarpList()
         {
-            return new PointColor(485 - 5 + xx, 126 - 5 + yy, 13034463, 0).isColor()
-                && new PointColor(485 - 5 + xx, 127 - 5 + yy, 13034463, 0).isColor(); 
+            return pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
+            //return new PointColor(485 - 5 + xx, 126 - 5 + yy, 13034463, 0).isColor()
+            //    && new PointColor(485 - 5 + xx, 127 - 5 + yy, 13034463, 0).isColor(); 
         }
 
         /// <summary>
@@ -1778,7 +1779,7 @@ namespace OpenGEWindows
         {
             TopMenu(12, status);                     // Click Teleport menu
 
-            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 180 - 5 + (NumberOfLine - 1) * 15 + yy);    //    тыкаем в указанную строчку телепорта 
+            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    тыкаем в указанную строчку телепорта 
 
             pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
             Pause(500);

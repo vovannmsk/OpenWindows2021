@@ -228,8 +228,8 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsTown2 = new uint[16] { 10921, 2105, 16711, 7237, 3552, 5395, 9737, 10263, 0, 9342, 15790, 8158, 1910, 3618, 1910, 3618 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsTown1 = new uint[16] { 12566, 4079, 4539, 16382, 9342, 8224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            this.arrayOfColorsIsTown2 = new uint[16] { 12171, 2829, 2434, 16777, 3552, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.arrayOfColorsIsTown1 = new uint[16] { 12566, 4079, 4539, 16382, 9342, 8224, 10, 10, 10, 10, 10,10, 10, 10, 10, 10 };
+            this.arrayOfColorsIsTown2 = new uint[16] { 12171, 2829, 2434, 16777, 3552,   10, 10, 10, 10, 10,10, 10, 10, 10, 10, 10 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
 
 
@@ -291,8 +291,8 @@ namespace OpenGEWindows
             this.pointisBarack6 = new PointColor(907 - 5 + xx, 659 - 5 + yy, 7661036, 0);            //
             this.pointToBarack = new Point(945 - 5 + xx, 660 - 5 + yy);                             // кнопка "To Barack" на странице создания перса
 
-            this.pointisBarackTeamSelection1 = new PointColor(15 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //Team Selection
-            this.pointisBarackTeamSelection2 = new PointColor(16 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //
+            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 7600000, 5);            //Team Member
+            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 7600000, 5);            //
             this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
             this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено

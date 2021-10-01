@@ -25,21 +25,23 @@
             this.pointOldMan1 = new PointColor(907 - 5 + xx, 675 - 5 + yy, 7800000, 5);
             this.pointOldMan2 = new PointColor(907 - 5 + xx, 676 - 5 + yy, 7800000, 5);
              
-            this.pointTask1 = new PointColor(948 - 30 + xx, 403 - 30 + yy, 8300000, 5);
-            this.pointTask2 = new PointColor(948 - 30 + xx, 404 - 30 + yy, 8300000, 5);
+            this.pointTask1 = new PointColor(928 - 5 + xx, 383 - 5 + yy, 8300000, 5);
+            this.pointTask2 = new PointColor(928 - 5 + xx, 384 - 5 + yy, 8300000, 5);
 
-            this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
-            this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
+            //this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
+            //this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
+            this.pointGetTask1 = new PointColor(764 - 5 + xx, 383 - 5 + yy, 16100000, 5);
+            this.pointGetTask2 = new PointColor(764 - 5 + xx, 384 - 5 + yy, 16100000, 5);
 
             //this.pointIsOpenMap1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 8549475, 0);
             //this.pointIsOpenMap2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 8549475, 0);
-            this.pointIsOpenMap1 = new PointColor(156 - 5 + xx, 208 - 5 + yy, 7000000, 6);
-            this.pointIsOpenMap2 = new PointColor(156 - 5 + xx, 209 - 5 + yy, 7000000, 6);
+            this.pointIsOpenMap1 = new PointColor(245 - 5 + xx, 108 - 5 + yy, 8000000, 6);
+            this.pointIsOpenMap2 = new PointColor(246 - 5 + xx, 108 - 5 + yy, 8000000, 6);
 
             this.pointIsPerfume1 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);   //не готово
             this.pointIsPerfume2 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);
 
-            this.pointIsNearOldMan = new PointColor(951 - 5 + xx, 127 - 5 + yy, 3819200, 0);
+            this.pointIsNearOldMan = new PointColor(957 - 5 + xx, 133 - 5 + yy, 2303198, 0);
 
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);

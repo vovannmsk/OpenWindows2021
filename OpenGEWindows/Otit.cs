@@ -82,7 +82,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// стоим ли мы около ОлдМэна
+        /// стоим ли мы около ОлдМэна (проверяем красный ободок на миникарте)
         /// </summary>
         /// <returns>true, если стоим</returns>
         public bool isNearOldMan()

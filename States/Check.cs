@@ -1593,12 +1593,49 @@ namespace States
             //if (server.isBarackTeamSelection()) result = 17;    // если в бараках на стадии выбора группы
             if (result != 0) return result;
 
+            //            if (dialog.isDialog() && !server.isTown())
+            //если стоим в диалоге с кем-то
+            if (dialog.isDialog())
+            {
+                switch (NumberOfState)
+                {
+                    case 1:
+                    case 2:
+                        result = 8;             //диалог с Mamons
+                        break;
+                    case 3:
+                        if (!TaskCompleted)
+                            if (GotTask)
+                                result = 11;        //Oldman(Dialog) --> Mission
+                            else
+                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
+                        else
+                            result = 10;        //OldMan (получение награды)
+                        break;
+                    case 4:
+                        if (GotTask) result = 11;            //OldMan (задание взято, переходим в миссию)
+                        break;
+                    case 5:
+                        result = 7;            //OldMan (задание взято, переходим в миссию)
+                        break;
+                    default:
+                        if (!TaskCompleted)
+                            if (GotTask)
+                                result = 11;        //Oldman(Dialog) --> Mission
+                            else
+                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
+                        else
+                            result = 10;        //OldMan (получение награды)
+                        break;
+                }
+                if (result != 0) return result;
+            }
 
             // Город (Ребольдо или ЛосТолдос)
             if (server.isTown())   
             {
-                if (otit.isGetTask()) GotTask = true;
-                if (otit.isTaskDone()) TaskCompleted = true;     //01-03-2021   не проверено
+                if (otit.isGetTask()) GotTask = true;            // сделано
+                if (otit.isTaskDone()) TaskCompleted = true;     // сделано
 
                 botwindow.PressEscThreeTimes();  //чтобы убрать рекламу с экрана
 
@@ -1612,7 +1649,7 @@ namespace States
                         break;
                     case 3:             //стоим около OldMan задание не взято
                     case 4:             //стоим около OldMan задание взято
-                        if (otit.isNearOldMan())     //на всякий случай проверяем, стоим ли мы около ОлдМана
+                        if (otit.isNearOldMan())     //на всякий случай проверяем, стоим ли мы около ОлдМана   //сделано
                             result = 5;
                         else
                             result = 4;
@@ -1641,7 +1678,7 @@ namespace States
                         result = 12;        //стоим в миссии. только что зашли
                         break;
                     case 6:                 // в бою!
-                        if (!otit.isOpenMap())
+                        if (!otit.isOpenMap())   //сделано
                             if (otit.isTaskDone())
                                 result = 15;   //если карта закрыта и задание уже выполнено
                             else
@@ -1683,41 +1720,6 @@ namespace States
                 if (result != 0) return result;
             }
 
-            if (dialog.isDialog() && !server.isTown())
-            {
-                switch (NumberOfState)
-                {
-                    case 1:
-                    case 2:
-                        result = 8;             //Mamons
-                        break;
-                    case 3:
-                        if (!TaskCompleted)
-                            if (GotTask)
-                                result = 11;        //Oldman(Dialog) --> Mission
-                            else
-                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
-                        else
-                            result = 10;        //OldMan (получение награды)
-                        break;
-                    case 4:
-                        if (GotTask) result = 11;            //OldMan (задание взято, переходим в миссию)
-                        break;
-                    case 5:
-                        result = 7;            //OldMan (задание взято, переходим в миссию)
-                        break;
-                    default:
-                        if (!TaskCompleted)
-                            if (GotTask)
-                                result = 11;        //Oldman(Dialog) --> Mission
-                            else
-                                result = 9;         //OldMan (задание не выполнено, и не взято). получаем задание
-                        else
-                            result = 10;        //OldMan (получение награды)
-                        break;
-                }
-                if (result != 0) return result;
-            }
 
             if (result == 0 && server.isBarack()) result = 2;                  // если стоят в бараке 
             if (server.isKillAllHero()) result = 29;                            // если убиты все
@@ -2213,12 +2215,12 @@ namespace States
             //server.Buff(server.WhatsHero(2), 2);
             //server.Buff(server.WhatsHero(3), 3);
             //Server server = new ServerEuropa2(botwindow);
-            //Otit otit = new OtitSing(botwindow);
-            //Dialog dialog = new DialogSing(botwindow);
+            Otit otit = new OtitSing(botwindow);
+            Dialog dialog = new DialogSing(botwindow);
             Town town = new SingTownReboldo(botwindow);
             //BHDialog BHdialog = new BHDialogSing(botwindow);
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
-            Market market = new MarketSing(botwindow);
+            //Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
@@ -2239,11 +2241,13 @@ namespace States
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.isCommandMode());
-            MessageBox.Show(" " + server.isMissionLobby());
+            //MessageBox.Show(" " + server.isTown());
             //MessageBox.Show(" " + town.isOpenTownTeleport());
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
             //MessageBox.Show(" " + pet.isActivePet());
+            //MessageBox.Show(" " + otit.isTaskDone());
+            
             //botwindow.Pause(1000);
 
             //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
@@ -2265,7 +2269,7 @@ namespace States
             //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
-            //MessageBox.Show("Wild " + server.isWild());
+            MessageBox.Show(" " + server.isBarackTeamSelection());
             //MessageBox.Show("Demon " + server.isDemon());
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
@@ -2327,8 +2331,8 @@ namespace States
 
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(33 - 5 + xx, 696 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(33 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 

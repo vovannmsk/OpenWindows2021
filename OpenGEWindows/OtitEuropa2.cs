@@ -25,11 +25,13 @@
             this.pointOldMan1 = new PointColor(907 - 5 + xx, 675 - 5 + yy, 7800000, 5);
             this.pointOldMan2 = new PointColor(907 - 5 + xx, 676 - 5 + yy, 7800000, 5);
 
-            this.pointTask1 = new PointColor(948 - 30 + xx, 403 - 30 + yy, 8300000, 5);
-            this.pointTask2 = new PointColor(948 - 30 + xx, 404 - 30 + yy, 8300000, 5);
+            this.pointTask1 = new PointColor(928 - 5 + xx, 383 - 5 + yy, 8300000, 5);
+            this.pointTask2 = new PointColor(928 - 5 + xx, 384 - 5 + yy, 8300000, 5);
 
-            this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
-            this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
+            //this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
+            //this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
+            this.pointGetTask1 = new PointColor(764 - 5 + xx, 383 - 5 + yy, 16100000, 5);
+            this.pointGetTask2 = new PointColor(764 - 5 + xx, 384 - 5 + yy, 16100000, 5);
 
             //this.pointIsOpenMap1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 8549475, 0);
             //this.pointIsOpenMap2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 8549475, 0);

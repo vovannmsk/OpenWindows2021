@@ -276,8 +276,8 @@ namespace OpenGEWindows
             this.pointisBarack4 = new PointColor(42 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено
             this.pointisBarack5 = new PointColor(105 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //страница создания нового персонажа
             this.pointisBarack6 = new PointColor(106 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //
-            this.pointisBarackTeamSelection1 = new PointColor(15 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //Team Selection
-            this.pointisBarackTeamSelection2 = new PointColor(16 - 5 + xx, 60 - 5 + yy, 7900000, 5);            //
+            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 7600000, 5);            //Team Member
+            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 7600000, 5);            //
             this.pointTeamSelection1 = new Point(140 - 5 + xx, 533 - 5 + yy);                   //проверено
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
             this.pointTeamSelection3 = new Point(50 - 5 + xx, 620 - 5 + yy);                   //проверено
