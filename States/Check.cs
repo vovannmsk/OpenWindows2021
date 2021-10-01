@@ -981,6 +981,7 @@ namespace States
                         DirectionOfMovement = 1;        //необходимо для стадии 4
                         break;
                     case 3:                                                 // собираемся атаковать
+                        botwindow.CommandMode();
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
 
