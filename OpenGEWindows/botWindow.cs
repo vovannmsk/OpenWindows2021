@@ -576,7 +576,8 @@ namespace OpenGEWindows
         /// <returns> true, если командный режим включен </returns>
         public bool isCommandMode()
         {
-            return new PointColor(127 - 5 + xx, 484 - 5 + yy, 9000000, 6).isColor();
+            return new PointColor(127 - 5 + xx, 484 - 5 + yy, 9000000, 6).isColor()
+                && new PointColor(128 - 5 + xx, 484 - 5 + yy, 9000000, 6).isColor();
         }
 
         /// <summary>
@@ -619,7 +620,7 @@ namespace OpenGEWindows
             if (!isCommandMode())       // если не включен командный режим
             {
                 pointMode.PressMouse();    //нажимаем на кнопку 1 раз
-                new Point(147 - 5 + xx, 504 - 5 + yy).Move(); 
+                new Point(250 - 5 + xx, 484 - 5 + yy).Move(); 
             }
         }
 
