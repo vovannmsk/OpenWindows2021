@@ -20,7 +20,7 @@ namespace States
             this.botwindow = botwindow;
             this.serverFactory = new ServerFactory(botwindow);
             this.server = serverFactory.create();   // создали конкретный экземпляр класса server по паттерну "простая Фабрика" (Америка, Европа или Синг)
-            this.tekStateInt = 16;
+            this.tekStateInt = 316;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace States
             if (!server.isHwnd()) return new StateGT028(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
             if (server.isLogout())
             {
-                return new StateGT015(botwindow);  //коннект и далее
+                return new StateGT315(botwindow);  //коннект и далее
             }
             else
             {
