@@ -1206,7 +1206,7 @@ namespace OpenGEWindows
             bool IsServerSelected = serverSelection();          //выбираем из списка свой сервер
             if (!IsServerSelected) return false; //если не смогли выбрать сервер, то выход из метода с результатом false
 
-            WriteToLogFileBH("дошли до while");
+            WriteToLogFileBH("Функция Connect. дошли до while");
             while ((aa | (ColorBOOL)) & (counter < MAX_NUMBER_ITERATION))
             {
                 counter++;  //счетчик
@@ -1391,7 +1391,7 @@ namespace OpenGEWindows
         /// </summary>
         public bool serverSelection()
         {
-            //WriteToLogFileBH("выбираем сервер из списка серверов начало");
+            WriteToLogFileBH("выбираем сервер из списка серверов начало");
             int count = 0;
             while ((!IsServerSelection())&&(count<5))
             {
@@ -1404,7 +1404,7 @@ namespace OpenGEWindows
             else
                 return false;
 
-            //WriteToLogFileBH("выбираем сервер из списка серверов конец метода");
+            WriteToLogFileBH("выбираем сервер из списка серверов конец метода");
         }
 
         /// <summary>
@@ -4290,11 +4290,11 @@ namespace OpenGEWindows
         /// <param name="strLog"></param>
         public void WriteToLogFileBH(string strLog)
         {
-            //StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
-            //string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
+            StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
+            string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
 
-            //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
-            //writer.Close();
+            writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
+            writer.Close();
         }
 
         /// <summary>
@@ -4303,11 +4303,11 @@ namespace OpenGEWindows
         /// <param name="strLog"></param>
         public void WriteToLogFile(string strLog)
         {
-            //StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\Error.log", true);
-            //string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
+            StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\Error.log", true);
+            string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
 
-            //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
-            //writer.Close();
+            writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
+            writer.Close();
         }
         
         /// <summary>

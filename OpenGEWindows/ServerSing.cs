@@ -172,8 +172,8 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsWork2 = new uint[16] { 10919, 2106, 16711, 7243, 3560, 5401, 9747, 10258, 0, 9350, 15767, 8162, 1910, 3624, 3616, 1910 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsWork1 = new uint[16] { 12565, 4094, 4545, 16383, 9371, 8231, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            this.arrayOfColorsIsWork2 = new uint[16] { 12169, 2850, 2438, 16777, 3562,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.arrayOfColorsIsWork1 = new uint[6] { 12565, 4094, 4545, 16383, 9371, 8231};
+            this.arrayOfColorsIsWork2 = new uint[6] { 12169, 2850, 2438, 16777, 3562,    0};
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
 
             //this.pointisKillHero1 = new PointColor(80 - 5 + xx, 636 - 5 + yy, 1900000, 5);
@@ -228,8 +228,8 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsTown2 = new uint[16] { 10921, 2105, 16711, 7237, 3552, 5395, 9737, 10263, 0, 9342, 15790, 8158, 1910, 3618, 1910, 3618 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsTown1 = new uint[16] { 12566, 4079, 4539, 16382, 9342, 8224, 10, 10, 10, 10, 10,10, 10, 10, 10, 10 };
-            this.arrayOfColorsIsTown2 = new uint[16] { 12171, 2829, 2434, 16777, 3552,   10, 10, 10, 10, 10,10, 10, 10, 10, 10, 10 };
+            this.arrayOfColorsIsTown1 = new uint[6] { 12566, 4079, 4539, 16382, 9342, 8224 };
+            this.arrayOfColorsIsTown2 = new uint[6] { 12171, 2829, 2434, 16777, 3552,    0 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
 
 

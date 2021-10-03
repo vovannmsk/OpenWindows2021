@@ -735,6 +735,7 @@ namespace States
         /// </summary>
         public void problemResolutionDemMultiStage1()
         {
+            server.WriteToLogFileBH("перешли к выполнению стадии 1  HowManyCyclesToSkip " + botParam.HowManyCyclesToSkip);
             GoBarack = 0;
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
@@ -749,6 +750,8 @@ namespace States
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemMultiStage1();
+                server.WriteToLogFileBH("номер проблемы " + numberOfProblem);
+
 
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
@@ -761,9 +764,11 @@ namespace States
 
                         case 1:     //зависли в логауте
                         case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
                             numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
                             break;
                         case 4:  //зависли в БХ
+                            server.WriteToLogFileBH("зависли в БХ");
                             numberOfProblem = 18; //переходим в стартовый город через системное меню
                             break;
                     }
@@ -775,18 +780,22 @@ namespace States
                 switch (numberOfProblem)
                 {
                     case 1:
+                        server.WriteToLogFileBH("case 1");
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 2:
+                        server.WriteToLogFileBH("case 2");
                         driver.StateFromBarackToTownBH();           // barack --> town              //сделано
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     case 3:                                         // старт миссии      //ок
+                        server.WriteToLogFileBH("case 3");
                         server.MissionStart();
                         botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 4:
+                        server.WriteToLogFileBH("case 4");
                         driver.StateFromBHToGateDem();              // BH --> Gate Demonic  (бафы + патроны)
                         break;
                     case 5:
@@ -799,6 +808,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 7:                                     // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                        server.WriteToLogFileBH("начинаем обработку case 4");
                         server.MoveMouseDown();
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
@@ -878,6 +888,7 @@ namespace States
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
                             //botParam.HowManyCyclesToSkip = 1;
                             IsItAlreadyPossibleToUploadNewSteam = 1;
@@ -897,6 +908,9 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем "+ botParam.HowManyCyclesToSkip + " ходов");
             }
         }
 
@@ -953,6 +967,7 @@ namespace States
         /// </summary>
         public void problemResolutionDemMultiStage2()
         {
+            server.WriteToLogFileBH("перешли к выполнению стадии 2");
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
@@ -1138,6 +1153,7 @@ namespace States
         /// </summary>
         public void problemResolutionDemMultiStage3()
         {
+            server.WriteToLogFileBH("перешли к выполнению стадии 3");
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место

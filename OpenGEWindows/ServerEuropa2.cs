@@ -217,8 +217,8 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsTown2 = new uint[16] { 10921, 2105, 16711, 7237, 3552, 5395, 9737, 10263, 0, 9342, 15790, 8158, 1910, 3618, 1910, 3618 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsTown1 = new uint[16] { 12566, 4079, 4539, 16382, 9342, 8224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            this.arrayOfColorsIsTown2 = new uint[16] { 12171, 2829, 2434, 16777, 3552, 0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            this.arrayOfColorsIsTown1 = new uint[6] { 12566, 4079, 4539, 16382, 9342, 8224 };
+            this.arrayOfColorsIsTown2 = new uint[6] { 12171, 2829, 2434, 16777, 3552, 0 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
 
 

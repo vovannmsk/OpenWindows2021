@@ -107,16 +107,7 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            if (!server.isHwnd()) return new StateGT023(botwindow);  //последнее состояние движка, чтобы движок сразу тормознулся
-            if (server.isLogout())
-            {
-//                return new StateGT015(botwindow);  //коннект и далее
-                return new StateGT023(botwindow);                  //в конец движка
-            }
-            else
-            {
-                return this;
-            }
+            return this;
         }
 
         /// <summary>
