@@ -63,12 +63,20 @@
         {
 
             iPoint [,] route ={ 
-                                  { new Point(505 - 5 + xx, 505 - 5 + yy), new Point(462 - 5 + xx, 468 - 5 + yy), new Point(505 - 5 + xx, 474 - 5 + yy) }, 
-                                  { new Point(569 - 5 + xx, 414 - 5 + yy), new Point(511 - 5 + xx, 436 - 5 + yy), new Point(563 - 5 + xx, 444 - 5 + yy) }, 
-                                  { new Point(334 - 5 + xx, 375 - 5 + yy), new Point(287 - 5 + xx, 350 - 5 + yy), new Point(286 - 5 + xx, 400 - 5 + yy) }, 
-                                  { new Point(404 - 5 + xx, 339 - 5 + yy), new Point(362 - 5 + xx, 319 - 5 + yy), new Point(410 - 5 + xx, 289 - 5 + yy) }, 
-                                  { new Point(379 - 5 + xx, 352 - 5 + yy), new Point(306 - 5 + xx, 347 - 5 + yy), new Point(350 - 5 + xx, 312 - 5 + yy) }, 
-                                  { new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
+                                  { new Point(510 - 5 + xx, 510 - 5 + yy), new Point(474 - 5 + xx, 478 - 5 + yy), new Point(510 - 5 + xx, 479 - 5 + yy) }, 
+                                  { new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) }, 
+                                  { new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) }, 
+                                  { new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) }, 
+                                  { new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) }, 
+                                  { new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
+
+                                  //{ new Point(505 - 5 + xx, 505 - 5 + yy), new Point(462 - 5 + xx, 468 - 5 + yy), new Point(505 - 5 + xx, 474 - 5 + yy) },
+                                  //{ new Point(569 - 5 + xx, 414 - 5 + yy), new Point(511 - 5 + xx, 436 - 5 + yy), new Point(563 - 5 + xx, 444 - 5 + yy) },
+                                  //{ new Point(334 - 5 + xx, 375 - 5 + yy), new Point(287 - 5 + xx, 350 - 5 + yy), new Point(286 - 5 + xx, 400 - 5 + yy) },
+                                  //{ new Point(404 - 5 + xx, 339 - 5 + yy), new Point(362 - 5 + xx, 319 - 5 + yy), new Point(410 - 5 + xx, 289 - 5 + yy) },
+                                  //{ new Point(379 - 5 + xx, 352 - 5 + yy), new Point(306 - 5 + xx, 347 - 5 + yy), new Point(350 - 5 + xx, 312 - 5 + yy) },
+                                  //{ new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
+
                               };
 
             iPoint result = route[NumberOfRoute(), CounterRouteNode];
@@ -83,12 +91,18 @@
         public override iPoint RouteNextPointMulti(int counter)
         {
             iPoint[,] routeMulti ={
-                                  { new Point(505 - 5 + xx, 505 - 5 + yy), new Point(462 - 5 + xx, 468 - 5 + yy), new Point(505 - 5 + xx, 474 - 5 + yy) },
-                                  { new Point(569 - 5 + xx, 414 - 5 + yy), new Point(511 - 5 + xx, 436 - 5 + yy), new Point(563 - 5 + xx, 444 - 5 + yy) },
-                                  { new Point(334 - 5 + xx, 375 - 5 + yy), new Point(287 - 5 + xx, 350 - 5 + yy), new Point(286 - 5 + xx, 400 - 5 + yy) },
-                                  { new Point(404 - 5 + xx, 339 - 5 + yy), new Point(362 - 5 + xx, 319 - 5 + yy), new Point(410 - 5 + xx, 289 - 5 + yy) },
-                                  { new Point(379 - 5 + xx, 352 - 5 + yy), new Point(306 - 5 + xx, 347 - 5 + yy), new Point(350 - 5 + xx, 312 - 5 + yy) },
-                                  { new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
+                                  { new Point(510 - 5 + xx, 510 - 5 + yy), new Point(467 - 5 + xx, 473 - 5 + yy), new Point(510 - 5 + xx, 479 - 5 + yy) },
+                                  { new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) },
+                                  { new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) },
+                                  { new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) },
+                                  { new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) },
+                                  { new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
+                                  //{ new Point(505 - 5 + xx, 505 - 5 + yy), new Point(462 - 5 + xx, 468 - 5 + yy), new Point(505 - 5 + xx, 474 - 5 + yy) },
+                                  //{ new Point(569 - 5 + xx, 414 - 5 + yy), new Point(511 - 5 + xx, 436 - 5 + yy), new Point(563 - 5 + xx, 444 - 5 + yy) },
+                                  //{ new Point(334 - 5 + xx, 375 - 5 + yy), new Point(287 - 5 + xx, 350 - 5 + yy), new Point(286 - 5 + xx, 400 - 5 + yy) },
+                                  //{ new Point(404 - 5 + xx, 339 - 5 + yy), new Point(362 - 5 + xx, 319 - 5 + yy), new Point(410 - 5 + xx, 289 - 5 + yy) },
+                                  //{ new Point(379 - 5 + xx, 352 - 5 + yy), new Point(306 - 5 + xx, 347 - 5 + yy), new Point(350 - 5 + xx, 312 - 5 + yy) },
+                                  //{ new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
                               };
 
             iPoint result = routeMulti[numberOfRoute, counter];

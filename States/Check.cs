@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using OpenGEWindows;
+using System.Threading;
 using GEBot.Data;
 
 namespace States
@@ -39,6 +40,16 @@ namespace States
         private GlobalParam globalParam;
         private DriversOfState driver;
         private BotParam botParam;
+        //private System.Windows.Forms.Timer NowTimer = new System.Windows.Forms.Timer();
+        private bool SteamLoaded;
+        /// <summary>
+        /// текущее дата и время
+        /// </summary>
+        private DateTime dateNow;
+        /// <summary>
+        /// время запуска Стим для этого окна
+        /// </summary>
+        private DateTime dateSteam;
         /// <summary>
         /// номер состояния бота (место, где бот сейчас находится)
         /// </summary>
@@ -117,6 +128,9 @@ namespace States
             //botParam.HowManyCyclesToSkip = 0;
             DirectionOfMovement = 1;
             Hero = new int[4] {0,0,0,0};
+            dateNow = DateTime.Now;
+            dateSteam = DateTime.Now;
+            SteamLoaded = false;
         }
 
         ///// <summary>
@@ -737,6 +751,8 @@ namespace States
         {
             server.WriteToLogFileBH("перешли к выполнению стадии 1  HowManyCyclesToSkip " + botParam.HowManyCyclesToSkip);
             GoBarack = 0;
+            
+            
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
@@ -750,8 +766,14 @@ namespace States
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemMultiStage1();
-                server.WriteToLogFileBH("номер проблемы " + numberOfProblem);
 
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5) 
+                    numberOfProblem = 31;
+
+
+                server.WriteToLogFileBH("номер проблемы " + numberOfProblem);
 
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
@@ -866,6 +888,7 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 5-8 циклов
                             IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
@@ -887,6 +910,7 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -2265,7 +2289,7 @@ namespace States
             //MessageBox.Show(" " + pet.isSummonPet());
             //MessageBox.Show(" " + pet.isActivePet());
             //MessageBox.Show(" " + otit.isTaskDone());
-            
+
             //botwindow.Pause(1000);
 
             //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
@@ -2297,11 +2321,19 @@ namespace States
             //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
             //MessageBox.Show("Призван пет? " + pet.isSummonPet());
             //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
+            //MessageBox.Show("одиночный режим? " + botwindow.isSingleMode());
+            //MessageBox.Show(" Wild? " + server.isWild());
+            //MessageBox.Show(" Lifeless? " + server.isLifeless());
+            //MessageBox.Show(" Undead? " + server.isUndead());
+            //MessageBox.Show(" SuperAtk? " + (server.isAtk40()|| server.isAtk39() || server.isAtk38() || server.isAtk37()));
+            //MessageBox.Show(" SuperSpeed? " + (server.isAtkSpeed27() || server.isAtkSpeed28() || server.isAtkSpeed29() || server.isAtkSpeed30()) );
+            MessageBox.Show(" HP? " + server.isHP());
+            MessageBox.Show(" Def15? " + server.isDef15());
             //MessageBox.Show(" " + pet.isActivePet());
             //MessageBox.Show(" " + kMarket.isSaleIn());
             //MessageBox.Show(" " + market.isClickPurchase());
             //MessageBox.Show(" " + market.isClickSell());
-            MessageBox.Show(" " + botwindow.isCommandMode());
+            //MessageBox.Show(" " + botwindow.isCommandMode());
             //MessageBox.Show(" " + market.isRedBottle());
 
             //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
@@ -2347,10 +2379,13 @@ namespace States
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
+
+            int xxx = 5;
+            int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(127 - 5 + xx, 484 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(128 - 5 + xx, 484 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(355 - 5 + xx + xxx, 322 - 5 + yy + yyy, 0, 0);
+            PointColor point2 = new PointColor(355 - 5 + xx + xxx, 307 - 5 + yy + yyy, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 

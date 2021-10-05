@@ -59,7 +59,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            botwindow.OneMode();
+            botwindow.SingleMode();
             botwindow.Pause(500);
         }
 

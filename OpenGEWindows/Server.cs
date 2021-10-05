@@ -445,6 +445,7 @@ namespace OpenGEWindows
         protected iPointColor pointIsPlus44;
 
         protected iPoint pointAddShinyCrystall;
+        protected iPoint pointAddShinyCrystall2;
         protected iPointColor pointIsAddShinyCrystall1;
         protected iPointColor pointIsAddShinyCrystall2;
 
@@ -3551,7 +3552,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isPlus4()
         {
-            return ((pointIsPlus41.isColor() && pointIsPlus42.isColor()) || (pointIsPlus43.isColor() && pointIsPlus44.isColor()));  //либо одни две точки либо другие две
+            return (pointIsPlus41.isColor() && pointIsPlus42.isColor()) || 
+                    (pointIsPlus43.isColor() && pointIsPlus44.isColor());  //либо одни две точки либо другие две
         }
 
         /// <summary>
@@ -3560,6 +3562,7 @@ namespace OpenGEWindows
         public void AddShinyCrystall()
         {
             pointAddShinyCrystall.PressMouseL();
+            pointAddShinyCrystall2.PressMouseL();
         }
 
         /// <summary>
@@ -3568,7 +3571,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isAddShinyCrystall()
         {
-            return (pointIsAddShinyCrystall1.isColor() && pointIsAddShinyCrystall2.isColor());
+            return pointIsAddShinyCrystall1.isColor() && pointIsAddShinyCrystall2.isColor();
         }
 
         /// <summary>
@@ -3577,8 +3580,6 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isIda()
         {
-            //bool ff = pointIsIda1.isColor();
-            //bool gg = pointIsIda2.isColor();
             return (pointIsIda1.isColor() && pointIsIda2.isColor());
         }
 
@@ -3603,7 +3604,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isWeapon()
         {
-            return (pointisWeapon1.isColor() && pointisWeapon2.isColor());
+            return pointisWeapon1.isColor() && pointisWeapon2.isColor();
         }
 
         /// <summary>
@@ -3663,15 +3664,24 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isHP()
         {
-            return (pointisHP1.isColor() || pointisHP2.isColor() || pointisHP3.isColor() || pointisHP4.isColor());
+            bool result = false;
+            for (int i = 1; i <= 5; i++)
+            {
+                if ( new PointColor(355 - 5 + 5 + 5, 277 - 5 + 5 + 5 + (i - 1) * 15, 7400000, 5).isColor() )
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
 
-        /// <summary>
-        /// метод возвращает параметр, отвечающий за тип чиповки оружия
-        /// </summary>
-        /// <returns></returns>
-        public int TypeOfNintendo()
-        { return int.Parse(File.ReadAllText(globalParam.DirectoryOfMyProgram + "\\Чиповка.txt")); }
+        ///// <summary>
+        ///// метод возвращает параметр, отвечающий за тип чиповки оружия
+        ///// </summary>
+        ///// <returns></returns>
+        //public int TypeOfNintendo()
+        //{ return int.Parse(File.ReadAllText(globalParam.DirectoryOfMyProgram + "\\Чиповка.txt")); }
 
         /// <summary>
         /// проверяем, зачиповалось ли оружие на АТК + 40%
@@ -3751,12 +3761,19 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isWild()
         {
-            return (
-                    (pointisWild41.isColor() && pointisWild42.isColor()) ||
-                    (pointisWild51.isColor() && pointisWild52.isColor()) || 
-                    (pointisWild61.isColor() && pointisWild62.isColor()) ||
-                    (pointisWild71.isColor() && pointisWild72.isColor())
-                   );
+            bool result = false;
+            for (int i = 1; i <= 5; i++)
+            {
+                if (
+                    new PointColor(415 - 5 + 5 + 5, 292 - 5 + 5 + 5 + (i - 1) * 15, 7900000, 5).isColor() ||
+                    new PointColor(415 - 5 + 5 + 5, 301 - 5 + 5 + 5 + (i - 1) * 15, 7900000, 5).isColor()
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -3793,12 +3810,19 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isUndead()
         {
-            return (
-                    (pointisUndead41.isColor() && pointisUndead42.isColor()) ||
-                    (pointisUndead51.isColor() && pointisUndead52.isColor()) ||
-                    (pointisUndead61.isColor() && pointisUndead62.isColor()) ||
-                    (pointisUndead71.isColor() && pointisUndead72.isColor())
-                    );
+            bool result = false;
+            for (int i = 1; i <= 5; i++)
+            {
+                if (
+                    new PointColor(397 - 5 + 5 + 5, 293 - 5 + 5 + 5 + (i - 1) * 15, 7400000, 5).isColor() ||
+                    new PointColor(397 - 5 + 5 + 5, 294 - 5 + 5 + 5 + (i - 1) * 15, 7400000, 5).isColor()
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -3807,12 +3831,19 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isLifeless()
         {
-            return (
-                    (pointisLifeless41.isColor() && pointisLifeless42.isColor()) ||
-                    (pointisLifeless51.isColor() && pointisLifeless52.isColor()) ||
-                    (pointisLifeless61.isColor() && pointisLifeless62.isColor()) ||
-                    (pointisLifeless71.isColor() && pointisLifeless72.isColor())
-                    );
+            bool result = false;
+            for (int i = 1; i <= 5; i++)
+            {
+                if (
+                    new PointColor(398 - 5 + 5 + 5, 292 - 5 + 5 + 5 + (i - 1) * 15, 7500000, 5).isColor() ||
+                    new PointColor(398 - 5 + 5 + 5, 301 - 5 + 5 + 5 + (i - 1) * 15, 7600000, 5).isColor()
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -3836,11 +3867,11 @@ namespace OpenGEWindows
                     if ((isAtk40() || isAtk39()) && (isAtkSpeed30() || isAtkSpeed29())) result = true;
                     break;
                 case 2:
-                    if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) && (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && (isWild())) result = true;
+                    if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) && (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && isWild()) result = true;
                     //if ((isAtk40() || isAtk39()) && (isAtkSpeed30() || isAtkSpeed29())) result = true;
                     break;
                 case 3:
-                    if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) && (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && (isLifeless())) result = true;
+                    if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) && (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && isLifeless()) result = true;
                     break;
                 case 4:
                     if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) && (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && (isWild() || isHuman())) result = true;
@@ -4290,11 +4321,11 @@ namespace OpenGEWindows
         /// <param name="strLog"></param>
         public void WriteToLogFileBH(string strLog)
         {
-            StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
-            string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
+            //StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\BH.log", true);
+            //string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
 
-            writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
-            writer.Close();
+            //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
+            //writer.Close();
         }
 
         /// <summary>
@@ -4303,11 +4334,11 @@ namespace OpenGEWindows
         /// <param name="strLog"></param>
         public void WriteToLogFile(string strLog)
         {
-            StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\Error.log", true);
-            string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
+            //StreamWriter writer = new StreamWriter(globalParam.DirectoryOfMyProgram + "\\Error.log", true);
+            //string timeNow = DateTime.Now.ToString("dd MMMM yyyy | HH:mm:ss | ");
 
-            writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
-            writer.Close();
+            //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
+            //writer.Close();
         }
         
         /// <summary>

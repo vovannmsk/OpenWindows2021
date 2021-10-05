@@ -268,7 +268,7 @@ namespace OpenGEWindows
 
             #region Barack
 
-            this.sdvigY = 0;
+            this.sdvigY = 0;  //это значит, что в Ребольдо три канала
             this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                        //выбор канала в меню Alt+F2
             this.pointisBarack1 = new PointColor(53 - 5 + xx, 154 - 5 + yy, 2400000, 5);            //зеленый цвет в слове Barracks  
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
@@ -367,8 +367,11 @@ namespace OpenGEWindows
             #endregion
 
             #region заточка Ида 
-            this.pointAcriveInventory = new Point(905 - 5 + xx, 425 - 5 + yy);
-            this.pointIsActiveInventory = new PointColor(696 - 5 + xx, 146 - 5 + yy, 16000000, 6);
+            //            this.pointAcriveInventory = new Point(905 - 5 + xx, 425 - 5 + yy);
+            this.pointAcriveInventory = new Point(910 - 5 + xx, 430 - 5 + yy);
+            //this.pointIsActiveInventory = new PointColor(696 - 5 + xx, 146 - 5 + yy, 16000000, 6);
+            this.pointIsActiveInventory = new PointColor(701 - 5 + xx, 151 - 5 + yy, 16000000, 6);
+
             this.pointisMoveEquipment1 = new PointColor(493 - 5 + xx, 281 - 5 + yy, 7400000, 5);
             this.pointisMoveEquipment2 = new PointColor(493 - 5 + xx, 282 - 5 + yy, 7400000, 5);
             this.pointButtonEnhance = new Point(525 - 5 + xx, 625 - 5 + yy);
@@ -379,8 +382,8 @@ namespace OpenGEWindows
             this.pointAddShinyCrystall = new Point(472 - 5 + xx, 487 - 5 + yy);                                   //max button
             this.pointIsAddShinyCrystall1 = new PointColor(653 - 5 + xx, 316 - 5 + yy, 15000000, 5);
             this.pointIsAddShinyCrystall2 = new PointColor(654 - 5 + xx, 316 - 5 + yy, 15000000, 5);
-            this.pointIsIda1 = new PointColor(487 - 5 + xx, 143 - 5 + yy, 16700000, 5);
-            this.pointIsIda2 = new PointColor(487 - 5 + xx, 144 - 5 + yy, 16700000, 5);
+            this.pointIsIda1 = new PointColor(492 - 5 + xx, 148 - 5 + yy, 16700000, 5);
+            this.pointIsIda2 = new PointColor(492 - 5 + xx, 149 - 5 + yy, 16700000, 5);
             #endregion
 
             #region чиповка

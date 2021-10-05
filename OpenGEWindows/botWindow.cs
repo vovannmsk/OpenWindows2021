@@ -581,9 +581,21 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// включен ли одиночный режим?
+        /// </summary>
+        /// <returns> true, если одиночный режим включен </returns>
+        public bool isSingleMode()
+        {
+            return new PointColor(131 - 5 + xx, 495 - 5 + yy, 7000000, 6).isColor2()
+                && new PointColor(126 - 5 + xx, 495 - 5 + yy, 4000000, 6).isColor2();
+              //&& new PointColor(131 - 5 + xx, 496 - 5 + yy, 7300000, 5).isColor();
+        }
+
+
+        /// <summary>
         /// перевод бота в одиночный режим 
         /// </summary>
-        public void OneMode()
+        public void SingleMode()
         {
             // если включен командный режим, то надо нажать на кнопку 1 раз
             if (isCommandMode()) 
@@ -617,7 +629,7 @@ namespace OpenGEWindows
         /// </summary>
         public void CommandMode()
         {
-            if (!isCommandMode())       // если не включен командный режим
+            if (isSingleMode())       // если включен одиночный режим
             {
                 pointMode.PressMouse();    //нажимаем на кнопку 1 раз
                 new Point(250 - 5 + xx, 484 - 5 + yy).Move(); 
@@ -754,7 +766,8 @@ namespace OpenGEWindows
         /// </summary>
         public void ToMoveMouse()
         {
-            iPoint pointToMoveMouse = new Point(205 - 5 + xx, 575 - 5 + yy);    //
+            //iPoint pointToMoveMouse = new Point(205 - 5 + xx, 575 - 5 + yy);    //
+            iPoint pointToMoveMouse = new Point(210 - 5 + xx, 580 - 5 + yy);    //
             pointToMoveMouse.PressMouseR();
         }
 
@@ -790,8 +803,9 @@ namespace OpenGEWindows
         /// </summary>
         public void SelectChannel()
         {
-            iPoint pointChoiceOfChannel = new Point(125 + xx, 660 + (channel - 1) * 15 + server.sdvig() + yy);    //переход на нужный канал в казарме
-            iPoint pointButtonSelectChannel = new Point(125 + xx, 705 + yy); //   125, 705);
+            ///раскрывающийся список "ch. 3 (Good)" в казарме (треугольник)
+            iPoint pointButtonSelectChannel = new Point(137 - 5 + xx, 713 - 5 + yy);
+            iPoint pointChoiceOfChannel = new Point(87 - 5 + xx, 673 - 5 + (this.channel - 1) * 13 + server.sdvig() + yy);    //переход на указанный канал
 
             pointButtonSelectChannel.PressMouseL();
             Pause(500);
@@ -804,8 +818,12 @@ namespace OpenGEWindows
         /// </summary>
         public void SelectChannel(int channel)
         {
-            iPoint pointChoiceOfChannel = new Point(125 + xx, 660 + (channel - 1) * 15 + server.sdvig() + yy);    //переход на указанный канал
-            iPoint pointButtonSelectChannel = new Point(125 + xx, 705 + yy); //   125, 705);
+            ///раскрывающийся список "ch. 3 (Good)" в казарме (треугольник)
+            iPoint pointButtonSelectChannel = new Point(137 - 5 + xx, 713 - 5 + yy);
+
+            iPoint pointChoiceOfChannel = new Point(87 - 5 + xx, 673 - 5 + (channel - 1) * 13 + server.sdvig() + yy);    //переход на указанный канал
+//            iPoint pointChoiceOfChannel = new Point(87 - 5 + xx, 660 + (channel - 1) * 15 + server.sdvig() + yy);    //переход на указанный канал
+
             pointButtonSelectChannel.PressMouseL();
             pointChoiceOfChannel.PressMouseL();
         }

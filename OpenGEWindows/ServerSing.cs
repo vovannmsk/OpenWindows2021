@@ -31,7 +31,8 @@ namespace OpenGEWindows
             ServerParamFactory serverParamFactory = new ServerParamFactory(botwindow.getNumberWindow());
             this.serverParam = serverParamFactory.create();
             this.botParam = new BotParam(botwindow.getNumberWindow());
-
+            int xxx = 5;
+            int yyy = 5;
             #endregion
 
             #region общие 2
@@ -279,7 +280,7 @@ namespace OpenGEWindows
 
             #region Barack
 
-            this.sdvigY = 0;
+            this.sdvigY = 0;   //это значит, что в Ребольдо три канала. Если было бы два, то sdvigY = 13
             this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                              //выбор канала 
             this.pointisBarack1 = new PointColor(53 - 5 + xx, 154 - 5 + yy, 2400000, 5);            //зеленый цвет в слове Barracks  
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
@@ -381,103 +382,201 @@ namespace OpenGEWindows
             #endregion
 
             #region заточка Ида 
-            this.pointAcriveInventory = new Point(905 - 5 + xx, 425 - 5 + yy);
-            this.pointIsActiveInventory = new PointColor(696 - 5 + xx, 146 - 5 + yy, 16000000, 6);
-            this.pointisMoveEquipment1 = new PointColor(493 - 5 + xx, 281 - 5 + yy, 7400000, 5);
-            this.pointisMoveEquipment2 = new PointColor(493 - 5 + xx, 282 - 5 + yy, 7400000, 5);
-            this.pointButtonEnhance = new Point(525 - 5 + xx, 625 - 5 + yy);
-            this.pointIsPlus41 = new PointColor(469 - 5 + xx, 461 - 5 + yy, 15700000, 5);
-            this.pointIsPlus42 = new PointColor(470 - 5 + xx, 462 - 5 + yy, 16700000, 5);
-            this.pointIsPlus43 = new PointColor(469 - 5 + xx, 489 - 5 + yy, 15700000, 5);
-            this.pointIsPlus44 = new PointColor(470 - 5 + xx, 490 - 5 + yy, 16700000, 5);
-            this.pointAddShinyCrystall = new Point(472 - 5 + xx, 487 - 5 + yy);                                   //max button
-            this.pointIsAddShinyCrystall1 = new PointColor(653 - 5 + xx, 316 - 5 + yy, 15000000, 5);
-            this.pointIsAddShinyCrystall2 = new PointColor(654 - 5 + xx, 316 - 5 + yy, 15000000, 5);
-            this.pointIsIda1 = new PointColor(487 - 5 + xx, 143 - 5 + yy, 16700000, 5);
-            this.pointIsIda2 = new PointColor(487 - 5 + xx, 144 - 5 + yy, 16700000, 5);
+//            this.pointAcriveInventory = new Point(905 - 5 + xx, 425 - 5 + yy);
+            this.pointAcriveInventory = new Point(910 - 5 + xx, 430 - 5 + yy);
+            //this.pointIsActiveInventory = new PointColor(696 - 5 + xx, 146 - 5 + yy, 16000000, 6);
+            this.pointIsActiveInventory = new PointColor(701 - 5 + xx, 151 - 5 + yy, 16000000, 6);
+
+            //this.pointisMoveEquipment1 = new PointColor(493 - 5 + xx, 281 - 5 + yy, 7400000, 5);
+            //this.pointisMoveEquipment2 = new PointColor(493 - 5 + xx, 282 - 5 + yy, 7400000, 5);
+            this.pointisMoveEquipment1 = new PointColor(354 - 5 + xx, 305 - 5 + yy, 14900000, 5);
+            this.pointisMoveEquipment2 = new PointColor(355 - 5 + xx, 305 - 5 + yy, 14900000, 5);
+
+//            this.pointButtonEnhance = new Point(525 - 5 + xx, 625 - 5 + yy);
+            this.pointButtonEnhance = new Point(530 - 5 + xx, 630 - 5 + yy);
+
+            //this.pointIsPlus41 = new PointColor(469 - 5 + xx, 461 - 5 + yy, 15700000, 5);
+            //this.pointIsPlus42 = new PointColor(470 - 5 + xx, 462 - 5 + yy, 16700000, 5);
+            //this.pointIsPlus43 = new PointColor(469 - 5 + xx, 489 - 5 + yy, 15700000, 5);
+            //this.pointIsPlus44 = new PointColor(470 - 5 + xx, 490 - 5 + yy, 16700000, 5);
+            this.pointIsPlus41 = new PointColor(474 - 5 + xx, 466 - 5 + yy, 15700000, 5);
+            this.pointIsPlus42 = new PointColor(475 - 5 + xx, 467 - 5 + yy, 16700000, 5);
+            this.pointIsPlus43 = new PointColor(474 - 5 + xx, 494 - 5 + yy, 15700000, 5);
+            this.pointIsPlus44 = new PointColor(475 - 5 + xx, 495 - 5 + yy, 16700000, 5);
+
+//            this.pointAddShinyCrystall = new Point(472 - 5 + xx, 487 - 5 + yy);                                   //max button
+            this.pointAddShinyCrystall = new Point(477 - 5 + xx, 506 - 5 + yy);                                   //max button (когда точим оружие)
+            this.pointAddShinyCrystall2 = new Point(477 - 5 + xx, 478 - 5 + yy);                                  //max button (когда точим броню)
+
+            //this.pointIsAddShinyCrystall1 = new PointColor(653 - 5 + xx, 316 - 5 + yy, 15000000, 5);
+            //this.pointIsAddShinyCrystall2 = new PointColor(654 - 5 + xx, 316 - 5 + yy, 15000000, 5);
+            this.pointIsAddShinyCrystall1 = new PointColor(658 - 5 + xx, 321 - 5 + yy, 15000000, 5);
+            this.pointIsAddShinyCrystall2 = new PointColor(659 - 5 + xx, 321 - 5 + yy, 15000000, 5);
+
+            //this.pointIsIda1 = new PointColor(487 - 5 + xx, 143 - 5 + yy, 16700000, 5);
+            //this.pointIsIda2 = new PointColor(487 - 5 + xx, 144 - 5 + yy, 16700000, 5);
+            this.pointIsIda1 = new PointColor(492 - 5 + xx, 148 - 5 + yy, 16700000, 5);
+            this.pointIsIda2 = new PointColor(492 - 5 + xx, 149 - 5 + yy, 16700000, 5);
             #endregion
 
             #region чиповка
 
-            this.pointIsEnchant1 = new PointColor(513 - 5 + xx, 189 - 5 + yy, 13000000, 5);
-            this.pointIsEnchant2 = new PointColor(514 - 5 + xx, 189 - 5 + yy, 13000000, 5);
-            this.pointisWeapon1 = new PointColor(584 - 5 + xx, 365 - 5 + yy, 10700000, 5);
-            this.pointisWeapon2 = new PointColor(585 - 5 + xx, 366 - 5 + yy, 10700000, 5);
-            this.pointisArmor1 = new PointColor(586 - 5 + xx, 367 - 5 + yy, 6100000, 5);
-            this.pointisArmor2 = new PointColor(586 - 5 + xx, 373 - 5 + yy, 6100000, 5);
-            this.pointMoveLeftPanelBegin = new Point(161 - 5 + xx, 130 - 5 + yy);
-            this.pointMoveLeftPanelEnd = new Point(161 - 5 + xx, 592 - 5 + yy);
-            this.pointButtonEnchance = new Point(630 - 5 + xx, 490 - 5 + yy);
-            this.pointisDef15 = new PointColor(388 - 5 + xx, 247 - 5 + yy, 12400000, 5);  //проверено
-            this.pointisHP1 = new PointColor(355 - 5 + xx, 277 - 5 + yy, 7100000, 5);     //проверено
-            this.pointisHP2 = new PointColor(355 - 5 + xx, 292 - 5 + yy, 7100000, 5);     //проверено
-            this.pointisHP3 = new PointColor(355 - 5 + xx, 307 - 5 + yy, 7100000, 5);     //проверено
-            this.pointisHP4 = new PointColor(355 - 5 + xx, 322 - 5 + yy, 7100000, 5);     //проверено
+            //this.pointIsEnchant1 = new PointColor(513 - 5 + xx, 189 - 5 + yy, 13000000, 5);
+            //this.pointIsEnchant2 = new PointColor(514 - 5 + xx, 189 - 5 + yy, 13000000, 5);
+            //this.pointisWeapon1 = new PointColor(584 - 5 + xx, 365 - 5 + yy, 10700000, 5);
+            //this.pointisWeapon2 = new PointColor(585 - 5 + xx, 366 - 5 + yy, 10700000, 5);
+            //this.pointisArmor1 = new PointColor(586 - 5 + xx, 367 - 5 + yy, 6100000, 5);
+            //this.pointisArmor2 = new PointColor(586 - 5 + xx, 373 - 5 + yy, 6100000, 5);
+            //this.pointMoveLeftPanelBegin = new Point(161 - 5 + xx, 130 - 5 + yy);
+            //this.pointMoveLeftPanelEnd = new Point(161 - 5 + xx, 592 - 5 + yy);
+            //this.pointButtonEnchance = new Point(630 - 5 + xx, 490 - 5 + yy);
+            //this.pointisDef15 = new PointColor(388 - 5 + xx, 247 - 5 + yy, 12400000, 5);  //проверено
+            //this.pointisHP1 = new PointColor(355 - 5 + xx, 277 - 5 + yy, 7100000, 5);     //проверено
+            //this.pointisHP2 = new PointColor(355 - 5 + xx, 292 - 5 + yy, 7100000, 5);     //проверено
+            //this.pointisHP3 = new PointColor(355 - 5 + xx, 307 - 5 + yy, 7100000, 5);     //проверено
+            //this.pointisHP4 = new PointColor(355 - 5 + xx, 322 - 5 + yy, 7100000, 5);     //проверено
 
-            this.pointisAtk401 = new PointColor(373 - 5 + xx, 247 - 5 + yy, 13300000, 5);   //проверено
-            this.pointisAtk402 = new PointColor(373 - 5 + xx, 256 - 5 + yy, 13700000, 5);   //проверено
-            this.pointisSpeed30 = new PointColor(390 - 5 + xx, 269 - 5 + yy, 15500000, 5);   //проверено
+            //this.pointisAtk401 = new PointColor(373 - 5 + xx, 247 - 5 + yy, 13300000, 5);   //проверено
+            //this.pointisAtk402 = new PointColor(373 - 5 + xx, 256 - 5 + yy, 13700000, 5);   //проверено
+            //this.pointisSpeed30 = new PointColor(390 - 5 + xx, 269 - 5 + yy, 15500000, 5);   //проверено
 
-            this.pointisAtk391 = new PointColor(378 - 5 + xx, 252 - 5 + yy, 14800000, 5);  //проверено
-            this.pointisAtk392 = new PointColor(381 - 5 + xx, 252 - 5 + yy, 13300000, 5);  //проверено
-            this.pointisSpeed291 = new PointColor(394 - 5 + xx, 267 - 5 + yy, 14800000, 5);   //проверено
-            this.pointisSpeed292 = new PointColor(397 - 5 + xx, 267 - 5 + yy, 13300000, 5);   //проверено
+            //this.pointisAtk391 = new PointColor(378 - 5 + xx, 252 - 5 + yy, 14800000, 5);  //проверено
+            //this.pointisAtk392 = new PointColor(381 - 5 + xx, 252 - 5 + yy, 13300000, 5);  //проверено
+            //this.pointisSpeed291 = new PointColor(394 - 5 + xx, 267 - 5 + yy, 14800000, 5);   //проверено
+            //this.pointisSpeed292 = new PointColor(397 - 5 + xx, 267 - 5 + yy, 13300000, 5);   //проверено
 
-            this.pointisAtk381 = new PointColor(378 - 5 + xx, 251 - 5 + yy, 14600000, 5);   //проверено
-            this.pointisAtk382 = new PointColor(381 - 5 + xx, 251 - 5 + yy, 13500000, 5);   //проверено
-            this.pointisSpeed281 = new PointColor(394 - 5 + xx, 266 - 5 + yy, 14600000, 5);  //проверено
-            this.pointisSpeed282 = new PointColor(397 - 5 + xx, 266 - 5 + yy, 13500000, 5);  //проверено
+            //this.pointisAtk381 = new PointColor(378 - 5 + xx, 251 - 5 + yy, 14600000, 5);   //проверено
+            //this.pointisAtk382 = new PointColor(381 - 5 + xx, 251 - 5 + yy, 13500000, 5);   //проверено
+            //this.pointisSpeed281 = new PointColor(394 - 5 + xx, 266 - 5 + yy, 14600000, 5);  //проверено
+            //this.pointisSpeed282 = new PointColor(397 - 5 + xx, 266 - 5 + yy, 13500000, 5);  //проверено
 
-            this.pointisAtk371 = new PointColor(377 - 5 + xx, 247 - 5 + yy, 14300000, 5);    //проверено
-            this.pointisAtk372 = new PointColor(382 - 5 + xx, 247 - 5 + yy, 14600000, 5);    //проверено
-            this.pointisSpeed271 = new PointColor(393 - 5 + xx, 262 - 5 + yy, 14300000, 5);  //проверено
-            this.pointisSpeed272 = new PointColor(398 - 5 + xx, 262 - 5 + yy, 14600000, 5);  //проверено
+            //this.pointisAtk371 = new PointColor(377 - 5 + xx, 247 - 5 + yy, 14300000, 5);    //проверено
+            //this.pointisAtk372 = new PointColor(382 - 5 + xx, 247 - 5 + yy, 14600000, 5);    //проверено
+            //this.pointisSpeed271 = new PointColor(393 - 5 + xx, 262 - 5 + yy, 14300000, 5);  //проверено
+            //this.pointisSpeed272 = new PointColor(398 - 5 + xx, 262 - 5 + yy, 14600000, 5);  //проверено
 
-            this.pointisWild41 = new PointColor(415 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild42 = new PointColor(415 - 5 + xx, 301 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild51 = new PointColor(415 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild52 = new PointColor(415 - 5 + xx, 316 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild61 = new PointColor(415 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild62 = new PointColor(415 - 5 + xx, 331 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild71 = new PointColor(415 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisWild72 = new PointColor(415 - 5 + xx, 346 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild41 = new PointColor(415 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild42 = new PointColor(415 - 5 + xx, 301 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild51 = new PointColor(415 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild52 = new PointColor(415 - 5 + xx, 316 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild61 = new PointColor(415 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild62 = new PointColor(415 - 5 + xx, 331 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild71 = new PointColor(415 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisWild72 = new PointColor(415 - 5 + xx, 346 - 5 + yy, 7900000, 5);   //проверено
 
-            this.pointisHuman41 = new PointColor(403 - 5 + xx, 292 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisHuman42 = new PointColor(403 - 5 + xx, 301 - 5 + yy, 7700000, 5);   //проверено
-            this.pointisHuman51 = new PointColor(403 - 5 + xx, 307 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisHuman52 = new PointColor(403 - 5 + xx, 316 - 5 + yy, 7700000, 5);   //проверено
-            this.pointisHuman61 = new PointColor(403 - 5 + xx, 322 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisHuman62 = new PointColor(403 - 5 + xx, 331 - 5 + yy, 7700000, 5);   //проверено
-            this.pointisHuman71 = new PointColor(403 - 5 + xx, 337 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisHuman72 = new PointColor(403 - 5 + xx, 346 - 5 + yy, 7700000, 5);   //проверено
+            //this.pointisHuman41 = new PointColor(403 - 5 + xx, 292 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisHuman42 = new PointColor(403 - 5 + xx, 301 - 5 + yy, 7700000, 5);   //проверено
+            //this.pointisHuman51 = new PointColor(403 - 5 + xx, 307 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisHuman52 = new PointColor(403 - 5 + xx, 316 - 5 + yy, 7700000, 5);   //проверено
+            //this.pointisHuman61 = new PointColor(403 - 5 + xx, 322 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisHuman62 = new PointColor(403 - 5 + xx, 331 - 5 + yy, 7700000, 5);   //проверено
+            //this.pointisHuman71 = new PointColor(403 - 5 + xx, 337 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisHuman72 = new PointColor(403 - 5 + xx, 346 - 5 + yy, 7700000, 5);   //проверено
 
-            this.pointisDemon41 = new PointColor(398 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon42 = new PointColor(399 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon51 = new PointColor(398 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon52 = new PointColor(399 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon61 = new PointColor(398 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon62 = new PointColor(399 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon71 = new PointColor(398 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
-            this.pointisDemon72 = new PointColor(399 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon41 = new PointColor(398 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon42 = new PointColor(399 - 5 + xx, 292 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon51 = new PointColor(398 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon52 = new PointColor(399 - 5 + xx, 307 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon61 = new PointColor(398 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon62 = new PointColor(399 - 5 + xx, 322 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon71 = new PointColor(398 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
+            //this.pointisDemon72 = new PointColor(399 - 5 + xx, 337 - 5 + yy, 7900000, 5);   //проверено
 
-            this.pointisUndead41 = new PointColor(397 - 5 + xx, 293 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead42 = new PointColor(397 - 5 + xx, 294 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead51 = new PointColor(397 - 5 + xx, 308 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead52 = new PointColor(397 - 5 + xx, 309 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead61 = new PointColor(397 - 5 + xx, 323 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead62 = new PointColor(397 - 5 + xx, 324 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead71 = new PointColor(397 - 5 + xx, 338 - 5 + yy, 7400000, 5);   //проверено
-            this.pointisUndead72 = new PointColor(397 - 5 + xx, 339 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead41 = new PointColor(397 - 5 + xx, 293 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead42 = new PointColor(397 - 5 + xx, 294 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead51 = new PointColor(397 - 5 + xx, 308 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead52 = new PointColor(397 - 5 + xx, 309 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead61 = new PointColor(397 - 5 + xx, 323 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead62 = new PointColor(397 - 5 + xx, 324 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead71 = new PointColor(397 - 5 + xx, 338 - 5 + yy, 7400000, 5);   //проверено
+            //this.pointisUndead72 = new PointColor(397 - 5 + xx, 339 - 5 + yy, 7400000, 5);   //проверено
 
-            this.pointisLifeless41 = new PointColor(398 - 5 + xx, 292 - 5 + yy, 7500000, 5);   //проверено
-            this.pointisLifeless42 = new PointColor(398 - 5 + xx, 301 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisLifeless51 = new PointColor(398 - 5 + xx, 307 - 5 + yy, 7500000, 5);   //проверено
-            this.pointisLifeless52 = new PointColor(398 - 5 + xx, 316 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisLifeless61 = new PointColor(398 - 5 + xx, 322 - 5 + yy, 7500000, 5);   //проверено
-            this.pointisLifeless62 = new PointColor(398 - 5 + xx, 331 - 5 + yy, 7600000, 5);   //проверено
-            this.pointisLifeless71 = new PointColor(398 - 5 + xx, 337 - 5 + yy, 7500000, 5);   //проверено
-            this.pointisLifeless72 = new PointColor(398 - 5 + xx, 346 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisLifeless41 = new PointColor(398 - 5 + xx, 292 - 5 + yy, 7500000, 5);   //проверено
+            //this.pointisLifeless42 = new PointColor(398 - 5 + xx, 301 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisLifeless51 = new PointColor(398 - 5 + xx, 307 - 5 + yy, 7500000, 5);   //проверено
+            //this.pointisLifeless52 = new PointColor(398 - 5 + xx, 316 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisLifeless61 = new PointColor(398 - 5 + xx, 322 - 5 + yy, 7500000, 5);   //проверено
+            //this.pointisLifeless62 = new PointColor(398 - 5 + xx, 331 - 5 + yy, 7600000, 5);   //проверено
+            //this.pointisLifeless71 = new PointColor(398 - 5 + xx, 337 - 5 + yy, 7500000, 5);   //проверено
+            //this.pointisLifeless72 = new PointColor(398 - 5 + xx, 346 - 5 + yy, 7600000, 5);   //проверено
 
+
+            this.pointIsEnchant1 = new PointColor(513 - 5 + xx, 186 - 5 + yy, 8000000, 5);
+            this.pointIsEnchant2 = new PointColor(514 - 5 + xx, 186 - 5 + yy, 8000000, 5);
+            this.pointisWeapon1 = new PointColor(584 - 5 + xx+xxx, 365 - 5 + yy + yyy, 10700000, 5);
+            this.pointisWeapon2 = new PointColor(585 - 5 + xx+xxx, 366 - 5 + yy + yyy, 10700000, 5);
+            this.pointisArmor1 = new PointColor(586 - 5 + xx+xxx, 367 - 5 + yy + yyy, 6100000, 5);
+            this.pointisArmor2 = new PointColor(586 - 5 + xx+xxx, 373 - 5 + yy + yyy, 6100000, 5);
+            this.pointMoveLeftPanelBegin = new Point(161 - 5 + xx+xxx, 130 - 5 + yy + yyy);
+            this.pointMoveLeftPanelEnd = new Point(161 - 5 + xx+xxx, 592 - 5 + yy + yyy);
+            this.pointButtonEnchance = new Point(630 - 5 + xx+xxx, 490 - 5 + yy + yyy);
+            this.pointisDef15 = new PointColor(388 - 5 + xx+xxx, 247 - 5 + yy + yyy, 5200000, 5);  //проверено
+            this.pointisHP1 = new PointColor(355 - 5 + xx+xxx, 277 - 5 + yy + yyy, 7100000, 5);     //проверено
+            this.pointisHP2 = new PointColor(355 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7100000, 5);     //проверено
+            this.pointisHP3 = new PointColor(355 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7100000, 5);     //проверено
+            this.pointisHP4 = new PointColor(355 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7100000, 5);     //проверено
+
+            this.pointisAtk401 = new PointColor(373 - 5 + xx+xxx, 247 - 5 + yy + yyy, 13900000, 5);     //сделано
+            this.pointisAtk402 = new PointColor(373 - 5 + xx+xxx, 256 - 5 + yy + yyy, 13700000, 5);     //сделано
+            this.pointisAtk391 = new PointColor(378 - 5 + xx+xxx, 252 - 5 + yy + yyy, 14700000, 5);     //сделано
+            this.pointisAtk392 = new PointColor(381 - 5 + xx+xxx, 252 - 5 + yy + yyy,  9100000, 5);     //сделано
+            this.pointisAtk381 = new PointColor(378 - 5 + xx+xxx, 251 - 5 + yy + yyy, 13500000, 5);     //сделано
+            this.pointisAtk382 = new PointColor(381 - 5 + xx+xxx, 251 - 5 + yy + yyy, 13700000, 5);     //сделано
+            this.pointisAtk371 = new PointColor(377 - 5 + xx+xxx, 247 - 5 + yy + yyy, 6700000, 5);      //сделано
+            this.pointisAtk372 = new PointColor(382 - 5 + xx+xxx, 247 - 5 + yy + yyy, 14300000, 5);     //сделано
+
+            this.pointisSpeed30 = new PointColor(390 - 5 + xx + xxx, 269 - 5 + yy + yyy, 15300000, 5);  //сделано
+            this.pointisSpeed291 = new PointColor(394 - 5 + xx + xxx, 267 - 5 + yy + yyy, 14700000, 5); //сделано
+            this.pointisSpeed292 = new PointColor(397 - 5 + xx + xxx, 267 - 5 + yy + yyy,  9100000, 5); //сделано
+            this.pointisSpeed281 = new PointColor(394 - 5 + xx + xxx, 266 - 5 + yy + yyy, 13500000, 5); //сделано
+            this.pointisSpeed282 = new PointColor(397 - 5 + xx + xxx, 266 - 5 + yy + yyy, 13700000, 5); //сделано
+            this.pointisSpeed271 = new PointColor(393 - 5 + xx+xxx, 262 - 5 + yy + yyy, 6700000, 5);    //сделано
+            this.pointisSpeed272 = new PointColor(398 - 5 + xx+xxx, 262 - 5 + yy + yyy, 14300000, 5);   //сделано
+
+            this.pointisWild41 = new PointColor(415 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild42 = new PointColor(415 - 5 + xx+xxx, 301 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild51 = new PointColor(415 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild52 = new PointColor(415 - 5 + xx+xxx, 316 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild61 = new PointColor(415 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild62 = new PointColor(415 - 5 + xx+xxx, 331 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild71 = new PointColor(415 - 5 + xx+xxx, 337 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisWild72 = new PointColor(415 - 5 + xx+xxx, 346 - 5 + yy + yyy, 7900000, 5);   //проверено
+
+            this.pointisHuman41 = new PointColor(403 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisHuman42 = new PointColor(403 - 5 + xx+xxx, 301 - 5 + yy + yyy, 7700000, 5);   //проверено
+            this.pointisHuman51 = new PointColor(403 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisHuman52 = new PointColor(403 - 5 + xx+xxx, 316 - 5 + yy + yyy, 7700000, 5);   //проверено
+            this.pointisHuman61 = new PointColor(403 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisHuman62 = new PointColor(403 - 5 + xx+xxx, 331 - 5 + yy + yyy, 7700000, 5);   //проверено
+            this.pointisHuman71 = new PointColor(403 - 5 + xx+xxx, 337 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisHuman72 = new PointColor(403 - 5 + xx+xxx, 346 - 5 + yy + yyy, 7700000, 5);   //проверено
+
+            this.pointisDemon41 = new PointColor(398 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon42 = new PointColor(399 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon51 = new PointColor(398 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon52 = new PointColor(399 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon61 = new PointColor(398 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon62 = new PointColor(399 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon71 = new PointColor(398 - 5 + xx+xxx, 337 - 5 + yy + yyy, 7900000, 5);   //проверено
+            this.pointisDemon72 = new PointColor(399 - 5 + xx+xxx, 337 - 5 + yy + yyy, 7900000, 5);   //проверено
+
+            this.pointisUndead41 = new PointColor(397 - 5 + xx+xxx, 293 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead42 = new PointColor(397 - 5 + xx+xxx, 294 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead51 = new PointColor(397 - 5 + xx+xxx, 308 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead52 = new PointColor(397 - 5 + xx+xxx, 309 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead61 = new PointColor(397 - 5 + xx+xxx, 323 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead62 = new PointColor(397 - 5 + xx+xxx, 324 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead71 = new PointColor(397 - 5 + xx+xxx, 338 - 5 + yy + yyy, 7400000, 5);   //проверено
+            this.pointisUndead72 = new PointColor(397 - 5 + xx+xxx, 339 - 5 + yy + yyy, 7400000, 5);   //проверено
+
+            this.pointisLifeless41 = new PointColor(398 - 5 + xx+xxx, 292 - 5 + yy + yyy, 7500000, 5);   //проверено
+            this.pointisLifeless42 = new PointColor(398 - 5 + xx+xxx, 301 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisLifeless51 = new PointColor(398 - 5 + xx+xxx, 307 - 5 + yy + yyy, 7500000, 5);   //проверено
+            this.pointisLifeless52 = new PointColor(398 - 5 + xx+xxx, 316 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisLifeless61 = new PointColor(398 - 5 + xx+xxx, 322 - 5 + yy + yyy, 7500000, 5);   //проверено
+            this.pointisLifeless62 = new PointColor(398 - 5 + xx+xxx, 331 - 5 + yy + yyy, 7600000, 5);   //проверено
+            this.pointisLifeless71 = new PointColor(398 - 5 + xx+xxx, 337 - 5 + yy + yyy, 7500000, 5);   //проверено
+            this.pointisLifeless72 = new PointColor(398 - 5 + xx+xxx, 346 - 5 + yy + yyy, 7600000, 5);   //проверено
             #endregion
 
             #region передача песо торговцу
@@ -931,8 +1030,10 @@ namespace OpenGEWindows
         {
             pointAcriveInventory.PressMouseR();
             Pause(500);
-            iPoint pointEquipmentBegin = new Point(701 - 5 + xx + (numberOfEquipment - 1) * 39, 183 - 5 + yy);
-            iPoint pointEquipmentEnd = new Point(521 - 5 + xx, 208 - 5 + yy);
+            //iPoint pointEquipmentBegin = new Point(701 - 5 + xx + (numberOfEquipment - 1) * 39, 183 - 5 + yy);
+            //iPoint pointEquipmentEnd = new Point(521 - 5 + xx, 208 - 5 + yy);
+            iPoint pointEquipmentBegin = new Point(706 - 5 + xx + (numberOfEquipment - 1) * 39, 188 - 5 + yy);
+            iPoint pointEquipmentEnd = new Point(526 - 5 + xx, 211 - 5 + yy);
             pointEquipmentBegin.Drag(pointEquipmentEnd);
         }
 
