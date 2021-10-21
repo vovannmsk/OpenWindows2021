@@ -297,7 +297,7 @@ namespace OpenGEWindows
             this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
             this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено
-            this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx, 705 - 5 + yy);               //кнопка логаут в казарме
+            this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx + xxx, 705 - 5 + yy + yyy);               //кнопка логаут в казарме
             //this.pointChooseChannel = new Point(820 - 5 + xx, 382 - 5 + yy);                       // нажатие кнопки Choose a channel
             this.pointEnterChannel = new Point(646 - 5 + xx, 409 - 5 + yy + (botwindow.getKanal() - 2) * 15);    //выбор канала 
             this.pointNewPlace = new Point(85 + xx, 670 + yy);
@@ -310,14 +310,17 @@ namespace OpenGEWindows
 
             #region  новые боты
 
+           
 
             this.pointNewName = new Point(490 - 5 + xx, 280 - 5 + yy);                             //строчка, куда надо вводить имя семьи
             this.pointButtonCreateNewName = new Point(465 - 5 + xx, 510 - 5 + yy);                 //кнопка Create для создания новой семьи
-            this.pointCreateHeroes = new Point(800 - 5 + xx, 655 - 5 + yy);                        //кнопка Create для создания нового героя (перса)
-            this.pointButtonOkCreateHeroes = new Point(520 - 5 + xx, 420 - 5 + yy);                //кнопка Ok для подтверждения создания героя
-            this.pointMenuSelectTypeHeroes = new Point(810 - 5 + xx, 260 - 5 + yy);                //меню выбора типа героя в казарме
-            this.pointSelectTypeHeroes = new Point(800 - 5 + xx, 320 - 5 + yy);                    //выбор мушкетера в меню типо героев в казарме
-            this.pointNameOfHeroes = new Point(800 - 5 + xx, 180 - 5 + yy);                        //нажимаем на строчку, где вводится имя героя (перса)
+
+            this.pointCreateHeroes = new Point(800 - 5 + xx + xxx, 655 - 5 + yy + yyy);                        //кнопка Create для создания нового героя (перса)
+            this.pointButtonOkCreateHeroes = new Point(520 - 5 + xx + xxx, 420 - 5 + yy + yyy);                //кнопка Ok для подтверждения создания героя
+            this.pointMenuSelectTypeHeroes = new Point(810 - 5 + xx + xxx, 260 - 5 + yy + yyy);                //меню выбора типа героя в казарме
+            this.pointSelectTypeHeroes = new Point(800 - 5 + xx + xxx, 320 - 5 + yy + yyy);                    //выбор мушкетера в меню типо героев в казарме
+            this.pointNameOfHeroes = new Point(800 - 5 + xx + xxx, 180 - 5 + yy + yyy);                        //нажимаем на строчку, где вводится имя героя (перса)
+
             this.pointButtonCreateChar = new Point(450 - 5 + xx, 700 - 5 + yy);                    //нажимаем на зеленую кнопку создания нового перса
             this.pointSelectMusk = new Point(320 - 5 + xx, 250 - 5 + yy);                          //нажимаем на строчку, где вводится имя героя (перса)
             this.pointUnselectMedik = new Point(450 - 5 + xx, 250 - 5 + yy);                       //нажимаем на медика и выкидываем из команды

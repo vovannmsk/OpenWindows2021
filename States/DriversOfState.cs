@@ -399,7 +399,7 @@ namespace States
         }
 
         /// <summary>
-        /// увеличение казармы с 4 до 46 мест
+        /// увеличение казармы с 4 до 46 мест (стоим в диалоге с Доминго в Ребольдо)
         /// </summary>
         public void StateBarackPlus()
         {
@@ -599,6 +599,7 @@ namespace States
 
 
 
+             
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 

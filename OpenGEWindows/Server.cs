@@ -1405,7 +1405,7 @@ namespace OpenGEWindows
             else
                 return false;
 
-            WriteToLogFileBH("выбираем сервер из списка серверов конец метода");
+            //WriteToLogFileBH("выбираем сервер из списка серверов конец метода");
         }
 
         /// <summary>
@@ -3337,15 +3337,15 @@ namespace OpenGEWindows
         /// <returns>true, если казарма переполнена</returns>
         public bool isBarackFull()
         {
-            return new PointColor(522 - 5 + xx, 427 - 5 + yy, 7727344, 0).isColor() 
-                && new PointColor(522 - 5 + xx, 428 - 5 + yy, 7727344, 0).isColor();
+            return new PointColor(522 - 5 + xx + 5, 427 - 5 + yy + 5, 7727344, 0).isColor() 
+                && new PointColor(522 - 5 + xx + 5, 428 - 5 + yy + 5, 7727344, 0).isColor();
         }
 
         /// <summary>
         /// создание мушкетера в казарме с заданным порядковым номером
         /// </summary>
         /// <param name="Number">номер мушкетера</param>
-        public bool CreateMuskInBarack(int Number)
+        public bool CreateMuskInBarack()
         {
             PressCreateButton();
 
@@ -3358,7 +3358,9 @@ namespace OpenGEWindows
             pointNameOfHeroes.PressMouseL();
             Pause(1500);
 
-            string NameMusk = "Musk" + Number;
+            Random rnd = new Random();
+            int number = rnd.Next(1, 10000);
+            string NameMusk = "Musk" + number;
             SendKeys.SendWait(NameMusk);
             Pause(1500);
 

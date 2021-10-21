@@ -8,7 +8,7 @@ namespace States
         private botWindow botwindow;
         private Server server;
         private int tekStateInt;
-        private bool result;
+        private bool resultCreate = false;
 
         public StateGT305()
         {
@@ -57,14 +57,13 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            for (int i = 4; i <= 34; i++)
-            //for (int i = 25; i <= 36; i++)
-            {
-                result = server.CreateMuskInBarack(i);
-                if (!result) break;
-                botwindow.Pause(2000);
-            }
-            botwindow.Pause(1000);
+            //for (int i = 4; i <= 34; i++)
+            //{
+                resultCreate = server.CreateMuskInBarack();
+            //    if (!result) break;
+            //    botwindow.Pause(2000);
+            //}
+            //botwindow.Pause(1000);
         }
 
         /// <summary>
@@ -72,6 +71,7 @@ namespace States
         /// </summary>
         public void elseRun()
         {
+            botwindow.Pause(3000);
         }
 
         /// <summary>
@@ -80,7 +80,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return true;
+            return resultCreate;
+            //return true;
         }
 
         /// <summary>

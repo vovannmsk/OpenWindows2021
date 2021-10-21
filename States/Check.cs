@@ -2283,7 +2283,7 @@ namespace States
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.isCommandMode());
-            //MessageBox.Show(" " + server.isTown());
+            MessageBox.Show("боевой режим?" + server.isBattleMode());
             //MessageBox.Show(" " + town.isOpenTownTeleport());
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
@@ -2327,8 +2327,8 @@ namespace States
             //MessageBox.Show(" Undead? " + server.isUndead());
             //MessageBox.Show(" SuperAtk? " + (server.isAtk40()|| server.isAtk39() || server.isAtk38() || server.isAtk37()));
             //MessageBox.Show(" SuperSpeed? " + (server.isAtkSpeed27() || server.isAtkSpeed28() || server.isAtkSpeed29() || server.isAtkSpeed30()) );
-            MessageBox.Show(" HP? " + server.isHP());
-            MessageBox.Show(" Def15? " + server.isDef15());
+            //MessageBox.Show(" HP? " + server.isHP());
+            //MessageBox.Show(" Def15? " + server.isDef15());
             //MessageBox.Show(" " + pet.isActivePet());
             //MessageBox.Show(" " + kMarket.isSaleIn());
             //MessageBox.Show(" " + market.isClickPurchase());
@@ -2380,12 +2380,12 @@ namespace States
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
 
-            int xxx = 5;
-            int yyy = 5;
+            //int xxx = 5;
+            //int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(355 - 5 + xx + xxx, 322 - 5 + yy + yyy, 0, 0);
-            PointColor point2 = new PointColor(355 - 5 + xx + xxx, 307 - 5 + yy + yyy, 0, 0);
+            PointColor point1 = new PointColor(522 - 5 + xx + 5, 427 - 5 + yy + 5, 0, 0);
+            PointColor point2 = new PointColor(522 - 5 + xx + 5, 428 - 5 + yy + 5, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 
@@ -2396,8 +2396,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

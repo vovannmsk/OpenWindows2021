@@ -277,7 +277,7 @@ namespace Main
 
         #endregion
 
-        #region Green button (исправление проблем)
+        #region Green button (исправление проблем для обычных ботов)
 
         /// <summary>
         /// проверка проблем у ботов и исправление
@@ -526,7 +526,7 @@ namespace Main
 
         #endregion
 
-        #region Green Button (TransferVis)
+        #region Green Button (создание мушкетеров в казарме)
 
         /// <summary>
         /// создание мушкетеров в казарме
