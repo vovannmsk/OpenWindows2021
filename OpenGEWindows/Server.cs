@@ -3344,12 +3344,13 @@ namespace OpenGEWindows
         /// <summary>
         /// создание мушкетера в казарме с заданным порядковым номером
         /// </summary>
-        /// <param name="Number">номер мушкетера</param>
+        /// <returns>true, если мушкетёр создан.  False - если казарма уже заполнена</returns>
         public bool CreateMuskInBarack()
         {
             PressCreateButton();
 
-            if (isBarackFull()) return false;
+            if (isBarackFull()) 
+                return false;
 
             pointMenuSelectTypeHeroes.PressMouse();
             Pause(1500);
@@ -5822,6 +5823,19 @@ namespace OpenGEWindows
         /// делаем главным (активным) в команде указанного героя
         /// </summary>
         /// <param name="N">номер героя</param>
+        public void messageWindowExtension()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                new Point(800 - 5 + xx, 725 - 5 + yy).PressMouseL();
+                Pause(100);
+            }
+        }
+
+        /// <summary>
+        /// делаем главным (активным) в команде указанного героя
+        /// </summary>
+        /// <param name="N">номер героя</param>
         public void ActiveHeroDem(int N)
         {
             new Point(213 + (N-1) * 250 - 5 + xx, 636 - 5 + yy).DoubleClickL();
@@ -5934,27 +5948,44 @@ namespace OpenGEWindows
 
             // проверяем букву Т в слове Treasure в пяти нижних строчках
 
+            bool result = false;
 
-            return (new PointColor(862 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(868 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(865 - 30 + xx, 694 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-                    ||
-                    (new PointColor(862 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(868 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(865 - 30 + xx, 675 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-                    ||
-                    (new PointColor(862 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(868 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(865 - 30 + xx, 656 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-                    ||
-                    (new PointColor(862 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(868 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(865 - 30 + xx, 637 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-                    ||
-                    (new PointColor(862 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(868 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(865 - 30 + xx, 618 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-                    ;
+            for (int i = 1; i <= 15; i++)
+            {
+                if (
+                    new PointColor(837 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+                    new PointColor(843 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+                    new PointColor(840 - 5 + xx, 674 - 5 + yy - (i - 1) * 19, 14900000, 5).isColor()             //нижняя средняя точка буквы Т
+                    )
+                {
+                    result = true;
+                    break;
+                }
+
+            }
+
+            return result;
+
+            //return (new PointColor(862 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+            //        new PointColor(868 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+            //        new PointColor(865 - 30 + xx, 694 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
+            //        ||
+            //        (new PointColor(862 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+            //        new PointColor(868 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+            //        new PointColor(865 - 30 + xx, 675 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
+            //        ||
+            //        (new PointColor(862 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+            //        new PointColor(868 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+            //        new PointColor(865 - 30 + xx, 656 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
+            //        ||
+            //        (new PointColor(862 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+            //        new PointColor(868 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+            //        new PointColor(865 - 30 + xx, 637 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
+            //        ||
+            //        (new PointColor(862 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
+            //        new PointColor(868 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
+            //        new PointColor(865 - 30 + xx, 618 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
+            //        ;
         }
 
         /// <summary>

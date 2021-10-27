@@ -663,8 +663,9 @@ namespace OpenGEWindows
 
             if (globalParam.Windows10)
             {
-                server.GoToEnd();
-                Pause(10000);  
+                //server.GoToEnd();
+                //Pause(10000);  
+                server.Logout();
             }
             else
             {
@@ -694,8 +695,9 @@ namespace OpenGEWindows
 
             if (globalParam.Windows10)
             {
-                server.GoToEnd();
-                Pause(10000);  
+                //server.GoToEnd();
+                //Pause(10000);
+                server.Logout();
             }
             else
             {

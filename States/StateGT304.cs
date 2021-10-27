@@ -57,8 +57,8 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //server.GotoBarack();
-            server.Connect();
-            botwindow.Pause(10000);
+            server.QuickConnect();
+            botwindow.Pause(2000);
         }
 
         /// <summary>
@@ -92,7 +92,8 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT307(botwindow);  // идем вконец цикла, так как не находимся в диалоге
+            //return new StateGT307(botwindow);  // идем вконец цикла, так как не находимся в диалоге
+            return this;
         }
 
         /// <summary>

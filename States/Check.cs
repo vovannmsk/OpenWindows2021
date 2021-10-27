@@ -713,19 +713,23 @@ namespace States
             if (server.isWaitingRoom()) return 3;
 
             //город или БХ
-            if (server.isTown() && 
-                !server.isBattleMode() && 
-                !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            if (server.isTown())
             {
-                if (server.isBH())     //в БХ     //проверка сделана
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                if (
+                !server.isBattleMode() &&
+                !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
                 {
-                    //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
-                    //else
-                    return 4;   // стоим в правильном месте (около ворот Demonic)
-                }
-                else   // в городе, но не в БХ
-                {
-                    return 6;
+                    if (server.isBH())     //в БХ     //проверка сделана
+                    {
+                        //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+                        //else
+                        return 4;   // стоим в правильном месте (около ворот Demonic)
+                    }
+                    else   // в городе, но не в БХ
+                    {
+                        return 6;
+                    }
                 }
             }
 
@@ -838,6 +842,8 @@ namespace States
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
+
+                        server.messageWindowExtension();
 
                         driver.StateActivePetDem();                 
                         server.MaxHeight(7);                      
@@ -1020,7 +1026,7 @@ namespace States
                         DirectionOfMovement = 1;        //необходимо для стадии 4
                         break;
                     case 3:                                                 // собираемся атаковать
-                        botwindow.CommandMode();
+                        //botwindow.CommandMode();
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
 
@@ -1248,7 +1254,6 @@ namespace States
         }
 
         #endregion =======================================================================================================
-
 
         #region  =================================== Demonic Multi Stage 4 ==============================================
 
@@ -2283,7 +2288,7 @@ namespace States
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
             //MessageBox.Show(" " + botwindow.isCommandMode());
-            MessageBox.Show("боевой режим?" + server.isBattleMode());
+            //MessageBox.Show("боевой режим?" + server.isBattleMode());
             //MessageBox.Show(" " + town.isOpenTownTeleport());
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
@@ -2315,6 +2320,7 @@ namespace States
             //MessageBox.Show("Demon " + server.isDemon());
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
+            MessageBox.Show("isTown? " + server.isTown());
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());

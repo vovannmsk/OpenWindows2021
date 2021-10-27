@@ -92,7 +92,8 @@ namespace States
                     (getTekStateInt() != 232) &&
                     (getTekStateInt() != 236) &&
                     (getTekStateInt() != 239) &&
-                    (getTekStateInt() != 301))
+                    (getTekStateInt() != 301) &&
+                    (getTekStateInt() != 305))
                     //(на состоянии 72 и 73 не делать ничего (там долгая чиповка и бьем отит и кукурузу)) 
                     // состояние 92 - алхимия 
                     // 224 - применяем карточки опыта

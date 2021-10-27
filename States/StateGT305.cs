@@ -8,7 +8,7 @@ namespace States
         private botWindow botwindow;
         private Server server;
         private int tekStateInt;
-        private bool resultCreate = false;
+        private bool resultCreate = true;
 
         public StateGT305()
         {
@@ -80,7 +80,7 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return resultCreate;
+            return !resultCreate;
             //return true;
         }
 
