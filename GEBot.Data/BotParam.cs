@@ -67,7 +67,13 @@ namespace GEBot.Data
         /// </summary>
         public string Password { get => PasswordFromFile(); }
         public string[] Passwords { get => passwords; }
+        /// <summary>
+        /// смещение окна относительно левого верхнего угла
+        /// </summary>
         public int X { get => x; }
+        /// <summary>
+        /// смещение окна относительно левого верхнего угла
+        /// </summary>
         public int Y { get => y; }
         /// <summary>
         /// текущий сервер: синг, америка или европа

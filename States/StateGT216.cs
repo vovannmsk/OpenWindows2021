@@ -77,18 +77,6 @@ namespace States
 
             botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
 
-            //botwindow.Pause(2000);
-            //int i = 0;
-            //while (i < 50)      // ожидание загрузки города, проверка по двум стойкам
-            //{ 
-            //    botwindow.Pause(500); 
-            //    i++;
-            //    if (server.isTown())  break;    // проверяем успешный переход в город, проверка по ружью и дробовику
-            //}
-            //botwindow.Pause(7000);       //поставил по Колиной просьбе
-
-            //botwindow.PressEscThreeTimes();
-            //botwindow.Pause(1000);
         }
 
         /// <summary>

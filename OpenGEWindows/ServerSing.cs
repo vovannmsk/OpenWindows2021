@@ -302,8 +302,8 @@ namespace OpenGEWindows
             this.pointEnterChannel = new Point(646 - 5 + xx, 409 - 5 + yy + (botwindow.getKanal() - 2) * 15);    //выбор канала 
             this.pointNewPlace = new Point(85 + xx, 670 + yy);
             this.pointLastPoint = new Point(210 - 5 + xx, 670 - 5 + yy);
-            this.pointisBHLastPoint1 = new PointColor(101 - 30 + xx, 527 - 30 + yy, 11000000, 6);            
-            this.pointisBHLastPoint2 = new PointColor(101 - 30 + xx, 528 - 30 + yy, 11000000, 6);
+            this.pointisBHLastPoint1 = new PointColor(141 - 5 + xx, 503 - 5 + yy, 11000000, 6);
+            this.pointisBHLastPoint2 = new PointColor(141 - 5 + xx, 504 - 5 + yy, 11000000, 6);
             this.pointCreateButton = new Point(447 - 5 + xx, 700 - 5 + yy);
 
             #endregion
@@ -630,26 +630,19 @@ namespace OpenGEWindows
 
             #region BH
 
-                this.pointGateInfinityBH = new Point(410 - 5 + xx, 430 - 5 + yy);
-                //this.pointGateInfinityBH = new Point(892 - 30 + xx, 573 - 30 + yy);
-                this.pointisBH1 = new PointColor(991 - 5 + xx, 199 - 5 + yy, 10420000, 4);             // желтый ободок на миникарте (в BH миникарты нет)
-                this.pointisBH3 = new PointColor(963 - 5 + xx, 47 - 5 + yy, 6600000, 5);                // верхняя желтая часть колонны
-                this.pointisBH2 = new PointColor(1020 - 5 + xx, 216 - 5 + yy, 5744852, 0);              //
-
-            //int[] aa = new int[16] {1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 2104613};
-            //bool ff = aa.Contains(725272);
-            //int tt = Array.IndexOf(aa, 725272);
+            this.pointGateInfinityBH = new Point(410 - 5 + xx + xxx, 430 - 5 + yy + yyy);                       //тыкаем в ворота Инфинити
+            //this.pointGateInfinityBH = new Point(892 - 30 + xx + xxx, 573 - 30 + yy + yyy);
+            this.pointisBH1 = new PointColor(991 - 5 + xx, 199 - 5 + yy, 10420000, 4);             // желтый ободок на миникарте (в BH миникарты нет)  //*
+            this.pointisBH3 = new PointColor(963 - 5 + xx + xxx, 47 - 5 + yy + yyy, 6600000, 5);                // верхняя желтая часть колонны
+            this.pointisBH2 = new PointColor(1020 - 5 + xx + xxx, 216 - 5 + yy + yyy, 5744852, 0);              //
 
             // this.arrayOfColors = new uint[19] { 0, 1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 1842730, 3955550, 1250584 };
             this.arrayOfColors = new uint[38] { 0, 1644, 725, 6123, 3088, 1715, 1452, 6608, 14190, 1319, 2302, 5275, 2830, 1577, 525, 2635, 1842, 3955, 1250, 5144, 460, 1584,7370, 7304, 2105, 6806, 1711, 15043, 1971, 15306, 2899, 1118, 1713, 5275, 921, 1447, 5074, 5663};
             //                                  0   1*    2*     3    4     5*   6*   7*      8     9     10*   11    12    13   14*   15    16*   17    18    19   20    21   22    23    24    25    26   27     28    29     30    31    32    33    34   35    36    37
-            //this.pointIsAtak1 = new PointColor(101 - 30 + xx, 541 - 30 + yy, 4000000, 6);                // проверяем, атакует ли бот босса (есть ли зеленый ободок вокруг сабли)
-            //this.pointIsAtak2 = new PointColor(101 - 30 + xx, 542 - 30 + yy, 3000000, 6);
-            //this.pointIsAtak3 = new PointColor(101 - 30 + xx, 542 - 30 + yy, 5000000, 6);
-            this.pointIsAtak1 = new PointColor(101 - 30 + xx, 541 - 30 + yy, 6000000, 6);                // проверяем, атакует ли бот босса (есть ли зеленый ободок вокруг сабли)
-            this.pointIsAtak2 = new PointColor(101 - 30 + xx, 542 - 30 + yy, 6000000, 6);
-            this.pointIsRoulette1 = new PointColor(507 - 5 + xx, 83 - 5 + yy, 15000000, 6);                
-            this.pointIsRoulette2 = new PointColor(509 - 5 + xx, 83 - 5 + yy, 15000000, 6);
+            this.pointIsAtak1 = new PointColor(101 - 30 + xx + xxx, 541 - 30 + yy + yyy, 6000000, 6);                // проверяем, атакует ли бот босса (есть ли зеленый ободок вокруг сабли)
+            this.pointIsAtak2 = new PointColor(101 - 30 + xx + xxx, 542 - 30 + yy + yyy, 6000000, 6);
+            this.pointIsRoulette1 = new PointColor(507 - 5 + xx + xxx, 83 - 5 + yy + yyy, 15000000, 6);                
+            this.pointIsRoulette2 = new PointColor(509 - 5 + xx + xxx, 83 - 5 + yy + yyy, 15000000, 6);
 
             #endregion
 

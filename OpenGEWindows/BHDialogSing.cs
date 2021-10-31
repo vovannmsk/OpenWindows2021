@@ -12,36 +12,38 @@
             this.botwindow = botwindow;
             this.xx = botwindow.getX();
             this.yy = botwindow.getY();
+            this.xxx = 5;
+            this.yyy = 5;
 
             #endregion
 
-            this.ButtonOkDialog = new Point(953 - 5 + xx, 369 - 5 + yy);                           //нажимаем на Ок в диалоге
+            this.ButtonOkDialog = new Point(953 - 5 + xx + xxx, 369 - 5 + yy + yyy);                           //нажимаем на Ок в диалоге
            
             //проверяем наличие кнопки Ок в открытом диалоге
-            this.pointsBottonGateBH1 = new PointColor(979 - 30 + xx, 390 - 30 + yy, 7700000, 5);            //Ok
-            this.pointsBottonGateBH2 = new PointColor(979 - 30 + xx, 391 - 30 + yy, 7700000, 5);            //Ok
+            this.pointsBottonGateBH1 = new PointColor(979 - 30 + xx + xxx, 390 - 30 + yy + yyy, 7700000, 5);            //Ok
+            this.pointsBottonGateBH2 = new PointColor(979 - 30 + xx + xxx, 391 - 30 + yy + yyy, 7700000, 5);            //Ok
 
             //проверяем то состояние ворот, где написано "You currently have N tries remaining" (N = 1..5)
-            this.pointsGateBH1 = new PointColor(891 - 5 + xx, 313 - 5 + yy, 4210914, 0);            //буква i в times
+            this.pointsGateBH1 = new PointColor(891 - 5 + xx + xxx, 313 - 5 + yy + yyy, 4210914, 0);            //буква i в times
 
             //проверяем то состояние ворот, где написано "You have used up your daily entry count."
-            this.pointsGateBH3 = new PointColor(860 - 5 + xx, 335 - 5 + yy, 4210914, 0);           //буква i в слове daily
+            this.pointsGateBH3 = new PointColor(860 - 5 + xx + xxx, 335 - 5 + yy + yyy, 4210914, 0);           //буква i в слове daily
 
-            pointInputBox = new Point(310 - 30 + xx, 675 - 30 + yy);                                    //нажимаем на поле ввода
-            pointInputBoxBottonOk = new Point(933 - 30 + xx, 704 - 30 + yy);                            //нажимаем на Ок в диалоге (Initialize)
+            pointInputBox = new Point(310 - 30 + xx + xxx, 675 - 30 + yy + yyy);                                    //нажимаем на поле ввода
+            pointInputBoxBottonOk = new Point(933 - 30 + xx + xxx, 704 - 30 + yy + yyy);                            //нажимаем на Ок в диалоге (Initialize)
 
             //уровень ворот меньше 10 ???
-            this.pointsIsLess11_1 = new PointColor(687 - 5 + xx, 259 - 5 + yy, 12700000, 5);               // буква Y в слове Your
+            this.pointsIsLess11_1 = new PointColor(687 - 5 + xx + xxx, 258 - 5 + yy + yyy, 13700000, 5);               // буква Y в слове Your
             //уровень ворот от 11 до 19 ???
-            this.pointsIsLevelfrom11to19_1 = new PointColor(682 - 5 + xx, 221 - 5 + yy, 12700000, 5);      // буква Y в слове Your
-            this.pointsIsLevelfrom11to19_2 = new PointColor(864 - 5 + xx, 226 - 5 + yy, 4270000, 4);       // красная цифра 1
+            this.pointsIsLevelfrom10to19_1 = new PointColor(682 - 5 + xx + xxx, 220 - 5 + yy + yyy, 13700000, 5);      // буква Y в слове Your
+            this.pointsIsLevelfrom10to19_2 = new PointColor(864 - 5 + xx + xxx, 226 - 5 + yy + yyy, 4270000, 4);       // красная цифра 1
             //уровень ворот от 20 и выше ???
-            this.pointsIsLevelAbove20_1 = new PointColor(682 - 5 + xx, 221 - 5 + yy, 12700000, 5);         // буква Y в слове Your
-            this.pointsIsLevelAbove20_2 = new PointColor(860 - 5 + xx, 233 - 5 + yy, 4670000, 4);          // красная цифра 2 
+            this.pointsIsLevelAbove20_1 = new PointColor(682 - 5 + xx + xxx, 221 - 5 + yy + yyy, 12700000, 5);         // буква Y в слове Your
+            this.pointsIsLevelAbove20_2 = new PointColor(860 - 5 + xx + xxx, 233 - 5 + yy + yyy, 4670000, 4);          // красная цифра 2 
 
             //проверяем экран, на котором надо вводить слово Initialize
-            this.pointIsInitialize1 = new PointColor(673 - 5 + xx, 613 - 5 + yy, 4671486, 0);         // буква I в слове Initialize
-            this.pointIsInitialize2 = new PointColor(673 - 5 + xx, 614 - 5 + yy, 4671486, 0);         // буква I в слове Initialize
+            this.pointIsInitialize1 = new PointColor(673 - 5 + xx + xxx, 613 - 5 + yy + yyy, 4671486, 0);         // буква I в слове Initialize
+            this.pointIsInitialize2 = new PointColor(673 - 5 + xx + xxx, 614 - 5 + yy + yyy, 4671486, 0);         // буква I в слове Initialize
         }
 
         // ===============================  Методы ==================================================
@@ -52,7 +54,7 @@
         /// <param name="number"></param>
         public override void PressStringDialog(int number)
         {
-            new Point(839 - 30 + xx, 363 - 30 + yy - (number - 1) * 19).PressMouseLL();
+            new Point(839 - 30 + xx + xxx, 363 - 30 + yy + yyy - (number - 1) * 19).PressMouseLL();
             Pause(1000);
         }
 

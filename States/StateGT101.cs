@@ -67,8 +67,8 @@ namespace States
         {
             server.WriteToLogFileBH("БХ");
 
-            if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
-            botwindow.PressEsc();
+            //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
+            //botwindow.PressEsc();
 
             botwindow.ActiveAllBuffBH();
             botwindow.PressEscThreeTimes();

@@ -1366,19 +1366,19 @@ namespace States
             }
 
             //ворота
-            if (BHdialog.isGateBH()) return 7;                    //если стоим в воротах, начальное состояние
-            if (BHdialog.isGateBH1()) return 8;                   //ворота. дневной лимит миссий еще не исчерпан
+            if (BHdialog.isGateBH()) return 7;                    //если стоим в воротах, начальное состояние            //*
+            if (BHdialog.isGateBH1()) return 8;                   //ворота. дневной лимит миссий еще не исчерпан            //*
             if (BHdialog.isGateBH3()) return 9;                   //ворота. дневной лимит миссий уже исчерпан
-            if (BHdialog.isGateLevelLessThan11()) return 10;      //ворота. уровень миссии меньше 11
-            if (BHdialog.isGateLevelFrom11to19()) return 19;      //ворота. уровень миссии от 11 до 19
+            if (BHdialog.isGateLevelLessThan11()) return 10;      //ворота. уровень миссии меньше 10                      //*
+            if (BHdialog.isGateLevelFrom10to19()) return 19;      //ворота. уровень миссии от 10 до 19                    //*
             if (BHdialog.isGateLevelAbove20()) return 25;         //ворота. уровень миссии больше 20
-            if (BHdialog.isInitialize()) return 26;               //ворота. форма, где надо вводить слово Initialize
-
+            if (BHdialog.isInitialize()) return 26;               //ворота. форма, где надо вводить слово Initialize      //*
+            
             
             //город или БХ
             if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
             {
-                if (server.isBH())     //в БХ 
+                if (server.isBH())     //в БХ   //*
                 {
                     if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
                     else
@@ -1420,35 +1420,36 @@ namespace States
                 }
                 else                                                                  //после начала атаки босса
                 {
-                    if (server.isRouletteBH())                                        //если крутится рулетка
+                    if (server.isRouletteBH())                                        //если крутится рулетка    //*
                     {
                         return 20;                                                    // подбор дропа
                     }
                     else
                     {
-                        if (!server.isAtakBH()) return 14;                            //идем в барак (а можем и в БХ)
-                                                                                        //если находимся в миссии, но уже не в начале и не атакуем босса и не крутится рулетка 
-                                                                                        //(значит бой окончен, либо заблудились и надо выходить из миссии) 
+                        //if (!server.isAtakBH()) return 14;                            //идем в барак (а можем и в БХ)
+                        if (!server.isAssaultMode()) return 14;                       //если уже не атакуем босса, то идём в барак 
+                                                                                      //если находимся в миссии, но уже не в начале и не атакуем босса и не крутится рулетка 
+                                                                                      //(значит бой окончен, либо заблудились и надо выходить из миссии) 
                     }
                 }
             }
 
             //в логауте
-            if (server.isLogout()) return 1;               // если окно в логауте
+            if (server.isLogout()) return 1;               // если окно в логауте       //*
 
             //в бараке
-            if (server.isBarack())                         //если стоят в бараке 
+            if (server.isBarack())                         //если стоят в бараке        //*
             {
-                if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ
+                if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ   //*
                 { return 16; }
                 else
-                { return 2; }
+                { return 2; }                               //если старое место не БХ, то начинаем в Ребольдо
             }
-            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы     //*
 
             //в миссии, но убиты
-            if (server.isKillAllHero()) return 29;            // если убиты все
-            if (server.isKillHero()) return 30;               // если убиты не все 
+            if (server.isKillAllHero()) return 29;            // если убиты все            //*
+            if (server.isKillHero()) return 30;               // если убиты не все          //*
 
             //если проблем не найдено
             return 0;
@@ -1465,7 +1466,8 @@ namespace States
                 {
                     //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
                     server.ReOpenWindow();
-                    Pause(500);
+                    //Pause(500);
+                    Pause(3000);
                 }
 
                 int numberOfProblem = NumberOfProblemBH();          //проверили, какие есть проблемы (на какой стадии находится бот)
@@ -1491,37 +1493,37 @@ namespace States
                 switch (numberOfProblem)
                 {
                     case 1:
-                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //*
                         botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 2:
-                        driver.StateFromBarackToTownBH();           // идем в город
+                        driver.StateFromBarackToTownBH();           // идем в город    //*
                         botParam.HowManyCyclesToSkip = 2;
                         break;
-                    case 3:
-                        //временная заплатка. вместо продажи аккаунта закрываем песочницу и переходим к следующему аккаунту
-                        botParam.StatusOfSale = 0;
-                        server.RemoveSandboxieBH();
+                    //case 3:
+                    //    //временная заплатка. вместо продажи аккаунта закрываем песочницу и переходим к следующему аккаунту
+                    //    botParam.StatusOfSale = 0;
+                    //    server.RemoveSandboxieBH();
 
-                        //проверено. работает
-                        //int result = globalParam.Infinity;
-                        //if (result >= 200) result = 52;
-                        //botParam.NumberOfInfinity = result;
-                        //globalParam.Infinity = result + 1;
-                        //server.CloseSandboxieBH();
-                        //server.MoveMouseDown();
+                    //    //проверено. работает
+                    //    //int result = globalParam.Infinity;
+                    //    //if (result >= 200) result = 52;
+                    //    //botParam.NumberOfInfinity = result;
+                    //    //globalParam.Infinity = result + 1;
+                    //    //server.CloseSandboxieBH();
+                    //    //server.MoveMouseDown();
 
 
 
-                        //driver.StateGotoTradeStep1BH();             // BH-->Town (первый этап продажи)
-                        //botParam.HowManyCyclesToSkip = 2;
-                        break;
+                    //    //driver.StateGotoTradeStep1BH();             // BH-->Town (первый этап продажи)
+                    //    //botParam.HowManyCyclesToSkip = 2;
+                    //    break;
                     case 4:
-                        driver.StateFromBHToGateBH();               // BH --> Gate
+                        driver.StateFromBHToGateBH();               // BH --> Gate   //*
                         break;
-                    case 5:
-                        driver.StateGotoTradeStep2BH();             // если стоят в городе и надо продаваться, то второй этап продажи
-                        break;
+                    //case 5:
+                    //    driver.StateGotoTradeStep2BH();             // если стоят в городе и надо продаваться, то второй этап продажи
+                    //    break;
                     case 6:
                         driver.StateFromTownToBH();                 // town --> BH
                         botParam.HowManyCyclesToSkip = 1;
@@ -1541,12 +1543,12 @@ namespace States
                     case 10:
                         driver.StateLevelLessThan11();              // диалог в воротах
                         break;
-                    case 11:
-                        driver.StateGotoTradeStep3BH();             // третий этап продажи
-                        break;
-                    case 12:
-                        driver.StateGotoTradeStep4BH();             // четвертый этап продажи
-                        break;
+                    //case 11:
+                    //    driver.StateGotoTradeStep3BH();             // третий этап продажи
+                    //    break;
+                    //case 12:
+                    //    driver.StateGotoTradeStep4BH();             // четвертый этап продажи
+                        //break;
                     case 13:
                         driver.StateFromMissionToFightBH();         // Mission--> Fight!!!
                         break;
@@ -1554,9 +1556,9 @@ namespace States
                         driver.StateFromMissionToBarackBH();        // в барак 
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 15:
-                        driver.StateGotoTradeStep5BH();             // пятый этап продажи
-                        break;
+                    //case 15:
+                    //    driver.StateGotoTradeStep5BH();             // пятый этап продажи
+                    //    break;
                     case 16:
                         server.barackLastPoint();                   // начинаем со старого места в БХ
                         botParam.HowManyCyclesToSkip = 2;
@@ -2056,8 +2058,10 @@ namespace States
                     break;
             }
         }
-        
+
         #endregion
+
+        #region общие методы
 
         /// <summary>
         /// выставляем на рынок продукт, если у нас на рынке не лучшая цена
@@ -2246,13 +2250,14 @@ namespace States
         //    return botParam.NumberOfInfinity.ToString();
         //}
 
+        #endregion
 
         /// <summary>
         /// тестовая кнопка
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 2;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -2266,7 +2271,7 @@ namespace States
             Otit otit = new OtitSing(botwindow);
             Dialog dialog = new DialogSing(botwindow);
             Town town = new SingTownReboldo(botwindow);
-            //BHDialog BHdialog = new BHDialogSing(botwindow);
+            BHDialog BHdialog = new BHDialogSing(botwindow);
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
             //Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
@@ -2322,7 +2327,7 @@ namespace States
             //MessageBox.Show("Demon " + server.isDemon());
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
-            MessageBox.Show("system menu? " + server.isOpenTopMenu(13));
+            //MessageBox.Show("system menu? " + server.isOpenTopMenu(13));
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
@@ -2343,6 +2348,15 @@ namespace States
             //MessageBox.Show(" " + market.isClickSell());
             //MessageBox.Show(" " + botwindow.isCommandMode());
             //MessageBox.Show(" " + market.isRedBottle());
+            MessageBox.Show("  " + server.isMissionBH());
+            //MessageBox.Show("BH  " + server.isBH());
+            //MessageBox.Show("11-19" + BHdialog.isGateLevelFrom10to19());
+            //MessageBox.Show("лимит не исчерпан  " + BHdialog.isGateBH1());
+            //MessageBox.Show("лимит исчерпан    " + BHdialog.isGateBH3());
+            //MessageBox.Show("до 11  " + BHdialog.isGateLevelLessThan11());
+            //MessageBox.Show("Initialize  " + BHdialog.isInitialize());
+
+            //server.isBarackLastPoint();
 
             //int[] x = { 0, 0, 130, 260, 390, -70, 60, 190, 320, 450 };
             //int[] y = { 0, 0, 0, 0, 0, 340, 340, 340, 340, 340 };
@@ -2388,12 +2402,12 @@ namespace States
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
 
-            //int xxx = 5;
-            //int yyy = 5;
+            int xxx = 5;
+            int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(141 - 5 + xx, 503 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(141 - 5 + xx, 504 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 
@@ -2404,8 +2418,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

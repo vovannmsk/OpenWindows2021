@@ -590,7 +590,9 @@ namespace OpenGEWindows
         protected iPointColor pointIsRoulette1;
         protected iPointColor pointIsRoulette2;
 
-        //        protected uint[] arrayOfColors = new uint[17] { 0, 1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 2104613 };
+        /// <summary>
+        /// массив номеров цветов. по нему определяем, в какую миссию вошли
+        /// </summary>
         protected uint[] arrayOfColors;
 
 
@@ -1181,9 +1183,12 @@ namespace OpenGEWindows
             //server.WriteToLogFile(botParam.NumberOfInfinity + " " + botParam.Logins[botParam.NumberOfInfinity] + " " + botParam.Passwords[botParam.NumberOfInfinity] + " " + botParam.Parametrs[botParam.NumberOfInfinity]);
             //server.serverSelection();          //выбираем из списка свой сервер
 
-            iPointColor point5050 = new PointColor(50 - 5 + botParam.X, 50 - 5 + botParam.Y, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
-            iPoint pointButtonOk = new Point(525 - 5 + botParam.X, 415 - 5 + botParam.Y);    // кнопка Ok. всплывающее сообщение в логауте
-            iPoint pointButtonOk2 = new Point(525 - 5 + botParam.X, 450 - 5 + botParam.Y);    // кнопка Ok. всплывающее сообщение  в логауте
+            //iPointColor point5050 = new PointColor(50 - 5 + botParam.X, 50 - 5 + botParam.Y, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
+            //iPoint pointButtonOk = new Point(525 - 5 + botParam.X, 415 - 5 + botParam.Y);    // кнопка Ok. всплывающее сообщение в логауте
+            //iPoint pointButtonOk2 = new Point(525 - 5 + botParam.X, 450 - 5 + botParam.Y);    // кнопка Ok. всплывающее сообщение  в логауте
+            iPointColor point5050 = new PointColor(50 - 5 + xx, 50 - 5 + yy, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
+            iPoint pointButtonOk = new Point(525 - 5 + xx, 415 - 5 + yy);    // кнопка Ok. всплывающее сообщение в логауте
+            iPoint pointButtonOk2 = new Point(525 - 5 + xx, 450 - 5 + yy);    // кнопка Ok. всплывающее сообщение  в логауте
 
             uint Tek_Color1;
             uint Test_Color = 0;
@@ -1414,7 +1419,7 @@ namespace OpenGEWindows
         public void QuickConnect()
         {
             //нажимаем на кнопки, которые могут появиться из-за сбоев входа в игру
-            new Point(525 - 5 + xx, 415 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
+            new Point(520 - 5 + xx, 420 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
             Pause(500);
             new Point(525 - 5 + xx, 450 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
             Pause(500);
@@ -2793,7 +2798,8 @@ namespace OpenGEWindows
         /// </summary>
         public bool isBarackLastPoint()
         {
-            pointLastPoint.PressMouseR();    // наводим мышку на кнопку Last Point в бараке
+//            pointLastPoint.PressMouseR();    // наводим мышку на кнопку Last Point в бараке
+            pointLastPoint.Move();    // наводим мышку на кнопку Last Point в бараке
             return (pointisBHLastPoint1.isColor() && pointisBHLastPoint2.isColor());
         }
 
@@ -4387,7 +4393,7 @@ namespace OpenGEWindows
 
             // в массиве arrayOfColors хранятся все цвета контрольной точки, которые могут быть миссиях. Один цвет - одна миссия
 
-            uint color = new PointColor(700 - 30 + xx, 500 - 30 + yy, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
+            uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
             color = color / 1000;
             //int tt = Array.IndexOf(arrayOfColors, color);
             
@@ -4405,7 +4411,7 @@ namespace OpenGEWindows
         {
             //botwindow.setStatusOfAtk(1);
             
-            uint color = new PointColor(700 - 30 + xx, 500 - 30 + yy, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
+            uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
             WriteToLogFileBH("неизвестная миссия!!!, цвет " + color);
 
 
@@ -4425,7 +4431,7 @@ namespace OpenGEWindows
         /// <returns>номер миссии по порядку</returns>
         public int NumberOfMissionBH()
         {
-            uint color = new PointColor(700 - 30 + xx, 500 - 30 + yy, 0, 0).GetPixelColor();                // проверяем номер цвета в контрольной точке
+            uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                // проверяем номер цвета в контрольной точке
             color = color / 1000;
             int result = Array.IndexOf(this.arrayOfColors, color); // номер миссии соответствует порядковому номеру цвета в массиве arrayOfColors
             //if (result == 0) WriteToLogFileBH("неизвестная миссия, цвет " + color);

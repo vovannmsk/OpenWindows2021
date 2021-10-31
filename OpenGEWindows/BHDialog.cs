@@ -13,13 +13,14 @@ namespace OpenGEWindows
         protected iPointColor pointsGateBH1;
         protected iPointColor pointsGateBH3;
         protected iPointColor pointsIsLess11_1;
-        protected iPointColor pointsIsLevelfrom11to19_1;
-        protected iPointColor pointsIsLevelfrom11to19_2;
+        protected iPointColor pointsIsLevelfrom10to19_1;
+        protected iPointColor pointsIsLevelfrom10to19_2;
         protected iPointColor pointsIsLevelAbove20_1;
         protected iPointColor pointsIsLevelAbove20_2;
         protected iPointColor pointIsInitialize1;
         protected iPointColor pointIsInitialize2;
-
+        protected int xxx;
+        protected int yyy;
         // ============  методы  ========================
 
         /// <summary>
@@ -44,12 +45,12 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверить, лежит ли уровень ворот в диапозоне 11-19
+        /// проверить, лежит ли уровень ворот в диапозоне 10-19
         /// </summary>
         /// <returns></returns>
-        public bool isGateLevelFrom11to19()
+        public bool isGateLevelFrom10to19()
         {
-            return pointsIsLevelfrom11to19_1.isColor() && pointsIsLevelfrom11to19_2.isColor();
+            return pointsIsLevelfrom10to19_1.isColor() && pointsIsLevelfrom10to19_2.isColor();
         }
 
         /// <summary>

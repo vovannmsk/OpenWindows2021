@@ -33,8 +33,8 @@
             //уровень ворот меньше 10 ???
             this.pointsIsLess11_1 = new PointColor(687 - 5 + xx, 259 - 5 + yy, 12700000, 5);               // буква Y в слове Your
             //уровень ворот от 11 до 19 ???
-            this.pointsIsLevelfrom11to19_1 = new PointColor(682 - 5 + xx, 221 - 5 + yy, 12700000, 5);      // буква Y в слове Your
-            this.pointsIsLevelfrom11to19_2 = new PointColor(864 - 5 + xx, 226 - 5 + yy, 4270000, 4);       // красная цифра 1
+            this.pointsIsLevelfrom10to19_1 = new PointColor(682 - 5 + xx, 221 - 5 + yy, 12700000, 5);      // буква Y в слове Your
+            this.pointsIsLevelfrom10to19_2 = new PointColor(864 - 5 + xx, 226 - 5 + yy, 4270000, 4);       // красная цифра 1
             //уровень ворот от 20 и выше ???
             this.pointsIsLevelAbove20_1 = new PointColor(682 - 5 + xx, 221 - 5 + yy, 12700000, 5);         // буква Y в слове Your
             this.pointsIsLevelAbove20_2 = new PointColor(860 - 5 + xx, 233 - 5 + yy, 4670000, 4);          // красная цифра 2 
