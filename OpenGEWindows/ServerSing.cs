@@ -25,14 +25,17 @@ namespace OpenGEWindows
             #region общие
 
             this.botwindow = botwindow;
-            this.xx = botwindow.getX();
-            this.yy = botwindow.getY();
+            //this.xx = botwindow.getX();
+            //this.yy = botwindow.getY();
             this.globalParam = new GlobalParam();
             ServerParamFactory serverParamFactory = new ServerParamFactory(botwindow.getNumberWindow());
             this.serverParam = serverParamFactory.create();
             this.botParam = new BotParam(botwindow.getNumberWindow());
-            int xxx = 5;
-            int yyy = 5;
+            this.xx = botParam.X;
+            this.yy = botParam.Y;
+            this.xxx = 5;
+            this.yyy = 5;
+
             #endregion
 
             #region общие 2

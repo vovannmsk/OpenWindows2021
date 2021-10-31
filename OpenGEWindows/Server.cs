@@ -56,6 +56,8 @@ namespace OpenGEWindows
         protected BotParam botParam;
         protected int xx;
         protected int yy;
+        protected int xxx;
+        protected int yyy;
 
         #endregion
 
