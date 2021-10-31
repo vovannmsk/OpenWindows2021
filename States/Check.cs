@@ -2022,7 +2022,8 @@ namespace States
                 case 9: server.buttonExitFromBarack();          //StateExitFromBarack();
                     break;
                 case 10: //driver.StateExitFromTown();          
-                    server.GoToEnd();
+                    server.Logout();
+                    //server.GoToEnd();
                     //server.CloseSandboxie();              //закрываем все проги в песочнице
                     break;
                 case 11: SellProduct();                     // выставление товаров на рынок
@@ -2271,6 +2272,7 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
+            //server.Logout();
             //if (server.isLogout()) server.CloseExpMerch();
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
@@ -2320,7 +2322,7 @@ namespace States
             //MessageBox.Show("Demon " + server.isDemon());
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
-            MessageBox.Show("isTown? " + server.isTown());
+            MessageBox.Show("system menu? " + server.isOpenTopMenu(13));
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
@@ -2390,8 +2392,8 @@ namespace States
             //int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(522 - 5 + xx + 5, 427 - 5 + yy + 5, 0, 0);
-            PointColor point2 = new PointColor(522 - 5 + xx + 5, 428 - 5 + yy + 5, 0, 0);
+            PointColor point1 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 
@@ -2402,8 +2404,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
 

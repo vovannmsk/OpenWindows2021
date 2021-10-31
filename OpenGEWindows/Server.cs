@@ -1563,7 +1563,7 @@ namespace OpenGEWindows
                     result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();  //РАБОТАЕТ 29-09-21
                     break;
                 case 13:
-                    result = (pointisOpenTopMenu131.isColor() && pointisOpenTopMenu132.isColor());
+                    result = (pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2());
                     break;
                 default:
                     result = true;
@@ -1647,7 +1647,7 @@ namespace OpenGEWindows
             //if (!isOpenTopMenu(13))
             TopMenu(13);
             Pause(500);
-            new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy).PressMouse();
+            new Point(685 - 5 + xx, 293 - 5 + (number - 1) * 30 + yy).PressMouse();
             if (number == 4 || number == 6 || number == 7)
                 botwindow.PressEsc(); //убираем системное меню
         }

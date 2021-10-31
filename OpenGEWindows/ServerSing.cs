@@ -121,7 +121,7 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu92 = new PointColor(597 - 5 + xx, 113 - 5 + yy, 16711422, 0);
             this.pointisOpenTopMenu121 = new PointColor(600 - 5 + xx, 116 - 5 + yy, 8000000, 6);        //Warp List
             this.pointisOpenTopMenu122 = new PointColor(610 - 5 + xx, 116 - 5 + yy, 8000000, 6);
-            this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name                                                         //проверено
+            this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name (system menu)                                                        //проверено
             this.pointisOpenTopMenu132 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 12000000, 6);
             this.pointisOpenMenuChooseChannel1 = new PointColor(500 - 5 + xx, 253 - 5 + yy, 8036794, 0);   //Menu of Choose a channel
             this.pointisOpenMenuChooseChannel2 = new PointColor(501 - 5 + xx, 253 - 5 + yy, 8036794, 0);
