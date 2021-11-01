@@ -1373,23 +1373,26 @@ namespace States
             if (BHdialog.isGateLevelFrom10to19()) return 19;      //ворота. уровень миссии от 10 до 19                    //*
             if (BHdialog.isGateLevelAbove20()) return 25;         //ворота. уровень миссии больше 20
             if (BHdialog.isInitialize()) return 26;               //ворота. форма, где надо вводить слово Initialize      //*
-            
-            
+
+
             //город или БХ
-            if (server.isTown() && !server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+            if (server.isTown())
             {
-                if (server.isBH())     //в БХ   //*
+                botwindow.PressEscThreeTimes();
+                if (!server.isBattleMode() && !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
                 {
-                    if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
-                    else
-                        return 4;   // стоим в правильном месте (около ворот Инфинити)
-                }
-                else   // в городе, но не в БХ
-                {
-                    return 6;
+                    if (server.isBH())     //в БХ   //*
+                    {
+                        if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
+                        else
+                            return 4;   // стоим в правильном месте (около ворот Инфинити)
+                    }
+                    else   // в городе, но не в БХ
+                    {
+                        return 6;
+                    }
                 }
             }
-
             ////магазин
             //if (market.isSale())
             //{
