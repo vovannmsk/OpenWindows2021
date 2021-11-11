@@ -668,21 +668,32 @@ namespace OpenGEWindows
         /// журнал с ежедневными наградами
         /// </summary>
         Item Journal = new Item(38, 209, 4390911);
-        Item Steroid2 = new Item(36, 211, 11690052);
-        Item Steroid = new Item(36, 211, 11296065);
-        Item Principle = new Item(37, 210, 3226091);
+        Item Steroid10Hours2 = new Item(36, 211, 11690052);
+        Item Steroid10Hours = new Item(36, 211, 11296065);
+        Item Principle10Hours = new Item(37, 210, 3226091);
+        Item SteroidOneHour = new Item(36, 216, 15082944);     
+        Item Steroid10HoursHP = new Item(43, 213, 16732560);
+        Item PrincipleOneHour = new Item(43, 214, 16756209);    
+        Item Principle10HoursHP = new Item(0, 0, 0);     // не сделано
         Item Triumph = new Item(35, 209, 47612);
-        Item SteroidLeftPanel = new Item(31, 241, 11690052);
-        Item PrincipleLeftPanel = new Item(32, 272, 3226091);
-        Item TriumphLeftPanel = new Item(31, 304, 47612);
+
+        Item Steroid10HoursLeftPanel = new Item(31 + 5, 241 + 5, 11690052);
+        Item Principle10HoursLeftPanel = new Item(32 + 5, 272 + 5, 3226091);
+        Item TriumphLeftPanel = new Item(31 + 5, 304 + 5, 47612);          //AR+DR
+        Item SteroidOneHourLeftPanel = new Item(38, 249, 13836720);
+        Item PrincipleOneHourLeftPanel = new Item(29, 282, 11943268);
+        Item Steroid10HoursHPLeftPanel = new Item(37, 249, 16724347);        
+        Item Principle10HoursHPLeftPanel = new Item(29, 282, 11943268);     // не сделано
         /// <summary>
         /// розовые крылья
         /// </summary>
-        Item PinkWings = new Item(36, 211, 4870905);
+        Item PinkWings = new Item(36 + 5, 211 + 5, 4870905);
         /// <summary>
         /// коробка с розовыми крыльями
         /// </summary>
-        Item PinkWingsBox = new Item(36, 211, 5144242);
+        Item PinkWingsBox = new Item(42, 213, 5522397);  //проверено
+        //Item PinkWingsBox = new Item(36, 211, 5144242);   //старое значение
+
 
         protected iPointColor pointisOpenInventory1;
         protected iPointColor pointisOpenInventory2;
@@ -2347,7 +2358,7 @@ namespace OpenGEWindows
         /// <returns>true, если закончились</returns>
         public bool isEmptyReward()
         {
-            return new PointColor(939 - 5 + xx, 177 - 5 + yy, 5848111, 0).isColor();
+            return new PointColor(939 - 5 + xx + 5, 177 - 5 + yy + 5, 5848111, 0).isColor();
         }
 
         /// <summary>
@@ -2355,7 +2366,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ReceiveTheReward()
         {
-            new Point(939 - 5 + xx, 177 - 5 + yy).PressMouseL();
+            new Point(939 - 5 + xx + 5, 177 - 5 + yy + 5).PressMouseL();
             MoveCursorOfMouse();
             Pause(1000);
         }
@@ -2367,7 +2378,7 @@ namespace OpenGEWindows
         public bool isReceiveReward()
 
         {
-            return new PointColor(408 - 5 + xx, 559 - 5 + yy, 10197915, 0).isColor();
+            return new PointColor(408 - 5 + xx + 5, 559 - 5 + yy + 5, 10197915, 0).isColor();
         }
 
         /// <summary>
@@ -2376,7 +2387,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ToBookmarkReceiveTheReward()
         {
-            new Point(406 - 5 + xx, 559 - 5 + yy).PressMouseLL();
+            new Point(406 - 5 + xx + 5, 559 - 5 + yy + 5).PressMouseLL();
             MoveCursorOfMouse();
         }
 
@@ -2388,8 +2399,8 @@ namespace OpenGEWindows
         {
             //return new PointColor(380 - 5 + xx, 182 - 5 + yy, 8000000, 6).isColor() &&
             //        new PointColor(380 - 5 + xx, 183 - 5 + yy, 8000000, 6).isColor();
-            return new PointColor(380 - 5 + xx, 182 - 5 + yy, 7000000, 6).isColor() ||
-                    new PointColor(380 - 5 + xx, 182 - 5 + yy, 8000000, 6).isColor();
+            return new PointColor(380 - 5 + xx + 5, 182 - 5 + yy + 5, 7000000, 6).isColor() ||
+                    new PointColor(380 - 5 + xx + 5, 182 - 5 + yy + 5, 8000000, 6).isColor();
         }
 
         /// <summary>
@@ -4260,13 +4271,19 @@ namespace OpenGEWindows
         /// </summary>
         public void GetDrop()
         {
-            new Point(188 - 5 + xx, 526 - 5 + yy).PressMouseL();    //боевой режим, чтобы боты остановились
-            //Pause(1000);
-            new Point(123 - 5 + xx, 526 - 5 + yy).PressMouseL();    //нажимаем на сундук (иконка подбора)
+            //старый способ
+            //new Point(188 - 5 + xx, 526 - 5 + yy).PressMouseL();    //боевой режим, чтобы боты остановились
+            //new Point(123 - 5 + xx, 526 - 5 + yy).PressMouseL();    //нажимаем на сундук (иконка подбора)
+            //Pause(200);
+            //new Point(760 - 5 + xx, 330 - 5 + yy).PressMouseL();    //нажимаем в случайную точку в стороне, чтобы начать подбор
+
+            BattleModeOn();   //боевой режим, чтобы боты остановились
+            new Point(123 - 5 + xx + 5, 526 - 5 + yy + 5).PressMouseLL();    //нажимаем на сундук (иконка подбора)
             Pause(200);
-            new Point(760 - 5 + xx, 330 - 5 + yy).PressMouseL();    //нажимаем в случайную точку в стороне, чтобы начать подбор
+            new Point(230 - 5 + xx + 5, 390 - 5 + yy + 5).PressMouseL();    //нажимаем в случайную точку в стороне, чтобы начать подбор
+
         }
-        
+
         /// <summary>
         /// проверяем, крутится ли рулетка после убийства босса
         /// </summary>
@@ -4359,12 +4376,22 @@ namespace OpenGEWindows
         /// <param name="y">коорд Y</param>
         public void FightToPoint(int x, int y, int t)
         {
-             Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl)
-             Point pointFightBH = new Point(x - 30 + xx, y - 30 + yy);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
+             //старый вариант
+             //Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
+             //Point pointFightBH = new Point(x - 30 + xx, y - 30 + yy);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
 
-             pointSabreBottonBH.PressMouseL();
-             pointFightBH.PressMouseL();
-             Pause(t * 1000);
+             //pointSabreBottonBH.PressMouseL();
+             //pointFightBH.PressMouseL();
+             //Pause(t * 1000);
+             
+            //новый вариант
+//            Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
+            Point pointFightBH = new Point(x - 30 + xx + 5, y - 30 + yy + 5);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
+
+            AssaultMode();
+            pointFightBH.PressMouseL();
+            Pause(t * 1000);
+
         }
 
         /// <summary>
@@ -5278,12 +5305,12 @@ namespace OpenGEWindows
         /// <param name="answer">если true, то ответить положительно</param>
         protected void AnswerYesOrNo(bool answer)
         {
-            if (new PointColor(559 - 5 + xx, 420 - 5 + yy, 7727344, 0).isColor() ||
-                new PointColor(559 - 5 + xx, 426 - 5 + yy, 7727344, 0).isColor())  //проверка, есть ли запрос на экране
+            if (new PointColor(559 - 5 + xx + xxx, 420 - 5 + yy + yyy, 7727344, 0).isColor() ||
+                new PointColor(559 - 5 + xx + xxx, 426 - 5 + yy + yyy, 7727344, 0).isColor())  //проверка, есть ли запрос на экране
                 if (answer)
-                    new Point(465 - 5 + xx, 422 - 5 + yy).PressMouseL();   //да
+                    new Point(465 - 5 + xx + xxx, 422 - 5 + yy + yyy).PressMouseL();   //да
                 else
-                    new Point(565 - 5 + xx, 422 - 5 + yy).PressMouseL();   //нет
+                    new Point(565 - 5 + xx + xxx, 422 - 5 + yy + yyy).PressMouseL();   //нет
         }
 
         /// <summary>
@@ -5292,8 +5319,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isOpenSpecInventory()
         {
-            return new PointColor(109 - 5 + xx, 116 - 5 + yy, 8036794, 0).isColor() &&
-                   new PointColor(118 - 5 + xx, 116 - 5 + yy, 8036794, 0).isColor();
+            return new PointColor(109 - 5 + xx + 5, 116 - 5 + yy + 5, 8036794, 0).isColor() &&
+                   new PointColor(118 - 5 + xx + 5, 116 - 5 + yy + 5, 8036794, 0).isColor();
         }
 
         /// <summary>
@@ -5453,26 +5480,26 @@ namespace OpenGEWindows
             }
 
               
-        } // НЕ проверено
+        } 
 
         /// <summary>
         /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке
         /// </summary>
         /// <param name="item">искомая вещь</param>
-        /// <param name="sdvig">величина сдвига специнвентаря по оси Х</param>
+        /// <param name="sdvig">величина сдвига специнвентаря по оси Х. Если инвентарь не сдвинут, то = 0</param>
         /// <param name="point">если вещь найдена, то возвращаем точку с координатами вещи</param>
         /// <returns>если вещь найдена, то возвращаем true</returns>
         protected bool FindItemFromSpecInventory(Item item, int sdvig, out Point point)
         {
             MoveCursorOfMouse();
-            point = new Point(item.x - 5 + xx, item.y - 5 + yy);
+            point = new Point(0, 0);   //возвращаемый объект. не убирать
             bool result = false;   //объект в кармане пока не найден
 
             for (int i = 1; i <= 7; i++)         //строки в инвентаре
             {
                 for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
                 {
-                    int xxx = item.x - 5 + xx + (j - 1) * 39 + sdvig;
+                    int xxx = item.x - 5 + xx + (j - 1) * 39 + sdvig;  //координаты исследуемой точки
                     int yyy = item.y - 5 + yy + (i - 1) * 38;
                     if (!result)
                     {
@@ -5480,6 +5507,7 @@ namespace OpenGEWindows
                         {
                             result = true;
                             point = new Point(xxx, yyy);
+                            break;
                         }
                     }
                 }
@@ -5511,7 +5539,7 @@ namespace OpenGEWindows
         /// перемещаем окно специнвентаря по оси X на sdvig точек
         /// </summary>
         /// <param name="sdvig">смещение по оси Х</param>
-        protected void MoveSpecInventory(int sdvig)
+        public void MoveSpecInventory(int sdvig)
         {
             new Point(165 - 5 + xx, 130 - 5 + yy).Drag(new Point(165 + sdvig - 5 + xx, 130 - 5 + yy));
         }
@@ -5538,12 +5566,14 @@ namespace OpenGEWindows
             MoveSpecInventory(sdvig);
             Pause(500);
 
-            MoveItemOnLeftPanelFromSpecInventory(Steroid, sdvig, 5);
+            MoveItemOnLeftPanelFromSpecInventory(SteroidOneHour, sdvig, 5);  //5 - номер ячейки
+            MoveItemOnLeftPanelFromSpecInventory(Steroid10Hours, sdvig, 5);
+            MoveItemOnLeftPanelFromSpecInventory(Steroid10Hours2, sdvig, 5);
+            MoveItemOnLeftPanelFromSpecInventory(Steroid10HoursHP, sdvig, 5);
 
-            MoveItemOnLeftPanelFromSpecInventory(Steroid2, sdvig, 5);
+            MoveItemOnLeftPanelFromSpecInventory(PrincipleOneHour, sdvig, 6);
+            MoveItemOnLeftPanelFromSpecInventory(Principle10Hours, sdvig, 6);
 
-            MoveItemOnLeftPanelFromSpecInventory(Principle, sdvig, 6);
-            
             MoveItemOnLeftPanelFromSpecInventory(Triumph, sdvig, 7);
         }
 
@@ -5564,14 +5594,9 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isBottlesOnLeftPanel()
         {
-            return isItemOnLeftPanel(SteroidLeftPanel) &&
-                    isItemOnLeftPanel(PrincipleLeftPanel);
-            // && isItemOnLeftPanel(TriumphLeftPanel);
-
-
-            //return  new PointColor(31 - 5 + xx, 241 - 5 + yy, 11690052, 0).isColor() &&
-            //        new PointColor(32 - 5 + xx, 272 - 5 + yy, 3226091, 0).isColor() &&
-            //        new PointColor(31 - 5 + xx, 304 - 5 + yy, 47612, 0).isColor();
+            return (isItemOnLeftPanel(Steroid10HoursLeftPanel) || isItemOnLeftPanel(SteroidOneHourLeftPanel) || isItemOnLeftPanel(Steroid10HoursHPLeftPanel)) &&
+                    (isItemOnLeftPanel(Principle10HoursLeftPanel) || isItemOnLeftPanel(PrincipleOneHourLeftPanel) || isItemOnLeftPanel(Principle10HoursHPLeftPanel));
+            //можно добавить проверку и для эликов славы
         }
 
         #endregion
@@ -5584,8 +5609,8 @@ namespace OpenGEWindows
         /// <returns>true, если открыт</returns>
         public bool isOpenDetailInfo(int i)
         {
-            return new PointColor(62 - 5 + xx + (i - 1) * 255, 345 - 5 + yy, 14000000, 6).isColor() &&
-                   new PointColor(62 - 5 + xx + (i - 1) * 255, 346 - 5 + yy, 14000000, 6).isColor();
+            return new PointColor(62 - 5 + xx + (i - 1) * 255 + 5, 345 - 5 + yy + 5, 14000000, 6).isColor() &&
+                   new PointColor(62 - 5 + xx + (i - 1) * 255 + 5, 346 - 5 + yy + 5, 14000000, 6).isColor();
         }
 
         /// <summary>
@@ -5604,7 +5629,7 @@ namespace OpenGEWindows
         /// <returns>true, если экипирпованы</returns>
         public bool isWearingPinkWings()
         {
-            return new PointColor(163 - 5 + xx, 363 - 5 + yy, 1579516, 0).isColor();
+            return new PointColor(163 - 5 + xx + 5, 363 - 5 + yy + 5, 1579516, 0).isColor();
         }
 
         /// <summary>

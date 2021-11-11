@@ -765,7 +765,7 @@ namespace States
 
                     //server.ReOpenWindow();
                     server.ActiveWindow();
-                    //Pause(500);
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
                 }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
@@ -1393,6 +1393,7 @@ namespace States
                     }
                 }
             }
+            
             ////магазин
             //if (market.isSale())
             //{
@@ -2260,7 +2261,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 2;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -2280,6 +2281,15 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
+
+            //int sdvig = 40;
+            //server.OpenSpecInventory();
+            //Pause(500);
+            //server.SpecInventoryBookmark(2);
+            //Pause(500);
+            //server.MoveSpecInventory(sdvig);
+            //Pause(500);
+
             //server.Logout();
             //if (server.isLogout()) server.CloseExpMerch();
             //если открыто окно Стим в правом нижнем углу
@@ -2308,6 +2318,7 @@ namespace States
             //botwindow.Pause(1000);
 
             //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
+           // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
             //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
@@ -2323,7 +2334,7 @@ namespace States
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.OpenDetailInfo();
-            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo());
+            //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo(1));
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show(" " + server.isBarackTeamSelection());
@@ -2351,7 +2362,6 @@ namespace States
             //MessageBox.Show(" " + market.isClickSell());
             //MessageBox.Show(" " + botwindow.isCommandMode());
             //MessageBox.Show(" " + market.isRedBottle());
-            MessageBox.Show("  " + server.isMissionBH());
             //MessageBox.Show("BH  " + server.isBH());
             //MessageBox.Show("11-19" + BHdialog.isGateLevelFrom10to19());
             //MessageBox.Show("лимит не исчерпан  " + BHdialog.isGateBH1());
@@ -2409,8 +2419,8 @@ namespace States
             int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(141 - 5 + xx, 503 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(141 - 5 + xx, 504 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(43 - 5 + xx, 213 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(29 - 5 + xx, 282 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
 
 
@@ -2421,10 +2431,17 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
+            //for (int x = 29; x <= 52; x++)
+            //    for (int y = 205; y <= 216; y++)
+            //    {
+            //        if (new PointColor(x, y, 0, 0).GetPixelColor() == 5144242 )
+            //        MessageBox.Show("x = "+ x + "   y = " + y );
+            //    }
+            //MessageBox.Show("ВСЁ");
 
             //if ((color1 > 2000000) && (color2 > 2000000)) MessageBox.Show(" больше ");
 

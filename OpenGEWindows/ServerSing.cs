@@ -114,13 +114,13 @@ namespace OpenGEWindows
 
             #region Top Menu
 
-            this.pointisOpenTopMenu21 = new PointColor(337 - 5 + xx, 76 - 5 + yy, 13421721, 0);
-            this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx, 77 - 5 + yy, 13421721, 0);
-            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 16711422, 0);      //буква "M" в слове Zone Map
-            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 16711422, 0);
-            this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx, 89 - 5 + yy, 13421721, 0);
-            this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx, 90 - 5 + yy, 13421721, 0);
-            this.pointisOpenTopMenu91 = new PointColor(597 - 5 + xx, 112 - 5 + yy, 16711422, 0);      //буква "Р" в слове Pet
+            this.pointisOpenTopMenu21 = new PointColor(337 - 5 + xx + xxx, 76 - 5 + yy + yyy, 13421721, 0);
+            this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx + xxx, 77 - 5 + yy + yyy, 13421721, 0);
+            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx + xxx, 125 - 5 + yy + yyy, 16711422, 0);      //буква "M" в слове Zone Map
+            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx + xxx, 126 - 5 + yy + yyy, 16711422, 0);
+            this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);
+            this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx + xxx, 90 - 5 + yy + yyy, 13421721, 0);
+            this.pointisOpenTopMenu91 = new PointColor(597 - 5 + xx, 112 - 5 + yy, 16711422, 0);      //буква "Р" в слове Pet   //проверено
             this.pointisOpenTopMenu92 = new PointColor(597 - 5 + xx, 113 - 5 + yy, 16711422, 0);
             this.pointisOpenTopMenu121 = new PointColor(600 - 5 + xx, 116 - 5 + yy, 8000000, 6);        //Warp List
             this.pointisOpenTopMenu122 = new PointColor(610 - 5 + xx, 116 - 5 + yy, 8000000, 6);
@@ -176,9 +176,9 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsWork2 = new uint[16] { 10919, 2106, 16711, 7243, 3560, 5401, 9747, 10258, 0, 9350, 15767, 8162, 1910, 3624, 3616, 1910 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsWork1 = new uint[6] { 12565, 4094, 4545, 16383, 9371, 8231};
-            this.arrayOfColorsIsWork2 = new uint[6] { 12169, 2850, 2438, 16777, 3562,    0};
-            // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
+            this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995};
+            this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};
+            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
 
             //this.pointisKillHero1 = new PointColor(80 - 5 + xx, 636 - 5 + yy, 1900000, 5);
             //this.pointisKillHero2 = new PointColor(335 - 5 + xx, 636 - 5 + yy, 1900000, 5);
@@ -232,9 +232,9 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsTown2 = new uint[16] { 10921, 2105, 16711, 7237, 3552, 5395, 9737, 10263, 0, 9342, 15790, 8158, 1910, 3618, 1910, 3618 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsTown1 = new uint[6] { 12566, 4079, 4539, 16382, 9342, 8224 };
-            this.arrayOfColorsIsTown2 = new uint[6] { 12171, 2829, 2434, 16777, 3552,    0 };
-            // ружье, флинт, outrange, эксп дробаш, джайна, Миса 
+            this.arrayOfColorsIsTown1 = new uint[7] { 12566, 4079, 4539, 16382, 9342, 8224, 986 };
+            this.arrayOfColorsIsTown2 = new uint[7] { 12171, 2829, 2434, 16777, 3552,    0, 1513 };
+            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch
 
 
 

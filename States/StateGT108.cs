@@ -60,7 +60,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //никаких действий, только проверка того, на какую миссию попали и распределение по состояниям
-            server.WriteToLogFileBH("108 выбираем, в какую миссию идти");
+            server.WriteToLogFileBH("108. выбираем, в какую миссию идти");
             //botwindow.PressMitridatBH();
             //botwindow.setStatusOfAtk(1);                      // статус атаки = 1 (начинаем атаковать босса)
             botParam.StatusOfAtk = 1;

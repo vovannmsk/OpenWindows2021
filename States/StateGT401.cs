@@ -68,8 +68,8 @@ namespace States
             //server.WriteToLogFileBH("БХ");
 
             //перемещаем бутылки на левую панель   //убрал 26-09-2021 (эксперимент)
-            //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
-            //botwindow.PressEsc();
+            if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
+            botwindow.PressEsc();
 
             botwindow.ActiveAllBuffBH();
             botwindow.PressEscThreeTimes();
