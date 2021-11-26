@@ -65,7 +65,8 @@ namespace States
             //server.TurnUp();
             server.TurnR(1);
             server.FightToPoint(157, 107, 4);
-            server.FightToPoint(295, 78, 0);
+            server.FightToPoint(157, 107, 4);
+//            server.FightToPoint(295, 78, 0);          //мешает поросенок нажать в эту точку
 
             //botwindow.Pause(50000);
             //server.TurnDown();

@@ -66,7 +66,8 @@ namespace States
             server.TurnUp();
             server.TurnR(1);
             //botwindow.Pause(50000);
-            server.FightToPoint(152, 304, 1);   
+            server.FightToPoint(152, 304, 2);       //15-11-2021
+            server.FightToPoint(152, 304, 1);
             server.TurnDown();
 
             //старый вариант
