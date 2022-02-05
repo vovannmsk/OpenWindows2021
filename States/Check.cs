@@ -834,7 +834,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 7:                                     // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
-                        server.WriteToLogFileBH("начинаем обработку case 4");
+                        server.WriteToLogFileBH("начинаем обработку case 7");
                         server.MoveMouseDown();
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
@@ -1980,7 +1980,7 @@ namespace States
             if (server.isBarackCreateNewHero()) return 20;          //если стоят на странице создания нового персонажа
             if (server.isTown()) return 10;                         //если стоят в городе
             if (mm.isMMSell() || (mm.isMMBuy())) return 11;         //если бот стоит на рынке
-            //if (server.isBulletHalf()|| server.isBulletOff()) return 15;      // если заканчиваются экспертные патроны
+            if (server.isBulletHalf() || server.isBulletOff()) return 15;      // если заканчиваются экспертные патроны
             if (server.isWork() && !server.isBattleMode()) return 18;       //если стоим на работе, но не в боевом режиме
             return 0;
         }
@@ -2009,57 +2009,57 @@ namespace States
 
             switch (numberOfProblem)
             {
-                case 1: driver.StateRecovery();                 //логаут --> работа
-                    break;
-                case 2: botwindow.CureOneWindow();              //закрываем окно
-                    break;
-                case 3: botwindow.CureOneWindow2();             //отбегаем в сторону и закрываем окно
-                    break;
-                case 4: driver.StateActivePet();
-                    break;
-                case 5: driver.StateGotoTradeKatovia();         
-                    break;
-                case 6: driver.StateGotoTrade();                //работа -> продажа -> выгрузка окна
-                    break;
-                case 7: driver.StateExitFromShop2();            //продаемся и закрытие песочницы   09-14
-                    break;
-                case 8: driver.StateExitFromShop();             //продаемся и закрытие песочницы   10-14                                                  
-                    break;
-                case 9: server.buttonExitFromBarack();          //StateExitFromBarack();
-                    break;
-                case 10: //driver.StateExitFromTown();          
-                    server.Logout();
-                    //server.GoToEnd();
-                    //server.CloseSandboxie();              //закрываем все проги в песочнице
-                    break;
-                case 11: SellProduct();                     // выставление товаров на рынок
-                    break;
-                case 12: driver.StateSelling2();          //продажа в катовичевском магазине      
-                    break;
-                case 13: driver.StateSelling4();          //продажа в катовичевском магазине
-                    break;
-                case 14: driver.StateSelling3();          //продажа в катовичевском магазине   
-                    break;
-                //case 15:
-                //    server.AddBullet10000();              //открываем коробку с патронами 10 000 штук
+                //case 1: driver.StateRecovery();                 //логаут --> работа
                 //    break;
-                case 16:
-                    server.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
-                    //server.CloseSandboxie();              //закрываем все проги в песочнице
-                    break;
-                case 17:
-                    server.CloseSandboxie();              //закрываем все проги в песочнице
-                    break;
-                case 18:
-                    server.BattleModeOn();         //включаем боевой режим
-                    server.TopMenu(9, 2);          //открываем окно с петом (для включения будущей расстановки)
-                    break;
-                //case 19:
-                //    driver.StateSerendibyteToTrade();
+                //case 2: botwindow.CureOneWindow();              //закрываем окно
                 //    break;
-                case 20:
-                    server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                //case 3: botwindow.CureOneWindow2();             //отбегаем в сторону и закрываем окно
+                //    break;
+                //case 4: driver.StateActivePet();
+                //    break;
+                //case 5: driver.StateGotoTradeKatovia();         
+                //    break;
+                //case 6: driver.StateGotoTrade();                //работа -> продажа -> выгрузка окна
+                //    break;
+                //case 7: driver.StateExitFromShop2();            //продаемся и закрытие песочницы   09-14
+                //    break;
+                //case 8: driver.StateExitFromShop();             //продаемся и закрытие песочницы   10-14                                                  
+                //    break;
+                //case 9: server.buttonExitFromBarack();          //StateExitFromBarack();
+                //    break;
+                //case 10: //driver.StateExitFromTown();          
+                //    server.Logout();
+                //    //server.GoToEnd();
+                //    //server.CloseSandboxie();              //закрываем все проги в песочнице
+                //    break;
+                //case 11: SellProduct();                     // выставление товаров на рынок
+                //    break;
+                //case 12: driver.StateSelling2();          //продажа в катовичевском магазине      
+                //    break;
+                //case 13: driver.StateSelling4();          //продажа в катовичевском магазине
+                //    break;
+                //case 14: driver.StateSelling3();          //продажа в катовичевском магазине   
+                //    break;
+                case 15:
+                    server.AddBullet10000();              //открываем коробку с патронами 10 000 штук
                     break;
+                //case 16:
+                //    server.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
+                //    //server.CloseSandboxie();              //закрываем все проги в песочнице
+                //    break;
+                //case 17:
+                //    server.CloseSandboxie();              //закрываем все проги в песочнице
+                //    break;
+                //case 18:
+                //    server.BattleModeOn();         //включаем боевой режим
+                //    server.TopMenu(9, 2);          //открываем окно с петом (для включения будущей расстановки)
+                //    break;
+                ////case 19:
+                ////    driver.StateSerendibyteToTrade();
+                ////    break;
+                //case 20:
+                //    server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                //    break;
             }
         }
 
@@ -2261,7 +2261,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 1;   //номер проверяемого окна
+            int i = 5;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -2281,6 +2281,10 @@ namespace States
             //Pet pet = new PetSing(botwindow);
 
             server.ReOpenWindow();
+
+            //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
+            MessageBox.Show("половина патронов? " + server.isBulletHalf());
+            MessageBox.Show("закончились патроны? " + server.isBulletOff());
 
             //int sdvig = 40;
             //server.OpenSpecInventory();
@@ -2318,7 +2322,7 @@ namespace States
             //botwindow.Pause(1000);
 
             //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
-           // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
+            // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
             //MessageBox.Show("Сережки нет? " + server.isEmptyEarrings(1));
@@ -2431,8 +2435,8 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
+            //MessageBox.Show(" " + color1);
+            //MessageBox.Show(" " + color2);
             //MessageBox.Show(" " + color3);
 
             //for (int x = 29; x <= 52; x++)

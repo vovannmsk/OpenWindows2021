@@ -116,8 +116,8 @@ namespace OpenGEWindows
 
             this.pointisOpenTopMenu21 = new PointColor(337 - 5 + xx + xxx, 76 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx + xxx, 77 - 5 + yy + yyy, 13421721, 0);
-            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx + xxx, 125 - 5 + yy + yyy, 16711422, 0);      //буква "M" в слове Zone Map
-            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx + xxx, 126 - 5 + yy + yyy, 16711422, 0);
+            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 16711422, 0);      //буква "M" в слове Zone Map
+            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 16711422, 0);
             this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx + xxx, 90 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu91 = new PointColor(597 - 5 + xx, 112 - 5 + yy, 16711422, 0);      //буква "Р" в слове Pet   //проверено
@@ -202,13 +202,13 @@ namespace OpenGEWindows
             //this.pointisBattleModeOff2 = new PointColor(200 - 5 + xx, 511 - 5 + yy, 8900000, 5);
 
             //            this.pointisBulletHalf = new PointColor(227 - 5 + xx, 621 - 5 + yy, 5500000, 5);
-            this.pointisBulletHalf1 = new PointColor(229 - 5 + xx, 622 - 5 + yy, 8245488, 0);
-            this.pointisBulletHalf2 = new PointColor(484 - 5 + xx, 622 - 5 + yy, 8245488, 0);
-            this.pointisBulletHalf3 = new PointColor(739 - 5 + xx, 622 - 5 + yy, 8245488, 0);
+            this.pointisBulletHalf1 = new PointColor(229 - 5 + xx + xxx, 622 - 5 + yy + yyy, 8245488, 0);
+            this.pointisBulletHalf2 = new PointColor(484 - 5 + xx + xxx, 622 - 5 + yy + yyy, 8245488, 0);
+            this.pointisBulletHalf3 = new PointColor(739 - 5 + xx + xxx, 622 - 5 + yy + yyy, 8245488, 0);
 //            this.pointisBulletOff  = new PointColor(227 - 5 + xx, 621 - 5 + yy, 5700000, 5);
-            this.pointisBulletOff1 = new PointColor(229 - 5 + xx, 622 - 5 + yy, 401668, 0);
-            this.pointisBulletOff2 = new PointColor(484 - 5 + xx, 622 - 5 + yy, 401668, 0);
-            this.pointisBulletOff3 = new PointColor(739 - 5 + xx, 622 - 5 + yy, 401668, 0);
+            this.pointisBulletOff1 = new PointColor(229 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
+            this.pointisBulletOff2 = new PointColor(484 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
+            this.pointisBulletOff3 = new PointColor(739 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
 
 
 
