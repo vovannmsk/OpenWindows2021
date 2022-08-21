@@ -5853,7 +5853,7 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
-        /// делаем главным (активным) в команде указанного героя
+        /// увеличиваем окно чата до максимума, чтобы гарантированно увидеть сообщение об окончании боя
         /// </summary>
         /// <param name="N">номер героя</param>
         public void messageWindowExtension()
@@ -6150,12 +6150,12 @@ namespace OpenGEWindows
                 y += 10; if (y > 432 - 5 + yy + Direction * DeltaY) break;
 
                 AssaultMode();
-                if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место,
+                if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место (т.е. за пределы боевой арены),
                     Direction = -Direction;                                     //то меняем направление тыка                     
                 new Point(x, y).PressMouseL();
                 IsBoss = isBossOrMob() && (!isMob());    //определяем босса так: в прицеле кто-то есть, но это не моб
             }
-            while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим
+            while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL
         }
 
         /// <summary>

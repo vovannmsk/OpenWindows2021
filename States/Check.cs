@@ -838,6 +838,10 @@ namespace States
                         server.MoveMouseDown();
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
+                        
+                        //botwindow.SingleMode();    //эксперимент 08-02-2022
+                        //botwindow.FirstHero();     //эксперимент 08-02-2022
+
                         server.ChatFifthBookmark();
                         Hero[1] = server.WhatsHero(1);
                         Hero[2] = server.WhatsHero(2);
