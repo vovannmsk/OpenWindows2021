@@ -68,11 +68,13 @@ namespace States
             //server.WriteToLogFileBH("БХ");
 
             //перемещаем бутылки на левую панель   //убрал 26-09-2021 (эксперимент)
-            if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
-            botwindow.PressEsc();
+            //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
+            //botwindow.PressEsc();
 
-            botwindow.ActiveAllBuffBH();
-            botwindow.PressEscThreeTimes();
+            //можно не применять хрин и рочю баффы, они применяются в бою на каждом ходе
+            //botwindow.ActiveAllBuffBH();
+            //botwindow.PressEscThreeTimes();
+
             server.AddBullets();           
 
             //if (server.isBulletOff())

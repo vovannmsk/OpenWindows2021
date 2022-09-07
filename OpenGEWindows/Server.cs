@@ -788,12 +788,21 @@ namespace OpenGEWindows
             {
                 while (true)
                 {
-                    Pause(3000);
+                   Pause(3000);
                     UIntPtr hwnd = FindWindowGE();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
                     if (hwnd != (UIntPtr)0) break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из цикла
                 }
             }
         }
+
+        /// <summary>
+        /// восстановливает чистое окно Стим
+        /// </summary>
+        public void ReOpenClearWindow()
+        {
+            OpenWindow();                 //загружаем чистое окно
+        }
+
 
         /// <summary>
         /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)
@@ -6144,18 +6153,39 @@ namespace OpenGEWindows
             int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
             int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
                                                           // немного смещаться вверх-вниз
-            bool IsBoss;
-            do
-            {
-                y += 10; if (y > 432 - 5 + yy + Direction * DeltaY) break;
 
-                AssaultMode();
-                if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место (т.е. за пределы боевой арены),
-                    Direction = -Direction;                                     //то меняем направление тыка                     
-                new Point(x, y).PressMouseL();
-                IsBoss = isBossOrMob() && (!isMob());    //определяем босса так: в прицеле кто-то есть, но это не моб
-            }
-            while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL
+            //вариант 1. (Старый и сложный)
+            //bool IsBoss;
+            //do
+            //{
+            //    y += 10; if (y > 432 - 5 + yy + Direction * DeltaY) break;
+
+            //    AssaultMode();
+            //    if (new PointColor(x, y, 0, 0).GetPixelColor() < 400000)        //если хотим тыкнуть в темное место (т.е. за пределы боевой арены),
+            //        Direction = -Direction;                                     //то меняем направление тыка                     
+            //    new Point(x, y).PressMouseL();
+            //    IsBoss = isBossOrMob() && (!isMob());    //определяем босса так: в прицеле кто-то есть, но это не моб
+            //}
+            //while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL
+            //проверка на "босса в прицеле" стоит для того, что не всегда удаётся перейти в Assault Mode, так как Кризалис загораживает весь экран и некуда тыкнуть, кроме как не в него
+
+            //вариант 2. новый и простой, но не проверенный
+            // сначала атакуем в выбранном направлении
+            AssaultMode();
+            new Point(x, y).PressMouseL();
+
+            //бафаемся
+            //тут надо бы сделать проверку, наложены ли уже баффы (хрин+принципал) или нет. И всё это вместе с баффами запихнуть в процедурку
+            botwindow.ActiveAllBuffBH();
+            botwindow.PressEscThreeTimes();
+
+            //потом атакуем в обратном направлении и переходим в исходную точку
+            x = 525 - 5 + xx - Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
+            y = 382 - 5 + yy - Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
+            AssaultMode();
+            new Point(x, y).PressMouseL();
+
+
         }
 
         /// <summary>

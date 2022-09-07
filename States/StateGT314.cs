@@ -59,7 +59,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.ReOpenWindow();       
+            server.ReOpenWindow();
+            //server.ReOpenClearWindow();
         }
 
         /// <summary>
@@ -75,8 +76,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            //bool ff = true;
             return server.isLogout() || Server.AccountBusy;
+            //return true;
         }
 
         /// <summary>

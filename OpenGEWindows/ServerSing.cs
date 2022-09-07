@@ -718,10 +718,10 @@ namespace OpenGEWindows
             while (HWND == (UIntPtr)0)
             {
                 Pause(500);
-                //вариант 1. ишем окно, открытое в песочнице===========================================================
+                ////вариант 1. ишем окно, открытое в песочнице===========================================================
                 HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":Granado Espada", "[#] Granado Espada [#]");
 
-                ////вариант 2. ищем чистое окно==========================================================================
+                //вариант 2. ищем чистое окно==========================================================================
                 //HWND = FindWindow("Granado Espada", "Granado Espada");
 
 
@@ -774,18 +774,11 @@ namespace OpenGEWindows
             process.Start();
             Pause(15000);
 
-            //if (isSteam())         //для старого варианта ввода логина-пароля
-            //{
-            //    InsertLoginPasswordOk();
-            //}
-
             for (int i = 1; i <= 10; i++)
             {
                 CloseWhatNews();
 
                 Pause(1000);
-
-                //new Point(963 - 5 + xx, 717 - 5 + yy).PressMouseL();        //закрываем рекламу
 
                 if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
                 {
@@ -817,6 +810,11 @@ namespace OpenGEWindows
             //process.StartInfo.Arguments = " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             //process.Start();
             //Pause(10000);
+
+            //if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
+            //{
+            //    pointNewSteamOk.PressMouseL();
+            //}
 
             //for (int i = 1; i <= 10; i++)
             //{
