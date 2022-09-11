@@ -660,6 +660,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage1()
         {
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
@@ -807,6 +810,7 @@ namespace States
                 {
                     case 1:
                         server.WriteToLogFileBH("case 1");
+
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
@@ -899,7 +903,7 @@ namespace States
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                             SteamLoaded = true;
-                            botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 5-8 циклов
+                            botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 3-5 циклов
                             IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -1135,6 +1139,9 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage3()
         {
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
             //если открыто окно Стим в правом нижнем углу
             if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
 

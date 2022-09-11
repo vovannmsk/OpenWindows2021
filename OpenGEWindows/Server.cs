@@ -6150,11 +6150,23 @@ namespace OpenGEWindows
         {
             int DeltaX = 200; //амплитуда движения героев по оси Х
             int DeltaY = 30;  //амплитуда движения героев по оси Y
-            int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
-            int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
-                                                          // немного смещаться вверх-вниз
+            int x;
+            int y;
+
+
+            if (new PointColor(x, y - 150, 0, 0).GetPixelColor() < 400000)        //если сдвинулись слишком сильно вверх (т.е. близко к верхнему краю боевой арены)
+            {
+                y = y + 60;
+            }
+            else if (new PointColor(x, y + 150, 0, 0).GetPixelColor() < 400000)
+            {
+                y = y - 60;
+            }
+
 
             //вариант 1. (Старый и сложный)
+            //int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
+            //int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз
             //bool IsBoss;
             //do
             //{
@@ -6171,6 +6183,17 @@ namespace OpenGEWindows
 
             //вариант 2. новый и простой, но не проверенный
             // сначала атакуем в выбранном направлении
+            x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
+            y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз
+
+            if (new PointColor(x, y - 150, 0, 0).GetPixelColor() < 400000)        //если сдвинулись слишком сильно вверх (т.е. близко к верхнему краю боевой арены)
+            {
+                y = y + 60;
+            }
+            else if (new PointColor(x, y + 150, 0, 0).GetPixelColor() < 400000)
+            {
+                y = y - 60;
+            }
             AssaultMode();
             new Point(x, y).PressMouseL();
 
@@ -6182,6 +6205,15 @@ namespace OpenGEWindows
             //потом атакуем в обратном направлении и переходим в исходную точку
             x = 525 - 5 + xx - Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
             y = 382 - 5 + yy - Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет
+            if (new PointColor(x, y - 150, 0, 0).GetPixelColor() < 400000)        //если сдвинулись слишком сильно вверх (т.е. близко к верхнему краю боевой арены)
+            {
+                y = y + 60;
+            }
+            else if (new PointColor(x, y + 150, 0, 0).GetPixelColor() < 400000)
+            {
+                y = y - 60;
+            }
+
             AssaultMode();
             new Point(x, y).PressMouseL();
 
