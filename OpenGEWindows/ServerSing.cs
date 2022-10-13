@@ -769,7 +769,7 @@ namespace OpenGEWindows
             //запускаем steam в песочнице (вариант 1)
             Process process = new Process();
             process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
-            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             //steam://rungameid/319730
             process.Start();
             Pause(15000);
@@ -1070,7 +1070,7 @@ namespace OpenGEWindows
                         //запускаем steam в песочнице
                         Process process = new Process();
                         process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
-                        process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -silent";
+                        process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
                         process.Start();
                     }
                     else             //если надо пропустить этот аккаунт из-за "Параметр.txt"

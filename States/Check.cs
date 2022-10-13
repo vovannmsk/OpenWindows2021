@@ -723,7 +723,7 @@ namespace States
                 !server.isBattleMode() &&
                 !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
                 {
-                    if (server.isBH())     //в БХ     //проверка сделана
+                    if (server.isBH())     //в БХ     
                     {
                         //if (server.isBH2()) return 18;   //стоим в БХ в неправильном месте
                         //else
@@ -2428,8 +2428,8 @@ namespace States
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
 
-            int xxx = 5;
-            int yyy = 5;
+            //int xxx = 5;
+            //int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
             PointColor point1 = new PointColor(43 - 5 + xx, 213 - 5 + yy, 0, 0);

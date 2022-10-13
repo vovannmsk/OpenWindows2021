@@ -1718,9 +1718,10 @@ namespace OpenGEWindows
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
         public void TopMenu(int numberOfThePartitionMenu, bool status)
         {
-            int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
+            //int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
+            int[] MenukoordX = { 310, 342, 374, 406, 438, 480, 527, 574, 614, 646, 678, 710, 742 };
             int x = MenukoordX[numberOfThePartitionMenu - 1];
-            int y = 55;
+            int y = 59; //55;
             iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
 
             int count = 0;
@@ -1729,7 +1730,7 @@ namespace OpenGEWindows
                 pointMenu.PressMouse();
                 botwindow.Pause(2000);
                 count++; if (count > 3) break;
-            } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && (status));
+            } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
         }
 
         /// <summary>
@@ -1799,20 +1800,36 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// в открытом меню телепортов выбираем нужную строчку и летим по выбранному телепорту
+        /// </summary>
+        /// <param name="NumberOfLine"></param>
+        public void FlyByTeleport(int NumberOfLine)
+        {
+            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    вычисляем точку на экране, куда тыкать
+
+            pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
+            Pause(500);
+
+            pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu (нажимаем на кнопку, чтобы перейти по телепорту)
+        }
+
+        /// <summary>
         /// вызываем телепорт через верхнее меню и телепортируемся по указанному номеру телепорта (используется для БХ)
         /// </summary>
         /// <param name="NumberOfLine"></param>
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
         public void Teleport(int NumberOfLine, bool status)
         {
-            TopMenu(12, status);                     // Click Teleport menu
+            TopMenu(12, status);                     // Click Teleport menu. открываем меню со списком сохранённых телепортов
 
-            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    тыкаем в указанную строчку телепорта 
+            FlyByTeleport(NumberOfLine);
 
-            pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
-            Pause(500);
+            //Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    тыкаем в указанную строчку телепорта 
 
-            pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
+            //pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
+            //Pause(500);
+
+            //pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
         }
 
         /// <summary>
@@ -6152,17 +6169,6 @@ namespace OpenGEWindows
             int DeltaY = 30;  //амплитуда движения героев по оси Y
             int x;
             int y;
-
-
-            if (new PointColor(x, y - 150, 0, 0).GetPixelColor() < 400000)        //если сдвинулись слишком сильно вверх (т.е. близко к верхнему краю боевой арены)
-            {
-                y = y + 60;
-            }
-            else if (new PointColor(x, y + 150, 0, 0).GetPixelColor() < 400000)
-            {
-                y = y - 60;
-            }
-
 
             //вариант 1. (Старый и сложный)
             //int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
