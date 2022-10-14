@@ -2018,6 +2018,11 @@ namespace States
 
             switch (numberOfProblem)
             {
+                case 0:
+                    botwindow.PressBoxInLeftPanel(5);
+                    botwindow.PressBoxInLeftPanel(6);
+                    botwindow.PressEscThreeTimes();
+                    break;
                 //case 1: driver.StateRecovery();                 //логаут --> работа
                 //    break;
                 //case 2: botwindow.CureOneWindow();              //закрываем окно
