@@ -1035,8 +1035,11 @@ namespace States
                         break;
                     case 3:                                                 // собираемся атаковать
                         //botwindow.CommandMode();
-                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
-                        server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
+
+                        //DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                        //server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
+
+                        server.AttackTheMonsters();
 
                         //бафаемся. Если бафались мушкетеры, то result = true
                         server.MoveCursorOfMouse();
@@ -1045,19 +1048,19 @@ namespace States
                                         server.Buff(Hero[3], 3);
 
 
-                        //если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
-                        //а потом пробел
-                        if (server.isBossOrMob() && !result)
-                        //if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
-                        {
-                            bool isMobs = server.isMob();   
-                            //server.MoveCursorOfMouse();
-                            server.Skill(Hero[1], 1, isMobs);
-                            server.Skill(Hero[2], 2, isMobs);
-                            server.Skill(Hero[3], 3, isMobs);
-                            //server.MoveCursorOfMouse();
-                        }
-                        //Pause(500);
+                        ////если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
+                        ////а потом пробел
+                        //if (server.isBossOrMob() && !result)
+                        ////if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
+                        //{
+                        //    bool isMobs = server.isMob();   
+                        //    //server.MoveCursorOfMouse();
+                        //    server.Skill(Hero[1], 1, isMobs);
+                        //    server.Skill(Hero[2], 2, isMobs);
+                        //    server.Skill(Hero[3], 3, isMobs);
+                        //    //server.MoveCursorOfMouse();
+                        //}
+                        ////Pause(500);
                         server.BattleModeOnDem();
 
                         //вариант 2 (основной)

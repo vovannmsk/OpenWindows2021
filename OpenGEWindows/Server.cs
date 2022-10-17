@@ -6227,6 +6227,60 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// атакуем монстров в миссии  (с CTRL)
+        /// </summary>
+        /// <param name="Direction"> направление движения (влево или вправо)</param>
+        public void AttackTheMonsters()
+        {
+            //смещение движения героев по оси Х
+            int DeltaX; 
+
+            //смещение движения героев по оси Y
+            int DeltaY;  
+            
+            //проверка цвета реперных точек на экране
+
+            PointColor LeftUP = new PointColor(85 - 5 + xx, 85 - 5 + yy, 0, 0);
+            PointColor RightUP = new PointColor(980 - 5 + xx, 85 - 5 + yy, 0, 0);
+            PointColor LeftDown = new PointColor(85 - 5 + xx, 480 - 5 + yy, 0, 0);
+            PointColor RightDown = new PointColor(980 - 5 + xx, 360 - 5 + yy, 0, 0);
+
+            uint LeftUpColor = LeftUP.GetPixelColor();
+            uint RightUpColor = RightUP.GetPixelColor();
+            uint LeftDownColor = LeftDown.GetPixelColor();
+            uint RightDownColor = RightDown.GetPixelColor();
+
+            if (LeftUpColor < 400000 && RightUpColor < 400000)
+                DeltaY = 150;
+            else
+                if (LeftDownColor < 400000 && RightDownColor < 400000)
+                    DeltaY = - 150;
+                else
+                    DeltaY = 0;
+
+            if (LeftUpColor < 400000 && LeftDownColor < 400000)
+                DeltaX = 250;
+            else
+                if (RightUpColor < 400000 && RightDownColor < 400000)
+                    DeltaX = -250;
+                else
+                    DeltaX = 250;
+
+            //вычисляем координаты точки, куда будем тыкать мышкой
+            int x = 525 - 5 + xx + DeltaX;    
+            int y = 382 - 5 + yy + DeltaY;    
+
+            AssaultMode();
+            new Point(x, y).PressMouseL();
+
+            //бафаемся
+            //тут надо бы сделать проверку, наложены ли уже баффы (хрин+принципал+элики славы) или нет. И всё это вместе с баффами запихнуть в процедурку
+            botwindow.ActiveAllBuffBH();
+            botwindow.PressEscThreeTimes();
+
+        }
+
+        /// <summary>
         /// переходим в режим атаки с CTRL
         /// </summary>
         public void AssaultMode()
