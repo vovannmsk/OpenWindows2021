@@ -6160,6 +6160,24 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
+        /// пытаемся тыкнуть с CTRL в заданные координаты. Если не удалось, то тыкаем чуть ниже.  И так делаем 5 раз
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void AttackCtrl(int x, int y)
+        {
+            int count = 0;
+            do
+            {
+                AssaultMode();
+                new Point(x, y).PressMouseL();
+                y += 10;
+                count++;
+            }
+            while (!isAssaultMode() && (count<5)); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL, либо тыкали уже больше пяти раз
+        }
+
+        /// <summary>
         /// атакуем монстров в миссии  (с CTRL)
         /// </summary>
         /// <param name="Direction"> направление движения (влево или вправо)</param>
@@ -6200,8 +6218,10 @@ namespace OpenGEWindows
             {
                 y = y - 60;
             }
-            AssaultMode();
-            new Point(x, y).PressMouseL();
+
+            //AssaultMode();
+            //new Point(x, y).PressMouseL();
+            AttackCtrl(x, y);
 
             //бафаемся
             //тут надо бы сделать проверку, наложены ли уже баффы (хрин+принципал) или нет. И всё это вместе с баффами запихнуть в процедурку
@@ -6220,9 +6240,9 @@ namespace OpenGEWindows
                 y = y - 60;
             }
 
-            AssaultMode();
-            new Point(x, y).PressMouseL();
-
+            //AssaultMode();
+            //new Point(x, y).PressMouseL();
+            AttackCtrl(x, y);
 
         }
 

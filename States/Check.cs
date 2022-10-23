@@ -1036,10 +1036,10 @@ namespace States
                     case 3:                                                 // собираемся атаковать
                         //botwindow.CommandMode();
 
-                        //DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
-                        //server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
+                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                        server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
 
-                        server.AttackTheMonsters();
+                        //server.AttackTheMonsters();
 
                         //бафаемся. Если бафались мушкетеры, то result = true
                         server.MoveCursorOfMouse();
@@ -1061,7 +1061,10 @@ namespace States
                         //    //server.MoveCursorOfMouse();
                         //}
                         ////Pause(500);
+                        
+
                         server.BattleModeOnDem();
+
 
                         //вариант 2 (основной)
                         //server.Buff(Hero[1], 1);
@@ -2024,6 +2027,11 @@ namespace States
                 case 0:
                     botwindow.PressBoxInLeftPanel(5);
                     botwindow.PressBoxInLeftPanel(6);
+                    server.MoveCursorOfMouse();
+                    server.Buff(1, 1);
+                    server.Buff(1, 2);
+                    server.Buff(1, 3);
+
                     botwindow.PressEscThreeTimes();
                     break;
                 //case 1: driver.StateRecovery();                 //логаут --> работа
@@ -2059,6 +2067,10 @@ namespace States
                 //    break;
                 case 15:
                     server.AddBullet10000();              //открываем коробку с патронами 10 000 штук
+                    server.MoveCursorOfMouse();
+                    server.Buff(1, 1);
+                    server.Buff(1, 2);
+                    server.Buff(1, 3);
                     break;
                 //case 16:
                 //    server.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
