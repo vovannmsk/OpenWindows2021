@@ -2290,7 +2290,7 @@ namespace States
         /// </summary>
         public void TestButton()
         {
-            int i = 5;   //номер проверяемого окна
+            int i = 1;   //номер проверяемого окна
 
             int[] koordX = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 875, 850, 825, 800, 775, 750, 875 };
             int[] koordY = { 5, 30, 55, 80, 105, 130, 155, 180, 205, 230, 255, 280, 305, 5, 30, 55, 80, 105, 130, 5 };
@@ -2312,8 +2312,8 @@ namespace States
             server.ReOpenWindow();
 
             //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
-            MessageBox.Show("половина патронов? " + server.isBulletHalf());
-            MessageBox.Show("закончились патроны? " + server.isBulletOff());
+            //MessageBox.Show("половина патронов? " + server.isBulletHalf());
+            //MessageBox.Show("закончились патроны? " + server.isBulletOff());
 
             //int sdvig = 40;
             //server.OpenSpecInventory();
@@ -2452,9 +2452,9 @@ namespace States
             //int yyy = 5;
             //PointColor point1 = new PointColor(1042, 551, 1, 1);
             //PointColor point2 = new PointColor(1043, 551, 1, 1);
-            PointColor point1 = new PointColor(43 - 5 + xx, 213 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(29 - 5 + xx, 282 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(33 - 5 + xx, 695 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(848 - 5 + xx, 609 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(848 - 5 + xx, 610 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(848 - 5 + xx, 611 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
@@ -2464,9 +2464,9 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
-            //MessageBox.Show(" " + color1);
-            //MessageBox.Show(" " + color2);
-            //MessageBox.Show(" " + color3);
+            MessageBox.Show(" " + color1);
+            MessageBox.Show(" " + color2);
+            MessageBox.Show(" " + color3);
 
             //for (int x = 29; x <= 52; x++)
             //    for (int y = 205; y <= 216; y++)

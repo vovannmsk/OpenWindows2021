@@ -5907,8 +5907,10 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isExpedMerch()
         {
-            return new PointColor(843 - 5 + xx, 608 - 5 + yy, 7925494, 0).isColor() &&
-                    new PointColor(843 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor();
+            //return new PointColor(843 - 5 + xx, 608 - 5 + yy, 7925494, 0).isColor() &&
+            //        new PointColor(843 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor();
+            return new PointColor(848 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor() &&
+                    new PointColor(848 - 5 + xx, 610 - 5 + yy, 7925494, 0).isColor();
         }
 
         /// <summary>
