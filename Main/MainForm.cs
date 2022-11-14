@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using States;
 using GEBot.Data;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Main
 {
@@ -793,6 +794,48 @@ namespace Main
 
         #endregion
 
+
+        #region Смена аккаунтов (чистое окно)
+
+        /// <summary>
+        /// смена аккаунтов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void changing_accounts_Click(object sender, EventArgs e)
+        {
+            this.changing_accounts.BackColor = Color.OrangeRed;
+            Thread myCA_cleanWindow = new Thread(funcChAccCW);
+            myCA_cleanWindow.Start();
+
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока для последовательной смены аккаунтов в чистом окне
+        /// </summary>
+        private void funcChAccCW()
+        {
+            //Check[] check = new Check[numberOfAcc + 1];
+            //for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+
+            Check check = new Check(1); //всё делаем в первом окне, поэтому массив не нужен
+
+            while (true)
+            {
+                    check.ChangingAccountsCW();
+                    if (globalParam.Infinity >= 423) globalParam.Infinity = 0;
+                
+            }
+        }
+
+        #endregion
+
+
+
+
+
+
+
         /// <summary>
         /// изменяет значение переменной startAcc при изменении счетчика в главной форме
         /// (присваиваем переменной класса значение, выбранное пользователем в форме)
@@ -1068,6 +1111,7 @@ namespace Main
         }
 
         #endregion
+
 
     }// END class MainForm 
 }// END namespace OpenGEWindows

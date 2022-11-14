@@ -2156,72 +2156,7 @@ namespace States
             server.runClientSteamBH();
         }
 
-        /// <summary>
-        /// боты заходят в город, получают подарок у ГМ и окно выгружается
-        /// </summary>
-        public void ChangingAccounts()
-        {
-            //for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)  //цикл по j от Инфинити и до конца файла Логины
-            //{
-            //driver.StateInputOutput5(); //вход и выход из игры (а в промежутке выполнение задания)
-            botwindow = new botWindow(numberOfWindow);
-            ServerFactory serverFactory = new ServerFactory(botwindow);
-            this.server = serverFactory.create();
-            this.globalParam = new GlobalParam();
-            this.botParam = new BotParam(numberOfWindow);
-            this.isActiveServer = server.IsActiveServer;
 
-            if (isActiveServer) driver.StateInputOutput6();
-            else 
-            { 
-                server.RemoveSandboxie();
-                
-            }
-            //}
-        }
-
-        /// <summary>
-        /// боты заходят в город, 
-        /// </summary>
-        public void ChangingAccounts2()
-        {
-            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
-            {
-                //server.WriteToLogFile("номер окна = " + j);
-                driver.ChangingAccounts2(); //вход и выход из игры
-            }
-        }
-
-        /// <summary>
-        /// боты заходят в город, 
-        /// </summary>
-        public void ChangingAccounts3()
-        {
-            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
-            {
-                driver.ChangingAccounts3(); //вход и выход из игры
-            }
-        }
-
-        /// <summary>
-        /// боты заходят в город, 
-        /// </summary>
-        public void ChangingAccounts4()
-        {
-            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
-            {
-                driver.ChangingAccounts4(); //вход и выход из игры
-            }
-        }
-
-        /// <summary>
-        /// создать новые аккаунты в одном окне бота
-        /// </summary>
-        public void NewAccountsTwo()
-        {
-            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
-                driver.StateNewAcc2(); //новые акки
-        }
 
         ///// <summary>
         ///// определяет, нужно ли работать с этим окном (может быть отключено из-за профилактики на сервере)
@@ -2284,6 +2219,103 @@ namespace States
         //}
 
         #endregion
+
+        #region смена аккаунтов
+
+        /// <summary>
+        /// боты заходят в город, получают подарок у ГМ и окно выгружается
+        /// </summary>
+        public void ChangingAccounts()
+        {
+            //for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)  //цикл по j от Инфинити и до конца файла Логины
+            //{
+            //driver.StateInputOutput5(); //вход и выход из игры (а в промежутке выполнение задания)
+            botwindow = new botWindow(numberOfWindow);
+            ServerFactory serverFactory = new ServerFactory(botwindow);
+            this.server = serverFactory.create();
+            this.globalParam = new GlobalParam();
+            this.botParam = new BotParam(numberOfWindow);
+            this.isActiveServer = server.IsActiveServer;
+
+            if (isActiveServer) driver.StateInputOutput6();
+            else
+            {
+                server.RemoveSandboxie();
+
+            }
+            //}
+        }
+
+
+        /// <summary>
+        /// боты заходят в город, 
+        /// </summary>
+        public void ChangingAccounts2()
+        {
+            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
+            {
+                //server.WriteToLogFile("номер окна = " + j);
+                driver.ChangingAccounts2(); //вход и выход из игры
+            }
+        }
+
+        /// <summary>
+        /// боты заходят в город, 
+        /// </summary>
+        public void ChangingAccounts3()
+        {
+            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
+            {
+                driver.ChangingAccounts3(); //вход и выход из игры
+            }
+        }
+
+        /// <summary>
+        /// боты заходят в город, 
+        /// </summary>
+        public void ChangingAccounts4()
+        {
+            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
+            {
+                driver.ChangingAccounts4(); //вход и выход из игры
+            }
+        }
+
+        /// <summary>
+        /// создать новые аккаунты в одном окне бота
+        /// </summary>
+        public void NewAccountsTwo()
+        {
+            for (int j = botParam.NumberOfInfinity; j < botParam.Logins.Length; j++)
+                driver.StateNewAcc2(); //новые акки
+        }
+
+        /// <summary>
+        /// смена ботов в чистом окне (загрузка аккаунта-логаут-барак-город-выгрузка аккаунта)
+        /// нужно для того, чтобы на новом компе войти каждым аккаунтом в игру
+        /// </summary>
+        public void ChangingAccountsCW()
+        {
+            botwindow = new botWindow(numberOfWindow);
+            ServerFactory serverFactory = new ServerFactory(botwindow);
+            this.server = serverFactory.create();
+            this.globalParam = new GlobalParam();
+            this.botParam = new BotParam(numberOfWindow);
+            this.isActiveServer = server.IsActiveServer;
+
+            if (isActiveServer) driver.StateInputOutput6();
+            else
+            {
+                server.RemoveSandboxie();
+
+            }
+            //}
+        }
+
+
+
+        #endregion
+
 
         /// <summary>
         /// тестовая кнопка
