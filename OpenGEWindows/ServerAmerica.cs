@@ -469,7 +469,44 @@ namespace OpenGEWindows
         {
             Process.Start(this.pathClient);
             Pause(40000);
-        }                                
+        }
+
+        /// <summary>
+        /// запуск клиента игры в чистом окне без песочницы
+        /// </summary>
+        public override void runClientCW()
+        {
+            AccountBusy = false;
+
+            Process process = new Process();
+            process.StartInfo.FileName = this.pathClient;
+            process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            process.Start();
+            Pause(10000);
+
+            if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
+            {
+                pointNewSteamOk.PressMouseL();
+            }
+
+            for (int i = 1; i <= 10; i++)
+            {
+                Pause(1000);
+
+                if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
+                {
+                    pointNewSteamOk.PressMouseL();
+                }
+
+                //if (isContinueRunning())    //если аккаунт запущен на другом компе
+                //{
+                //    NextAccount();
+                //    AccountBusy = true;
+                //    break;
+                //}
+            }
+        }
+
 
         /// <summary>
         /// действия для оранжевой кнопки
@@ -484,7 +521,36 @@ namespace OpenGEWindows
             }
         }
 
-   
+        /// <summary>
+        /// поиск нового окна с игрой 
+        /// чистое окно без песочницы
+        /// </summary>
+        /// <returns></returns>
+        public override UIntPtr FindWindowGE_CW()
+        {
+            UIntPtr HWND = (UIntPtr)0;
+
+            int count = 0;
+            while (HWND == (UIntPtr)0)
+            {
+                Pause(500);
+
+                HWND = FindWindow("Granado Espada", "Granado Espada");
+
+                count++; if (count > 5) return (UIntPtr)0;
+            }
+
+            botParam.Hwnd = HWND;
+            //botwindow.setHwnd(HWND);
+
+            SetWindowPos(HWND, 0, xx, yy, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+            //            ShowWindow(HWND, 2);   //скрыть окно в трей
+            Pause(500);
+
+            return HWND;
+        }
+
+
         /// <summary>
         /// поиск новых окон с игрой для кнопки "Найти окна"
         /// </summary>

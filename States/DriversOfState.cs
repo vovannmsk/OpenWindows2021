@@ -603,6 +603,17 @@ namespace States
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
+        /// <summary>
+        /// смена аккаунтов в чистом окне
+        /// </summary>
+        public void StateInputOutputCW()
+        {
+            // reOpen 
+            StateDriverRun(new StateGT308(botwindow), new StateGT315(botwindow)); 
+
+            //закрываем чистое окно с игрой
+            StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
+        }
 
 
         /// <summary>

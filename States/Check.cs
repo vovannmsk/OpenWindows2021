@@ -2296,19 +2296,15 @@ namespace States
         /// </summary>
         public void ChangingAccountsCW()
         {
-            botwindow = new botWindow(numberOfWindow);
-            ServerFactory serverFactory = new ServerFactory(botwindow);
-            this.server = serverFactory.create();
-            this.globalParam = new GlobalParam();
-            this.botParam = new BotParam(numberOfWindow);
-            this.isActiveServer = server.IsActiveServer;
+            //botwindow = new botWindow(numberOfWindow);
+            //ServerFactory serverFactory = new ServerFactory(botwindow);
+            //this.server = serverFactory.create();
+            //this.globalParam = new GlobalParam();
+            //this.botParam = new BotParam(numberOfWindow);
+            //this.isActiveServer = server.IsActiveServer;
 
-            if (isActiveServer) driver.StateInputOutput6();
-            else
-            {
-                server.RemoveSandboxie();
-
-            }
+            if (isActiveServer) driver.StateInputOutputCW();
+            else server.RemoveSandboxieCW();
             //}
         }
 

@@ -46,6 +46,8 @@
     <Compile Include="IState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateDriver.cs" />
+    <Compile Include="StateGT171.cs" />
+    <Compile Include="StateGT308.cs" />
     <Compile Include="StateGT402.cs" />
     <Compile Include="StateGT403.cs" />
     <Compile Include="StateGT404.cs" />

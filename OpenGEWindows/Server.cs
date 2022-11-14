@@ -796,11 +796,23 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// восстановливает чистое окно Стим
+        /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
+        /// чистое окно
         /// </summary>
-        public void ReOpenClearWindow()
+        /// <returns> hwnd окна </returns>
+        private void OpenWindowCW()
         {
-            OpenWindow();                 //загружаем чистое окно
+            runClientCW();    ///запускаем клиент игры и ждем 30 сек
+
+            if (!AccountBusy)           //если аккаунт не занят на другом компе
+            {
+                while (true)
+                {
+                    Pause(3000);
+                    UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
+                    if (hwnd != (UIntPtr)0) break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из цикла
+                }
+            }
         }
 
 
@@ -835,6 +847,40 @@ namespace OpenGEWindows
                 ActiveWindow();                      //сдвигаем окно на своё место и активируем его
             }
         }
+
+        /// <summary>
+        /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)  
+        /// чистое окно (без песочницы)
+        /// </summary>
+        public void ReOpenWindowCW()
+        {
+            bool result = isHwnd();   //Перемещает в заданные координаты. Если окно есть, то result=true, а если вылетело окно, то result=false.
+            if (!result)  //нет окна с нужным HWND
+            {
+                if (FindWindowGE_CW() == (UIntPtr)0)   //если поиск окна тоже не дал результатов
+                {
+                    OpenWindowCW();                 //то загружаем новое окно
+
+                    if (!Server.AccountBusy)
+                    {
+                        ActiveWindow();
+
+                        while (!isLogout()) Pause(1000);    //ожидание логаута        бесконечный цикл
+
+                        ActiveWindow();
+                    }
+                }
+                else
+                {
+                    ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+                }
+            }
+            else
+            {
+                ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+            }
+        }
+
 
         /// <summary>
         /// проверяем, выскочило ли сообщение о несовместимости версии SafeIPs.dll
@@ -993,12 +1039,33 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// закрываем текущий клиент игры вместе со Steam (чистое окно)
+        /// </summary>
+        public void RemoveSandboxieCW()
+        {
+            int result = botParam.NumberOfInfinity + 1;         //прибавили индекс, когда удаляем песочницу 
+            if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
+            botParam.NumberOfInfinity = result;
+            MoveMouseDown();                                    //перемещаем мышь вниз 
+            Pause(400);
+
+            Process process = new Process();
+            process.StartInfo.FileName = this.pathClient;
+            process.StartInfo.Arguments = " -shutdown";
+            process.Start();
+
+            Pause(4000);
+        }
+
+
+
+        /// <summary>
         /// удаляем текущую песочницу
         /// </summary>
         public void RemoveSandboxie()
         {
             int result = botParam.NumberOfInfinity + 1; //прибавили индекс, когда удаляем песочницу 
-            if (result >= botParam.LengthOfList) result = 0;
+            if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
             botParam.NumberOfInfinity = result;
             //new Point(1597, 1060).Move();   //перемещаем мышь вниз 
             MoveMouseDown(); 
@@ -1102,7 +1169,9 @@ namespace OpenGEWindows
 
         public abstract void runClientSteamBH();
         public abstract void runClient();
+        public abstract void runClientCW();
         public abstract UIntPtr FindWindowGE();
+        public abstract UIntPtr FindWindowGE_CW();
         //public abstract UIntPtr FindWindowSteam();
 
         /// <summary>
