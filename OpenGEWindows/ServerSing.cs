@@ -64,9 +64,9 @@ namespace OpenGEWindows
             this.pointSteamPassword = new Point(862, 489);//для Стима используются абсолютные координаты
             this.pointSteamSavePassword = new Point(843, 518);//для Стима используются абсолютные координаты
             this.pointSteamOk = new Point(902, 551);//для Стима используются абсолютные координаты
-            this.pointisNewSteam1 = new PointColor(998, 715, 14471368, 0); //для Стима используются абсолютные координаты
-            this.pointisNewSteam2 = new PointColor(999, 715, 14471368, 0); //для Стима используются абсолютные координаты
-            this.pointNewSteamOk = new Point(983, 712);   //кнопка "Соглашаюсь", когда входишь в новый акк
+            this.pointisNewSteam1 = new PointColor(1165, 338, 11382191, 0); //для Стима используются абсолютные координаты
+            this.pointisNewSteam2 = new PointColor(1166, 338, 11382191, 0); //для Стима используются абсолютные координаты
+            this.pointNewSteamOk = new Point(1034, 694);   //кнопка "Соглашаюсь", когда входишь в новый акк
             
             //this.pointisContinueRunning1 = new PointColor(861, 551, 14400000, 5); //для Стима используются абсолютные координаты
             //this.pointisContinueRunning2 = new PointColor(862, 551, 14400000, 5); //для Стима используются абсолютные координаты
@@ -76,6 +76,9 @@ namespace OpenGEWindows
 
             this.pointisWhatNews1 = new PointColor(976, 712, 15131615, 0);
             this.pointisWhatNews2 = new PointColor(977, 712, 15131615, 0);
+
+            this.pointLeaveGame = new Point(1045, 705);
+
             #endregion
 
             #region Logout
@@ -721,15 +724,16 @@ namespace OpenGEWindows
                 Pause(500);
 
                 HWND = FindWindow("Granado Espada", "Granado Espada");
-
+                //HWND = FindWindow("Granado Espada", "[#] Granado Espada [#]");
+                
                 count++; if (count > 5) return (UIntPtr)0;
             }
 
             botParam.Hwnd = HWND;
             //botwindow.setHwnd(HWND);
 
-            SetWindowPos(HWND, 0, xx, yy, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
-            //            ShowWindow(HWND, 2);   //скрыть окно в трей
+            SetWindowPos(HWND, 0, 5, 5, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+            
             Pause(500);
 
             return HWND;

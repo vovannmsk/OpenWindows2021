@@ -2337,7 +2337,7 @@ namespace States
             //Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
 
-            server.ReOpenWindow();
+            //server.ReOpenWindow();
 
             //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
             //MessageBox.Show("половина патронов? " + server.isBulletHalf());
@@ -2476,10 +2476,17 @@ namespace States
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
 
+            Pause(4000);
+            server.ActiveWindow();
+            iPoint pointLeaveGame = new Point(1045, 705);
+            pointLeaveGame.Move();
+            Pause(400);
+            pointLeaveGame.PressMouseLL();
+
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1042, 551, 1, 1);
-            //PointColor point2 = new PointColor(1043, 551, 1, 1);
+            //PointColor point1 = new PointColor(1165, 338, 1, 1);
+            //PointColor point2 = new PointColor(1166, 338, 1, 1);
             PointColor point1 = new PointColor(848 - 5 + xx, 609 - 5 + yy, 0, 0);
             PointColor point2 = new PointColor(848 - 5 + xx, 610 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(848 - 5 + xx, 611 - 5 + yy, 0, 0);

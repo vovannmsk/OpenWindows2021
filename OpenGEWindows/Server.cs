@@ -106,6 +106,9 @@ namespace OpenGEWindows
         protected iPointColor pointisWhatNews1;
         protected iPointColor pointisWhatNews2;
 
+        protected iPoint pointLeaveGame;
+
+
         #endregion
 
         #region Logout
@@ -749,6 +752,7 @@ namespace OpenGEWindows
         /// <returns>Если окно есть, то result = true, а если вылетело окно, то result = false.</returns>
         private bool SetPosition()
         {
+            //MessageBox.Show("SetPosition HWND=" + botParam.Hwnd);
             if (globalParam.Windows10)
                 return SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y - 1, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
             else
@@ -769,6 +773,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ActiveWindow()
         {
+            //MessageBox.Show("ActiveWindow HWND=" + botParam.Hwnd);
             ShowWindow(botParam.Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
             SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
             //BringWindowToTop(botParam.Hwnd);                                  // Делает окно активным и Перемещает окно в верхний список Z порядка     
@@ -803,16 +808,20 @@ namespace OpenGEWindows
         private void OpenWindowCW()
         {
             runClientCW();    ///запускаем клиент игры и ждем 30 сек
+            //Pause(30000);
 
-            if (!AccountBusy)           //если аккаунт не занят на другом компе
+            while (true)
             {
-                while (true)
+                Pause(3000);
+                UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
+                if (hwnd != (UIntPtr)0)
                 {
-                    Pause(3000);
-                    UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
-                    if (hwnd != (UIntPtr)0) break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из цикла
+                    //ActiveWindow();
+                    //MessageBox.Show("номер нового окна = " + hwnd + " HWND=" + botParam.Hwnd);
+                    break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
                 }
             }
+            Pause(20000);
         }
 
 
@@ -861,14 +870,14 @@ namespace OpenGEWindows
                 {
                     OpenWindowCW();                 //то загружаем новое окно
 
-                    if (!Server.AccountBusy)
-                    {
-                        ActiveWindow();
-
-                        while (!isLogout()) Pause(1000);    //ожидание логаута        бесконечный цикл
-
-                        ActiveWindow();
-                    }
+                    //MessageBox.Show("Реопен перед проверкой логаута HWND=" + botParam.Hwnd);
+                    //while (!isLogout())
+                    //{
+                    //    Pause(1000);    //ожидание логаута        бесконечный цикл
+                    //    SetPosition();
+                    //    ActiveWindow();
+                    //}
+                    //MessageBox.Show("Реопен после проверки логаута");
                 }
                 else
                 {
@@ -881,6 +890,27 @@ namespace OpenGEWindows
             }
         }
 
+        /// <summary>
+        /// закрываем текущий клиент игры вместе со Steam (чистое окно)
+        /// </summary>
+        public void RemoveSandboxieCW()
+        {
+            int result = botParam.NumberOfInfinity + 1;         //прибавили индекс, когда удаляем песочницу 
+            if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
+            botParam.NumberOfInfinity = result;
+            Pause(400);
+
+            ActiveWindow();
+            //MessageBox.Show("начинаем выгружать окно");
+            pointLeaveGame.PressMouseLL();                //нажимаем на кнопку "Leave Game"  в логауте
+
+            Process process = new Process();
+            process.StartInfo.FileName = this.pathClient;
+            process.StartInfo.Arguments = " -shutdown";
+            process.Start();
+
+            Pause(12000);
+        }
 
         /// <summary>
         /// проверяем, выскочило ли сообщение о несовместимости версии SafeIPs.dll
@@ -1038,24 +1068,6 @@ namespace OpenGEWindows
                 //" " + botParam.Passwords[botParam.NumberOfInfinity] + " " + botParam.Parametrs[botParam.NumberOfInfinity]);
         }
 
-        /// <summary>
-        /// закрываем текущий клиент игры вместе со Steam (чистое окно)
-        /// </summary>
-        public void RemoveSandboxieCW()
-        {
-            int result = botParam.NumberOfInfinity + 1;         //прибавили индекс, когда удаляем песочницу 
-            if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
-            botParam.NumberOfInfinity = result;
-            MoveMouseDown();                                    //перемещаем мышь вниз 
-            Pause(400);
-
-            Process process = new Process();
-            process.StartInfo.FileName = this.pathClient;
-            process.StartInfo.Arguments = " -shutdown";
-            process.Start();
-
-            Pause(4000);
-        }
 
 
 
