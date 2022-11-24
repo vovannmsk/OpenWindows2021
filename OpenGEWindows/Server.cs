@@ -901,6 +901,7 @@ namespace OpenGEWindows
             Pause(400);
 
             ActiveWindow();
+            Pause(1000);
             //MessageBox.Show("начинаем выгружать окно");
             pointLeaveGame.PressMouseLL();                //нажимаем на кнопку "Leave Game"  в логауте
 
@@ -6424,13 +6425,19 @@ namespace OpenGEWindows
         {
             int result = 0;
 
-            if (new PointColor(33 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 806655, 0).isColor())    //флинтлок
-            { 
-                //проверяем Y
+            if (new PointColor(33 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 806655, 0).isColor())    //узнали, что это флинтлок
+            {
+                //проверяем Y, чтобы понять мушкетер или Бернелли
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 13951211, 0).isColor())
+                {
                     result = 1;     //мушкетер с флинтом
+                    return result;
+                }
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
+                {
                     result = 10;   //Бернелли с флинтом
+                    return result;
+                }
             }
             //if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
             //if (new PointColor(18 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
@@ -6441,14 +6448,26 @@ namespace OpenGEWindows
             //if (new PointColor(26 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
             //if (new PointColor(25 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
 
-            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
-            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
-            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor()) result = 4;    //Джайна
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
+            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor())
+            {
+                result = 2;   //Берка(супериор бластер)
+                return result;
+            }
+            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor())
+            {
+                result = 3;    //Лорч
+                return result;
+            }
+            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor())
+            {
+                result = 4;    //Джайна
+                return result;
+            }
+//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
                                                                                                                 //C.Daria
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
-            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
-            if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
+//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
+//            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
+//            if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
 
             return result;
         }
@@ -6479,21 +6498,22 @@ namespace OpenGEWindows
                     case 4:
                         BuffJaina(i);  //*
                         break;
-                    case 5:
-                        BuffBarell(i);  //*
-                        break;
-                    case 6:
-                        BuffCDaria(i);   //47
-                        break;
-                    case 7:
-                        BuffTom(i);
-                        break;
-                    case 8:
-                        BuffMoon(i);  //*
-                        break;
-                    case 9:
-                        BuffMisa(i);
-                        break;
+                    // убрал этих героев из походов в Demonic
+                    //case 5:
+                    //    BuffBarell(i);  //*
+                    //    break;
+                    //case 6:
+                    //    BuffCDaria(i);   //47
+                    //    break;
+                    //case 7:
+                    //    BuffTom(i);
+                    //    break;
+                    //case 8:
+                    //    BuffMoon(i);  //*
+                    //    break;
+                    //case 9:
+                    //    BuffMisa(i);
+                    //    break;
                     case 10:
                         BuffBernelliFlint(i);   //*
                         break;

@@ -77,7 +77,7 @@ namespace OpenGEWindows
             this.pointisWhatNews1 = new PointColor(976, 712, 15131615, 0);
             this.pointisWhatNews2 = new PointColor(977, 712, 15131615, 0);
 
-            this.pointLeaveGame = new Point(1045, 705);
+            this.pointLeaveGame = new Point(613 - 5 + xx, 540 - 5 + yy);
 
             #endregion
 
