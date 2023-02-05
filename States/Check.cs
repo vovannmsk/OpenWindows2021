@@ -800,6 +800,11 @@ namespace States
                             server.WriteToLogFileBH("зависли в БХ");
                             numberOfProblem = 18; //переходим в стартовый город через системное меню
                             break;
+                        //case 17:  //зависли в бараке на стадии выбора группы
+                        //    server.WriteToLogFileBH("зависли в бараке на стадии выбора группы");
+                        //    numberOfProblem = 18; //переходим в стартовый город через системное меню
+                        //    break;
+
                     }
                 }
                 else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
@@ -1189,7 +1194,7 @@ namespace States
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
 
-            //if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
             return 0;
@@ -1257,6 +1262,9 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
                     case 20:
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
@@ -1303,6 +1311,7 @@ namespace States
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
 
+            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
             return 0;
@@ -1341,7 +1350,10 @@ namespace States
                         dialog.PressOkButton(1);
                         //botParam.HowManyCyclesToSkip = 1;
                         break;
-                }
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+            }
             //}
             //else
             //{
@@ -2290,6 +2302,14 @@ namespace States
                 driver.StateNewAcc2(); //новые акки
         }
 
+
+
+
+
+        #endregion
+
+        #region смена аккаунтов (ЧИСТОЕ ОКНО)
+
         /// <summary>
         /// смена ботов в чистом окне (загрузка аккаунта-логаут-барак-город-выгрузка аккаунта)
         /// нужно для того, чтобы на новом компе войти каждым аккаунтом в игру
@@ -2307,8 +2327,6 @@ namespace States
             else server.RemoveSandboxieCW();
             //}
         }
-
-
 
         #endregion
 

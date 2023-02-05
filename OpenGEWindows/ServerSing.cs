@@ -77,7 +77,8 @@ namespace OpenGEWindows
             this.pointisWhatNews1 = new PointColor(976, 712, 15131615, 0);
             this.pointisWhatNews2 = new PointColor(977, 712, 15131615, 0);
 
-            this.pointLeaveGame = new Point(613 - 5 + xx, 540 - 5 + yy);
+            //this.pointLeaveGame = new Point(613 - 5 + xx, 540 - 5 + yy);    //если окно смещается в левый верхний угол
+            this.pointLeaveGame = new Point(1040, 710);                       //если окно не смещается в левый верхний угол, а остаётся посредине экрана
 
             #endregion
 
@@ -804,11 +805,6 @@ namespace OpenGEWindows
             process.Start();
             Pause(10000);
 
-            if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
-            {
-                pointNewSteamOk.PressMouseL();
-            }
-
             for (int i = 1; i <= 10; i++)
             {
                 Pause(1000);
@@ -858,7 +854,9 @@ namespace OpenGEWindows
 
                 if (isNewSteam())
                 {
-                    pointNewSteamOk.PressMouseL();
+                    new Point(1040, 560).PressMouseL();   //нажимаем "Отмена" на предложение установить службу Стим
+                    Pause(1000);
+                    pointNewSteamOk.PressMouseL();  //нажимаем "Соглашаюсь"
                 }
 
                 if (isContinueRunning())    //если аккаунт запущен на другом компе
@@ -1143,6 +1141,17 @@ namespace OpenGEWindows
                         process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
                         process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
                         process.Start();
+
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            Pause(1000);
+
+                            if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
+                            {
+                                pointNewSteamOk.PressMouseL();
+                            }
+
+                        }
                     }
                     else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
                     {
@@ -1169,6 +1178,7 @@ namespace OpenGEWindows
                     isLoadedGEBH = true;
                     AccountBusy = false;
 
+
                     //запускаем steam в песочнице (вариант 1)
                     Process process = new Process();
                     process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
@@ -1178,32 +1188,33 @@ namespace OpenGEWindows
                     process.Start();
 
 
-                    //for (int i = 1; i <= 10; i++)
-                    //{
-                    //    Pause(1000);
 
-                    //    //if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
-                    //    //{
-                    //    //    OkSystemError();
-                    //    //}
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        Pause(1000);
 
-                    //    if (isNewSteam())
-                    //    {
-                    //        pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
-                    //    }
+                        //    //if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
+                        //    //{
+                        //    //    OkSystemError();
+                        //    //}
 
-                    //    if (isContinueRunning())    //если аккаунт запущен на другом компе
-                    //    {
-                    //        NextAccount();
-                    //        AccountBusy = true;
-                    //        //                            RemoveSandboxieBH();
-                    //        CloseSandboxieBH();
-                    //        botParam.NumberOfInfinity = globalParam.Infinity;
-                    //        globalParam.Infinity = botParam.NumberOfInfinity + 1;
+                        if (isNewSteam())
+                        {
+                            pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
+                        }
 
-                    //        break;
-                    //    }
-                    //}
+                        //    if (isContinueRunning())    //если аккаунт запущен на другом компе
+                        //    {
+                        //        NextAccount();
+                        //        AccountBusy = true;
+                        //        //                            RemoveSandboxieBH();
+                        //        CloseSandboxieBH();
+                        //        botParam.NumberOfInfinity = globalParam.Infinity;
+                        //        globalParam.Infinity = botParam.NumberOfInfinity + 1;
+
+                        //        break;
+                        //    }
+                    }
                 }
                 else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
                 {
@@ -1342,6 +1353,16 @@ namespace OpenGEWindows
             //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             process.Start();
 
+            for (int i = 1; i <= 10; i++)
+            {
+                Pause(1000);
+
+                if (isNewSteam())
+                {
+                    pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
+                }
+
+            }
             #endregion
         }
 
