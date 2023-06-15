@@ -63,6 +63,7 @@ namespace States
             botwindow.Pause(1000);
 
             //============ выбор канала ===========
+            botwindow.SelectChannel(1);                 //12.03.2023
             //botwindow.SelectChannel();
             //botwindow.Pause(1000);
 

@@ -226,6 +226,9 @@ namespace OpenGEWindows
 
         #region atWork
 
+        protected iPointColor pointisBadFightingStance1;   //неправильная стойка
+        protected iPointColor pointisBadFightingStance2;
+        protected iPoint pointProperFightingStance;  //правильная стойка
         protected iPointColor pointisKillHero1;      //если перс убит
         protected iPointColor pointisKillHero2;
         protected iPointColor pointisKillHero3;
@@ -744,8 +747,7 @@ namespace OpenGEWindows
 
         #endregion
 
-
-        #region No window  (работа с читым окном)
+        #region No window  (работа с чистым окном)
 
 
         /// <summary>
@@ -830,7 +832,6 @@ namespace OpenGEWindows
 
 
         #endregion
-
 
         #region No Window
 
@@ -966,7 +967,7 @@ namespace OpenGEWindows
         /// если первый раз загружается стим на этом компе, то надо нажать "соглашаюсь"
         /// </summary>
         /// <returns>true, если первый раз загружается стим на этом компе</returns>
-        protected bool isNewSteam()
+        public bool isNewSteam()
         {
             return (pointisNewSteam1.isColor() && pointisNewSteam2.isColor());
         }
@@ -1199,7 +1200,7 @@ namespace OpenGEWindows
         //public abstract UIntPtr FindWindowSteam();
 
         /// <summary>
-        /// найден ли Steam в текущей песочнице?
+        /// поиск окна Steam в текущей песочнице (в том числе для миссии в Demonic)
         /// </summary>
         /// <returns>true, если Steam найден</returns>
         public abstract bool FindWindowSteamBool();
@@ -2278,6 +2279,23 @@ namespace OpenGEWindows
         public abstract bool is248Items();
 
         public abstract void AddBullet10000();
+
+        /// <summary>
+        /// неправильная стойка у мушкетёра или Бернелли (не флинтлок)?
+        /// </summary>
+        /// <returns> true, если неправильная </returns>
+        public bool isBadFightingStance()
+        {
+            return pointisBadFightingStance1.isColor() && pointisBadFightingStance2.isColor() ;
+        }
+
+        /// <summary>
+        /// Выбрать правильную стойку (Флинтлок)
+        /// </summary>
+        public void ProperFightingStanceOn()
+        {
+            pointProperFightingStance.PressMouseLL();  //включить правильную стойку (Флинтлок)
+        }
 
         /// <summary>
         /// метод проверяет, закончились ли экспертные патроны (красный значок индикатора)
@@ -6046,7 +6064,7 @@ namespace OpenGEWindows
         {
             //MinHeight();
             botwindow.FirstHero();
-            new Point(528 - 105 + xx, 316 - 105 + yy).PressMouseL();       
+            new Point(528 - 105 + xx, 296 - 105 + yy).PressMouseL();       //316-105
         }
 
         /// <summary>
@@ -6303,7 +6321,7 @@ namespace OpenGEWindows
             //вариант 2. новый и простой, но не проверенный
             // сначала атакуем в выбранном направлении
             x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
-            y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз
+            y = 412 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз   //382
 
             if (new PointColor(x, y - 150, 0, 0).GetPixelColor() < 400000)        //если сдвинулись слишком сильно вверх (т.е. близко к верхнему краю боевой арены)
             {
@@ -6965,7 +6983,7 @@ namespace OpenGEWindows
             return new PointColor(552 - 5 + xx, 435 - 5 + yy, 0, 0).isColor() &&
                     new PointColor(552 - 5 + xx, 436 - 5 + yy, 0, 0).isColor();
 
-            // ЦВЕТ ТОЧЕК НАДО УКАЗАТЬ
+            // ЦВЕТ ТОЧЕК НАДО УКАЗАТЬ и проверить координаты. сейчас этот метод не работает
         }
 
         /// <summary>

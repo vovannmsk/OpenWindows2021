@@ -41,7 +41,8 @@
             this.pointIsPerfume1 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);   //не готово
             this.pointIsPerfume2 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);
 
-            this.pointIsNearOldMan = new PointColor(957 - 5 + xx, 133 - 5 + yy, 2303198, 0);
+//            this.pointIsNearOldMan = new PointColor(957 - 5 + xx, 133 - 5 + yy, 2303198, 0); старый вариант
+            this.pointIsNearOldMan = new PointColor(957 - 5 + xx, 133 - 5 + yy, 2303000, 3);
 
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
@@ -135,11 +136,18 @@
         /// </summary>
         public override void GetTask()
         {
-            dialog.PressStringDialog(1);
+            //dialog.PressStringDialog(1);
+            //dialog.PressOkButton(1);
+
+            //dialog.PressStringDialog(2);
+            //dialog.PressOkButton(2);
+
+            dialog.PressStringDialog(3);
             dialog.PressOkButton(1);
 
             dialog.PressStringDialog(2);
             dialog.PressOkButton(2);
+
 
         }
 
@@ -148,12 +156,16 @@
         /// </summary>
         public override void EnterToTierraDeLosMuertus()
         {
-            dialog.PressStringDialog(2);
+            //dialog.PressStringDialog(2);      //старый вариант
+            //dialog.PressOkButton(1);
+            dialog.PressStringDialog(4);
             dialog.PressOkButton(1);
 
             //if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
             //{
-            dialog.PressStringDialog(3);     // стартовая точка - около входа
+            //dialog.PressStringDialog(3);     // стартовая точка - около входа
+            dialog.PressStringDialog(2);     // стартовая точка - в середине карты
+            //dialog.PressStringDialog(1);     // стартовая точка - вверху
             dialog.PressOkButton(1);
             //}
             //else
@@ -163,7 +175,7 @@
             //}
 
             botwindow.Pause(500);
-            dialog.PressStringDialog(1);    //move
+            dialog.PressStringDialog(1);    //move  (в миссию)
             botwindow.Pause(500);
             dialog.PressOkButton(1);
             botwindow.Pause(500);
@@ -174,7 +186,8 @@
         /// </summary>
         public override void TakePureOtite()
         {
-            dialog.PressStringDialog(1);
+            //dialog.PressStringDialog(1);      //старый вариант
+            dialog.PressStringDialog(3);
             dialog.PressOkButton(1);
 
             dialog.PressStringDialog(1);

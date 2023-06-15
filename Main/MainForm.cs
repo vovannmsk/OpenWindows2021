@@ -794,7 +794,6 @@ namespace Main
 
         #endregion
 
-
         #region Смена аккаунтов (чистое окно)
 
         /// <summary>

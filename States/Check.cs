@@ -41,6 +41,10 @@ namespace States
         private DriversOfState driver;
         private BotParam botParam;
         //private System.Windows.Forms.Timer NowTimer = new System.Windows.Forms.Timer();
+
+        /// <summary>
+        /// переменная нужна для отслеживания зависания в состоянии Logout
+        /// </summary>
         private bool SteamLoaded;
         /// <summary>
         /// текущее дата и время
@@ -674,14 +678,17 @@ namespace States
                 }
                 else    //если Стим уже загружен
                 {
-                    if (!server.FindWindowGEforBHBool())
-                    {
-                        return 22;                  //если нет окна ГЭ в текущей песочнице
-                    }
-                    else
-                    {
-                        return 23;                  //нашли окно ГЭ в текущей песочнице и перезаписали Hwnd
-                    }
+                    if (server.FindWindowGEforBHBool()) return 23;    //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else  return 22;                  //если нет окна ГЭ в текущей песочнице
+
+                    //if (!server.FindWindowGEforBHBool())
+                    //{
+                    //    return 22;                  //если нет окна ГЭ в текущей песочнице
+                    //}
+                    //else
+                    //{
+                    //    return 23;                  //нашли окно ГЭ в текущей песочнице и перезаписали Hwnd
+                    //}
                 }
             }
             else            //если окно с нужным HWND нашлось
@@ -708,6 +715,8 @@ namespace States
                     return 8;                       //если стоим в воротах Demonic и миссия доступна
             }
 
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
 
             //Mission Lobby
             if (server.isMissionLobby()) return 5;      //сделано
@@ -895,6 +904,11 @@ namespace States
                         server.GotoSavePoint();
                         botParam.HowManyCyclesToSkip = 3;
                         break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+
                     case 20:
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
@@ -920,7 +934,7 @@ namespace States
                         IsItAlreadyPossibleToUploadNewWindow = 0; //не факт, что надо
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
-                                            //и надо заново проинициализировать основные объекты (не факт, что это нужно)
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
                         if (IsItAlreadyPossibleToUploadNewSteam == 0)
                         {
                             botwindow = new botWindow(numberOfWindow);
@@ -972,6 +986,9 @@ namespace States
 
             //служба Steam
             if (server.isSteamService()) return 11;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 12;
 
             //в миссии
             if (server.isWork() || server.isKillFirstHero())
@@ -1122,6 +1139,10 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
+                    case 12:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
@@ -1161,6 +1182,9 @@ namespace States
 
             //если диалог (он получается, если тыкнуть в ворота)
             if (dialog.isDialog()) return 7;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 12;
 
             //в миссии
             if (server.isWork())
@@ -1226,11 +1250,11 @@ namespace States
                         driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
                         botParam.HowManyCyclesToSkip = 2;
                         break;
-                    case 3:                                         //в миссии, но рулетка не крутится
+                    case 3:                                         //в миссии, но рулетка ещё не крутится
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         botParam.HowManyCyclesToSkip = 1;
                         GoBarack = 1;
-                        server.MaxHeight(3);                        //чтобы было видно вторые ворота
+                        //server.MaxHeight(3);                        //чтобы было видно вторые ворота
                         break;
                     case 4:                                         //крутится рулетка или уже тыкали в сундук
                         server.GotoBarack();
@@ -1262,6 +1286,10 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
+                    case 12:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
@@ -1290,6 +1318,9 @@ namespace States
         {
             //если диалог, то выбрать вход в комнату с фесо
             if (dialog.isDialog()) return 7;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 12;
 
             //в миссии
             if (server.isWork())
@@ -1350,9 +1381,13 @@ namespace States
                         dialog.PressOkButton(1);
                         //botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 17:                                        // в бараках на стадии выбора группы
-                        botwindow.PressEsc();                       // нажимаем Esc
+                    case 12:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
                         break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                            botwindow.PressEsc();                       // нажимаем Esc
+                            break;
             }
             //}
             //else
@@ -2392,11 +2427,11 @@ namespace States
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
             //MessageBox.Show(" " + pet.isActivePet());
-            //MessageBox.Show(" " + otit.isTaskDone());
+            //MessageBox.Show(" " + otit.isNearOldMan());
 
             //botwindow.Pause(1000);
 
-            //MessageBox.Show("в бараке? " + server.isBarackCreateNewHero());
+            MessageBox.Show("загружен Стим? " + server.FindWindowSteamBool());
             // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
@@ -2494,20 +2529,20 @@ namespace States
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
 
-            Pause(4000);
+            //Pause(4000);
             server.ActiveWindow();
-            iPoint pointLeaveGame = new Point(1045, 705);
-            pointLeaveGame.Move();
-            Pause(400);
-            pointLeaveGame.PressMouseLL();
+            //iPoint pointLeaveGame = new Point(1045, 705);
+            //pointLeaveGame.Move();
+            //Pause(400);
+            //pointLeaveGame.PressMouseLL();
 
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1165, 338, 1, 1);
-            //PointColor point2 = new PointColor(1166, 338, 1, 1);
-            PointColor point1 = new PointColor(848 - 5 + xx, 609 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(848 - 5 + xx, 610 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(848 - 5 + xx, 611 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(1018, 692, 1, 1);
+            //PointColor point2 = new PointColor(1019, 692, 1, 1);
+            PointColor point1 = new PointColor(957 - 5 + xx, 133 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(87 - 5 + xx, 675 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
@@ -2517,6 +2552,12 @@ namespace States
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);
 
+            if (server.isBadFightingStance())
+            {
+                server.ProperFightingStanceOn();
+                //Pause(200);
+                server.MoveCursorOfMouse();
+            }
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
             MessageBox.Show(" " + color3);

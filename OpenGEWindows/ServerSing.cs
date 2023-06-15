@@ -4,7 +4,6 @@ using System.Diagnostics;
 using GEBot.Data;
 
 
-
 namespace OpenGEWindows
 {
     /// <summary>
@@ -214,7 +213,9 @@ namespace OpenGEWindows
             this.pointisBulletOff2 = new PointColor(484 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
             this.pointisBulletOff3 = new PointColor(739 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
 
-
+            this.pointProperFightingStance = new Point(115 - 5 + xx, 676 - 5 + yy);
+            this.pointisBadFightingStance1 = new PointColor(85 - 5 + xx, 673 - 5 + yy, 16777215, 0);
+            this.pointisBadFightingStance2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 16777215, 0);
 
             #endregion
 
@@ -1134,14 +1135,15 @@ namespace OpenGEWindows
                     #region для песочницы
                     if (isActiveServer)    //если надо грузить, то грузим 
                     {
-                        isLoadedSteamBH = true;
+                        isLoadedSteamBH = true;   
 
                         //запускаем steam в песочнице
                         Process process = new Process();
                         process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
                         process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
+                        //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";   //15.06.23
                         process.Start();
-
+                        
                         for (int i = 1; i <= 10; i++)
                         {
                             Pause(1000);
@@ -1250,7 +1252,7 @@ namespace OpenGEWindows
         {
             bool result = false;
             UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":Granado Espada", "[#] Granado Espada [#]");
-
+                                                                                                                
             if (HWND != (UIntPtr)0)
             {
                 botParam.Hwnd = HWND;  //если окно найдено, то запись в файл HWND.txt
@@ -1275,7 +1277,7 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
-        /// поиск окна Steam в текущей песочнице
+        /// поиск окна Steam в текущей песочнице (в том числе для миссии в Demonic)
         /// </summary>
         /// <returns>true, если найден стим для текущего окна</returns>
         public override bool FindWindowSteamBool()
@@ -1283,9 +1285,11 @@ namespace OpenGEWindows
             bool result = false;
             UIntPtr HWND;
             if (globalParam.Windows10)
-                HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
+                //HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "[#] Steam [#]");
+                HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", ""); //15.06.23
             else
-                HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "Steam");
+//                HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "Steam");
+                HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":vguiPopupWindow", "");   //15.06.23
 
             if (HWND != (UIntPtr)0)
             {
@@ -1353,16 +1357,16 @@ namespace OpenGEWindows
             //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             process.Start();
 
-            for (int i = 1; i <= 10; i++)
-            {
-                Pause(1000);
+            //for (int i = 1; i <= 10; i++)
+            //{
+            //    Pause(1000);
 
-                if (isNewSteam())
-                {
-                    pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
-                }
+            //    if (isNewSteam())
+            //    {
+            //        pointNewSteamOk.PressMouseL(); //нажимаем кнопку "соглашаюсь"
+            //    }
 
-            }
+            //}
             #endregion
         }
 
