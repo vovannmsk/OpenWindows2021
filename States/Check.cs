@@ -27,6 +27,9 @@ namespace States
         /// </summary>
         private int prevProblem;
         private int prevPrevProblem;
+        /// <summary>
+        /// номер окна по порядку (в том порядке, на каком оно находится на экране. Самое левое верхнее левое окно имеет #1)
+        /// </summary>
         private int numberOfWindow;
         private botWindow botwindow;
         private Server server;
@@ -664,6 +667,26 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage1()
         {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) 
+                { server.CloseSteamWindow(); 
+                    //server.CloseSteam();
+                }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow2()) 
+                { server.CloseSteamWindow2(); 
+                    //server.CloseSteam(); 
+                }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow3()) 
+                { server.CloseSteamWindow3(); 
+                    //server.CloseSteam();
+                }
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820())    {  new Point(1117, 604).PressMouseL(); }
+
+
             //служба Steam
             if (server.isSteamService()) return 11;
 
@@ -953,8 +976,8 @@ namespace States
                         break;
                     case 31:
                         server.CloseSandboxieBH();              //закрываем все проги в песочнице
-                        //IsItAlreadyPossibleToUploadNewSteam = 0;
-                        //IsItAlreadyPossibleToUploadNewWindow = 0; 
+                        IsItAlreadyPossibleToUploadNewSteam = 0;   //24.06.23
+                        IsItAlreadyPossibleToUploadNewWindow = 0;    //24.06.23
                         break;
                     case 32:
                         IsItAlreadyPossibleToUploadNewSteam = 0;
@@ -981,8 +1004,24 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage2()
         {
-            //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow())
+            {
+                server.CloseSteamWindow();
+                //server.CloseSteam();
+            }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow2())
+            {
+                server.CloseSteamWindow2();
+                //server.CloseSteam(); 
+            }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow3())
+            {
+                server.CloseSteamWindow3();
+                //server.CloseSteam();
+            }
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1171,11 +1210,24 @@ namespace States
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemDemMultiStage3()
         {
-            //служба Steam
-            if (server.isSteamService()) return 11;
-
-            //если открыто окно Стим в правом нижнем углу
-            if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow())
+            {
+                server.CloseSteamWindow();
+                //server.CloseSteam();
+            }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow2())
+            {
+                server.CloseSteamWindow2();
+                //server.CloseSteam(); 
+            }
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow3())
+            {
+                server.CloseSteamWindow3();
+                //server.CloseSteam();
+            }
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -2431,7 +2483,9 @@ namespace States
 
             //botwindow.Pause(1000);
 
-            MessageBox.Show("загружен Стим? " + server.FindWindowSteamBool());
+//            MessageBox.Show("ошибка 820? " + server.isError820());
+            MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
+            //MessageBox.Show("служба Стим? " + server.isSteamService());
             // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
@@ -2528,9 +2582,11 @@ namespace States
             //PointColor point2 = new PointColor(151 - 5 + xx, 209 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в городе
             // PointColor point1 = new PointColor(152 - 5 + xx, 250 - 5 + yy + (j - 1) * 27, 1, 1);       // новый товар в магазине в Катовии
 
-
             //Pause(4000);
+            //
             server.ActiveWindow();
+
+
             //iPoint pointLeaveGame = new Point(1045, 705);
             //pointLeaveGame.Move();
             //Pause(400);
@@ -2538,29 +2594,32 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1018, 692, 1, 1);
-            //PointColor point2 = new PointColor(1019, 692, 1, 1);
-            PointColor point1 = new PointColor(957 - 5 + xx, 133 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(87 - 5 + xx, 675 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(1869, 451, 1, 1);
+            PointColor point2 = new PointColor(1870, 451, 1, 1);
+            PointColor point3 = new PointColor(1871, 451, 1, 1);
+            //PointColor point1 = new PointColor(957 - 5 + xx, 133 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(87 - 5 + xx, 675 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
             color3 = point3.GetPixelColor();
 
-            //server.WriteToLogFile("цвет " + color1);
-            //server.WriteToLogFile("цвет " + color2);
-
-            if (server.isBadFightingStance())
-            {
-                server.ProperFightingStanceOn();
-                //Pause(200);
-                server.MoveCursorOfMouse();
-            }
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
             MessageBox.Show(" " + color3);
+
+            //server.WriteToLogFile("цвет " + color1);
+            //server.WriteToLogFile("цвет " + color2);
+
+            //if (server.isBadFightingStance())
+            //{
+            //    server.ProperFightingStanceOn();
+            //    //Pause(200);
+            //    server.MoveCursorOfMouse();
+            //}
+
 
             //for (int x = 29; x <= 52; x++)
             //    for (int y = 205; y <= 216; y++)

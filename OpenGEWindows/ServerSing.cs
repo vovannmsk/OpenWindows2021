@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using GEBot.Data;
+using System.Runtime.InteropServices.ComTypes;
 
 
 namespace OpenGEWindows
@@ -734,9 +735,9 @@ namespace OpenGEWindows
             botParam.Hwnd = HWND;
             //botwindow.setHwnd(HWND);
 
-            SetWindowPos(HWND, 0, 5, 5, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+            //SetWindowPos(HWND, 0, 5, 5, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
             
-            Pause(500);
+            //Pause(500);
 
             return HWND;
         }
@@ -840,33 +841,52 @@ namespace OpenGEWindows
             process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             //steam://rungameid/319730
             process.Start();
-            Pause(15000);
 
-            for (int i = 1; i <= 10; i++)
-            {
-                CloseWhatNews();
 
-                Pause(1000);
+            Pause(10000);
+            //for (int i = 1; i <= 40; i++)
+            //{
+            //    new Point(1400, 710).PressMouseL();
 
-                if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
-                {
-                    OkSystemError();
-                }
+            //    //если открыто окно Стим
+            //    if (isOpenSteamWindow()) { CloseSteamWindow(); CloseSteam(); }
+            //    //если открыто окно Стим
+            //    if (isOpenSteamWindow2()) { CloseSteamWindow2(); CloseSteam(); }
 
-                if (isNewSteam())
-                {
-                    new Point(1040, 560).PressMouseL();   //нажимаем "Отмена" на предложение установить службу Стим
-                    Pause(1000);
-                    pointNewSteamOk.PressMouseL();  //нажимаем "Соглашаюсь"
-                }
+            //    if (isSteamService())
+            //    {
+            //        CloseSteam();
+            //        //Pause(10000);
+            //        //break;
+            //    }
+            //    Pause(1000);
+            //}
 
-                if (isContinueRunning())    //если аккаунт запущен на другом компе
-                {
-                    NextAccount();
-                    AccountBusy = true;
-                    break;
-                }
-            }
+            //for (int i = 1; i <= 10; i++)
+            //{
+            //    CloseWhatNews();
+
+            //    Pause(1000);
+
+            //    if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
+            //    {
+            //        OkSystemError();
+            //    }
+
+            //    if (isNewSteam())
+            //    {
+            //        new Point(1040, 560).PressMouseL();   //нажимаем "Отмена" на предложение установить службу Стим
+            //        Pause(1000);
+            //        pointNewSteamOk.PressMouseL();  //нажимаем "Соглашаюсь"
+            //    }
+
+            //    if (isContinueRunning())    //если аккаунт запущен на другом компе
+            //    {
+            //        NextAccount();
+            //        AccountBusy = true;
+            //        break;
+            //    }
+            //}
 
 
             #endregion

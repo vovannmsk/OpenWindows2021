@@ -813,21 +813,22 @@ namespace OpenGEWindows
         /// <returns> hwnd окна </returns>
         public void OpenWindowCW()
         {
-            runClientCW();    ///запускаем клиент игры и ждем 30 сек
-            //Pause(30000);
+            runClientCW();    ///запускаем чистый клиент игры (не в песочнице)
+            Pause(5000);
 
-            while (true)
-            {
-                Pause(3000);
-                UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
-                if (hwnd != (UIntPtr)0)
-                {
-                    //ActiveWindow();
-                    //MessageBox.Show("номер нового окна = " + hwnd + " HWND=" + botParam.Hwnd);
-                    break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
-                }
-            }
-            Pause(20000);
+            //убрал временно, для получения согласия с лицензией
+            //while (true)
+            //{
+            //    Pause(3000);
+            //    UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
+            //    if (hwnd != (UIntPtr)0)
+            //    {
+            //        ActiveWindow();
+            //        //MessageBox.Show("номер нового окна = " + hwnd + " HWND=" + botParam.Hwnd);
+            //        break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
+            //    }
+            //}
+            Pause(5000);
         }
 
 
@@ -935,13 +936,17 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открыто ли окно Стим?
+        /// открыто ли окно Стим по центру экрана?
         /// </summary>
         /// <returns></returns>
         public bool isOpenSteamWindow()
         {
-            return  new PointColor(1900, 450, 2000000, 6).isColor() && 
-                    new PointColor(1901, 450, 2000000, 6).isColor();
+            return  (new PointColor(1559, 161, 9603704, 0).isColor() && 
+                    new PointColor(1560, 161, 9603704, 0).isColor())
+                    ||
+                    (new PointColor(1869, 451, 9603704, 0).isColor() &&
+                    new PointColor(1870, 451, 9603704, 0).isColor())
+                    ;
         }
 
         /// <summary>
@@ -949,10 +954,67 @@ namespace OpenGEWindows
         /// </summary>
         public void CloseSteamWindow()
         {
-            //new Point(1898, 428).PressMouseL();
-            new Point(1898, 460).PressMouseL();
+            new Point(1593, 166).PressMouseL();
             Pause(500);
         }
+
+        /// <summary>
+        /// открыто ли окно Стим? другое место в центре
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenSteamWindow2()
+        {
+            return new PointColor(1549, 151, 9603704, 0).isColor() &&
+                    new PointColor(1550, 151, 9603704, 0).isColor();
+        }
+
+        /// <summary>
+        /// скрыть окно Steam
+        /// </summary>
+        public void CloseSteamWindow2()
+        {
+            new Point(1583, 156).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// открыто ли окно Стим в правом нижнем углу?
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenSteamWindow3()
+        {
+            return new PointColor(1869, 451, 9603704, 0).isColor() &&
+                    new PointColor(1870, 451, 9603704, 0).isColor();
+        }
+
+        /// <summary>
+        /// скрыть окно Steam
+        /// </summary>
+        public void CloseSteamWindow3()
+        {
+            new Point(1903, 456).PressMouseL();
+            Pause(500);
+        }
+
+
+
+
+        /// <summary>
+        /// выскочила ошибка 820?
+        /// </summary>
+        /// <returns></returns>
+        public bool isError820()
+        {
+            return (new PointColor(1117, 604, 3539040, 0).isColor() &&
+                    new PointColor(1117, 605, 3539040, 0).isColor()) 
+                   || 
+                   (new PointColor(1117, 604, 96, 0).isColor() &&
+                    new PointColor(1117, 605, 96, 0).isColor());
+        }
+
+
+
+
 
         /// <summary>
         /// проверяем, открыто ли окно Стим для ввода логина и пароля
@@ -6049,7 +6111,7 @@ namespace OpenGEWindows
         public void CloseSteam()
         {
             new Point(1380, 451).PressMouseLL();
-            new Point(1043, 560).PressMouseL();
+            new Point(1043, 560).PressMouseLL();
         }
 
         /// <summary>
