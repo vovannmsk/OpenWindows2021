@@ -942,11 +942,7 @@ namespace OpenGEWindows
         public bool isOpenSteamWindow()
         {
             return  (new PointColor(1559, 161, 9603704, 0).isColor() && 
-                    new PointColor(1560, 161, 9603704, 0).isColor())
-                    ||
-                    (new PointColor(1869, 451, 9603704, 0).isColor() &&
-                    new PointColor(1870, 451, 9603704, 0).isColor())
-                    ;
+                    new PointColor(1560, 161, 9603704, 0).isColor());
         }
 
         /// <summary>
@@ -995,6 +991,27 @@ namespace OpenGEWindows
             new Point(1903, 456).PressMouseL();
             Pause(500);
         }
+
+
+        /// <summary>
+        /// открыто ли окно Стим? другое место в центре
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenSteamWindow4()
+        {
+            return new PointColor(1579, 181, 9603704, 0).isColor() &&
+                    new PointColor(1580, 181, 9603704, 0).isColor();
+        }
+
+        /// <summary>
+        /// скрыть окно Steam
+        /// </summary>
+        public void CloseSteamWindow4()
+        {
+            new Point(1613, 186).PressMouseL();
+            Pause(500);
+        }
+
 
 
 
@@ -2863,7 +2880,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isAlchemy()
         {
-            return (pointisAlchemy1.isColor() && pointisAlchemy2.isColor());
+            return pointisAlchemy1.isColor() && pointisAlchemy2.isColor();
         }
 
         #endregion
@@ -6101,8 +6118,11 @@ namespace OpenGEWindows
         /// <returns>true, если появилось</returns>
         public bool isSteamService()
         {
-            return new PointColor(1380, 451, 2000000, 6).isColor() &&
-                    new PointColor(1380, 452, 2000000, 6).isColor();
+            //return new PointColor(1380, 451, 2000000, 6).isColor() &&
+            //        new PointColor(1380, 452, 2000000, 6).isColor();
+            return new PointColor(1380, 453, 2000000, 6).isColor()
+                    && new PointColor(1380, 454, 2000000, 6).isColor() 
+                    && new PointColor(1380, 455, 2000000, 6).isColor();
         }
 
         /// <summary>
@@ -6111,7 +6131,7 @@ namespace OpenGEWindows
         public void CloseSteam()
         {
             new Point(1380, 451).PressMouseLL();
-            new Point(1043, 560).PressMouseLL();
+            new Point(1043, 560).PressMouseL();
         }
 
         /// <summary>
@@ -6485,7 +6505,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// переходим в режим атаки с CTRL
+        /// нажимаем на сундук, чтобы запустить рулетку
         /// </summary>
         public void OpeningTheChest()
         {

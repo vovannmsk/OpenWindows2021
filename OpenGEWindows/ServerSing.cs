@@ -303,7 +303,8 @@ namespace OpenGEWindows
 
             this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 7600000, 5);            //Team Member
             this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 7600000, 5);            //
-            this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
+//            this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
+            this.pointTeamSelection1 = new Point(140 - 5 + xx, 563 - 5 + yy);                   //26.07.2023
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
             this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено
             this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx + xxx, 705 - 5 + yy + yyy);               //кнопка логаут в казарме
@@ -843,8 +844,8 @@ namespace OpenGEWindows
             process.Start();
 
 
-            Pause(10000);
-            //for (int i = 1; i <= 40; i++)
+            //Pause(15000);
+            //for (int i = 1; i <= 20; i++)
             //{
             //    new Point(1400, 710).PressMouseL();
 
@@ -852,14 +853,14 @@ namespace OpenGEWindows
             //    if (isOpenSteamWindow()) { CloseSteamWindow(); CloseSteam(); }
             //    //если открыто окно Стим
             //    if (isOpenSteamWindow2()) { CloseSteamWindow2(); CloseSteam(); }
-
-            //    if (isSteamService())
-            //    {
-            //        CloseSteam();
-            //        //Pause(10000);
-            //        //break;
-            //    }
-            //    Pause(1000);
+            //    //Pause(1000);
+            //    //if (isSteamService())
+            //    //{
+            //    //    CloseSteam();
+            //    //    //Pause(10000);
+            //    //    //break;
+            //    //}
+            //    Pause(2000);
             //}
 
             //for (int i = 1; i <= 10; i++)

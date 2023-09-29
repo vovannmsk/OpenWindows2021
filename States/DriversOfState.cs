@@ -580,6 +580,11 @@ namespace States
         public void StateInputOutput6()
         {
             StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+
+
+
+
+            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
             botwindow.PressEscThreeTimes();
 
             //StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow));  // reOpen   чистое окно Стим
@@ -594,9 +599,15 @@ namespace States
             //botwindow.PressEscThreeTimes();
             //StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
             //botwindow.PressEscThreeTimes();
-
+            
             //закрываем проги в песочнице
-             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
+                    
+            
+            
+            
+            
+            
+            StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
         /// <summary>
@@ -613,12 +624,13 @@ namespace States
 
 
         /// <summary>
-        ///                // коралл кнопка (алхимия)
+        /// коралл кнопка (алхимический стол)
         /// </summary>
         public void StateAlchemy()
         {
             botwindow.Pause(300);
-            if (server.isAlchemy())
+            //if (server.isAlchemy())
+            for (int i = 0; i < 250; i++)
             {
                 StateDriverRun(new StateGT092(botwindow), new StateGT093(botwindow));
 

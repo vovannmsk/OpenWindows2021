@@ -32,12 +32,12 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            for (int j = 1; j <= 10; j++)
-            {
+            //for (int j = 1; j <= 10; j++)
+            //{
                 server.PressButtonAlchemy();
-                botwindow.Pause(300);
-            }
-            botwindow.Pause(600);
+                botwindow.Pause(1000);
+            //}
+            //botwindow.Pause(600);
         }
 
         /// <summary>

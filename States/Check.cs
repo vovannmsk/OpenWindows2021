@@ -668,23 +668,13 @@ namespace States
         public int NumberOfProblemDemMultiStage1()
         {
             //если открыто окно Стим
-            if (server.isOpenSteamWindow()) 
-                { server.CloseSteamWindow(); 
-                    //server.CloseSteam();
-                }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow2()) 
-                { server.CloseSteamWindow2(); 
-                    //server.CloseSteam(); 
-                }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow3()) 
-                { server.CloseSteamWindow3(); 
-                    //server.CloseSteam();
-                }
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow(); 
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2(); 
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3(); 
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            if (server.isError820())    {  new Point(1117, 604).PressMouseL(); }
+            if (server.isError820()) return 33;
 
 
             //служба Steam
@@ -726,14 +716,14 @@ namespace States
             //служба Steam
             //if (server.isSteamService())    return 11;
 
-            //случайно зашли в Expedition Merchant в городе
+            //случайно зашли в магазин Expedition Merchant в городе
             if (server.isExpedMerch()) return 12;
 
             //ворота
             if (dialog.isDialog())
             {
                 if (server.isMissionNotAvailable())
-                    return 10;
+                    return 10;                      //если стоим в воротах Demonic и миссия не доступна
                 else
                     return 8;                       //если стоим в воротах Demonic и миссия доступна
             }
@@ -876,7 +866,7 @@ namespace States
                         break;
                     case 7:                                     // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         server.WriteToLogFileBH("начинаем обработку case 7");
-                        server.MoveMouseDown();
+                        //server.MoveMouseDown();
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
                         
@@ -890,7 +880,8 @@ namespace States
 
                         server.messageWindowExtension();
 
-                        driver.StateActivePetDem();                 
+                        driver.StateActivePetDem();    
+                        
                         server.MaxHeight(7);                      
                         botParam.Stage = 2;
                         break;
@@ -899,12 +890,16 @@ namespace States
                         dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
                         break;
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
-                        dialog.PressOkButton(1);
-                        botwindow.Pause(1000);  //2000
-                        //server.GotoBarack();
-                        server.GotoSavePoint();
-                        botParam.Stage = 3;
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
+                        //старый вариант  (сначала идём в город)
+                        //dialog.PressOkButton(1);
+                        //botwindow.Pause(1000);  //2000
+                        //server.GotoSavePoint();
+                        //botParam.Stage = 3;
+                        //break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -982,6 +977,10 @@ namespace States
                     case 32:
                         IsItAlreadyPossibleToUploadNewSteam = 0;
                         break;
+                    case 33:
+                        new Point(1117, 604).PressMouseL();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
 
                 }
             }
@@ -1005,23 +1004,10 @@ namespace States
         public int NumberOfProblemDemMultiStage2()
         {
             //если открыто окно Стим
-            if (server.isOpenSteamWindow())
-            {
-                server.CloseSteamWindow();
-                //server.CloseSteam();
-            }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow2())
-            {
-                server.CloseSteamWindow2();
-                //server.CloseSteam(); 
-            }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow3())
-            {
-                server.CloseSteamWindow3();
-                //server.CloseSteam();
-            }
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1211,23 +1197,10 @@ namespace States
         public int NumberOfProblemDemMultiStage3()
         {
             //если открыто окно Стим
-            if (server.isOpenSteamWindow())
-            {
-                server.CloseSteamWindow();
-                //server.CloseSteam();
-            }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow2())
-            {
-                server.CloseSteamWindow2();
-                //server.CloseSteam(); 
-            }
-            //если открыто окно Стим
-            if (server.isOpenSteamWindow3())
-            {
-                server.CloseSteamWindow3();
-                //server.CloseSteam();
-            }
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1304,14 +1277,22 @@ namespace States
                         break;
                     case 3:                                         //в миссии, но рулетка ещё не крутится
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
+                        //botwindow.Pause(500);
+                        //driver.StateActivePetDem();                 //активируем пета
                         botParam.HowManyCyclesToSkip = 1;
                         GoBarack = 1;
                         //server.MaxHeight(3);                        //чтобы было видно вторые ворота
                         break;
-                    case 4:                                         //крутится рулетка или уже тыкали в сундук
-                        server.GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
+                    case 4:                                         //уже тыкали в сундук. заканчиваем миссию
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
+
+                        //старый вариант
+                        //server.GotoBarack();
+                        //botParam.HowManyCyclesToSkip = 2;
+                        //break;
                     case 5:                                         // в БХ
                         server.systemMenu(3, true);                 // переход в стартовый город
                         botParam.HowManyCyclesToSkip = 3;
@@ -2484,8 +2465,8 @@ namespace States
             //botwindow.Pause(1000);
 
 //            MessageBox.Show("ошибка 820? " + server.isError820());
-            MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
-            //MessageBox.Show("служба Стим? " + server.isSteamService());
+            //MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
+            MessageBox.Show("служба Стим? " + server.isSteamService());
             // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
