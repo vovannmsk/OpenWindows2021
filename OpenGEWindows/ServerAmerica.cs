@@ -437,6 +437,25 @@ namespace OpenGEWindows
 
         #region No window
 
+        /// <summary>
+        /// поиск окна с ошибкой
+        /// </summary>
+        /// <returns>HWND найденного окна</returns>
+        public override UIntPtr FindWindowError()
+        {
+            UIntPtr HWND = (UIntPtr)0;
+
+            //HWND = FindWindow("Granado Espada", "Granado Espada");
+            HWND = FindWindow("Ошибка", "[#] #32770 (Диалоговое окно) [#]");
+
+
+            //SetWindowPos(HWND, 0, 5, 5, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+
+            //Pause(500);
+
+            return HWND;
+        }
+
         public override bool isContinueRunning()
         {
             return false;

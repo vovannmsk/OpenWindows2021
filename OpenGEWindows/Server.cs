@@ -7,6 +7,7 @@ using System.Threading;
 using System.Drawing;
 using GEBot.Data;
 using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace OpenGEWindows
 {
@@ -872,6 +873,15 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// активируем окно с заданным hwnd
+        /// </summary>
+        public void ActiveWindow(UIntPtr Hwnd)
+        {
+            ShowWindow(Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
+            SetForegroundWindow(Hwnd);                                 // Перемещает окно в верхний список Z порядка     
+        }
+
+        /// <summary>
         /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
         /// </summary>
         /// <returns> hwnd окна </returns>
@@ -1017,22 +1027,25 @@ namespace OpenGEWindows
 
 
         /// <summary>
-        /// выскочила ошибка 820?
+        /// выскочила ошибка 820?  /проверяем белый цвет фона сообщения об ошибке/
         /// </summary>
         /// <returns></returns>
         public bool isError820()
         {
-            return (new PointColor(1117, 604, 3539040, 0).isColor() &&
-                    new PointColor(1117, 605, 3539040, 0).isColor()) 
-                   || 
-                   (new PointColor(1117, 604, 96, 0).isColor() &&
-                    new PointColor(1117, 605, 96, 0).isColor());
+            return new PointColor(1086, 497, 16777215, 0).isColor() &&
+                    new PointColor(1086, 498, 16777215, 0).isColor();
+            //(new PointColor(1117, 604, 3539040, 0).isColor() &&
+            //    new PointColor(1117, 605, 3539040, 0).isColor()) 
+            //   || 
+            //   (new PointColor(1117, 604, 96, 0).isColor() &&
+            //    new PointColor(1117, 605, 96, 0).isColor())
+            //   ||
+            //(new PointColor(1100, 609, 3539040, 0).isColor() &&
+            // new PointColor(1100, 611, 3539040, 0).isColor())
+            //||
+            //(new PointColor(1097, 608, 3000000, 6).isColor() &&
+            // new PointColor(1097, 609, 3000000, 6).isColor())
         }
-
-
-
-
-
         /// <summary>
         /// проверяем, открыто ли окно Стим для ввода логина и пароля
         /// </summary>
@@ -1286,6 +1299,12 @@ namespace OpenGEWindows
 
         public abstract void OrangeButton();
         //public abstract bool isActive();
+
+        /// <summary>
+        /// поиск окна с ошибкой
+        /// </summary>
+        /// <returns>HWND найденного окна</returns>
+        public abstract UIntPtr FindWindowError();
 
 
 
@@ -6067,6 +6086,17 @@ namespace OpenGEWindows
         #endregion
 
         #region  Demonic
+
+        /// <summary>
+        /// активируем пета (быстрый способ)
+        /// </summary>
+        /// <param name="N">номер героя</param>
+        public void ActivatePetDemonic()
+        {
+            new Point(272 - 5 + xx, 60 - 5 + yy).PressMouseL();
+            Pause(100);
+        }
+
 
         /// <summary>
         /// увеличиваем окно чата до максимума, чтобы гарантированно увидеть сообщение об окончании боя

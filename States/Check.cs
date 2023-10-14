@@ -96,10 +96,17 @@ namespace States
         /// </summary>
         public bool GotTask { get => gotTask; set => gotTask = value; }
 
+        /// <summary>
+        /// Конструктор 1
+        /// </summary>
         public Check()
         { 
         }
 
+        /// <summary>
+        /// конструктор основной
+        /// </summary>
+        /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
             
@@ -674,7 +681,7 @@ namespace States
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            if (server.isError820()) return 33;
+            //if (server.isError820()) return 33;
 
 
             //служба Steam
@@ -1009,6 +1016,10 @@ namespace States
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            //if (server.isError820()) return 33;
+
             //служба Steam
             if (server.isSteamService()) return 11;
 
@@ -1178,6 +1189,10 @@ namespace States
                         server.GotoBarack();                        // идем в барак, чтобы потом перейти к стадии 3 (открытие сундука и проч.)
                         botParam.HowManyCyclesToSkip = 2;
                         break;
+                    case 33:
+                        new Point(1117, 604).PressMouseL();
+                        //IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
                 }
             }
             else
@@ -1201,6 +1216,9 @@ namespace States
             if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            //if (server.isError820()) return 33;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1276,6 +1294,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 3:                                         //в миссии, но рулетка ещё не крутится
+                        server.ActivatePetDemonic();                //активируем пета
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         //botwindow.Pause(500);
                         //driver.StateActivePetDem();                 //активируем пета
@@ -1330,7 +1349,10 @@ namespace States
                         server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
-
+                    case 33:
+                        new Point(1117, 604).PressMouseL();
+                        //IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
                 }
             }
             else
@@ -1431,7 +1453,7 @@ namespace States
 
         #endregion =======================================================================================================
 
-        #region Гильдия охотников BH
+        #region Гильдия охотников BH (Infinity Multi)
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в БХ и возвращаем номер проблемы
@@ -1539,12 +1561,18 @@ namespace States
             //в бараке
             if (server.isBarack())                         //если стоят в бараке        //*
             {
-                if (server.isBarackLastPoint())            //если начиная со старого места попадаем в БХ   //*
-                { return 16; }
+                if (numberOfState == 0)                      // если в БХ еще сегодня не ходили, то по-любому начинаем в городе
+                                                             // ибо можем попасть не в ту точку БХ (например в точку около ворот Демоник)
+                {
+                    numberOfState = 1;                        //отметка, что первый заход в бараки уже был
+                    return 2;                                  //начинаем в Ребольдо
+                }                             
+                else if (server.isBarackLastPoint())            //если в БХ уже ходили и старое место тоже в БХ
+                { return 16; }                                  //начинаем со старого места в БХ  
                 else
-                { return 2; }                               //если старое место не БХ, то начинаем в Ребольдо
+                {  return 2; }
             }
-            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы     //*
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы   
 
             //в миссии, но убиты
             if (server.isKillAllHero()) return 29;            // если убиты все            //*
@@ -2442,6 +2470,7 @@ namespace States
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
+            MessageBox.Show("есть ошибка?" + server.FindWindowError());
             //MessageBox.Show("есть первые ворота? " + server.isGate());
             //MessageBox.Show("моб? " + server.isMob());
             //MessageBox.Show("меню открыто? " + server.isOpenWarpList());
@@ -2464,9 +2493,9 @@ namespace States
 
             //botwindow.Pause(1000);
 
-//            MessageBox.Show("ошибка 820? " + server.isError820());
+            MessageBox.Show("ошибка 820? " + server.isError820());
             //MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
-            MessageBox.Show("служба Стим? " + server.isSteamService());
+            //MessageBox.Show("служба Стим? " + server.isSteamService());
             // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Пояса нет? " + server.isEmptyBelt(1));
             //MessageBox.Show("Ботинок нет? " + server.isEmptyBoots(1));
@@ -2575,9 +2604,9 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            PointColor point1 = new PointColor(1869, 451, 1, 1);
-            PointColor point2 = new PointColor(1870, 451, 1, 1);
-            PointColor point3 = new PointColor(1871, 451, 1, 1);
+            PointColor point1 = new PointColor(1086, 497, 1, 1);
+            PointColor point2 = new PointColor(1086, 498, 1, 1);
+            PointColor point3 = new PointColor(1086, 499, 1, 1);
             //PointColor point1 = new PointColor(957 - 5 + xx, 133 - 5 + yy, 0, 0);
             //PointColor point2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(87 - 5 + xx, 675 - 5 + yy, 0, 0);
