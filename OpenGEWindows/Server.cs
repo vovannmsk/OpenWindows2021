@@ -89,6 +89,8 @@ namespace OpenGEWindows
         protected iPointColor pointisSteam2;
         protected iPointColor pointisNewSteam1;
         protected iPointColor pointisNewSteam2;
+        protected iPointColor pointisNewSteam3;
+        protected iPointColor pointisNewSteam4;
         //protected iPointColor pointisError1;
         //protected iPointColor pointisError2;
         protected iPointColor pointisContinueRunning1;
@@ -900,8 +902,6 @@ namespace OpenGEWindows
             }
         }
 
-
-
         /// <summary>
         /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)
         /// </summary>
@@ -933,8 +933,6 @@ namespace OpenGEWindows
                 ActiveWindow();                      //сдвигаем окно на своё место и активируем его
             }
         }
-
-
 
         /// <summary>
         /// проверяем, выскочило ли сообщение о несовместимости версии SafeIPs.dll
@@ -1002,7 +1000,6 @@ namespace OpenGEWindows
             Pause(500);
         }
 
-
         /// <summary>
         /// открыто ли окно Стим? другое место в центре
         /// </summary>
@@ -1022,18 +1019,24 @@ namespace OpenGEWindows
             Pause(500);
         }
 
-
-
-
-
         /// <summary>
         /// выскочила ошибка 820?  /проверяем белый цвет фона сообщения об ошибке/
         /// </summary>
         /// <returns></returns>
         public bool isError820()
         {
-            return new PointColor(1086, 497, 16777215, 0).isColor() &&
-                    new PointColor(1086, 498, 16777215, 0).isColor();
+            return new PointColor(1152, 601, 6908265, 0).isColor() &&
+                    new PointColor(1152, 602, 6908265, 0).isColor()
+                    ||
+                    new PointColor(1151, 601, 6908265, 0).isColor() &&
+                    new PointColor(1151, 602, 6908265, 0).isColor()
+                    ||
+                    new PointColor(1150, 601, 6908265, 0).isColor() &&
+                    new PointColor(1150, 602, 6908265, 0).isColor()
+                    ;
+            //return new PointColor(1086, 497, 16777215, 0).isColor() &&
+            //        new PointColor(1086, 498, 16777215, 0).isColor();
+
             //(new PointColor(1117, 604, 3539040, 0).isColor() &&
             //    new PointColor(1117, 605, 3539040, 0).isColor()) 
             //   || 
@@ -1046,6 +1049,8 @@ namespace OpenGEWindows
             //(new PointColor(1097, 608, 3000000, 6).isColor() &&
             // new PointColor(1097, 609, 3000000, 6).isColor())
         }
+
+
         /// <summary>
         /// проверяем, открыто ли окно Стим для ввода логина и пароля
         /// </summary>
@@ -1056,12 +1061,24 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// если первый раз загружается стим на этом компе, то надо нажать "соглашаюсь"
+        /// если первый раз загружается стим на этом компе, то надо нажать "Принять",
+        /// соглашаясь с пользовательским соглашение
         /// </summary>
         /// <returns>true, если первый раз загружается стим на этом компе</returns>
         public bool isNewSteam()
         {
-            return (pointisNewSteam1.isColor() && pointisNewSteam2.isColor());
+            return (pointisNewSteam1.isColor() && pointisNewSteam2.isColor())
+                    ||
+                   (pointisNewSteam3.isColor() && pointisNewSteam4.isColor());
+        }
+
+        /// <summary>
+        /// Нажимаем кнопку "Принять" и соглашаемся с пользовательским соглашением
+        /// </summary>
+        public void AcceptUserAgreement()
+        {
+            new Point(1052, 832).PressMouseL();
+            Pause(200);
         }
 
         protected bool isSystemError()

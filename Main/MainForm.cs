@@ -34,7 +34,7 @@ namespace Main
             numberOfAcc = globalParam.TotalNumberOfAccounts;
             startAcc = globalParam.StartingAccount;
             this.Text = "Программа от " + DataVersion + "    " + numberOfAcc + " окон";
-            this.Location = new System.Drawing.Point(1430, 1080 - this.Height - 34);
+            this.Location = new System.Drawing.Point(1032, 1080 - this.Height - 34);
             this.numberOfAccounts.Value = numberOfAcc;
             this.startAccount.Value = startAcc;
             //this.labelNomer.Text = "Текущий № аккаунта " + botParam.NumberOfInfinity;

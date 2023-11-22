@@ -64,8 +64,12 @@ namespace OpenGEWindows
             this.pointSteamPassword = new Point(862, 489);//для Стима используются абсолютные координаты
             this.pointSteamSavePassword = new Point(843, 518);//для Стима используются абсолютные координаты
             this.pointSteamOk = new Point(902, 551);//для Стима используются абсолютные координаты
-            this.pointisNewSteam1 = new PointColor(1165, 338, 11382191, 0); //для Стима используются абсолютные координаты
-            this.pointisNewSteam2 = new PointColor(1166, 338, 11382191, 0); //для Стима используются абсолютные координаты
+            //this.pointisNewSteam1 = new PointColor(1165, 338, 11382191, 0); //для Стима используются абсолютные координаты
+            //this.pointisNewSteam2 = new PointColor(1166, 338, 11382191, 0); //для Стима используются абсолютные координаты
+            this.pointisNewSteam1 = new PointColor(1052, 832, 15131615, 0); //для Стима используются абсолютные координаты
+            this.pointisNewSteam2 = new PointColor(1053, 832, 15131615, 0); //для Стима используются абсолютные координаты
+            this.pointisNewSteam3 = new PointColor(1042, 822, 15131615, 0); //для Стима используются абсолютные координаты
+            this.pointisNewSteam4 = new PointColor(1043, 822, 15131615, 0); //для Стима используются абсолютные координаты
             this.pointNewSteamOk = new Point(1034, 694);   //кнопка "Соглашаюсь", когда входишь в новый акк
             
             //this.pointisContinueRunning1 = new PointColor(861, 551, 14400000, 5); //для Стима используются абсолютные координаты

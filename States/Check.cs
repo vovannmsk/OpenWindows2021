@@ -681,7 +681,10 @@ namespace States
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            //if (server.isError820()) return 33;
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
 
 
             //служба Steam
@@ -943,14 +946,14 @@ namespace States
                     //    //botParam.HowManyCyclesToSkip = 3;
                     //    break;
                     case 22:
-                        if (IsItAlreadyPossibleToUploadNewWindow == 0)
-                        {
+                        //if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        //{
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                             SteamLoaded = true;
-                            botParam.HowManyCyclesToSkip = rand.Next(3, 5);       //пропускаем следующие 3-5 циклов
-                            IsItAlreadyPossibleToUploadNewSteam = 0;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 3-5 циклов
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
-                        }
+                        //}
                         break;
                     case 23:                                    //есть окно стим
                         //server.ReOpenWindow();                      // 
@@ -985,10 +988,12 @@ namespace States
                         IsItAlreadyPossibleToUploadNewSteam = 0;
                         break;
                     case 33:
-                        new Point(1117, 604).PressMouseL();
+                        new Point(1114, 607).PressMouseL();
                         IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
-
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
                 }
             }
             else
@@ -1016,9 +1021,11 @@ namespace States
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
 
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            //if (server.isError820()) return 33;
+            if (server.isError820()) return 33;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1190,9 +1197,13 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 33:
-                        new Point(1117, 604).PressMouseL();
-                        //IsItAlreadyPossibleToUploadNewWindow = 0;
+                        new Point(1114, 607).PressMouseL();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+
                 }
             }
             else
@@ -1217,8 +1228,11 @@ namespace States
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            //if (server.isError820()) return 33;
+            if (server.isError820()) return 33;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1350,9 +1364,13 @@ namespace States
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
                     case 33:
-                        new Point(1117, 604).PressMouseL();
-                        //IsItAlreadyPossibleToUploadNewWindow = 0;
+                        new Point(1114, 607).PressMouseL();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+
                 }
             }
             else
@@ -2470,7 +2488,8 @@ namespace States
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-            MessageBox.Show("есть ошибка?" + server.FindWindowError());
+            MessageBox.Show("логаут?" + server.isLogout());
+            //MessageBox.Show("есть ошибка?" + server.FindWindowError());
             //MessageBox.Show("есть первые ворота? " + server.isGate());
             //MessageBox.Show("моб? " + server.isMob());
             //MessageBox.Show("меню открыто? " + server.isOpenWarpList());
@@ -2493,7 +2512,8 @@ namespace States
 
             //botwindow.Pause(1000);
 
-            MessageBox.Show("ошибка 820? " + server.isError820());
+            //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
+            //MessageBox.Show("ошибка 820? " + server.isError820());
             //MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
             //MessageBox.Show("служба Стим? " + server.isSteamService());
             // MessageBox.Show("Left Panel? " + server.isBottlesOnLeftPanel());
@@ -2604,12 +2624,12 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            PointColor point1 = new PointColor(1086, 497, 1, 1);
-            PointColor point2 = new PointColor(1086, 498, 1, 1);
-            PointColor point3 = new PointColor(1086, 499, 1, 1);
-            //PointColor point1 = new PointColor(957 - 5 + xx, 133 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(87 - 5 + xx, 675 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(1151, 601, 1, 1);
+            //PointColor point2 = new PointColor(1151, 602, 1, 1);
+            //PointColor point3 = new PointColor(1151, 603, 1, 1);
+            PointColor point1 = new PointColor(935 - 5 + xx, 707 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(935 - 5 + xx, 708 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(935 - 5 + xx, 709 - 5 + yy, 0, 0);
 
 
             color1 = point1.GetPixelColor();
