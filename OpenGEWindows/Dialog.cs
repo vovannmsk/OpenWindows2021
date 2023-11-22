@@ -23,7 +23,7 @@
         /// </summary>
         public bool isDialog()
         {
-            return (pointDialog1.isColor() && pointDialog2.isColor());
+            return pointDialog1.isColor() && pointDialog2.isColor();
         }
 
         /// <summary>

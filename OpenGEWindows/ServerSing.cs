@@ -92,10 +92,11 @@ namespace OpenGEWindows
             this.pointConnect = new PointColor(547 - 30 + xx, 441 - 5 + yy, 7800000, 5);
             //this.pointisLogout1 = new PointColor(565 - 5 + xx, 532 - 5 + yy, 16000000, 6);       // проверено   слово Leave Game буква L
             //this.pointisLogout2 = new PointColor(565 - 5 + xx, 531 - 5 + yy, 16000000, 6);       // проверено
-            this.pointisLogout1 = new PointColor(935 - 5 + xx, 707 - 5 + yy, 7925494, 0);       // проверено   слово Ver буква r
-            this.pointisLogout2 = new PointColor(935 - 5 + xx, 708 - 5 + yy, 7925494, 0);       // проверено
-            this.pointIsServerSelection1 = new PointColor(430 - 5 + xx, 340 - 5 + yy, 5848111, 0);    // проверено
-            this.pointIsServerSelection2 = new PointColor(430 - 5 + xx, 341 - 5 + yy, 5848111, 0);    // проверено
+            this.pointisLogout1 = new PointColor(935 - 5 + xx, 707 - 5 + yy, 12118521, 0);       // проверено   слово Ver буква r
+            this.pointisLogout2 = new PointColor(935 - 5 + xx, 708 - 5 + yy, 12118521, 0);       // проверено
+            //выбран ли сервер на экране логаута
+            this.pointIsServerSelection1 = new PointColor(430 - 5 + xx, 340 - 5 + yy, 5986903, 0);    // проверено
+            this.pointIsServerSelection2 = new PointColor(430 - 5 + xx, 341 - 5 + yy, 5986903, 0);    // проверено
             pointserverSelection = new Point(480 - 5 + xx, 344 - 5 + yy); //синг. первая строка
             //this.pointIsServerSelection1 = new PointColor(430 - 5 + xx, 390 - 5 + yy, 5848111, 0);    // европа. проверено
             //this.pointIsServerSelection2 = new PointColor(430 - 5 + xx, 391 - 5 + yy, 5848111, 0);    // европа. проверено
@@ -124,12 +125,14 @@ namespace OpenGEWindows
 
             this.pointisOpenTopMenu21 = new PointColor(337 - 5 + xx + xxx, 76 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx + xxx, 77 - 5 + yy + yyy, 13421721, 0);
-            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 16711422, 0);      //буква "M" в слове Zone Map
-            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 16711422, 0);
+            this.pointisOpenTopMenu51 = new PointColor(442 - 5 + xx, 83 - 5 + yy, 6713000, 3);      //верхняя коричневая полоса
+            this.pointisOpenTopMenu52 = new PointColor(443 - 5 + xx, 83 - 5 + yy, 6713000, 3);     //22-11
+            this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 6713463, 0);      
+            this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 6713463, 0);     
             this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx + xxx, 90 - 5 + yy + yyy, 13421721, 0);
-            this.pointisOpenTopMenu91 = new PointColor(597 - 5 + xx, 112 - 5 + yy, 16711422, 0);      //буква "Р" в слове Pet   //проверено
-            this.pointisOpenTopMenu92 = new PointColor(597 - 5 + xx, 113 - 5 + yy, 16711422, 0);
+            this.pointisOpenTopMenu91 = new PointColor(408 - 5 + xx, 285 - 5 + yy, 16316664, 0);      //N в слове Name  22-11
+            this.pointisOpenTopMenu92 = new PointColor(408 - 5 + xx, 286 - 5 + yy, 16316664, 0);
             this.pointisOpenTopMenu121 = new PointColor(600 - 5 + xx, 116 - 5 + yy, 8000000, 6);        //Warp List
             this.pointisOpenTopMenu122 = new PointColor(610 - 5 + xx, 116 - 5 + yy, 8000000, 6);
             this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name (system menu)                                                        //проверено
@@ -147,7 +150,7 @@ namespace OpenGEWindows
 
             this.pointTeleportFirstLine = new Point(400 + xx, 178 + yy);    //              тыкаем в первую строчку телепорта                          //проверено
             //this.pointTeleportSecondLine = new Point(400 + xx, 193 + yy);   //              тыкаем во вторую строчку телепорта                          //проверено
-            this.pointTeleportExecute = new Point(355 + xx, 580 + yy);   //355, 570               тыкаем в кнопку Execute                   //проверено
+            this.pointTeleportExecute = new Point(114 + xx, 571 + yy);              //22-11               тыкаем в кнопку Operate
 
             #endregion
 
@@ -184,8 +187,10 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsWork2 = new uint[16] { 10919, 2106, 16711, 7243, 3560, 5401, 9747, 10258, 0, 9350, 15767, 8162, 1910, 3624, 3616, 1910 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995};
-            this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};
+            //this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995};
+            //this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};   до 22-11-2023
+            this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995 };
+            this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562, 0, 1522 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
 
             //this.pointisKillHero1 = new PointColor(80 - 5 + xx, 636 - 5 + yy, 1900000, 5);
@@ -232,9 +237,9 @@ namespace OpenGEWindows
             this.pointCure1 = new Point(215 - 5 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой U
             this.pointCure2 = new Point(215 - 5 + 255 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой J
             this.pointCure3 = new Point(215 - 5 + 255 * 2 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой M
-            this.pointMana1 = new Point(245 - 5 + xx, 705 - 5 + yy);                        //бутылка маны под буквой I
-            this.pointMana2 = new Point(245 - 5 + 255 + xx, 705 - 5 + yy);                  //бутылка маны под буквой K
-            this.pointMana3 = new Point(245 - 5 + 510 + xx, 705 - 5 + yy);                  //бутылка маны под буквой ,
+            this.pointMana1 = new Point(250 - 5 + xx, 705 - 5 + yy);                        //бутылка маны под буквой I   22-11
+            this.pointMana2 = new Point(250 - 5 + 255 + xx, 705 - 5 + yy);                  //бутылка маны под буквой K    22-11
+            this.pointMana3 = new Point(250 - 5 + 510 + xx, 705 - 5 + yy);                  //бутылка маны под буквой ,    22-11
             this.pointGM = new Point(439 - 5 + xx, 413 - 5 + yy);
 //            this.pointHeadGM = new Point(369 - 5 + xx, 290 - 5 + yy);
             this.pointHeadGM = new Point(394 - 5 + xx, 394 - 5 + yy);
@@ -242,8 +247,10 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsTown2 = new uint[16] { 10921, 2105, 16711, 7237, 3552, 5395, 9737, 10263, 0, 9342, 15790, 8158, 1910, 3618, 1910, 3618 };
             // ружье, флинт, дробаш, вет дробаш, эксп дробаш, джайна, повар вет, C.Daria, outrange, Sight Shot, Unlimited Shot (эксп пистолет), Миса, и еще 4 непонятно кто
 
-            this.arrayOfColorsIsTown1 = new uint[7] { 12566, 4079, 4539, 16382, 9342, 8224, 986 };
-            this.arrayOfColorsIsTown2 = new uint[7] { 12171, 2829, 2434, 16777, 3552,    0, 1513 };
+            //this.arrayOfColorsIsTown1 = new uint[7] { 12566, 4079, 4539, 16382, 9342, 8224, 986 };
+            //this.arrayOfColorsIsTown2 = new uint[7] { 12171, 2829, 2434, 16777, 3552,    0, 1513 };   //до 22-11-2023 было норм
+            this.arrayOfColorsIsTown1 = new uint[7] { 8092, 5921, 0, 16777, 0, 0, 0 };
+            this.arrayOfColorsIsTown2 = new uint[7] { 7895, 1907, 0, 6118, 0, 0, 0 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch
 
 
@@ -299,16 +306,14 @@ namespace OpenGEWindows
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
             this.pointisBarack3 = new PointColor(42 - 5 + xx, 61 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
             this.pointisBarack4 = new PointColor(42 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено
-            //this.pointisBarack5 = new PointColor(105 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //страница создания нового персонажа
-            //this.pointisBarack6 = new PointColor(106 - 5 + xx, 41 - 5 + yy, 8036794, 0);            //
-            this.pointisBarack5 = new PointColor(907 - 5 + xx, 658 - 5 + yy, 7661036, 0);            //страница создания нового персонажа
-            this.pointisBarack6 = new PointColor(907 - 5 + xx, 659 - 5 + yy, 7661036, 0);            //
-            this.pointToBarack = new Point(945 - 5 + xx, 660 - 5 + yy);                             // кнопка "To Barack" на странице создания перса
+            this.pointisBarack5 = new PointColor(907 - 5 + xx, 670 - 5 + yy, 11723248, 0);            //страница создания нового персонажа  22-11
+            this.pointisBarack6 = new PointColor(907 - 5 + xx, 671 - 5 + yy, 11723248, 0);            //буква Т в слове "To Barack"
+            this.pointToBarack = new Point(945 - 5 + xx, 675 - 5 + yy);                       // кнопка "To Barack" на странице создания перса 22-11
 
-            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 7600000, 5);            //Team Member
-            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 7600000, 5);            //
-//            this.pointTeamSelection1 = new Point(140 - 5 + xx, 537 - 5 + yy);                   //проверено
-            this.pointTeamSelection1 = new Point(140 - 5 + xx, 563 - 5 + yy);                   //26.07.2023
+            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 11723248, 0);            //Team Member буква T
+            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 11723248, 0);            // 22-11
+            // кнопка вызова списка групп в бараке "View Character List"
+            this.pointTeamSelection1 = new Point(140 - 5 + xx, 583 - 5 + yy);                   //22-11-2023
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
             this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено
             this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx + xxx, 705 - 5 + yy + yyy);               //кнопка логаут в казарме

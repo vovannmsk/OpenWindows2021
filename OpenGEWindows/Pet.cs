@@ -1,4 +1,6 @@
-﻿namespace OpenGEWindows
+﻿using System.Drawing;
+
+namespace OpenGEWindows
 {
     public abstract class Pet : Server2
     {
@@ -95,6 +97,31 @@
         {
             return pointisSummonPet1.isColor() && pointisSummonPet2.isColor();
         }
+
+        /// <summary>
+        /// активируем пета через пиктограмму (для Демоник). 
+        /// считается, что изначально пет не активирован
+        /// </summary>
+        public void ActivePetDem()
+        {
+            uint colorBegin  = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
+            uint colorCurrent = colorBegin;
+            if ((colorCurrent != 11381225) && (colorCurrent != 0))          //если текущий цвет не розовый 
+                                                                            // добавить цвет оленя вместо нуля
+            {                                                                 
+                while (colorBegin == colorCurrent)  //сверяем текущий цвет пета и изначальный
+                                                //если текущий цвет и изначальный различны, то значит мы активировали пета
+                {
+                    new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
+                    Pause(500);
+                    new Point(600 - 5 + xx, 385 - 5 + yy).Move();   //убираем курсор в сторонку
+                    Pause(500);
+                    colorCurrent = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();
+                }
+            }
+        }
+
+
 
         #endregion
 

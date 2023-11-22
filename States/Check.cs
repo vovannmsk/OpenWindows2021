@@ -727,7 +727,7 @@ namespace States
             //if (server.isSteamService())    return 11;
 
             //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;
+            //if (server.isExpedMerch()) return 12;                         //не актуально в новой версии игры     22-11-23
 
             //ворота
             if (dialog.isDialog())
@@ -742,10 +742,10 @@ namespace States
             if (server.isBadFightingStance()) return 19;
 
             //Mission Lobby
-            if (server.isMissionLobby()) return 5;      //сделано
+            if (server.isMissionLobby()) return 5;      //22-11
 
-            //Waiting Room
-            if (server.isWaitingRoom()) return 3;
+            //Waiting Room //Mission Room 22-11
+            if (server.isWaitingRoom()) return 3;      //22-11
 
             //город или БХ
             if (server.isTown())
@@ -888,9 +888,11 @@ namespace States
                         Hero[2] = server.WhatsHero(2);
                         Hero[3] = server.WhatsHero(3);
 
-                        server.messageWindowExtension();
+                        //server.messageWindowExtension();     //не актуально 22-11-23
 
-                        driver.StateActivePetDem();    
+                        //driver.StateActivePetDem();
+                        pet.ActivePetDem();                     //ноая функция  22-11
+
                         
                         server.MaxHeight(7);                      
                         botParam.Stage = 2;
@@ -2488,7 +2490,7 @@ namespace States
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
-            MessageBox.Show("логаут?" + server.isLogout());
+            //MessageBox.Show("логаут?" + server.isLogout());
             //MessageBox.Show("есть ошибка?" + server.FindWindowError());
             //MessageBox.Show("есть первые ворота? " + server.isGate());
             //MessageBox.Show("моб? " + server.isMob());
@@ -2502,16 +2504,19 @@ namespace States
             //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
             //MessageBox.Show("баф1? " + server.FindConcentracion(1));
             //MessageBox.Show("баф2? " + server.FindConcentracion(2));
-            //MessageBox.Show(" " + botwindow.isCommandMode());
-            //MessageBox.Show("боевой режим?" + server.isBattleMode());
+            //MessageBox.Show("командный режим " + botwindow.isCommandMode());               //проверено 22-11
+            //MessageBox.Show("боевой режим?" + server.isBattleMode());               //проверено  22-11
             //MessageBox.Show(" " + town.isOpenTownTeleport());
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
             //MessageBox.Show(" " + pet.isActivePet());
             //MessageBox.Show(" " + otit.isNearOldMan());
+            //MessageBox.Show("в городе?" + server.isTown());   //22-11
+            //MessageBox.Show("на работе?" + server.isWork());   //22-11
 
             //botwindow.Pause(1000);
 
+            //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
             //MessageBox.Show("ошибка 820? " + server.isError820());
             //MessageBox.Show("открыт Стим в углу? " + server.isOpenSteamWindow3());
@@ -2533,17 +2538,20 @@ namespace States
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.OpenDetailInfo();
             //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo(1));
-            //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());
+            //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());               //проверено
             //MessageBox.Show("Undead " + server.isUndead());
-            //MessageBox.Show(" " + server.isBarackTeamSelection());
+            //MessageBox.Show("выбор команды " + server.isBarackTeamSelection());    //22-11
+            //MessageBox.Show("в бараках? " + server.isBarack());  //22-11
+            //MessageBox.Show("создание героя " + server.isBarackCreateNewHero());  //22-11
             //MessageBox.Show("Demon " + server.isDemon());
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
-            //MessageBox.Show("system menu? " + server.isOpenTopMenu(13));
+            //MessageBox.Show("телепорты? " + server.isOpenTopMenu(5));
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
             //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
+            //MessageBox.Show("миссия не доступна? " + server.isMissionNotAvailable());
             //MessageBox.Show("Призван пет? " + pet.isSummonPet());
             //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
             //MessageBox.Show("одиночный режим? " + botwindow.isSingleMode());
@@ -2560,7 +2568,7 @@ namespace States
             //MessageBox.Show(" " + market.isClickSell());
             //MessageBox.Show(" " + botwindow.isCommandMode());
             //MessageBox.Show(" " + market.isRedBottle());
-            //MessageBox.Show("BH  " + server.isBH());
+            //MessageBox.Show("BH  " + server.isBH());                                 //22-11
             //MessageBox.Show("11-19" + BHdialog.isGateLevelFrom10to19());
             //MessageBox.Show("лимит не исчерпан  " + BHdialog.isGateBH1());
             //MessageBox.Show("лимит исчерпан    " + BHdialog.isGateBH3());
@@ -2614,7 +2622,7 @@ namespace States
 
             //Pause(4000);
             //
-            server.ActiveWindow();
+            //server.ActiveWindow();
 
 
             //iPoint pointLeaveGame = new Point(1045, 705);
@@ -2622,23 +2630,37 @@ namespace States
             //Pause(400);
             //pointLeaveGame.PressMouseLL();
 
+            //server.systemMenu(4,true);
+            MessageBox.Show("первый герой=" +server.WhatsHero(1));
+            MessageBox.Show("второй герой=" + server.WhatsHero(2));
+            MessageBox.Show("третий герой=" + server.WhatsHero(3));
+
             //int xxx = 5;
             //int yyy = 5;
             //PointColor point1 = new PointColor(1151, 601, 1, 1);
             //PointColor point2 = new PointColor(1151, 602, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
-            PointColor point1 = new PointColor(935 - 5 + xx, 707 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(935 - 5 + xx, 708 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(935 - 5 + xx, 709 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(408 - 5 + xx, 285 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(408 - 5 + xx, 286 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(484 - 5 + xx, 314 - 5 + yy, 0, 0);
 
+            //for (int xxx = 18; xxx < 46; xxx++)
+            //    for (int yyy = 692; yyy < 719; yyy++)
+            //    {
+            //        PointColor point1 = new PointColor(xxx - 5 + xx, yyy - 5 + yy, 0, 0);
+            //        color1 = point1.GetPixelColor()/1000;
+            //        if (color1 == 4079)
+            //        { MessageBox.Show("xxx=" + xxx + " yyy=" + yyy);          }
+            //    }
+            //MessageBox.Show("проверка завершена");
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
-            color3 = point3.GetPixelColor();
+            //color3 = point3.GetPixelColor();
 
             MessageBox.Show(" " + color1);
             MessageBox.Show(" " + color2);
-            MessageBox.Show(" " + color3);
+            //MessageBox.Show(" " + color3);
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);

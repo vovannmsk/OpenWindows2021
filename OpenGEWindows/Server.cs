@@ -145,6 +145,8 @@ namespace OpenGEWindows
         #region Top Menu
         protected iPointColor pointisOpenTopMenu21;
         protected iPointColor pointisOpenTopMenu22;
+        protected iPointColor pointisOpenTopMenu51;
+        protected iPointColor pointisOpenTopMenu52;
         protected iPointColor pointisOpenTopMenu61;
         protected iPointColor pointisOpenTopMenu62;
         protected iPointColor pointisOpenTopMenu81;
@@ -1786,17 +1788,20 @@ namespace OpenGEWindows
                 case 2:
                     result = (pointisOpenTopMenu21.isColor() && pointisOpenTopMenu22.isColor());
                     break;
+                case 5:
+                    result = pointisOpenTopMenu51.isColor() && pointisOpenTopMenu52.isColor(); //телепорт 22-11
+                    break;
                 case 6:
-                    result = (pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor());
+                    result = pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor(); 
                     break;
                 case 8:
                     result = (pointisOpenTopMenu81.isColor() && pointisOpenTopMenu82.isColor());
                     break;
                 case 9:
-                    result = (pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor());
+                    result = pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor(); //системное меню 22-11
                     break;
                 case 12:
-                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();  //РАБОТАЕТ 29-09-21
+                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor(); 
                     break;
                 case 13:
                     result = (pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2());
@@ -1869,9 +1874,9 @@ namespace OpenGEWindows
         /// Идем в казармы через верхнее меню 
         /// </summary>
         /// <param name="status"> false, если без проверки открытия системного меню </param>
-        public void GotoBarack(bool status)
+        public void GotoBarack(bool status)                    
         {
-            systemMenu(4, status);
+            systemMenu(4, status);  //22-11
         }
 
         /// <summary>
@@ -1881,9 +1886,9 @@ namespace OpenGEWindows
         public void systemMenu(int number)
         {
             //if (!isOpenTopMenu(13))
-            TopMenu(13);
-            Pause(500);
-            new Point(685 - 5 + xx, 293 - 5 + (number - 1) * 30 + yy).PressMouse();
+            TopMenu(9);      //22-11
+            Pause(1000);
+            new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouse();
             if (number == 4 || number == 6 || number == 7)
                 botwindow.PressEsc(); //убираем системное меню
         }
@@ -1894,10 +1899,13 @@ namespace OpenGEWindows
         /// <param name="number"> номер пункта меню </param>
         public void systemMenu(int number, bool status)
         {
-            if(!isOpenTopMenu(13))  TopMenu(13, status);       //если не открыто системное меню, то открыть
-            //Pause(500);
-            iPoint pointCurrentMenu = new Point(685 - 5 + xx, 288 - 5 + (number - 1) * 30 + yy);  //строчка в меню
-            if (!isRouletteBH() && (isOpenTopMenu(13))) pointCurrentMenu.PressMouse();   //нажимаем на указанный пункт меню
+            if (!isOpenTopMenu(13))
+            {
+                TopMenu(9, status);       //если не открыто системное меню, то открыть
+                Pause(500);
+            }
+            iPoint pointCurrentMenu = new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy);  //строчка в меню
+            if (!isRouletteBH() && isOpenTopMenu(9)) pointCurrentMenu.PressMouse();   //нажимаем на указанный пункт меню
         }
 
         /// <summary>
@@ -1921,17 +1929,41 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// нажмает на выбранный раздел верхнего меню (используется для БХ)
+        /// нажмает на выбранный раздел верхнего меню (используется для БХ) старый вариант
+        /// </summary>
+        /// <param name="numberOfThePartitionMenu"></param>
+        /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
+        //public void TopMenu(int numberOfThePartitionMenu, bool status)
+        //{
+        //    //int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
+        //    int[] MenukoordX = { 310, 342, 374, 406, 438, 480, 527, 574, 614, 646, 678, 710, 742 };
+        //    int x = MenukoordX[numberOfThePartitionMenu - 1];
+        //    int y = 59; //55;
+        //    iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+
+        //    int count = 0;
+        //    do
+        //    {
+        //        pointMenu.PressMouse();
+        //        botwindow.Pause(2000);
+        //        count++; if (count > 3) break;
+        //    } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
+        //}
+
+        /// <summary>
+        /// нажмает на выбранный раздел верхнего меню (используется для БХ)  22-11-2023
         /// </summary>
         /// <param name="numberOfThePartitionMenu"></param>
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
         public void TopMenu(int numberOfThePartitionMenu, bool status)
         {
             //int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
-            int[] MenukoordX = { 310, 342, 374, 406, 438, 480, 527, 574, 614, 646, 678, 710, 742 };
+            int[] MenukoordX = { 105, 137, 169, 201, 233, 265, 297, 329, 105, 137, 169, 201, 233, 265, 297, 329 };
+            int[] MenukoordY = { 55, 55, 55, 55, 55, 55, 55, 55, 87, 87, 87, 87, 87, 87, 87, 87 };
             int x = MenukoordX[numberOfThePartitionMenu - 1];
-            int y = 59; //55;
-            iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+            int y = MenukoordY[numberOfThePartitionMenu - 1];
+
+            iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy); //кнопка с нужными координатами
 
             int count = 0;
             do
@@ -1941,6 +1973,8 @@ namespace OpenGEWindows
                 count++; if (count > 3) break;
             } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
         }
+
+
 
         /// <summary>
         /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
@@ -2009,12 +2043,12 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// в открытом меню телепортов выбираем нужную строчку и летим по выбранному телепорту
+        /// в открытом меню телепортов выбираем нужную строчку и летим по выбранному телепорту  22-11
         /// </summary>
-        /// <param name="NumberOfLine"></param>
+        /// <param name="NumberOfLine">номер строки в списке сохраненных телепортов</param>
         public void FlyByTeleport(int NumberOfLine)
         {
-            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    вычисляем точку на экране, куда тыкать
+            Point pointTeleportNumbertLine = new Point(132 - 5 + xx, 200 - 5 + (NumberOfLine - 1) * 15 + yy);    //    вычисляем точку на экране, куда тыкать
 
             pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
             Pause(500);
@@ -2029,7 +2063,8 @@ namespace OpenGEWindows
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
         public void Teleport(int NumberOfLine, bool status)
         {
-            TopMenu(12, status);                     // Click Teleport menu. открываем меню со списком сохранённых телепортов
+            TopMenu(5, status);                     // Click Teleport menu. открываем меню со списком сохранённых телепортов
+            Pause(500);
 
             FlyByTeleport(NumberOfLine);
 
@@ -2597,7 +2632,7 @@ namespace OpenGEWindows
         /// </summary>
         public void BattleModeOnDem()
         {
-            new Point(190 - 5 + xx, 530 - 5 + yy).PressMouseL();  // Кликаю на кнопку "боевой режим"
+            new Point(190 - 5 + xx, 530 - 5 + yy).PressMouseL();  // Кликаю на кнопку "боевой режим"   22-11
         }
 
         #endregion
@@ -2813,8 +2848,10 @@ namespace OpenGEWindows
             // в массиве arrayOfColorsIsTown1 хранятся все цвета первой контрольной точки, которые есть у проверяемых стоек 
             // в массиве arrayOfColorsIsTown2 хранятся все цвета второй контрольной точки, которые есть у проверяемых стоек 
 
-            uint color1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
-            uint color2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            //uint color1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            //uint color2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            uint color1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            uint color2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
 
             return this.arrayOfColorsIsTown1.Contains(color1) && this.arrayOfColorsIsTown2.Contains(color2);                // проверяем, есть ли цвет контрольной точки в массивах цветов
         }
@@ -3009,12 +3046,14 @@ namespace OpenGEWindows
 
         /// <summary>
         /// проверяем, выскочило ли сообщение, где надо нажать кнопку "Yes"
+        /// для подтверждения того, что начинаем с города
+        /// (сообщение возникает после выхода из миссий на мосту или БХ)
         /// </summary>
         /// <returns> true, если выскочило </returns>
         public bool isBarackWarningYes()
         {
-            return  new PointColor(462 - 5 + xx, 427 - 5 + yy, 7925494, 0).isColor() &&
-                    new PointColor(462 - 5 + xx, 428 - 5 + yy, 7925494, 0).isColor();
+            return  new PointColor(482 - 5 + xx, 314 - 5 + yy, 6713206, 0).isColor() &&
+                    new PointColor(483 - 5 + xx, 314 - 5 + yy, 6713206, 0).isColor();
         }
 
         /// <summary>
@@ -3023,7 +3062,7 @@ namespace OpenGEWindows
         /// </summary>
         public void PressYesBarack()
         {
-            new Point (471 - 5 + xx, 425 - 5 + yy).PressMouseL();   // Нажимаем кнопку Yes
+            new Point (471 - 5 + xx, 437 - 5 + yy).PressMouseL();   // Нажимаем кнопку Yes
         }
 
 
@@ -3033,7 +3072,7 @@ namespace OpenGEWindows
         /// <returns> true, если бот в бараках на стадии выбора группы  </returns>
         public bool isBarackTeamSelection()
         {
-            return (pointisBarackTeamSelection1.isColor() && pointisBarackTeamSelection2.isColor());
+            return pointisBarackTeamSelection1.isColor() && pointisBarackTeamSelection2.isColor();
         }
 
         /// <summary>
@@ -6202,30 +6241,30 @@ namespace OpenGEWindows
         /// <returns>true, если находимся</returns>
         public bool isMissionLobby()
         {
-            return  new PointColor(286 - 5 + xx, 112 - 5 + yy, 7925494, 0).isColor() &&
-                    new PointColor(286 - 5 + xx, 113 - 5 + yy, 7925494, 0).isColor();
+            return  new PointColor(242 - 5 + xx, 163 - 5 + yy, 13882323, 0).isColor() &&
+                    new PointColor(242 - 5 + xx, 164 - 5 + yy, 13882323, 0).isColor();  //22-11   буква М
         }
 
         /// <summary>
-        /// создаем миссию
+        /// создаем миссию. цель - дойти из Mission Lobby в Mission Room
         /// </summary>
         public void CreatingMission()
         {
-            new Point(600 - 5 + xx, 250 - 5 + yy).PressMouseL();
-            Pause(500);
-            new Point(600 - 5 + xx, 612 - 5 + yy).PressMouseL();
+            new Point(607 - 5 + xx, 640 - 5 + yy).PressMouseL();    //кнопка Create Mission Room
             Pause(1000);
-            new Point(438 - 5 + xx, 397 - 5 + yy).PressMouseL();
+            new Point(440 - 5 + xx, 433 - 5 + yy).PressMouseL();    //кнопка Create a Room
+            //Pause(1000);
+            //new Point(707 - 5 + xx, 565 - 5 + yy).PressMouseL();    //кнопка Mission Start
         }
 
         /// <summary>
-        /// проверяем, находимся ли в Waiting Room
+        /// проверяем, находимся ли в Mission Room
         /// </summary>
         /// <returns>true, если находимся</returns>
         public bool isWaitingRoom()
         {
-            return  new PointColor(503 - 5 + xx, 166 - 5 + yy, 13034463, 0).isColor() &&
-                    new PointColor(503 - 5 + xx, 167 - 5 + yy, 13034463, 0).isColor();
+            return  new PointColor(177 - 5 + xx, 155 - 5 + yy, 12829635, 0).isColor() &&
+                    new PointColor(177 - 5 + xx, 156 - 5 + yy, 12829635, 0).isColor();      //22-11   буква М
         }
 
         /// <summary>
@@ -6294,7 +6333,8 @@ namespace OpenGEWindows
         /// </summary>
         public void MissionStart()
         {
-            new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
+            //new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
+            new Point(707 - 5 + xx, 565 - 5 + yy).PressMouseL();    //кнопка Mission Start
         }
 
         /// <summary>
@@ -6355,12 +6395,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// переключаем чат на пятую закладку
+        /// переключаем чат на пятую закладку "System"
         /// </summary>
         public void ChatFifthBookmark()
         {
-            new Point(914 - 5 + xx, 703 - 5 + yy).PressMouseLL();
-            MoveCursorOfMouse();
+            new Point(1010 - 5 + xx, 323 - 5 + yy).PressMouseL();
+            Pause(500);
+            new Point(805 - 5 + xx, 327 - 5 + yy).PressMouseL();
+            //MoveCursorOfMouse();
         }
 
         /// <summary>
@@ -6570,8 +6612,8 @@ namespace OpenGEWindows
 
 
             //проверяем букву Т в слове Today
-            return new PointColor(354 - 5 + xx, 657 - 5 + yy, 13752023, 0).isColor() &&
-                    new PointColor(354 - 5 + xx, 658 - 5 + yy, 13752023, 0).isColor();
+            return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
+                    new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
         }
 
         /// <summary>
