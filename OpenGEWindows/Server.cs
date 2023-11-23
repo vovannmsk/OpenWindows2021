@@ -1859,7 +1859,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoBarack()
         {
-            systemMenu(4);
+            systemMenu(4,true);
         }
 
         /// <summary>
@@ -1899,7 +1899,7 @@ namespace OpenGEWindows
         /// <param name="number"> номер пункта меню </param>
         public void systemMenu(int number, bool status)
         {
-            if (!isOpenTopMenu(13))
+            if (!isOpenTopMenu(9))
             {
                 TopMenu(9, status);       //если не открыто системное меню, то открыть
                 Pause(500);
@@ -6334,7 +6334,7 @@ namespace OpenGEWindows
         public void MissionStart()
         {
             //new Point(703 - 5 + xx, 538 - 5 + yy).PressMouseLL();
-            new Point(707 - 5 + xx, 565 - 5 + yy).PressMouseL();    //кнопка Mission Start
+            new Point(707 - 5 + xx, 565 - 5 + yy).PressMouseL();    //кнопка Mission Start  22-11
         }
 
         /// <summary>
@@ -6342,7 +6342,7 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffQ(int i)
         {
-            new Point(34 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();
+            new Point(34 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();   //проверено 23-11
             //MoveCursorOfMouse();
             //Pause(500);
         }
@@ -6390,7 +6390,7 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffY(int i)
         {
-            new Point(189 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();
+            new Point(189 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();              //проверено 23-11
             MoveCursorOfMouse();
         }
 
@@ -6402,6 +6402,7 @@ namespace OpenGEWindows
             new Point(1010 - 5 + xx, 323 - 5 + yy).PressMouseL();
             Pause(500);
             new Point(805 - 5 + xx, 327 - 5 + yy).PressMouseL();
+            Pause(500);
             //MoveCursorOfMouse();
         }
 
@@ -6611,7 +6612,7 @@ namespace OpenGEWindows
             //        new PointColor(349 - 5 + xx, 653 - 5 + yy, 13752023, 0).isColor();
 
 
-            //проверяем букву Т в слове Today
+            //проверяем букву Т в слове Today  22-11-23
             return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
                     new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
         }
@@ -6903,13 +6904,15 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindMysophoia(int i)
+        public bool FindMysophoia(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
-                        new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
+                if (    
+                    //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
+                    //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
+                        new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
+                        new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()           //23-11
                     ) result = true;
             return result;
         }
@@ -6919,13 +6922,15 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindBulletApilicon(int i)
+        public bool FindBulletApilicon(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
-                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
+                if (
+                    //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
+                    //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
+                    new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
+                        new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()   //23-11
                     ) result = true;
 
             return result;
@@ -6936,13 +6941,15 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindShareFlint(int i)
+        public bool FindShareFlint(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
-                        new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
+                if (
+                    //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
+                    //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
+                    new PointColor(79 - 5 + xx + j * 14 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&    
+                        new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()  //23-11
                     ) result = true;
 
             return result;
@@ -6955,15 +6962,14 @@ namespace OpenGEWindows
         /// <returns>true, если есть</returns>
         public bool FindConcentracion(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
                 if (    
-                        //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + xx, 16777215, 0).isColor() &&
-                        //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + xx, 16777215, 0).isColor()
-                        new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
-                        new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
-                    ) result = true;
+                        //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
+                        //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
+                        new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
+                        new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()          //23-11
+                   ) result = true;
             if (isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф концентрации 
 
             return result;
@@ -7010,11 +7016,10 @@ namespace OpenGEWindows
         /// <returns>true, если есть</returns>
         public bool FindMarksmanship(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
-                        new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()
+                if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
+                        new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
                    ) result = true;
 
             return result;
@@ -7027,17 +7032,19 @@ namespace OpenGEWindows
         /// <returns>true, если есть</returns>
         public bool FindHound(int i)
         {
-            //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
-                        new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
+                if (
+                    //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
+                    //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
+                    new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
+                        new PointColor(81 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()   //23-11
                    ) result = true;
             return result;
         }
 
         /// <summary>
-        /// бафаем мушкетера или Бернелли с флинтом на i-м месте /ТРЕБУЕТ ПЕРЕДЕЛКИ  - У БЕРНЕЛЛИ БАФФ НЕ КОНЦЕНТРАЦИЯ/
+        /// бафаем мушкетера (с флинтом) на i-м месте 
         /// </summary>
         /// <param name="i"></param>
         private bool BuffMusk(int i)

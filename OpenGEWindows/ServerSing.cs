@@ -193,12 +193,10 @@ namespace OpenGEWindows
             this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562, 0, 1522 };
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
 
-            //this.pointisKillHero1 = new PointColor(80 - 5 + xx, 636 - 5 + yy, 1900000, 5);
-            //this.pointisKillHero2 = new PointColor(335 - 5 + xx, 636 - 5 + yy, 1900000, 5);
-            //this.pointisKillHero3 = new PointColor(590 - 5 + xx, 636 - 5 + yy, 1900000, 5);
-            this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 986895, 0);
-            this.pointisKillHero2 = new PointColor(336 - 5 + xx, 642 - 5 + yy, 986895, 0);
-            this.pointisKillHero3 = new PointColor(591 - 5 + xx, 642 - 5 + yy, 986895, 0);
+
+            this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);
+            this.pointisKillHero2 = new PointColor(336 - 5 + xx, 642 - 5 + yy, 2800000, 5);
+            this.pointisKillHero3 = new PointColor(591 - 5 + xx, 642 - 5 + yy, 2800000, 5);
             this.pointisLiveHero1 = new PointColor( 80 - 5 + xx, 636 - 5 + yy, 4200000, 5);
             this.pointisLiveHero2 = new PointColor(335 - 5 + xx, 636 - 5 + yy, 4200000, 5);
             this.pointisLiveHero3 = new PointColor(590 - 5 + xx, 636 - 5 + yy, 4200000, 5);
@@ -223,7 +221,7 @@ namespace OpenGEWindows
             this.pointisBulletOff2 = new PointColor(484 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
             this.pointisBulletOff3 = new PointColor(739 - 5 + xx + xxx, 622 - 5 + yy + yyy, 401668, 0);
 
-            this.pointProperFightingStance = new Point(115 - 5 + xx, 676 - 5 + yy);
+            this.pointProperFightingStance = new Point(115 - 5 + xx, 674 - 5 + yy);    //23-11 проверено
             this.pointisBadFightingStance1 = new PointColor(85 - 5 + xx, 673 - 5 + yy, 16777215, 0);
             this.pointisBadFightingStance2 = new PointColor(86 - 5 + xx, 674 - 5 + yy, 16777215, 0);
 

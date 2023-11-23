@@ -756,7 +756,8 @@ namespace OpenGEWindows
         /// <param name="NumberOfBox">номер ячейки</param>
         public void PressBoxInLeftPanel(int NumberOfBox)
         {
-            new Point(31 - 5 + xx, 114 - 5 + (NumberOfBox - 1) * 32 + yy).PressMouseL();
+            //new Point(31 - 5 + xx, 114 - 5 + (NumberOfBox - 1) * 32 + yy).PressMouseL();
+            new Point(36 - 5 + xx, 120 - 5 + (NumberOfBox - 1) * 32 + yy).PressMouseL();          //23-11
         }
 
         #endregion
@@ -774,18 +775,58 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// бафаемся (хрин+принципал+элики славы)                    
+        /// проверяем, есть ли на i-м герое бафф "Steroid" от бутылки
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindSteroid(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (
+                        new PointColor(84 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 16645886, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 5268894, 0).isColor()          //23-11
+                   ) result = true;
+            if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
+
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Principal" от бутылки
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindPrincipal(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (
+                        new PointColor(84 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 12956141, 0).isColor() &&
+                        new PointColor(85 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 16777215, 0).isColor()          //23-11
+                   ) result = true;
+            if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// бафаемся (хрин + принципал + элики славы/либо defensive/либо Offensive/либо DEX/либо AGI)                    
         /// </summary>
         public void ActiveAllBuffBH()
         {
             //iPoint pointPanel = new Point(38 - 5 + xx, 486 - 5 + yy);    // 33, 481
             //pointPanel.PressMouseR();                   // Кликаю правой кнопкой в панель с бытылками, чтобы сделать ее активной и поверх всех окон (группа может мешать)
 
-            PressBoxInLeftPanel(5);
-            PressBoxInLeftPanel(6);
+            if (!FindSteroid(1)) PressBoxInLeftPanel(5);   //проверяем бафф на первом герое
+            if (!FindPrincipal(1)) PressBoxInLeftPanel(6);   //проверяем бафф на первом герое
             PressBoxInLeftPanel(7);
 
         }
+        
+
+
 
         #endregion
 

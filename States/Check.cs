@@ -915,7 +915,7 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
-                    case 12:                                         // закрыть магазин
+                    case 12:                                         // закрыть магазин //не актуально 22-11
                         server.CloseExpMerch();
                         break;
 
@@ -2502,8 +2502,31 @@ namespace States
             //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
             //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
             //MessageBox.Show("баф3? " + server.FindReloadBullet(3));
-            //MessageBox.Show("баф1? " + server.FindConcentracion(1));
-            //MessageBox.Show("баф2? " + server.FindConcentracion(2));
+
+            //MessageBox.Show("есть концентрация у первого? " + server.FindConcentracion(1));
+            //MessageBox.Show("есть концентрация у второго? " + server.FindConcentracion(2));
+            //MessageBox.Show("есть концентрация у третьего? " + server.FindConcentracion(3));
+
+            //MessageBox.Show("есть гончая у первого? " + server.FindHound(1));
+            //MessageBox.Show("есть гончая у второго? " + server.FindHound(2));
+            //MessageBox.Show("есть гончая у третьего? " + server.FindHound(3));
+
+            //MessageBox.Show("есть лорчX у первого? " + server.FindShareFlint(1));
+            //MessageBox.Show("есть лорчX у второго? " + server.FindShareFlint(2));
+            //MessageBox.Show("есть лорчX у третьего? " + server.FindShareFlint(3));
+
+            //MessageBox.Show("есть джайнаY у первого? " + server.FindMysophoia(1));
+            //MessageBox.Show("есть джайнаY у второго? " + server.FindMysophoia(2));
+            //MessageBox.Show("есть джайнаY у третьего? " + server.FindMysophoia(3));
+
+            //MessageBox.Show("есть баф стероид у первого? " + botwindow.FindSteroid(1));
+            //MessageBox.Show("есть баф стероид у второго? " + botwindow.FindSteroid(2));
+            //MessageBox.Show("есть баф стероид у третьего? " + botwindow.FindSteroid(3));
+
+            //MessageBox.Show("есть баф принципал у первого? " + botwindow.FindPrincipal(1));
+            //MessageBox.Show("есть баф принципал у второго? " + botwindow.FindPrincipal(2));
+            //MessageBox.Show("есть баф принципал у третьего? " + botwindow.FindPrincipal(3));
+
             //MessageBox.Show("командный режим " + botwindow.isCommandMode());               //проверено 22-11
             //MessageBox.Show("боевой режим?" + server.isBattleMode());               //проверено  22-11
             //MessageBox.Show(" " + town.isOpenTownTeleport());
@@ -2513,6 +2536,7 @@ namespace States
             //MessageBox.Show(" " + otit.isNearOldMan());
             //MessageBox.Show("в городе?" + server.isTown());   //22-11
             //MessageBox.Show("на работе?" + server.isWork());   //22-11
+            //MessageBox.Show("убит первый перс?" + server.isKillFirstHero());   //22-11
 
             //botwindow.Pause(1000);
 
@@ -2574,6 +2598,9 @@ namespace States
             //MessageBox.Show("лимит исчерпан    " + BHdialog.isGateBH3());
             //MessageBox.Show("до 11  " + BHdialog.isGateLevelLessThan11());
             //MessageBox.Show("Initialize  " + BHdialog.isInitialize());
+            //MessageBox.Show("первый герой=" + server.WhatsHero(1));
+            //MessageBox.Show("второй герой=" + server.WhatsHero(2));
+            //MessageBox.Show("третий герой=" + server.WhatsHero(3));
 
             //server.isBarackLastPoint();
 
@@ -2631,26 +2658,24 @@ namespace States
             //pointLeaveGame.PressMouseLL();
 
             //server.systemMenu(4,true);
-            MessageBox.Show("первый герой=" +server.WhatsHero(1));
-            MessageBox.Show("второй герой=" + server.WhatsHero(2));
-            MessageBox.Show("третий герой=" + server.WhatsHero(3));
+
 
             //int xxx = 5;
             //int yyy = 5;
             //PointColor point1 = new PointColor(1151, 601, 1, 1);
             //PointColor point2 = new PointColor(1151, 602, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
-            PointColor point1 = new PointColor(408 - 5 + xx, 285 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(408 - 5 + xx, 286 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(84 - 5 + xx + 28, 592 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(85 - 5 + xx + 28, 592 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(484 - 5 + xx, 314 - 5 + yy, 0, 0);
 
-            //for (int xxx = 18; xxx < 46; xxx++)
-            //    for (int yyy = 692; yyy < 719; yyy++)
+            //for (int xxx = 133; xxx < 146; xxx++)
+            //    for (int yyy = 596; yyy < 598; yyy++)
             //    {
             //        PointColor point1 = new PointColor(xxx - 5 + xx, yyy - 5 + yy, 0, 0);
-            //        color1 = point1.GetPixelColor()/1000;
-            //        if (color1 == 4079)
-            //        { MessageBox.Show("xxx=" + xxx + " yyy=" + yyy);          }
+            //        color1 = point1.GetPixelColor();
+            //        if (color1 == 13067318)
+            //        { MessageBox.Show("xxx=" + xxx + " yyy=" + yyy); }
             //    }
             //MessageBox.Show("проверка завершена");
 
