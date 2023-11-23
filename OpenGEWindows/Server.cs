@@ -1815,7 +1815,8 @@ namespace OpenGEWindows
 
         public bool isOpenWarpList()
         {
-            return pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
+            return isOpenTopMenu(5);
+            //return pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
             //return new PointColor(485 - 5 + xx, 126 - 5 + yy, 13034463, 0).isColor()
             //    && new PointColor(485 - 5 + xx, 127 - 5 + yy, 13034463, 0).isColor(); 
         }
@@ -1968,8 +1969,8 @@ namespace OpenGEWindows
             int count = 0;
             do
             {
-                pointMenu.PressMouse();
-                botwindow.Pause(2000);
+                pointMenu.PressMouseL();
+                botwindow.Pause(1000);
                 count++; if (count > 3) break;
             } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
         }
@@ -3052,8 +3053,8 @@ namespace OpenGEWindows
         /// <returns> true, если выскочило </returns>
         public bool isBarackWarningYes()
         {
-            return  new PointColor(482 - 5 + xx, 314 - 5 + yy, 6713206, 0).isColor() &&
-                    new PointColor(483 - 5 + xx, 314 - 5 + yy, 6713206, 0).isColor();
+            return  new PointColor(482 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor() &&
+                    new PointColor(483 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor();
         }
 
         /// <summary>
@@ -6241,8 +6242,8 @@ namespace OpenGEWindows
         /// <returns>true, если находимся</returns>
         public bool isMissionLobby()
         {
-            return  new PointColor(242 - 5 + xx, 163 - 5 + yy, 13882323, 0).isColor() &&
-                    new PointColor(242 - 5 + xx, 164 - 5 + yy, 13882323, 0).isColor();  //22-11   буква М
+            return  new PointColor(242 - 5 + xx, 163 - 5 + yy, 13800000, 5).isColor() &&
+                    new PointColor(242 - 5 + xx, 164 - 5 + yy, 13800000, 5).isColor();  //22-11   буква М
         }
 
         /// <summary>
@@ -6273,29 +6274,19 @@ namespace OpenGEWindows
         /// <returns>true, если появился</returns>
         public bool isTreasureChest()
         {
-            //return  (new PointColor(832 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(838 - 5 + xx, 655 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(835 - 5 + xx, 664 - 5 + yy, 14900000, 5).isColor())
-            //        ||
-            //        (new PointColor(832 - 5 + xx, 617 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(838 - 5 + xx, 617 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(835 - 5 + xx, 626 - 5 + yy, 14900000, 5).isColor())
-            //        ||
-            //        (new PointColor(832 - 5 + xx, 598 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(838 - 5 + xx, 598 - 5 + yy, 15500000, 5).isColor() &&
-            //        new PointColor(835 - 5 + xx, 607 - 5 + yy, 14900000, 5).isColor())
-            //        ;
-
             // проверяем букву Т в слове Treasure в пяти нижних строчках
 
             bool result = false;
 
-            for (int i = 1; i <= 15; i++)
+            for (int i = 1; i <= 17; i++)
             {
                 if (
-                    new PointColor(837 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-                    new PointColor(843 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-                    new PointColor(840 - 5 + xx, 674 - 5 + yy - (i - 1) * 19, 14900000, 5).isColor()             //нижняя средняя точка буквы Т
+                    //new PointColor(837 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&       //левая верхняя точка буквы Т
+                    //new PointColor(843 - 5 + xx, 664 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&       //правая верхняя точка буквы Т
+                    //new PointColor(840 - 5 + xx, 674 - 5 + yy - (i - 1) * 19, 14900000, 5).isColor()          //нижняя средняя точка буквы Т
+                    new PointColor(837 - 5 + xx, 674 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&         //левая верхняя точка буквы Т
+                    new PointColor(843 - 5 + xx, 674 - 5 + yy - (i - 1) * 19, 15500000, 5).isColor() &&         //правая верхняя точка буквы Т
+                    new PointColor(840 - 5 + xx, 684 - 5 + yy - (i - 1) * 19, 15000000, 5).isColor()            //нижняя средняя точка буквы Т 23-11
                     )
                 {
                     result = true;
@@ -6306,26 +6297,7 @@ namespace OpenGEWindows
 
             return result;
 
-            //return (new PointColor(862 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-            //        new PointColor(868 - 30 + xx, 684 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-            //        new PointColor(865 - 30 + xx, 694 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-            //        ||
-            //        (new PointColor(862 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-            //        new PointColor(868 - 30 + xx, 665 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-            //        new PointColor(865 - 30 + xx, 675 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-            //        ||
-            //        (new PointColor(862 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-            //        new PointColor(868 - 30 + xx, 646 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-            //        new PointColor(865 - 30 + xx, 656 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-            //        ||
-            //        (new PointColor(862 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-            //        new PointColor(868 - 30 + xx, 627 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-            //        new PointColor(865 - 30 + xx, 637 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-            //        ||
-            //        (new PointColor(862 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //левая верхняя точка буквы Т
-            //        new PointColor(868 - 30 + xx, 608 - 30 + yy, 15500000, 5).isColor() &&          //правая верхняя точка буквы Т
-            //        new PointColor(865 - 30 + xx, 618 - 30 + yy, 14900000, 5).isColor())            //нижняя средняя точка буквы Т
-            //        ;
+
         }
 
         /// <summary>
@@ -6411,7 +6383,8 @@ namespace OpenGEWindows
         /// </summary>
         public void ReturnToMissionFromBarack()
         {
-            new Point(330 - 5 + xx, 670 - 5 + yy).PressMouseLL();
+            //new Point(330 - 5 + xx, 670 - 5 + yy).PressMouseLL();
+            new Point(330 - 5 + xx, 670 - 5 + yy).PressMouseL();     //23-11
             Pause(500);
         }
 

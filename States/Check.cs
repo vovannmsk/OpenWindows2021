@@ -751,9 +751,10 @@ namespace States
             if (server.isTown())
             {
                 botwindow.PressEscThreeTimes();             //27-10-2021
-                if (
-                !server.isBattleMode() &&
-                !server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
+                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!server.isKillFirstHero())
+                //!server.isBattleMode() &&
+                //!server.isAssaultMode())   //если в городе, но не в боевом режиме и не в режиме атаки
                 {
                     if (server.isBH())     //в БХ     
                     {
@@ -768,8 +769,8 @@ namespace States
                 }
             }
 
-            //в миссии
-            if (server.isWork()) return 7;
+            //в миссии (если убит первый персонаж, то это точно миссия
+            if (server.isWork() || server.isKillFirstHero()) return 7;
 
             //в логауте
             if (server.isLogout()) return 1;
@@ -777,7 +778,9 @@ namespace States
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
 
             //если проблем не найдено
             return 0;
@@ -926,6 +929,10 @@ namespace States
 
                     //    botParam.HowManyCyclesToSkip = 1;
                     //    break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        //botwindow.PressEsc();                       // нажимаем Esc
+                        server.PressYesBarack();
+                        break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
@@ -1058,6 +1065,7 @@ namespace States
             //в бараке
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackWarningYes()) return 16;
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
@@ -1175,7 +1183,7 @@ namespace States
                         //server.BattleModeOn();
                         break;
                     case 10:
-                        //если белая надпись вверху
+                        //если появился сундук
                         server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
                         Pause(5000);
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
@@ -1187,6 +1195,10 @@ namespace States
                     case 12:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        //botwindow.PressEsc();                       // нажимаем Esc
+                        server.PressYesBarack();
                         break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
@@ -1252,10 +1264,10 @@ namespace States
                                                                                    //(либо уже тыкали в сундук)
                                                                                    //либо крутится рулетка
                 {
-                    if (server.isSecondGate())      //появились вторые ворота (с фесом)?
+                    if (server.isSecondGate())      //появились вторые ворота (с фесом)?  //не работает
                         return 9;
                     else
-                        return 4;                   //ворота с фесом не появились и надо идти в барак
+                        return 4;       //ворота с фесом не появились и можно удалять песочницу и переходить к следующему аккаунту
                 }
                 //if (server.isRouletteBH() || GoBarack == 1)
                 //    return 4;                       //надо идти в барак
@@ -1276,7 +1288,7 @@ namespace States
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
-
+            if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
 
             //если проблем не найдено
@@ -1310,7 +1322,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 3:                                         //в миссии, но рулетка ещё не крутится
-                        server.ActivatePetDemonic();                //активируем пета
+                        pet.ActivePetDem();                         //активируем пета (может он успеет собрать не подобранные вещи)
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         //botwindow.Pause(500);
                         //driver.StateActivePetDem();                 //активируем пета
@@ -1357,6 +1369,10 @@ namespace States
                     case 12:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        //botwindow.PressEsc();                       // нажимаем Esc
+                        server.PressYesBarack();
                         break;
                     case 17:                                        // в бараках на стадии выбора группы
                         botwindow.PressEsc();                       // нажимаем Esc
@@ -2537,6 +2553,7 @@ namespace States
             //MessageBox.Show("в городе?" + server.isTown());   //22-11
             //MessageBox.Show("на работе?" + server.isWork());   //22-11
             //MessageBox.Show("убит первый перс?" + server.isKillFirstHero());   //22-11
+            //MessageBox.Show("появился сундук?" + server.isTreasureChest());   //22-11
 
             //botwindow.Pause(1000);
 
@@ -2601,6 +2618,7 @@ namespace States
             //MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
+            //MessageBox.Show("в диалоге " + dialog.isDialog());
 
             //server.isBarackLastPoint();
 
@@ -2665,9 +2683,25 @@ namespace States
             //PointColor point1 = new PointColor(1151, 601, 1, 1);
             //PointColor point2 = new PointColor(1151, 602, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
-            PointColor point1 = new PointColor(84 - 5 + xx + 28, 592 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(85 - 5 + xx + 28, 592 - 5 + yy, 0, 0);
-            //PointColor point3 = new PointColor(484 - 5 + xx, 314 - 5 + yy, 0, 0);
+
+            //for (int ii = 4; ii <= 17; ii++)
+            //{
+                //PointColor point1 = new PointColor(837 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
+                //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
+                //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
+
+            PointColor point1 = new PointColor(482 - 5 + xx, 314 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(483 - 5 + xx, 314 - 5 + yy, 0, 0);
+            //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy, 0, 0);
+
+            color1 = point1.GetPixelColor();
+            color2 = point2.GetPixelColor();
+            //color3 = point3.GetPixelColor();
+
+            MessageBox.Show("цвет 1 = " + color1);
+            MessageBox.Show("цвет 2 = " + color2);
+            //MessageBox.Show("цвет 3 = " + color3);
+            //}
 
             //for (int xxx = 133; xxx < 146; xxx++)
             //    for (int yyy = 596; yyy < 598; yyy++)
@@ -2679,13 +2713,6 @@ namespace States
             //    }
             //MessageBox.Show("проверка завершена");
 
-            color1 = point1.GetPixelColor();
-            color2 = point2.GetPixelColor();
-            //color3 = point3.GetPixelColor();
-
-            MessageBox.Show(" " + color1);
-            MessageBox.Show(" " + color2);
-            //MessageBox.Show(" " + color3);
 
             //server.WriteToLogFile("цвет " + color1);
             //server.WriteToLogFile("цвет " + color2);

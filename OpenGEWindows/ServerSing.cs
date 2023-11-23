@@ -125,8 +125,10 @@ namespace OpenGEWindows
 
             this.pointisOpenTopMenu21 = new PointColor(337 - 5 + xx + xxx, 76 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx + xxx, 77 - 5 + yy + yyy, 13421721, 0);
-            this.pointisOpenTopMenu51 = new PointColor(442 - 5 + xx, 83 - 5 + yy, 6713000, 3);      //верхняя коричневая полоса
-            this.pointisOpenTopMenu52 = new PointColor(443 - 5 + xx, 83 - 5 + yy, 6713000, 3);     //22-11
+            //this.pointisOpenTopMenu51 = new PointColor(442 - 5 + xx, 83 - 5 + yy, 6713000, 3);      //верхняя коричневая полоса
+            //this.pointisOpenTopMenu52 = new PointColor(443 - 5 + xx, 83 - 5 + yy, 6713000, 3);     //22-11
+            this.pointisOpenTopMenu51 = new PointColor(175 - 5 + xx, 175 - 5 + yy, 12118521, 0);      //буква L в слове Warp List
+            this.pointisOpenTopMenu52 = new PointColor(175 - 5 + xx, 176 - 5 + yy, 12118521, 0);     //23-11
             this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 6713463, 0);      
             this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 6713463, 0);     
             this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);

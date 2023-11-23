@@ -5,7 +5,8 @@
         protected iPoint ButtonOkDialog;
         protected iPointColor pointDialog1;
         protected iPointColor pointDialog2;
-
+        protected iPointColor pointDialog3;
+        protected iPointColor pointDialog4;
         // ============  методы  ========================
 
         /// <summary>
@@ -23,7 +24,8 @@
         /// </summary>
         public bool isDialog()
         {
-            return pointDialog1.isColor() && pointDialog2.isColor();
+            return (pointDialog1.isColor() && pointDialog2.isColor()) || 
+                (pointDialog3.isColor() && pointDialog4.isColor());
         }
 
         /// <summary>
@@ -34,7 +36,8 @@
         {
             for (int j = 1; j <= number; j++)
             {
-                ButtonOkDialog.DoubleClickL();    // Нажимаем на Ok в диалоге
+                //ButtonOkDialog.DoubleClickL();    // Нажимаем на Ok в диалоге
+                ButtonOkDialog.PressMouseL();    // Нажимаем на Ok в диалоге
                 Pause(1500);
             }
         }
