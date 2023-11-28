@@ -57,7 +57,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.TopMenuTeleport();
+            //server.TopMenuTeleport();
+            server.Teleport(1, true);
         }
 
         /// <summary>

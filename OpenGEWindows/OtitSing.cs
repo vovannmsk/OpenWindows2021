@@ -25,18 +25,18 @@
             this.pointOldMan1 = new PointColor(907 - 5 + xx, 675 - 5 + yy, 7800000, 5);
             this.pointOldMan2 = new PointColor(907 - 5 + xx, 676 - 5 + yy, 7800000, 5);
              
-            this.pointTask1 = new PointColor(928 - 5 + xx, 383 - 5 + yy, 8300000, 5);
-            this.pointTask2 = new PointColor(928 - 5 + xx, 384 - 5 + yy, 8300000, 5);
+            this.pointTask1 = new PointColor(891 - 5 + xx, 152 - 5 + yy, 7800000, 5);   //цифра 1 в числе 100    
+            this.pointTask2 = new PointColor(891 - 5 + xx, 153 - 5 + yy, 7800000, 5);   //23-11
 
-            //this.pointGetTask1 = new PointColor(824 - 5 + xx, 379 - 5 + yy, 16100000, 5);
-            //this.pointGetTask2 = new PointColor(824 - 5 + xx, 380 - 5 + yy, 16100000, 5);
-            this.pointGetTask1 = new PointColor(764 - 5 + xx, 383 - 5 + yy, 16100000, 5);
-            this.pointGetTask2 = new PointColor(764 - 5 + xx, 384 - 5 + yy, 16100000, 5);
+            //this.pointGetTask1 = new PointColor(764 - 5 + xx, 383 - 5 + yy, 16100000, 5); 
+            //this.pointGetTask2 = new PointColor(764 - 5 + xx, 384 - 5 + yy, 16100000, 5);
+            this.pointGetTask1 = new PointColor(783 - 5 + xx, 151 - 5 + yy, 16100000, 5);  //буква R в слове Refined
+            this.pointGetTask2 = new PointColor(783 - 5 + xx, 152 - 5 + yy, 16100000, 5);
 
-            //this.pointIsOpenMap1 = new PointColor(484 - 30 + xx, 129 - 30 + yy, 8549475, 0);
-            //this.pointIsOpenMap2 = new PointColor(490 - 30 + xx, 129 - 30 + yy, 8549475, 0);
-            this.pointIsOpenMap1 = new PointColor(245 - 5 + xx, 108 - 5 + yy, 8000000, 6);
-            this.pointIsOpenMap2 = new PointColor(246 - 5 + xx, 108 - 5 + yy, 8000000, 6);
+            //this.pointIsOpenMap1 = new PointColor(245 - 5 + xx, 108 - 5 + yy, 8000000, 6);
+            //this.pointIsOpenMap2 = new PointColor(246 - 5 + xx, 108 - 5 + yy, 8000000, 6);
+            this.pointIsOpenMap1 = new PointColor(253 - 5 + xx, 124 - 5 + yy, 16000000, 6);  //буква М в слове Zone Map
+            this.pointIsOpenMap2 = new PointColor(253 - 5 + xx, 125 - 5 + yy, 16000000, 6);
 
             this.pointIsPerfume1 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);   //не готово
             this.pointIsPerfume2 = new PointColor(0 - 5 + xx, 0 - 5 + yy, 7000000, 6);
@@ -47,8 +47,10 @@
 
             this.pointMamons = new Point(526 - 5 + xx, 262 - 5 + yy);
             this.pointOldMan = new Point(531 - 5 + xx, 313 - 5 + yy);
-            this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
-            this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
+            //this.pointOldManOnMap = new Point(740 - 5 + xx, 212 - 5 + yy);
+            this.pointOldManOnMap = new Point(740 - 5 + xx, 237 - 5 + yy);
+            //this.pointButtonMoveOnMap = new Point(835 - 5 + xx, 635 - 5 + yy);
+            this.pointButtonMoveOnMap = new Point(845 - 5 + xx, 645 - 5 + yy);    //23-11
 
             this.numberOfRoute = NumberOfRoute();
             //this.CounterRouteNode = 0;
@@ -136,19 +138,16 @@
         /// </summary>
         public override void GetTask()
         {
-            //dialog.PressStringDialog(1);
+            //dialog.PressStringDialog(3);
             //dialog.PressOkButton(1);
-
             //dialog.PressStringDialog(2);
             //dialog.PressOkButton(2);
-
             dialog.PressStringDialog(3);
-            dialog.PressOkButton(1);
-
+            botwindow.Pause(1000);
             dialog.PressStringDialog(2);
-            dialog.PressOkButton(2);
-
-
+            botwindow.Pause(1000);
+            dialog.PressOkButton(1);
+            botwindow.Pause(1000);
         }
 
         /// <summary>
@@ -156,29 +155,12 @@
         /// </summary>
         public override void EnterToTierraDeLosMuertus()
         {
-            //dialog.PressStringDialog(2);      //старый вариант
-            //dialog.PressOkButton(1);
             dialog.PressStringDialog(4);
-            dialog.PressOkButton(1);
-
-            //if ((NumberOfRoute() == 0) || (NumberOfRoute() == 1) || (NumberOfRoute() == 5))
-            //{
-            //dialog.PressStringDialog(3);     // стартовая точка - около входа
+            botwindow.Pause(1000);
             dialog.PressStringDialog(2);     // стартовая точка - в середине карты
-            //dialog.PressStringDialog(1);     // стартовая точка - вверху
-            dialog.PressOkButton(1);
-            //}
-            //else
-            //{
-            //dialog.PressStringDialog(2);     // стартовая точка - центр карты (для маршрутов 2 и 3)
-            //    dialog.PressOkButton(1);
-            //}
-
-            botwindow.Pause(500);
+            botwindow.Pause(1000);
             dialog.PressStringDialog(1);    //move  (в миссию)
-            botwindow.Pause(500);
-            dialog.PressOkButton(1);
-            botwindow.Pause(500);
+            botwindow.Pause(1000);
         }
 
         /// <summary>
@@ -186,17 +168,24 @@
         /// </summary>
         public override void TakePureOtite()
         {
-            //dialog.PressStringDialog(1);      //старый вариант
-            dialog.PressStringDialog(3);
-            dialog.PressOkButton(1);
+            //dialog.PressStringDialog(3);
+            //dialog.PressOkButton(1);
+            //dialog.PressStringDialog(1);
+            //botwindow.Pause(500);
+            //dialog.PressOkButton(1);
+            //botwindow.Pause(1000);
+            //dialog.PressOkButton(1);
+            //botwindow.Pause(1000);
+            //dialog.PressOkButton(1);
 
+            dialog.PressStringDialog(3);
+            botwindow.Pause(1000);
             dialog.PressStringDialog(1);
-            botwindow.Pause(500);
-            dialog.PressOkButton(1);
             botwindow.Pause(1000);
             dialog.PressOkButton(1);
             botwindow.Pause(1000);
             dialog.PressOkButton(1);
+            botwindow.Pause(1000);
         }
 
     }

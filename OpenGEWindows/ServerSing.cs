@@ -135,8 +135,10 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx + xxx, 90 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu91 = new PointColor(408 - 5 + xx, 285 - 5 + yy, 16316664, 0);      //N в слове Name  22-11
             this.pointisOpenTopMenu92 = new PointColor(408 - 5 + xx, 286 - 5 + yy, 16316664, 0);
-            this.pointisOpenTopMenu121 = new PointColor(600 - 5 + xx, 116 - 5 + yy, 8000000, 6);        //Warp List
-            this.pointisOpenTopMenu122 = new PointColor(610 - 5 + xx, 116 - 5 + yy, 8000000, 6);
+            this.pointisOpenTopMenu121 = new PointColor(242 - 5 + xx, 166 - 5 + yy, 16700000, 5);       //WorldMap and Zone Map
+            this.pointisOpenTopMenu122 = new PointColor(242 - 5 + xx, 167 - 5 + yy, 16700000, 5);        //буква М в слове Zone Map
+            this.pointisOpenTopMenu121work = new PointColor(242 - 5 + xx, 145 - 5 + yy, 16700000, 5);       //WorldMap and Zone Map
+            this.pointisOpenTopMenu122work = new PointColor(242 - 5 + xx, 146 - 5 + yy, 16700000, 5);        //буква М в слове Zone Map
             this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name (system menu)                                                        //проверено
             this.pointisOpenTopMenu132 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 12000000, 6);
             this.pointisOpenMenuChooseChannel1 = new PointColor(500 - 5 + xx, 253 - 5 + yy, 8036794, 0);   //Menu of Choose a channel
@@ -196,9 +198,9 @@ namespace OpenGEWindows
             // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
 
 
-            this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);
-            this.pointisKillHero2 = new PointColor(336 - 5 + xx, 642 - 5 + yy, 2800000, 5);
-            this.pointisKillHero3 = new PointColor(591 - 5 + xx, 642 - 5 + yy, 2800000, 5);
+            this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //22-11
+            this.pointisKillHero2 = new PointColor(336 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //23-11
+            this.pointisKillHero3 = new PointColor(591 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //23-11
             this.pointisLiveHero1 = new PointColor( 80 - 5 + xx, 636 - 5 + yy, 4200000, 5);
             this.pointisLiveHero2 = new PointColor(335 - 5 + xx, 636 - 5 + yy, 4200000, 5);
             this.pointisLiveHero3 = new PointColor(590 - 5 + xx, 636 - 5 + yy, 4200000, 5);

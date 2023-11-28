@@ -162,7 +162,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isTaskDone()
         {
-            return (pointTask1.isColor() && pointTask2.isColor());
+            return pointTask1.isColor() && pointTask2.isColor();
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isGetTask()
         {
-            return (pointGetTask1.isColor() && pointGetTask2.isColor());
+            return pointGetTask1.isColor() && pointGetTask2.isColor();
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace OpenGEWindows
         public void GoToOldManMulti()
         {
             //server.OpenMapForState();
-            server.TopMenu(6, 2, true);       //12-02-2021
+            server.TopMenu(12, 2, true);       //23-11
             Pause(1000);
 
             PressOldManonMap();

@@ -58,7 +58,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             botwindow.PressEscThreeTimes();
-            server.Teleport(1); //летим по первому телепорту с проверкой открытия меню со списком телепортов
+            server.Teleport(1,true); //летим по первому телепорту с проверкой открытия меню со списком телепортов
         }
 
         /// <summary>

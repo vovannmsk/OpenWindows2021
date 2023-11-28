@@ -1046,8 +1046,10 @@ namespace States
             if (server.isWork() || server.isKillFirstHero())
             {
                 //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
-                if (server.isWhiteLabel() ||
-                    server.isTreasureChest()) return 10;
+                if (
+                    //server.isWhiteLabel() ||        //если белая надпись сверху
+                    server.isTreasureChest()            //если розовая надпись в чате "Treasure chest...", значит появился сундук
+                    ) return 10;                        //надо собрать дроп, идти в барак и далее - стадия 3
                 else
                 //    if (server.isBossOrMob() && !server.isMob())
                 //    return 4;   //если босс в прицеле, то скилляем
@@ -1252,21 +1254,23 @@ namespace States
             if (server.isSteamService()) return 11;
 
             //если диалог (он получается, если тыкнуть в ворота)
-            if (dialog.isDialog()) return 7;
-
+            if (dialog.isDialog()) 
+                //return 7;                 //выходим из диалога обратно в миссию
+                return 6;                    //закрываем песочницу и аккаунт
             // если неправильная стойка
             if (server.isBadFightingStance()) return 12;
 
             //в миссии
             if (server.isWork())
             {
-                if (server.isGate() || GoBarack == 1 || server.isRouletteBH())     //если сундука уже нет, а появились ворота
-                                                                                   //(либо уже тыкали в сундук)
-                                                                                   //либо крутится рулетка
+                if (GoBarack == 1              // уже тыкали в сундук 
+                                               // || server.isGate()                   // не работает
+                                               // || server.isRouletteBH()             // не работает
+                    )     
                 {
-                    if (server.isSecondGate())      //появились вторые ворота (с фесом)?  //не работает
-                        return 9;
-                    else
+                    //if (server.isSecondGate())      //появились вторые ворота (с фесом)?  //не работает
+                    //    return 9;
+                    //else
                         return 4;       //ворота с фесом не появились и можно удалять песочницу и переходить к следующему аккаунту
                 }
                 //if (server.isRouletteBH() || GoBarack == 1)
@@ -1276,20 +1280,33 @@ namespace States
             }
 
             //в городе или в БХ
-            if (server.isTown())
+            if (server.isTown())                
             {
-                if (server.isBH()) return 5;        //в БХ
-                else return 6;                      //в стартовом городе
+                //if (server.isBH())                  //если в БХ, то значит миссия закончилась и нас выкинуло
+                //    return 5;                       //идём в стартовый город
+                //else 
+                    return 6;                   //закрываем песочницу и аккаунт
             }
 
             //в логауте
-            if (server.isLogout()) return 1;                    // если окно в логауте
+            if (server.isLogout())
+                //return 1;                    // если окно в логауте
+                return 6;                    //закрываем песочницу и аккаунт
 
             //в бараке
-            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
-            if (server.isBarack()) return 2;                    //если стоят в бараке 
-            if (server.isBarackWarningYes()) return 16;
-            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackCreateNewHero()) 
+                //return 20;      //если стоят на странице создания нового персонажа
+                return 6;                    //закрываем песочницу и аккаунт
+            if (server.isBarack())
+                //return 2;                    //если стоят в бараке 
+                return 6;                    //закрываем песочницу и аккаунт
+            if (server.isBarackWarningYes())
+                //return 16;        //нажимаем Yes
+                return 6;                    //закрываем песочницу и аккаунт
+
+            if (server.isBarackTeamSelection())
+                //return 17;      //если в бараках на стадии выбора группы
+                return 6;                    //закрываем песочницу и аккаунт
 
             //если проблем не найдено
             return 0;
@@ -1317,7 +1334,7 @@ namespace States
                         driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 2:                                         //в бараках
+                    case 2:                                         //в бараках  (этот пункт не использую)
                         driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
                         botParam.HowManyCyclesToSkip = 2;
                         break;
@@ -1325,7 +1342,7 @@ namespace States
                         pet.ActivePetDem();                         //активируем пета (может он успеет собрать не подобранные вещи)
                         server.OpeningTheChest();                   //тыкаем в сундук и запускаем рулетку
                         //botwindow.Pause(500);
-                        //driver.StateActivePetDem();                 //активируем пета
+                        //driver.StateActivePetDem();                 //активируем пета (старый вариант)
                         botParam.HowManyCyclesToSkip = 1;
                         GoBarack = 1;
                         //server.MaxHeight(3);                        //чтобы было видно вторые ворота
@@ -1340,7 +1357,7 @@ namespace States
                         //server.GotoBarack();
                         //botParam.HowManyCyclesToSkip = 2;
                         //break;
-                    case 5:                                         // в БХ
+                    case 5:                                         // из БХ
                         server.systemMenu(3, true);                 // переход в стартовый город
                         botParam.HowManyCyclesToSkip = 3;
                         break;
@@ -1351,7 +1368,7 @@ namespace States
                         break;
                     case 7:                                         // в диалоге ворот (выйти в БХ или остаться на месте)
                         dialog.PressStringDialog(1);
-                        dialog.PressOkButton(1);
+                        //dialog.PressOkButton(1);
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     //case 8:                                         // появились ворота вместо сундука
@@ -1399,6 +1416,7 @@ namespace States
 
         #endregion =======================================================================================================
 
+        // это стадия только для работы в воротах с фесо /не используется/
         #region  =================================== Demonic Multi Stage 4 ==============================================
 
         /// <summary>
@@ -1942,7 +1960,7 @@ namespace States
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в добыче Pure Otite
+        /// разрешение выявленных проблем в добыче Pure Otite Multi
         /// </summary>
         public void problemResolutionOtite()
         {
@@ -1999,7 +2017,6 @@ namespace States
                         else GotTask = false;
                         //============================================
                         otit.PressOldMan();                             // OldMan --> OldMan (dialog)
-                        //driver.PressOldMan();                       // OldMan --> OldMan (dialog)
                         break;
                     case 6:
                         driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
@@ -2549,7 +2566,7 @@ namespace States
             //MessageBox.Show(" " + pet.isOpenMenuPet());
             //MessageBox.Show(" " + pet.isSummonPet());
             //MessageBox.Show(" " + pet.isActivePet());
-            //MessageBox.Show(" " + otit.isNearOldMan());
+            //MessageBox.Show("около старика " + otit.isNearOldMan());
             //MessageBox.Show("в городе?" + server.isTown());   //22-11
             //MessageBox.Show("на работе?" + server.isWork());   //22-11
             //MessageBox.Show("убит первый перс?" + server.isKillFirstHero());   //22-11
@@ -2574,6 +2591,7 @@ namespace States
             //MessageBox.Show("Открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("Выполнено задание??? " + otit.isTaskDone());
             //MessageBox.Show("около ОлдМана??? " + otit.isNearOldMan());
+            //MessageBox.Show("открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
@@ -2588,6 +2606,7 @@ namespace States
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
             //MessageBox.Show("телепорты? " + server.isOpenTopMenu(5));
+            MessageBox.Show("карты? " + server.isOpenTopMenu(12));
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
@@ -2655,7 +2674,7 @@ namespace States
             yy = koordY[i - 1];
             uint color1;
             uint color2;
-            uint color3;
+            //uint color3;
             //int x = 483;
             //int y = 292;
             //int i = 4;
@@ -2690,8 +2709,8 @@ namespace States
                 //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
                 //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
 
-            PointColor point1 = new PointColor(482 - 5 + xx, 314 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(483 - 5 + xx, 314 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(242 - 5 + xx, 145 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(242 - 5 + xx, 146 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

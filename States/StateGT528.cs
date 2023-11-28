@@ -37,7 +37,8 @@ namespace States
             otit.PressMitridat();           //баффнулись
             botwindow.PressEscThreeTimes(); //убрали лишнее с экрана
             //server.OpenMapForState();     //13-02-2021
-            server.TopMenu(6, 2, true);     //вызвали карту
+            //server.TopMenu(12, 2, true);     //вызвали карту
+            server.OpenMapForState();          //вызвали карту
             botwindow.Pause(1000);
             otit.GotoWorkMulti();      //идем к началу маршрута
         }

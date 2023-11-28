@@ -31,7 +31,7 @@
         public override void PressStringDialog(int number)
         {
             iPoint pointString = new Point(685 - 5 + xx, 493 - 5 + yy - (number - 1) * 28);   //22-11
-            pointString.PressMouseLL();
+            pointString.PressMouseL();
             Pause(1000);
         }
 

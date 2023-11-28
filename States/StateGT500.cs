@@ -59,6 +59,7 @@ namespace States
         {
             botwindow.PressEscThreeTimes();             //убираем всё лишнее с экрана
             server.runAway();
+            //server.TopMenu(12, true);
         }
 
         /// <summary>

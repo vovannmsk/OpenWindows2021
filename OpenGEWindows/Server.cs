@@ -155,6 +155,8 @@ namespace OpenGEWindows
         protected iPointColor pointisOpenTopMenu92;
         protected iPointColor pointisOpenTopMenu121;
         protected iPointColor pointisOpenTopMenu122;
+        protected iPointColor pointisOpenTopMenu121work;
+        protected iPointColor pointisOpenTopMenu122work;
         protected iPointColor pointisOpenTopMenu131;
         protected iPointColor pointisOpenTopMenu132;
         protected iPointColor pointisOpenMenuChooseChannel1;
@@ -1336,7 +1338,7 @@ namespace OpenGEWindows
         /// </summary>
         protected void EnterLoginAndPasword()
         {
-            iPoint pointPassword = new Point(510 - 5 + botParam.X, 355 - 5 + botParam.Y);    //  505, 350
+            iPoint pointPassword = new Point(510 - 5 + xx, 355 - 5 + yy);    //  505, 350
             // окно открылось, надо вставить логин и пароль
             pointPassword.PressMouseL();   //Кликаю в строчку с паролем
             //PressMouseL(505, 350);       //Кликаю в строчку с паролем
@@ -1360,7 +1362,7 @@ namespace OpenGEWindows
         /// <returns>true=если удалось нажать,  false=если окно вылетело</returns>
         private bool PressConnectButton()
         {
-            iPoint pointButtonConnect = new Point(595 - 5 + botParam.X, 485 - 5 + botParam.Y);    // кнопка "Connect" в логауте 
+            iPoint pointButtonConnect = new Point(595 - 5 + xx, 485 - 5 + yy);    // кнопка "Connect" в логауте 
             if (isHwnd())
             {
                 pointButtonConnect.PressMouseLL();   // Кликаю в Connect
@@ -1422,6 +1424,7 @@ namespace OpenGEWindows
             iPointColor point5050 = new PointColor(50 - 5 + xx, 50 - 5 + yy, 7800000, 5);  //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
             iPoint pointButtonOk = new Point(525 - 5 + xx, 415 - 5 + yy);    // кнопка Ok. всплывающее сообщение в логауте
             iPoint pointButtonOk2 = new Point(525 - 5 + xx, 450 - 5 + yy);    // кнопка Ok. всплывающее сообщение  в логауте
+            iPoint pointButtonOk3 = new Point(525 - 5 + xx, 432 - 5 + yy);    // кнопка Ok. всплывающее сообщение в логауте
 
             uint Tek_Color1;
             uint Test_Color = 0;
@@ -1437,9 +1440,11 @@ namespace OpenGEWindows
             ColorBOOL = (Test_Color == Tek_Color1);
             int counter = 0; //счетчик
 
-            pointButtonOk.PressMouseL();  //кликаю в кнопку  "ОК"
+            pointButtonOk.PressMouseL();  //кликаю в кнопку  "ОК" (сообщение об ошибке 1)
             Pause(500);
-            pointButtonOk2.PressMouseL();  //кликаю в кнопку  "ОК" 3 min
+            pointButtonOk2.PressMouseL();  //кликаю в кнопку  "ОК" (сообщение об ошибке 1)
+            Pause(500);
+            pointButtonOk3.PressMouseL();  //кликаю в кнопку  "ОК" (сообщение об ошибке 1)
             Pause(500);
 
             bool IsServerSelected = serverSelection();          //выбираем из списка свой сервер
@@ -1801,7 +1806,8 @@ namespace OpenGEWindows
                     result = pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor(); //системное меню 22-11
                     break;
                 case 12:
-                    result = pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor(); 
+                    result = (pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor()) ||
+                            (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor()); 
                     break;
                 case 13:
                     result = (pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2());
@@ -1831,12 +1837,15 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Открыть карту местности (Alt + Z). Без проверок  
+        /// Открыть карту местности (Alt + Z) на работе. Без проверок  
         /// </summary>
         public void OpenMapForState()
         {
-            TopMenu(6, 2);
+            TopMenu(12, true);
             Pause(1000);
+            new Point(197 - 5 + xx, 144 - 5 + yy).PressMouseL();
+            Pause(500);
+
         }
 
         /// <summary>
@@ -1976,7 +1985,6 @@ namespace OpenGEWindows
         }
 
 
-
         /// <summary>
         /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
         /// </summary>
@@ -1984,22 +1992,47 @@ namespace OpenGEWindows
         /// <param name="punkt">пункт меню. номер п/п</param>
         public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
         {
-            int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
-            int[] PunktX = { 0, 336, 368, 401, 0, 462, 510, 561, 578, 0, 0, 0, 0 };    //координата X пунктов меню
-            int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 }; //координата Y первого пункта меню
+            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
+            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 230, 0, 0, 0, 0 };    //координата X первого подпункта меню
+            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 143, 0, 0, 0, 0 }; //координата Y первого пункта меню
 
             if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
             {
+                int x = PunktX[numberOfThePartitionMenu - 1];
                 int y = FirstPunktOfMenuKoordY[numberOfThePartitionMenu - 1] + 25 * (punkt - 1);
 
                 TopMenu(numberOfThePartitionMenu, status);   //сначала открываем раздел верхнего меню (1-14)
                 Pause(500);
 
-                int x = PunktX[numberOfThePartitionMenu - 1];
                 iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
                 pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
             }
         }
+
+
+        ///// <summary>
+        ///// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
+        ///// </summary>
+        ///// <param name="numberOfThePartitionMenu">номер раздела верхнего меню п/п</param>
+        ///// <param name="punkt">пункт меню. номер п/п</param>
+        //public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
+        //{
+        //    int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
+        //    int[] PunktX = { 0, 336, 368, 401, 0, 462, 510, 561, 578, 0, 0, 0, 0 };    //координата X пунктов меню
+        //    int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 }; //координата Y первого пункта меню
+
+        //    if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
+        //    {
+        //        int y = FirstPunktOfMenuKoordY[numberOfThePartitionMenu - 1] + 25 * (punkt - 1);
+
+        //        TopMenu(numberOfThePartitionMenu, status);   //сначала открываем раздел верхнего меню (1-14)
+        //        Pause(500);
+
+        //        int x = PunktX[numberOfThePartitionMenu - 1];
+        //        iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
+        //        pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
+        //    }
+        //}
 
 
         /// <summary>
