@@ -23,6 +23,10 @@ namespace States
         /// </summary>
         private int GoBarack;
         /// <summary>
+        /// для миссии Кастилия. номер следующей точки маршрута
+        /// </summary>
+        private int NextPointNumber;
+        /// <summary>
         /// номер проблемы на предыдущем цикле
         /// </summary>
         private int prevProblem;
@@ -109,7 +113,7 @@ namespace States
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
-            
+            NextPointNumber = -1;
             GoBarack = 0;
             numberOfState = 0;
             taskCompleted = false;
@@ -1523,7 +1527,6 @@ namespace States
 
         #endregion =======================================================================================================
 
-
         #region  =================================== Castilia Multi Stage 1 ==============================================
 
         /// <summary>
@@ -1868,20 +1871,14 @@ namespace States
             if (server.isWork() || server.isKillFirstHero())
             {
                 //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
-                if (
-                    //server.isWhiteLabel() ||        //если белая надпись сверху
-                    server.isTreasureChest()            //если розовая надпись в чате "Treasure chest...", значит появился сундук
-                    ) return 10;                        //надо собрать дроп, идти в барак и далее - стадия 3
+                if (server.isAssaultMode())    //значит ещё бегут к выбранной точке и никаких действий не надо предпринимать
+                    return 4;
                 else
-                    //    if (server.isBossOrMob() && !server.isMob())
-                    //    return 4;   //если босс в прицеле, то скилляем
-                    //else
-                    return 3;
+                    return 3;                  //добежали до точки, всех перебили и остановились
             }
 
             //служба Steam
             if (server.isSteamService()) return 11;
-
 
             //в логауте
             if (server.isLogout()) return 1;                    // если окно в логауте
@@ -1889,11 +1886,14 @@ namespace States
             //в бараке
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
-            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackWarningYes()) return 16;         //если нужно нажать кнопку Yes в бараках
             if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
-            if (server.isTown() && server.isBH() && !server.isKillHero()) return 29;
+            if (server.isTown() && server.isCastilia()
+                //&& !server.isKillHero()) 
+                )
+                return 29;
 
             //если проблем не найдено
             return 0;
@@ -1908,11 +1908,7 @@ namespace States
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
-                {
-                    //server.ReOpenWindow();
                     server.ActiveWindow();
-                    //Pause(500);
-                }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemCastiliaMultiStage2();
@@ -1933,78 +1929,31 @@ namespace States
                         DirectionOfMovement = 1;        //необходимо для стадии 4
                         break;
                     case 3:                                                 // собираемся атаковать
-                        //botwindow.CommandMode();
 
-                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
-                        server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
+                        botwindow.PressEscThreeTimes();             
+                        server.TopMenu(6, 2, true);                       //открываем карту в миссии (LocalMap)
 
-                        //server.AttackTheMonsters();
+                        NextPointNumber++;
 
-                        //бафаемся. Если бафались мушкетеры, то result = true
+                        if (NextPointNumber != 0)       //если не только что  вошли. а уже повоевали
+                            server.GetDropCastilia();   //собираем лут
+
+                        if (NextPointNumber <= 10)        //если еще не дошли до конца миссии
+                        {
+                            iPoint NextPoint = server.RouteNextPointMulti(NextPointNumber);  //получили следующую точку маршрута
+                            NextPoint.PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
+
+                        }
+                        botwindow.PressEscThreeTimes();
+
+                        break;
+                    case 4:                                                 // бафаемся на бегу
                         server.MoveCursorOfMouse();
-                        bool result = server.Buff(Hero[1], 1) ||
-                                        server.Buff(Hero[2], 2) ||
-                                        server.Buff(Hero[3], 3);
-
-
-                        ////если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
-                        ////а потом пробел
-                        //if (server.isBossOrMob() && !result)
-                        ////if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
-                        //{
-                        //    bool isMobs = server.isMob();   
-                        //    //server.MoveCursorOfMouse();
-                        //    server.Skill(Hero[1], 1, isMobs);
-                        //    server.Skill(Hero[2], 2, isMobs);
-                        //    server.Skill(Hero[3], 3, isMobs);
-                        //    //server.MoveCursorOfMouse();
-                        //}
-                        ////Pause(500);
-
-
-                        server.BattleModeOnDem();
-
-
-                        //вариант 2 (основной)
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
-                        ////server.BattleModeOn();
-
-                        ////выбор главного героя через rnd и им скилуем
-                        //int nn = rand.Next(1, 4);
-                        //server.ActiveHeroDem(nn);
-                        //if (server.isBossOrMob() && !server.isMob())
-                        //{
-                        //    server.Skill(Hero[nn], nn);
-                        //}
-
-
+                        server.Buff(Hero[1], 1);
+                        server.Buff(Hero[2], 2);
+                        server.Buff(Hero[3], 3);
                         break;
-                    case 4:                                                 // скилуем
-
-                        //int number = rand.Next(1, 3);
-                        //сделать выбор персонажа через rnd и им скиловать
-                        //server.Skill(Hero[number], number);
-
-                        //server.Skill(Hero[1], 1);
-                        //server.Skill(Hero[2], 2);
-                        //server.Skill(Hero[3], 3);
-
-                        break;
-                    case 5:                                                 // если в миссии и в прицеле босс, то скилляем 
-                        //обновляем баффы, если надо
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
-
-                        //int number = rand.Next(1, 3);
-                        //сделать выбор персонажа через rnd и им скиловать
-                        //server.Skill(Hero[number], number);
-                        //server.Skill(Hero[1], 1);
-                        //server.Skill(Hero[2], 2);
-                        //server.Skill(Hero[3], 3);
-                        //server.BattleModeOn();
+                    case 5:                    
                         break;
                     case 10:
                         //если появился сундук
@@ -2041,7 +1990,8 @@ namespace States
                     case 34:
                         server.AcceptUserAgreement();
                         break;
-
+                    case 0:
+                        break;
                 }
             }
             else
@@ -2051,9 +2001,6 @@ namespace States
         }
 
         #endregion ======================================================================================================
-
-
-
 
         #region Гильдия охотников BH (Infinity Multi)
 
@@ -2456,7 +2403,7 @@ namespace States
                         result = 12;        //стоим в миссии. только что зашли
                         break;
                     case 6:                 // в бою!
-                        if (!otit.isOpenMap())   //сделано
+                        if (!otit.isOpenMap())   //карта не открыта
                             if (otit.isTaskDone())
                                 result = 15;   //если карта закрыта и задание уже выполнено
                             else

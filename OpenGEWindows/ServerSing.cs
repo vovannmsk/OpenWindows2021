@@ -1045,7 +1045,7 @@ namespace OpenGEWindows
         #endregion
 
         #region Top Menu
-        
+
         /// <summary>
         /// нажмает на выбранный раздел верхнего меню 
         /// </summary>

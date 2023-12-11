@@ -2012,32 +2012,6 @@ namespace OpenGEWindows
             }
         }
 
-
-        ///// <summary>
-        ///// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
-        ///// </summary>
-        ///// <param name="numberOfThePartitionMenu">номер раздела верхнего меню п/п</param>
-        ///// <param name="punkt">пункт меню. номер п/п</param>
-        //public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
-        //{
-        //    int[] numberOfPunkt = { 0, 8, 4, 2, 0, 3, 2, 6, 9, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
-        //    int[] PunktX = { 0, 336, 368, 401, 0, 462, 510, 561, 578, 0, 0, 0, 0 };    //координата X пунктов меню
-        //    int[] FirstPunktOfMenuKoordY = { 0, 83, 83, 83, 0, 97, 97, 97, 83, 0, 0, 0, 0 }; //координата Y первого пункта меню
-
-        //    if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
-        //    {
-        //        int y = FirstPunktOfMenuKoordY[numberOfThePartitionMenu - 1] + 25 * (punkt - 1);
-
-        //        TopMenu(numberOfThePartitionMenu, status);   //сначала открываем раздел верхнего меню (1-14)
-        //        Pause(500);
-
-        //        int x = PunktX[numberOfThePartitionMenu - 1];
-        //        iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
-        //        pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
-        //    }
-        //}
-
-
         /// <summary>
         /// открываем список телепоров, проверяем, есть ли телепорт в Катовию и летим туда
         /// </summary>
@@ -4992,6 +4966,41 @@ namespace OpenGEWindows
             botwindow.FirstHero();
             new Point(736 - 5 + xx, 50 - 5 + yy).PressMouseL();       
         }
+
+        /// <summary>
+        /// получаем следующую точку маршрута для миссии Кастилия
+        /// </summary>
+        /// <param name="counter">номер точки маршрута</param>
+        /// <returns>точка iPoint</returns>
+        public iPoint RouteNextPointMulti(int counter)
+        {
+            iPoint[] routeMulti = {  new Point(351 - 5 + xx, 569- 5 + yy), 
+                                     new Point(343 - 5 + xx, 520 - 5 + yy), 
+                                     new Point(395 - 5 + xx, 486 - 5 + yy),
+                                     new Point(444 - 5 + xx, 521 - 5 + yy), 
+                                     new Point(478 - 5 + xx, 486 - 5 + yy), 
+                                     new Point(453 - 5 + xx, 431 - 5 + yy),
+                                     new Point(383 - 5 + xx, 411 - 5 + yy), 
+                                     new Point(396 - 5 + xx, 338 - 5 + yy), 
+                                     new Point(437 - 5 + xx, 287 - 5 + yy),
+                                     new Point(437 - 5 + xx, 225 - 5 + yy), 
+                                  };
+
+            iPoint result = routeMulti[counter];
+
+            return result;
+        }
+
+        /// <summary>
+        /// подбор дропа в миссии Кастилия
+        /// </summary>
+        public void GetDropCastilia()
+        {
+            new Point(123 - 5 + xx + 5, 526 - 5 + yy + 5).PressMouseL();    //нажимаем на сундук (иконка подбора)
+            Pause(200);
+            new Point(230 - 5 + xx + 5, 390 - 5 + yy + 5).PressMouseL();    //нажимаем в случайную точку в стороне, чтобы начать подбор
+        }
+
 
         #endregion
 
