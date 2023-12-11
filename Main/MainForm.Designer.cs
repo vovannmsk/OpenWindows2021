@@ -55,6 +55,7 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.changing_accounts = new System.Windows.Forms.Button();
             this.startAccount = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.ChangingAccounts = new System.Windows.Forms.Button();
@@ -64,7 +65,7 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.changing_accounts = new System.Windows.Forms.Button();
+            this.Castilia = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -197,7 +198,7 @@
             // 
             this.sharpening.BackColor = System.Drawing.Color.BlueViolet;
             this.sharpening.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.sharpening.Location = new System.Drawing.Point(202, 47);
+            this.sharpening.Location = new System.Drawing.Point(6, 170);
             this.sharpening.Name = "sharpening";
             this.sharpening.Size = new System.Drawing.Size(170, 35);
             this.sharpening.TabIndex = 49;
@@ -325,7 +326,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 241);
+            this.tabControl1.Size = new System.Drawing.Size(386, 201);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -349,6 +350,17 @@
             this.tabPage1.Size = new System.Drawing.Size(378, 215);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
+            // 
+            // changing_accounts
+            // 
+            this.changing_accounts.BackColor = System.Drawing.Color.PeachPuff;
+            this.changing_accounts.Location = new System.Drawing.Point(9, 173);
+            this.changing_accounts.Name = "changing_accounts";
+            this.changing_accounts.Size = new System.Drawing.Size(170, 35);
+            this.changing_accounts.TabIndex = 69;
+            this.changing_accounts.Text = "Перебор аккаунтов  (чистое_окно)";
+            this.changing_accounts.UseVisualStyleBackColor = false;
+            this.changing_accounts.Click += new System.EventHandler(this.changing_accounts_Click);
             // 
             // startAccount
             // 
@@ -384,6 +396,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Bisque;
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage2.Controls.Add(this.Castilia);
             this.tabPage2.Controls.Add(this.DemonicStage2);
             this.tabPage2.Controls.Add(this.Demonic);
             this.tabPage2.Controls.Add(this.LoadSteams);
@@ -396,7 +409,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 182);
+            this.tabPage2.Size = new System.Drawing.Size(378, 175);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -449,7 +462,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 182);
+            this.tabPage3.Size = new System.Drawing.Size(378, 215);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -464,23 +477,23 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // changing_accounts
+            // Castilia
             // 
-            this.changing_accounts.BackColor = System.Drawing.Color.PeachPuff;
-            this.changing_accounts.Location = new System.Drawing.Point(9, 173);
-            this.changing_accounts.Name = "changing_accounts";
-            this.changing_accounts.Size = new System.Drawing.Size(170, 35);
-            this.changing_accounts.TabIndex = 69;
-            this.changing_accounts.Text = "Перебор аккаунтов  (чистое_окно)";
-            this.changing_accounts.UseVisualStyleBackColor = false;
-            this.changing_accounts.Click += new System.EventHandler(this.changing_accounts_Click);
+            this.Castilia.BackColor = System.Drawing.Color.Turquoise;
+            this.Castilia.Location = new System.Drawing.Point(202, 47);
+            this.Castilia.Name = "Castilia";
+            this.Castilia.Size = new System.Drawing.Size(170, 35);
+            this.Castilia.TabIndex = 67;
+            this.Castilia.Text = "Castilia. Много окон";
+            this.Castilia.UseVisualStyleBackColor = false;
+            this.Castilia.Click += new System.EventHandler(this.Castilia_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 241);
+            this.ClientSize = new System.Drawing.Size(386, 201);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -540,6 +553,7 @@
         private System.Windows.Forms.Button Demonic;
         private System.Windows.Forms.Button DemonicStage2;
         private System.Windows.Forms.Button changing_accounts;
+        private System.Windows.Forms.Button Castilia;
     }
 }
 

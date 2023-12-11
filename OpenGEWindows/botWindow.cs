@@ -819,6 +819,7 @@ namespace OpenGEWindows
             //iPoint pointPanel = new Point(38 - 5 + xx, 486 - 5 + yy);    // 33, 481
             //pointPanel.PressMouseR();                   // Кликаю правой кнопкой в панель с бытылками, чтобы сделать ее активной и поверх всех окон (группа может мешать)
 
+            PressBoxInLeftPanel(4);                        //Soul Crystall
             if (!FindSteroid(1)) PressBoxInLeftPanel(5);   //проверяем бафф на первом герое
             if (!FindPrincipal(1)) PressBoxInLeftPanel(6);   //проверяем бафф на первом герое
             PressBoxInLeftPanel(7);

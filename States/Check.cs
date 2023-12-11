@@ -727,7 +727,7 @@ namespace States
             //if (server.isSteamService())    return 11;
 
             //случайно зашли в магазин Expedition Merchant в городе
-            //if (server.isExpedMerch()) return 12;                         //не актуально в новой версии игры     22-11-23
+            if (server.isExpedMerch()) return 12;                         //не актуально в новой версии игры     22-11-23
 
             //ворота
             if (dialog.isDialog())
@@ -900,9 +900,9 @@ namespace States
                         server.MaxHeight(7);                      
                         botParam.Stage = 2;
                         break;
-                    case 8:                                         //Gate --> List of missions
-                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (join)
-                        dialog.PressOkButton(1);                    //нажимаем Ок в диалоге ворот
+                    case 8:                                         //Gate --> Mission Lobby
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
+
                         break;
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
@@ -937,9 +937,22 @@ namespace States
                         botwindow.PressEsc();                       // нажимаем Esc
                         break;
                     case 18:
-                        //server.systemMenu(3, true);                 // переход в стартовый город
-                        server.GotoSavePoint();
-                        botParam.HowManyCyclesToSkip = 3;
+
+                        //старый вариант
+                        //server.GotoSavePoint();                   // переход в стартовый город (вряд ли работает)
+                        //botParam.HowManyCyclesToSkip = 3;
+
+                        //новый вариант                             //переход по телепорту в БХ к воротам
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        //botwindow.Pause(500);
+                        server.PressToGateDemonic();
+                        prevProblem = 6;                    // делаем предыдущее состояние = город        
+                                                            // а иначе программа считает, что мы всё еще застряли в БХ и стоим не там 
+                                                            // и опять попадаем сюда же (бесконечный цикл)
+                        botParam.HowManyCyclesToSkip = 1; 
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -997,7 +1010,10 @@ namespace States
                         IsItAlreadyPossibleToUploadNewSteam = 0;
                         break;
                     case 33:
-                        new Point(1114, 607).PressMouseL();
+                        //new Point(1114, 607).PressMouseL();
+                        new Point(1106, 595).PressMouseL();
+                        Pause(500);
+                        new Point(1106, 595).PressMouseL();
                         IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
                     case 34:
@@ -1506,6 +1522,538 @@ namespace States
         }
 
         #endregion =======================================================================================================
+
+
+        #region  =================================== Castilia Multi Stage 1 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemCastiliaMultiStage1()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool()) 
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else 
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow)
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                if (server.isMissionCastiliaNotAvailable())
+                    return 10;                      //если стоим в воротах Castilia и миссия не доступна
+                else
+                    return 8;                       //если стоим в воротах Castilia и миссия доступна
+            }
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //Mission Lobby
+            if (server.isMissionLobby()) return 5;      //22-11
+
+            //Waiting Room //Mission Room 22-11
+            if (server.isWaitingRoom()) return 3;      //22-11
+
+            //город или БХ
+            if (server.isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!server.isKillFirstHero())
+                {
+                    if (server.isCastilia())     //в Кастилии     
+                    {
+                        return 4;   // стоим в правильном месте (около зеленой стрелки в миссию)
+                    }
+                    else   // в городе, но не в Кастилии
+                    {
+                        return 6;
+                    }
+                }
+            }
+
+            //в миссии (если убит первый персонаж, то это точно миссия
+            if (server.isWork() || server.isKillFirstHero()) return 7;
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionCastiliaMultiStage1()
+        {
+            //server.WriteToLogFileBH("перешли к выполнению стадии 1,  HowManyCyclesToSkip " + botParam.HowManyCyclesToSkip);
+            GoBarack = 0;
+
+
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    //botwindow.ActiveWindowBH();   //перед проверкой проблем, активируем окно с ботом. Это вместо ReOpenWindow()
+
+                    //server.ReOpenWindow();
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemCastiliaMultiStage1();
+
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5)
+                    numberOfProblem = 31;
+
+
+                //server.WriteToLogFileBH("номер проблемы " + numberOfProblem);
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        //case 24:
+                        //    numberOfProblem = 32;  //закрываем песочницу без перехода к следующему аккаунту
+                        //    break;
+
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                        case 4:  //зависли в Кастилии
+                            numberOfProblem = 18; //переходим по телепорту снова к зелёной стрелке
+                            break;
+                            //case 17:  //зависли в бараке на стадии выбора группы
+                            //    server.WriteToLogFileBH("зависли в бараке на стадии выбора группы");
+                            //    numberOfProblem = 18; //переходим в стартовый город через системное меню
+                            //    break;
+
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //server.WriteToLogFileBH("case 1");
+
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        //server.WriteToLogFileBH("case 2");
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        //server.WriteToLogFileBH("case 3");
+                        server.MissionStart();                          //проверить
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 4:                                         // Castilia --> Gate Demonic  
+                        //server.WriteToLogFileBH("case 4");
+                        server.AddBullets();                
+                        server.GoToMissionCastilia();
+                        break;
+                    case 5:                                         //Mission Lobby --> Mission Room
+                        server.CreatingMission();
+                        break;
+                    case 6:                                         // town --> Castilia
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(4, true);                   // телепорт в Кастилию
+                        botParam.HowManyCyclesToSkip = 2;             
+                        break;
+                    case 7:                                     // начало миссии
+                                                                // активируем пета и переходим к стадии 2
+                        //server.WriteToLogFileBH("начинаем обработку case 7");
+
+                        botwindow.CommandMode();
+                        server.BattleModeOnDem();                   //пробел
+
+                        //server.ChatFifthBookmark();
+
+                        Hero[1] = server.WhatsHero(1);
+                        Hero[2] = server.WhatsHero(2);
+                        Hero[3] = server.WhatsHero(3);
+
+                        pet.ActivePetDem();                     //новая функция  22-11
+
+
+                        //server.MaxHeight(7);
+                        botParam.Stage = 2;
+                        break;
+                    case 8:                                         //Green Arrow --> Mission Lobby
+                        dialog.PressStringDialog(1);                //I want to play
+                        dialog.PressStringDialog(2);                //Normal Mode
+                        break;
+                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseExpMerch();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 18:
+                        //новый вариант                             //переход по телепорту в Кастилии к воротам
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(4, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        //server.PressToGateDemonic();
+                        prevProblem = 6;                    // делаем предыдущее состояние = город        
+                                                            // а иначе программа считает, что мы всё еще застряли в БХ и стоим не там 
+                                                            // и опять попадаем сюда же (бесконечный цикл)
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        //if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        //{
+                        server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                        SteamLoaded = true;
+                        botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 3-5 циклов
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        //}
+                        break;
+                    case 23:                                    //есть окно стим
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //не факт, что надо
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            //botParam.HowManyCyclesToSkip = 1;
+                            IsItAlreadyPossibleToUploadNewSteam = 1;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        IsItAlreadyPossibleToUploadNewSteam = 0;   //24.06.23
+                        IsItAlreadyPossibleToUploadNewWindow = 0;    //24.06.23
+                        break;
+                    case 32:
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        new Point(1106, 595).PressMouseL();
+                        Pause(500);
+                        new Point(1106, 595).PressMouseL();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Castilia Multi Stage 2 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Castilia и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemCastiliaMultiStage2()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 12;
+
+            //в миссии
+            if (server.isWork() || server.isKillFirstHero())
+            {
+                //если белая надпись сверху или розовая надпись в чате, значит появился сундук и надо идти в барак и далее стадия 3
+                if (
+                    //server.isWhiteLabel() ||        //если белая надпись сверху
+                    server.isTreasureChest()            //если розовая надпись в чате "Treasure chest...", значит появился сундук
+                    ) return 10;                        //надо собрать дроп, идти в барак и далее - стадия 3
+                else
+                    //    if (server.isBossOrMob() && !server.isMob())
+                    //    return 4;   //если босс в прицеле, то скилляем
+                    //else
+                    return 3;
+            }
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+
+            //в логауте
+            if (server.isLogout()) return 1;                    // если окно в логауте
+
+            //в бараке
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
+
+            //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
+            if (server.isTown() && server.isBH() && !server.isKillHero()) return 29;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Castilia
+        /// </summary>
+        public void problemResolutionCastiliaMultiStage2()
+        {
+            server.WriteToLogFileBH("перешли к выполнению стадии 2");
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    //server.ReOpenWindow();
+                    server.ActiveWindow();
+                    //Pause(500);
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemCastiliaMultiStage2();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                                 // в логауте (при переходе в барак можем попасть в логаут)
+                        driver.StateFromLogoutToBarackBH();                 // Logout-->Barack   
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 2:                                                 // в бараках
+                        server.ReturnToMissionFromBarack();                 // идем из барака обратно в миссию     
+                        botParam.HowManyCyclesToSkip = 2;
+                        server.MoveCursorOfMouse();
+                        botParam.Stage = 3;
+                        DirectionOfMovement = 1;        //необходимо для стадии 4
+                        break;
+                    case 3:                                                 // собираемся атаковать
+                        //botwindow.CommandMode();
+
+                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                        server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
+
+                        //server.AttackTheMonsters();
+
+                        //бафаемся. Если бафались мушкетеры, то result = true
+                        server.MoveCursorOfMouse();
+                        bool result = server.Buff(Hero[1], 1) ||
+                                        server.Buff(Hero[2], 2) ||
+                                        server.Buff(Hero[3], 3);
+
+
+                        ////если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
+                        ////а потом пробел
+                        //if (server.isBossOrMob() && !result)
+                        ////if (server.isBossOrMob())         //пробуем обойтись без проверки "баффались или нет"
+                        //{
+                        //    bool isMobs = server.isMob();   
+                        //    //server.MoveCursorOfMouse();
+                        //    server.Skill(Hero[1], 1, isMobs);
+                        //    server.Skill(Hero[2], 2, isMobs);
+                        //    server.Skill(Hero[3], 3, isMobs);
+                        //    //server.MoveCursorOfMouse();
+                        //}
+                        ////Pause(500);
+
+
+                        server.BattleModeOnDem();
+
+
+                        //вариант 2 (основной)
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
+                        ////server.BattleModeOn();
+
+                        ////выбор главного героя через rnd и им скилуем
+                        //int nn = rand.Next(1, 4);
+                        //server.ActiveHeroDem(nn);
+                        //if (server.isBossOrMob() && !server.isMob())
+                        //{
+                        //    server.Skill(Hero[nn], nn);
+                        //}
+
+
+                        break;
+                    case 4:                                                 // скилуем
+
+                        //int number = rand.Next(1, 3);
+                        //сделать выбор персонажа через rnd и им скиловать
+                        //server.Skill(Hero[number], number);
+
+                        //server.Skill(Hero[1], 1);
+                        //server.Skill(Hero[2], 2);
+                        //server.Skill(Hero[3], 3);
+
+                        break;
+                    case 5:                                                 // если в миссии и в прицеле босс, то скилляем 
+                        //обновляем баффы, если надо
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
+
+                        //int number = rand.Next(1, 3);
+                        //сделать выбор персонажа через rnd и им скиловать
+                        //server.Skill(Hero[number], number);
+                        //server.Skill(Hero[1], 1);
+                        //server.Skill(Hero[2], 2);
+                        //server.Skill(Hero[3], 3);
+                        //server.BattleModeOn();
+                        break;
+                    case 10:
+                        //если появился сундук
+                        server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        Pause(5000);
+                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        //botwindow.PressEsc();                       // нажимаем Esc
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 20:
+                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 29:                                        //если все убиты
+                        server.GotoBarack();                        // идем в барак, чтобы потом перейти к стадии 3 (открытие сундука и проч.)
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 33:
+                        new Point(1114, 607).PressMouseL();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion ======================================================================================================
+
+
+
 
         #region Гильдия охотников BH (Infinity Multi)
 
@@ -2606,12 +3154,13 @@ namespace States
             //MessageBox.Show("Human " + server.isHuman());
             //MessageBox.Show("isLogout " + server.isLogout());
             //MessageBox.Show("телепорты? " + server.isOpenTopMenu(5));
-            MessageBox.Show("карты? " + server.isOpenTopMenu(12));
+            //MessageBox.Show("карты? " + server.isOpenTopMenu(12));
             //MessageBox.Show("Переполнение??? " + server.isBoxOverflow());
             //MessageBox.Show("Первый канал??? " + server.CurrentChannel_is_1());
             //MessageBox.Show("есть стим??? " + server.FindWindowSteamBool());
             //MessageBox.Show("мы в диалоге? " + dialog.isDialog());
             //MessageBox.Show("миссия не доступна? " + server.isMissionNotAvailable());
+            MessageBox.Show("Mission Lobby? " + server.isMissionLobby());
             //MessageBox.Show("Призван пет? " + pet.isSummonPet());
             //MessageBox.Show("248 вещей в инвентаре? " + server.is248Items());
             //MessageBox.Show("одиночный режим? " + botwindow.isSingleMode());
@@ -2637,7 +3186,7 @@ namespace States
             //MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
-            //MessageBox.Show("в диалоге " + dialog.isDialog());
+
 
             //server.isBarackLastPoint();
 
@@ -2699,18 +3248,18 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1151, 601, 1, 1);
-            //PointColor point2 = new PointColor(1151, 602, 1, 1);
+            //PointColor point1 = new PointColor(1106, 594, 1, 1);
+            //PointColor point2 = new PointColor(1106, 595, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
 
             //for (int ii = 4; ii <= 17; ii++)
             //{
-                //PointColor point1 = new PointColor(837 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
-                //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
-                //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
+            //PointColor point1 = new PointColor(837 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
+            //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
+            //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
 
-            PointColor point1 = new PointColor(242 - 5 + xx, 145 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(242 - 5 + xx, 146 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(924 - 5 + xx, 254 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(924 - 5 + xx, 255 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

@@ -1037,6 +1037,9 @@ namespace OpenGEWindows
                     ||
                     new PointColor(1150, 601, 6908265, 0).isColor() &&
                     new PointColor(1150, 602, 6908265, 0).isColor()
+                    ||
+                    new PointColor(1106, 594, 3539040, 0).isColor() &&
+                    new PointColor(1106, 595, 3539040, 0).isColor()
                     ;
             //return new PointColor(1086, 497, 16777215, 0).isColor() &&
             //        new PointColor(1086, 498, 16777215, 0).isColor();
@@ -4955,6 +4958,43 @@ namespace OpenGEWindows
 
         #endregion
 
+
+        #region Кастилия (миссия)
+
+        /// <summary>
+        /// проверяем, находимся ли в Кастилии   
+        /// </summary>
+        /// <returns></returns>
+        public bool isCastilia()
+        {
+            return new PointColor(924 - 5 + xx, 254 - 5 + yy, 15658991, 0).isColor() &&
+                   new PointColor(924 - 5 + xx, 255 - 5 + yy, 15658991, 0).isColor();        //слово Castilla под миникартой (буква l)
+            
+        }
+
+        /// <summary>
+        /// проверяем, доступна ли миссия (не доступна, потому что уже ходили сегодня)  // не готово
+        /// /// </summary>
+        /// <returns>true, если не доступна</returns>
+        public bool isMissionCastiliaNotAvailable()
+        {
+            //проверяем букву Т в слове Today  
+            return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
+                    new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
+        }
+
+        /// <summary>
+        /// тыкаем в зелёную стрелку для начала миссии в  Кастилии
+        /// </summary>
+        public void GoToMissionCastilia()
+        {
+            //MinHeight();
+            botwindow.FirstHero();
+            new Point(736 - 5 + xx, 50 - 5 + yy).PressMouseL();       
+        }
+
+        #endregion
+
         #region подготовка новых ботов для БХ
 
         /// <summary>
@@ -6177,6 +6217,15 @@ namespace OpenGEWindows
 
         #region  Demonic
 
+
+        /// <summary>
+        /// тыкнуть в ворота Demonic
+        /// </summary>
+        public void PressToGateDemonic()
+        {
+            new Point(628 - 5 + xx, 326 - 5 + yy).PressMouseL();
+        }
+
         /// <summary>
         /// активируем пета (быстрый способ)
         /// </summary>
@@ -6217,10 +6266,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isExpedMerch()
         {
-            //return new PointColor(843 - 5 + xx, 608 - 5 + yy, 7925494, 0).isColor() &&
-            //        new PointColor(843 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor();
-            return new PointColor(848 - 5 + xx, 609 - 5 + yy, 7925494, 0).isColor() &&
-                    new PointColor(848 - 5 + xx, 610 - 5 + yy, 7925494, 0).isColor();
+            return new PointColor(843 - 5 + xx, 616 - 5 + yy, 12118521, 0).isColor() &&
+                    new PointColor(843 - 5 + xx, 616 - 5 + yy, 12118521, 0).isColor();
         }
 
         /// <summary>
@@ -6228,7 +6275,7 @@ namespace OpenGEWindows
         /// </summary>
         public void CloseExpMerch()
         {
-            new Point(843 - 5 + xx, 608 - 5 + yy).PressMouseL();
+            new Point(843 - 5 + xx, 616 - 5 + yy).PressMouseL();
         }
 
 
@@ -6284,6 +6331,9 @@ namespace OpenGEWindows
         /// </summary>
         public void CreatingMission()
         {
+            new Point(547 - 5 + xx, 486 - 5 + yy).PressMouseL();    // тыкаем в окно Mission Lobby, чтобы сделать его поверх остального,
+                                                                    // тогда становится видимой кнопка Create Mission Room
+            Pause(500);
             new Point(607 - 5 + xx, 640 - 5 + yy).PressMouseL();    //кнопка Create Mission Room
             Pause(1000);
             new Point(440 - 5 + xx, 433 - 5 + yy).PressMouseL();    //кнопка Create a Room

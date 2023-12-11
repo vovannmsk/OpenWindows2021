@@ -1112,6 +1112,78 @@ namespace Main
         #endregion
 
 
+
+        #region  ======================== Castilia Multi =============================================
+
+        /// <summary>
+        /// миссия в Кастилии. Много окон
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Castilia_Click(object sender, EventArgs e)
+        {
+            Castilia.BackColor = Color.OrangeRed;
+            Thread myCastiliaMulti = new Thread(funcCastiliaMulti);
+            myCastiliaMulti.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой Castilia 
+        /// </summary>
+        private void funcCastiliaMulti()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionCastiliaMultiStage1();
+                                break;
+                            case 2:
+                                check[j].problemResolutionCastiliaMultiStage2();
+                                break;
+                            case 3:
+                                //check[j].problemResolutionCastiliaMultiStage3();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+
+
+        #endregion
+
     }// END class MainForm 
 }// END namespace OpenGEWindows
 
