@@ -599,9 +599,12 @@ namespace States
             //botwindow.PressEscThreeTimes();
             //StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
             //botwindow.PressEscThreeTimes();
-            
+
             //закрываем проги в песочнице
-              StateDriverRun(new StateGT169(botwindow),new StateGT170(botwindow));  // закрываем проги в песочнице
+            //server.TopMenu(12, 2, true);
+            //new Point(499, 257).PressMouseLL();
+
+            StateDriverRun(new StateGT169(botwindow),new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
         /// <summary>

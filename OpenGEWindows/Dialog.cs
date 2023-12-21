@@ -37,8 +37,11 @@
             for (int j = 1; j <= number; j++)
             {
                 //ButtonOkDialog.DoubleClickL();    // Нажимаем на Ok в диалоге
-                ButtonOkDialog.PressMouseL();    // Нажимаем на Ok в диалоге
-                Pause(1500);
+                if (isDialog())
+                {
+                    ButtonOkDialog.PressMouseL();    // Нажимаем на Ok в диалоге
+                    Pause(1500);
+                }
             }
         }
 

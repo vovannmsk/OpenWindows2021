@@ -40,7 +40,7 @@ namespace OpenGEWindows
         /// <summary>
         /// true, если сейчас происходит загрузка нового окна ГЭ. Переменная нужна, чтобы не грузить одновременно два окна для BH
         /// </summary>
-        public static bool isLoadedGEBH;
+        //public static bool isLoadedGEBH;         //21-12-23
 
         /// <summary>
         /// true, если сейчас происходит загрузка нового стима. Переменная нужна, чтобы не грузить одновременно два окна для BH
@@ -1023,6 +1023,28 @@ namespace OpenGEWindows
             Pause(500);
         }
 
+
+        /// <summary>
+        /// выскочила ошибка Sandboxie?  /проверяем букву р в слове Закрыть/
+        /// </summary>
+        /// <returns></returns>
+        public bool isErrorSandboxie()
+        {
+            return new PointColor(1060, 615, 5898291, 0).isColor() &&
+                    new PointColor(1060, 616, 51, 0).isColor()
+                    ;
+        }
+
+        /// <summary>
+        /// закрываем окно Sandboxie с ошибкой 
+        /// </summary>
+        /// <returns></returns>
+        public void CloseErrorSandboxie()
+        {
+            new Point(1060, 615).PressMouseL();
+            Pause(500);
+        }
+
         /// <summary>
         /// выскочила ошибка 820?  /проверяем белый цвет фона сообщения об ошибке/
         /// </summary>
@@ -1041,22 +1063,37 @@ namespace OpenGEWindows
                     new PointColor(1106, 594, 3539040, 0).isColor() &&
                     new PointColor(1106, 595, 3539040, 0).isColor()
                     ;
-            //return new PointColor(1086, 497, 16777215, 0).isColor() &&
-            //        new PointColor(1086, 498, 16777215, 0).isColor();
-
-            //(new PointColor(1117, 604, 3539040, 0).isColor() &&
-            //    new PointColor(1117, 605, 3539040, 0).isColor()) 
-            //   || 
-            //   (new PointColor(1117, 604, 96, 0).isColor() &&
-            //    new PointColor(1117, 605, 96, 0).isColor())
-            //   ||
-            //(new PointColor(1100, 609, 3539040, 0).isColor() &&
-            // new PointColor(1100, 611, 3539040, 0).isColor())
-            //||
-            //(new PointColor(1097, 608, 3000000, 6).isColor() &&
-            // new PointColor(1097, 609, 3000000, 6).isColor())
         }
 
+        /// <summary>
+        /// закрываем сообщения об ошибке 820 нажатием на кнопку Ок
+        /// </summary>
+        public void CloseError820()
+        {
+            new Point(1106, 595).PressMouseL();
+            Pause(500);
+            new Point(1106, 605).PressMouseL();
+        }
+
+        /// <summary>
+        /// выскочила ошибка с предложением отправить отчёт к разработчикам /проверяем букву Н в слове Нет/
+        /// </summary>
+        /// <returns></returns>
+        public bool isUnexpectedError()
+        {
+            return new PointColor(1100, 609, 3473504, 0).isColor() &&
+                   new PointColor(11000, 610, 96, 0).isColor()
+                    ;
+        }
+
+        /// <summary>
+        /// закрываем сообщение об UnexpectedError нажатием на кнопку Нет
+        /// </summary>
+        public void CloseUnexpectedError()
+        {
+            new Point(1100, 609).PressMouseL();
+            Pause(500);
+        }
 
         /// <summary>
         /// проверяем, открыто ли окно Стим для ввода логина и пароля
@@ -1271,7 +1308,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// закрываем программы в конкретной песочнице для БХ
+        /// закрываем программы в конкретной песочнице без перехода к следующему аккаунту (для БХ)
         /// </summary>
         public void CloseSandboxieBH()
         {
@@ -1928,7 +1965,7 @@ namespace OpenGEWindows
         {
             int teleport = botwindow.getNomerTeleport();
 
-            if (teleport >= 14)
+            if (teleport >= 15)
             {
                 teleport = 1;              //если номер телепорта больше 14 (катовия и отит), то летим в Ребольдо
             }
@@ -1940,28 +1977,6 @@ namespace OpenGEWindows
             pointTeleportToTownAltW.PressMouse();           //было два нажатия левой, решил попробовать RRL
             //            botwindow.Pause(2000);
         }
-
-        /// <summary>
-        /// нажмает на выбранный раздел верхнего меню (используется для БХ) старый вариант
-        /// </summary>
-        /// <param name="numberOfThePartitionMenu"></param>
-        /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
-        //public void TopMenu(int numberOfThePartitionMenu, bool status)
-        //{
-        //    //int[] MenukoordX = { 305, 339, 371, 402, 435, 475, 522, 570, 610, 642, 675, 705, 738 };
-        //    int[] MenukoordX = { 310, 342, 374, 406, 438, 480, 527, 574, 614, 646, 678, 710, 742 };
-        //    int x = MenukoordX[numberOfThePartitionMenu - 1];
-        //    int y = 59; //55;
-        //    iPoint pointMenu = new Point(x - 5 + xx, y - 5 + yy);
-
-        //    int count = 0;
-        //    do
-        //    {
-        //        pointMenu.PressMouse();
-        //        botwindow.Pause(2000);
-        //        count++; if (count > 3) break;
-        //    } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
-        //}
 
         /// <summary>
         /// нажмает на выбранный раздел верхнего меню (используется для БХ)  22-11-2023
@@ -1995,9 +2010,9 @@ namespace OpenGEWindows
         /// <param name="punkt">пункт меню. номер п/п</param>
         public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
         {
-            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
-            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 230, 0, 0, 0, 0 };    //координата X первого подпункта меню
-            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 143, 0, 0, 0, 0 }; //координата Y первого пункта меню
+            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
+            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197, 0, 0, 0, 0 };    //координата X первого подпункта меню
+            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 118, 0, 0, 0, 0 }; //координата Y первого пункта меню
 
             if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
             {
@@ -2011,6 +2026,23 @@ namespace OpenGEWindows
                 pointMenu.PressMouseL();  //выбираем конкретный пункт подменю (в раскрывающемся списке)
             }
         }
+
+        /// <summary>
+        /// телепортируемся в город по Alt+W             /21-12-23/
+        /// </summary>
+        public void TeleportAltW(int NumberOfTown)
+        {
+            if (NumberOfTown >= 15)
+            {
+                NumberOfTown = 1;              //если номер телепорта больше 15, то летим в Ребольдо
+            }
+
+            TopMenu(12, 1,true);
+            Pause(1000);
+            new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();        
+        }
+
+
 
         /// <summary>
         /// открываем список телепоров, проверяем, есть ли телепорт в Катовию и летим туда
@@ -2613,6 +2645,17 @@ namespace OpenGEWindows
             return pointisAssaultMode1.isColor() && pointisAssaultMode2.isColor();
         }
 
+        /// <summary>
+        /// проверяем, включён ли штурмовой режим (Ctrl+Click)
+        /// </summary>
+        /// <returns>true, если включён</returns>
+        public bool isHarvestMode()
+        {
+            return new PointColor(114 - 5 + xx, 516 - 5 + yy, 9366000, 3).isColor() &&
+                   new PointColor(142 - 5 + xx, 544 - 5 + yy, 9760000, 3).isColor();
+        }
+
+
         ///// <summary>
         ///// проверяем, вЫключен ли боевой режим
         ///// </summary>
@@ -3052,7 +3095,9 @@ namespace OpenGEWindows
         /// <returns> true, если бот в бараках </returns>
         public bool isBarack()
         {
-            return (pointisBarack1.isColor() && pointisBarack2.isColor()) || (pointisBarack3.isColor() && pointisBarack4.isColor());
+            return 
+                    //(pointisBarack1.isColor() && pointisBarack2.isColor()) || 
+                    (pointisBarack3.isColor() && pointisBarack4.isColor());
         }
 
         /// <summary>
@@ -4932,7 +4977,6 @@ namespace OpenGEWindows
 
         #endregion
 
-
         #region Кастилия (миссия)
 
         /// <summary>
@@ -4953,8 +4997,8 @@ namespace OpenGEWindows
         public bool isMissionCastiliaNotAvailable()
         {
             //проверяем букву Т в слове Today  
-            return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
-                    new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
+            return new PointColor(373 - 5 + xx, 537 - 5 + yy, 13752023, 0).isColor() &&
+                    new PointColor(374 - 5 + xx, 537 - 5 + yy, 13752023, 0).isColor();
         }
 
         /// <summary>
@@ -4962,9 +5006,14 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToMissionCastilia()
         {
-            //MinHeight();
+            MaxHeight(8);
             botwindow.FirstHero();
-            new Point(736 - 5 + xx, 50 - 5 + yy).PressMouseL();       
+            new Point(585 - 5 + xx, 50 - 5 + yy).PressMouseL();
+            Pause(1000);
+            new Point(685 - 5 + xx, 50 - 5 + yy).PressMouseL();
+            Pause(1000);
+            new Point(785 - 5 + xx, 50 - 5 + yy).PressMouseL();
+            Pause(1000);
         }
 
         /// <summary>
@@ -4974,16 +5023,32 @@ namespace OpenGEWindows
         /// <returns>точка iPoint</returns>
         public iPoint RouteNextPointMulti(int counter)
         {
-            iPoint[] routeMulti = {  new Point(351 - 5 + xx, 569- 5 + yy), 
-                                     new Point(343 - 5 + xx, 520 - 5 + yy), 
-                                     new Point(395 - 5 + xx, 486 - 5 + yy),
-                                     new Point(444 - 5 + xx, 521 - 5 + yy), 
-                                     new Point(478 - 5 + xx, 486 - 5 + yy), 
-                                     new Point(453 - 5 + xx, 431 - 5 + yy),
-                                     new Point(383 - 5 + xx, 411 - 5 + yy), 
-                                     new Point(396 - 5 + xx, 338 - 5 + yy), 
-                                     new Point(437 - 5 + xx, 287 - 5 + yy),
-                                     new Point(437 - 5 + xx, 225 - 5 + yy), 
+            iPoint[] routeMulti = {  new Point(372 - 5 + xx, 585 - 5 + yy), 
+                                     new Point(353 - 5 + xx, 572 - 5 + yy), //1+
+                                     new Point(347 - 5 + xx, 550 - 5 + yy),
+                                     new Point(343 - 5 + xx, 524 - 5 + yy), //2+
+                                     new Point(368 - 5 + xx, 495 - 5 + yy),
+                                     new Point(395 - 5 + xx, 489 - 5 + yy), //3+
+                                     new Point(417 - 5 + xx, 508 - 5 + yy),
+                                     new Point(436 - 5 + xx, 516 - 5 + yy),
+                                     new Point(448 - 5 + xx, 519 - 5 + yy), //4+
+                                     new Point(474 - 5 + xx, 511 - 5 + yy),
+                                     //new Point(481 - 5 + xx, 495 - 5 + yy),
+                                     new Point(478 - 5 + xx, 498 - 5 + yy),
+                                     new Point(477 - 5 + xx, 478 - 5 + yy), //5+
+                                     new Point(443 - 5 + xx, 432 - 5 + yy), //6+
+                                     new Point(407 - 5 + xx, 444 - 5 + yy), 
+                                     new Point(384 - 5 + xx, 416 - 5 + yy), //7+
+                                     new Point(359 - 5 + xx, 388 - 5 + yy),
+                                     new Point(355 - 5 + xx, 359 - 5 + yy),
+                                     new Point(391 - 5 + xx, 352 - 5 + yy),
+                                     new Point(398 - 5 + xx, 335 - 5 + yy), //8
+                                     new Point(398 - 5 + xx, 334 - 5 + yy),
+                                     new Point(438 - 5 + xx, 297 - 5 + yy),
+                                     new Point(437 - 5 + xx, 285 - 5 + yy), //9
+                                     new Point(437 - 5 + xx, 282 - 5 + yy), 
+                                     new Point(437 - 5 + xx, 225 - 5 + yy), //10
+                                     new Point(439 - 5 + xx, 212 - 5 + yy), //11
                                   };
 
             iPoint result = routeMulti[counter];
@@ -4992,15 +5057,88 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// возвращает время ожидания подбора дропа для выбранной точки маршрута
+        /// </summary>
+        /// <param name="counter">номер точки маршрута</param>
+        /// <returns>время в милисекундах</returns>
+        public int GetWaitingTimeForDropPicking (int counter)
+        {
+            int[] WaitingTime = {   0, 
+                                    5000, 
+                                    5000, //1
+                                    5000, 
+                                    10000, //2
+                                    4000, 
+                                    10000, //3
+                                    5000, 
+                                    5000, 
+                                    5000, //4
+                                    5000, 
+                                    5000, 
+                                    5000, //5
+                                    5000, //6
+                                    5000, 
+                                    9000, //7
+                                    5000, 
+                                    5000, 
+                                    5000, 
+                                    5000, //8
+                                    5000, 
+                                    5000, 
+                                    5000, //9
+                                    5000,
+                                    10000, //10
+                                    10000,  //11
+                                    5000
+            };
+
+            return WaitingTime[counter];
+        }
+
+        /// <summary>
         /// подбор дропа в миссии Кастилия
         /// </summary>
         public void GetDropCastilia()
         {
-            new Point(123 - 5 + xx + 5, 526 - 5 + yy + 5).PressMouseL();    //нажимаем на сундук (иконка подбора)
-            Pause(200);
-            new Point(230 - 5 + xx + 5, 390 - 5 + yy + 5).PressMouseL();    //нажимаем в случайную точку в стороне, чтобы начать подбор
+            HarvestMode();
+            new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
+            Pause(5000);
+
+
+            BattleModeOnDem();
+            Pause(500);
+
+            HarvestMode();
+            new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
+            Pause(5000);
         }
 
+        /// <summary>
+        /// подбор дропа в миссии Кастилия 
+        /// </summary>
+        /// <param name="Period">кол-во милисекунд ожидания подбора</param>
+        public void GetDropCastilia(int Period)
+        {
+            HarvestMode();
+            new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
+            Pause(Period);
+
+            BattleModeOnDem();
+            Pause(2000);
+
+            HarvestMode();
+            new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
+            Pause(Period);
+        }
+
+        /// <summary>
+        /// нажимаем кнопку Сундук (Harvest Mode) для начала подбора дропа
+        /// </summary>
+        public void HarvestMode()
+        {
+            new Point(123 - 5 + xx + 5, 526 - 5 + yy + 5).PressMouseL();    //нажимаем на сундук (иконка подбора)
+            Pause(200);
+        }
 
         #endregion
 
@@ -6232,7 +6370,8 @@ namespace OpenGEWindows
         /// </summary>
         public void PressToGateDemonic()
         {
-            new Point(628 - 5 + xx, 326 - 5 + yy).PressMouseL();
+            //new Point(628 - 5 + xx, 326 - 5 + yy).PressMouseL();
+            new Point(528 - 5 + xx, 320 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -6311,7 +6450,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// запуск клиента игры для Demonic
+        /// Стим загружен. грузим игру для Demonic и проч.
         /// </summary>
         public abstract void RunClientDem();
 
@@ -7261,6 +7400,174 @@ namespace OpenGEWindows
         {
             new Point(123 - 5 + xx, 526 - 5 + yy).PressMouseL();    //нажимаем на сундук (иконка подбора)
             Pause(200);
+
+        }
+
+        #endregion
+
+        #region Delivery Event
+
+
+        /// <summary>
+        /// идём к Рудольфу по карте
+        /// </summary>
+        public void GoToRudolphOnMap()
+        {
+            //MaxHeight(8);
+            botwindow.FirstHero();
+
+            TopMenu(12, 2, true);
+
+            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();
+            botwindow.PressEscThreeTimes();
+            Pause(12000);
+            new Point(621 - 5 + xx, 424 - 5 + yy).PressMouseL();
+
+        }
+
+        /// <summary>
+        /// идём к Рудольфу за наградой
+        /// </summary>
+        public void GoToRudolph2()
+        {
+            MaxHeight(8);
+            botwindow.FirstHero();
+
+            TopMenu(12, 2, true);
+
+            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();
+            Pause(12000);
+            botwindow.PressEscThreeTimes();
+            new Point(609 - 5 + xx, 431 - 5 + yy).PressMouseL();
+
+        }
+
+
+        /// <summary>
+        /// идём к первому клиенту по карте
+        /// </summary>
+        public void GoToDeliveryNumber1()
+        {
+            botwindow.PressEscThreeTimes();
+            if (!dialog.isDialog()) TopMenu(12, 2, true);
+            //Pause(500);
+            if (!dialog.isDialog()) new Point(295 - 5 + xx, 324 - 5 + yy).PressMouseLL();
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// идём к клиенту 2 по карте
+        /// </summary>
+        public void GoToDeliveryNumber2()
+        {
+            botwindow.PressEscThreeTimes();
+            if (!dialog.isDialog()) TopMenu(12, 2, true);
+            //Pause(500);
+            if (!dialog.isDialog()) new Point(220 - 5 + xx, 434 - 5 + yy).PressMouseLL();
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// идём к клиенту 3 по карте
+        /// </summary>
+        public void GoToDeliveryNumber3()
+        {
+            botwindow.PressEscThreeTimes();
+            if (!dialog.isDialog()) TopMenu(12, 2, true);
+            //Pause(500);
+            if (!dialog.isDialog()) new Point(547 - 5 + xx, 606 - 5 + yy).PressMouseLL();
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// идём к клиенту 4 по карте
+        /// </summary>
+        public void GoToDeliveryNumber4()
+        {
+            botwindow.PressEscThreeTimes();
+            if (!dialog.isDialog()) TopMenu(12, 2, true);
+            //Pause(500);
+            if (!dialog.isDialog()) new Point(462 - 5 + xx, 479 - 5 + yy).PressMouseLL();
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// идём к клиенту 5 по карте
+        /// </summary>
+        public void GoToDeliveryNumber5()
+        {
+            botwindow.PressEscThreeTimes();
+            if (!dialog.isDialog()) TopMenu(12, 2, true);
+            //Pause(500);
+            if (!dialog.isDialog()) new Point(675 - 5 + xx, 410 - 5 + yy).PressMouseLL();
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+
+        /// <summary>
+        /// идём в Ребольдо
+        /// </summary>
+        public void GoToReboldo()
+        {
+            botwindow.PressEscThreeTimes();
+            TeleportAltW(1);
+            botwindow.PressEscThreeTimes();
+        }
+        /// <summary>
+        /// идём в Коимбру
+        /// </summary>
+        public void GoToCoimbra()
+        {
+            botwindow.PressEscThreeTimes();
+            TeleportAltW(2); 
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// идём в Ош
+        /// </summary>
+        public void GoToAuch()
+        {
+            botwindow.PressEscThreeTimes();
+            TeleportAltW(3);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в Ребольдо
+        /// </summary>
+        /// <returns></returns>
+        public bool isReboldo()
+        {
+            return new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor() &&
+                   new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово Rebo под миникартой (буква R)
+
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в Коимбре
+        /// </summary>
+        /// <returns></returns>
+        public bool isCoimbra()
+        {
+            return new PointColor(963 - 5 + xx, 254 - 5 + yy, 15000000, 6).isColor() &&
+                   new PointColor(963 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();        //слово Coimbra под миникартой (буква i)
+
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в Оше
+        /// </summary>
+        /// <returns></returns>
+        public bool isAuch()
+        {
+            return new PointColor(937 - 5 + xx, 253 - 5 + yy, 16000000, 6).isColor() &&
+                   new PointColor(937 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово of под миникартой (буква f)
 
         }
 

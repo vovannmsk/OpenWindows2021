@@ -19,7 +19,7 @@ namespace OpenGEWindows
         //основной конструктор
         public ServerSing(botWindow botwindow)
         {
-            isLoadedGEBH = false;   
+            //isLoadedGEBH = false;   
             isLoadedSteamBH = false;
 
             #region общие
@@ -306,8 +306,8 @@ namespace OpenGEWindows
             this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                              //выбор канала 
             this.pointisBarack1 = new PointColor(53 - 5 + xx, 154 - 5 + yy, 2400000, 5);            //зеленый цвет в слове Barracks  
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
-            this.pointisBarack3 = new PointColor(42 - 5 + xx, 61 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
-            this.pointisBarack4 = new PointColor(42 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено
+            this.pointisBarack3 = new PointColor(67 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
+            this.pointisBarack4 = new PointColor(67 - 5 + xx, 63 - 5 + yy, 15500000, 5);            //проверено
             this.pointisBarack5 = new PointColor(907 - 5 + xx, 670 - 5 + yy, 11723248, 0);            //страница создания нового персонажа  22-11
             this.pointisBarack6 = new PointColor(907 - 5 + xx, 671 - 5 + yy, 11723248, 0);            //буква Т в слове "To Barack"
             this.pointToBarack = new Point(945 - 5 + xx, 675 - 5 + yy);                       // кнопка "To Barack" на странице создания перса 22-11
@@ -1047,7 +1047,7 @@ namespace OpenGEWindows
         #region Top Menu
 
         /// <summary>
-        /// нажмает на выбранный раздел верхнего меню 
+        /// нажмает на выбранный раздел верхнего меню /не работает с 22-11-23/
         /// </summary>
         /// <param name="numberOfThePartitionMenu"> номер раздела верхнего меню </param>
         public override void TopMenu(int numberOfThePartitionMenu)
@@ -1069,7 +1069,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
+        /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка  /не работает с 22-11-23/
         /// </summary>
         /// <param name="numberOfThePartitionMenu">номер раздела верхнего меню п/п</param>
         /// <param name="punkt">пункт меню. номер п/п</param>
@@ -1217,23 +1217,23 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// запуск клиента игры для Инфинити
+        /// Стим уже загружен. Запускаем игру в песочнице. для Инфинити и проч.
         /// </summary>
         public override void runClientBH()
         {
-            if (!isLoadedGEBH)   //если в данный момент не грузится другой стим и другие окна ГЭ
-            {
+            //if (!isLoadedGEBH)   //если в данный момент не грузится другой стим и другие окна ГЭ
+            //{
                 //if (!FindWindowGEforBHBool())  //эта проверка уже стоит в check и получает код проблемы 23, а сюда приходим только с проблемой 22
                 //{
                 #region для песочницы
 
                 if (isActiveServer)    //если надо грузить, то грузим 
                 {
-                    isLoadedGEBH = true;
+                    //isLoadedGEBH = true;
                     AccountBusy = false;
 
 
-                    //запускаем steam в песочнице (вариант 1)
+                    //Стим уже загружен. Запускаем игру в песочнице (вариант 1)
                     Process process = new Process();
                     process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
                     process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -applaunch 663090";
@@ -1276,7 +1276,7 @@ namespace OpenGEWindows
                 }
                 #endregion
                 //}
-            }
+            //}
         }
 
         ///// <summary>
@@ -1297,7 +1297,7 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
-        /// найдено ли окно ГЭ в текущей песочнице?
+        /// найдено ли окно ГЭ в текущей песочнице? Если найдено, то в файл hwnd.txt пишем найденный hwnd 
         /// </summary>
         /// <returns>true, если найдено</returns>
         public override bool FindWindowGEforBHBool()
@@ -1308,7 +1308,7 @@ namespace OpenGEWindows
             if (HWND != (UIntPtr)0)
             {
                 botParam.Hwnd = HWND;  //если окно найдено, то запись в файл HWND.txt
-                isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+                //isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
                 result = true;  //нашли окно
             }
             return result;
@@ -1402,7 +1402,7 @@ namespace OpenGEWindows
         {
             #region для песочницы
 
-            //запускаем steam в песочнице (вариант 1)
+            //Стим загружен. запускаем игру в песочнице (вариант 1)
             Process process = new Process();
             process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
             process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -applaunch 663090 -silent";

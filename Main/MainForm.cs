@@ -1184,6 +1184,85 @@ namespace Main
 
         #endregion
 
+        #region  ======================== DeliveryEvent Multi =============================================
+
+        private void NewYearDelivery_Click(object sender, EventArgs e)
+        {
+            NewYearDelivery.BackColor = Color.OrangeRed;
+            Thread myDeliveryMulti = new Thread(funcDeliveryMulti);
+            myDeliveryMulti.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой NewYearDelivery 
+        /// </summary>
+        private void funcDeliveryMulti()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionDeliveryMultiStage1();
+                                break;
+                            case 2:
+                                check[j].problemResolutionDeliveryMultiStage2();
+                                break;
+                            case 3:
+                                check[j].problemResolutionDeliveryMultiStage3();
+                                break;
+                            case 4:
+                                check[j].problemResolutionDeliveryMultiStage4();
+                                break;
+                            case 5:
+                                check[j].problemResolutionDeliveryMultiStage5();
+                                break;
+                            case 6:
+                                check[j].problemResolutionDeliveryMultiStage6();
+                                break;
+                            case 7:
+                                check[j].problemResolutionDeliveryMultiStage7();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
+
     }// END class MainForm 
 }// END namespace OpenGEWindows
 

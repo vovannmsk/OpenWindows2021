@@ -19,7 +19,7 @@ namespace OpenGEWindows
         //основной конструктор
         public ServerEuropa2(botWindow botwindow)
         {
-            isLoadedGEBH = false;   
+            //isLoadedGEBH = false;   
             isLoadedSteamBH = false;
 
             #region общие
@@ -1088,13 +1088,13 @@ namespace OpenGEWindows
         /// </summary>
         public override void runClientBH()
         {
-            if (!isLoadedGEBH)   //если в данный момент не грузится другой стим и другие окна ГЭ
-            {
-                if (!FindWindowGEforBHBool())
-                {
+            //if (!isLoadedGEBH)   //если в данный момент не грузится другой стим и другие окна ГЭ
+            //{
+            //    if (!FindWindowGEforBHBool())
+            //    {
                     #region для песочницы
 
-                    isLoadedGEBH = true;
+                    //isLoadedGEBH = true;
                     AccountBusy = false;
 
                     //запускаем steam в песочнице (вариант 1)
@@ -1130,8 +1130,8 @@ namespace OpenGEWindows
                     }
 
                     #endregion
-                }
-            }
+            //    }
+            //}
         }
 
         ///// <summary>
@@ -1163,7 +1163,7 @@ namespace OpenGEWindows
             if (HWND != (UIntPtr)0)
             {
                 botParam.Hwnd = HWND;  //если окно найдено, то запись в файл HWND.txt
-                isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+                //isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
                 result = true;  //нашли окно
             }
             return result;

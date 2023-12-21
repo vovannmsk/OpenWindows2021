@@ -20,7 +20,7 @@ namespace OpenGEWindows
         /// <param name="nomerOfWindow"> номер окна по порядку </param>
         public ServerAmerica(botWindow botwindow) 
         {
-            isLoadedGEBH = false;   //?????????????? может не ставить сюда ??????????????????
+            //isLoadedGEBH = false;   //?????????????? может не ставить сюда ??????????????????
             isLoadedSteamBH = false;
 
             #region общие
@@ -781,7 +781,7 @@ namespace OpenGEWindows
             if (HWND != (UIntPtr)0)
             {
                 botParam.Hwnd = HWND;  //если окно найдено, то запись в файл HWND.txt
-                isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+                //isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
                 result = true;  //нашли окно
             }
             return result;
@@ -799,7 +799,7 @@ namespace OpenGEWindows
             if (HWND != (UIntPtr)0)
             {
                 result = true;
-                isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+                //isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
             }
             return result;
         }

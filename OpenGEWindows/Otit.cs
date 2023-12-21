@@ -230,7 +230,8 @@ namespace OpenGEWindows
         public void GoToOldManMulti()
         {
             //server.OpenMapForState();
-            server.TopMenu(12, 2, true);       //23-11
+            //            server.TopMenu(12, 2, true);       //23-11
+            server.TopMenu(12, 3, true);       //12-12-23
             Pause(1000);
 
             PressOldManonMap();
