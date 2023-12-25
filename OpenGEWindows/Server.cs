@@ -821,7 +821,7 @@ namespace OpenGEWindows
         public void OpenWindowCW()
         {
             runClientCW();    ///запускаем чистый клиент игры (не в песочнице)
-            Pause(5000);
+            //Pause(5000);
 
             //убрал временно, для получения согласия с лицензией
             //while (true)
@@ -835,7 +835,7 @@ namespace OpenGEWindows
             //        break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
             //    }
             //}
-            Pause(5000);
+            //Pause(5000);
         }
 
 
@@ -1081,8 +1081,11 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isUnexpectedError()
         {
-            return new PointColor(1100, 609, 3473504, 0).isColor() &&
-                   new PointColor(11000, 610, 96, 0).isColor()
+            return  new PointColor(1100, 609, 3473504, 0).isColor() &&
+                    new PointColor(1100, 610, 96, 0).isColor()
+                    ||
+                    new PointColor(1127, 614, 3539040, 0).isColor() &&
+                    new PointColor(1127, 615, 3539040, 0).isColor()
                     ;
         }
 
@@ -7407,21 +7410,89 @@ namespace OpenGEWindows
 
         #region Delivery Event
 
+        /// <summary>
+        /// идём к Рудольфу по карте (карта уже открыта)
+        /// </summary>
+        public void GoToRudolph()
+        {
+            //botwindow.FirstHero();
+
+            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем в Рудольфа на карте
+            botwindow.PressEscThreeTimes();                         //убираем карту
+            Pause(12000);                                           //ждём, пока добежим до Рудольфа
+
+            new Point(621 - 5 + xx, 424 - 5 + yy).PressMouseL();    //тыкаем в Рудольфа, чтобы перейти к диалогу с ним
+        }
 
         /// <summary>
-        /// идём к Рудольфу по карте
+        /// проверяем, можно ли взять задание у Рудольфа (синий кружок на карте на месте Рудольфа)
         /// </summary>
-        public void GoToRudolphOnMap()
+        /// <returns>true, если есть</returns>
+        public bool GotTask()
         {
-            //MaxHeight(8);
-            botwindow.FirstHero();
+            return new PointColor(533 - 5 + xx, 413 - 5 + yy, 5784856, 0).isColor() &&
+                    new PointColor(534 - 5 + xx, 413 - 5 + yy, 5456151, 0).isColor();
 
-            TopMenu(12, 2, true);
+            
+        }
 
-            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();
+        /// <summary>
+        /// проверяем, есть ли задание у первого клиента (синий кружок на карте)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool GotTask2()
+        {
+            return  new PointColor(288 - 5 + xx, 319 - 5 + yy, 16777215, 0).isColor() &&
+                    new PointColor(289 - 5 + xx, 318 - 5 + yy, 16777215, 0).isColor();
+        }
+
+        /// <summary>
+        /// проверяем, получено ли задание у Рудольфа (синий кружок на карте на месте первого клиента)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool GotTaskRudolph ()
+        {
             botwindow.PressEscThreeTimes();
-            Pause(12000);
-            new Point(621 - 5 + xx, 424 - 5 + yy).PressMouseL();
+
+            //надёжно открываем карту города
+            if (isReboldo())
+            {
+                while (!isOpenMapReboldo()) { TopMenu(12, 2, true); Pause(500); }
+            }
+
+            bool result = GotTask2();  //проверяем, получено ли задание у Рудольфа
+
+            botwindow.PressEscThreeTimes(); //закрываем карту
+            
+            return result;
+        }
+
+        /// <summary>
+        /// открываем карту Ребольдо с гарантией
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public void OpenMapReboldo()
+        {
+            botwindow.PressEscThreeTimes();
+
+            //надёжно открываем карту города
+            if (isReboldo())
+            {
+                while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);
+            }
+        }
+
+
+        /// <summary>
+        /// проверяем, открыта ли карта Ребольдо (буква H  в надписи Repeption Hall)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool isOpenMapReboldo()
+        {
+            return new PointColor(199 - 5 + xx, 255 - 5 + yy, 6525666, 0).isColor() &&
+                    new PointColor(199 - 5 + xx, 256 - 5 + yy, 6525666, 0).isColor();
+
 
         }
 
@@ -7430,16 +7501,23 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToRudolph2()
         {
-            MaxHeight(8);
-            botwindow.FirstHero();
-
-            TopMenu(12, 2, true);
-
-            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();
-            Pause(12000);
             botwindow.PressEscThreeTimes();
-            new Point(609 - 5 + xx, 431 - 5 + yy).PressMouseL();
+            if (isReboldo())
+            {
 
+                botwindow.FirstHero();
+                while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);
+
+                new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
+                Pause(12000);
+
+                botwindow.PressEscThreeTimes();                         //убираем карту
+                new Point(290 - 5 + xx, 513 + yy).PressMouseL();    // тыкаем в Рудольфа
+                Pause(1000);
+                if (!dialog.isDialog())                                 // если не попали в Рудольфа
+                    new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
+            }
         }
 
 
@@ -7449,9 +7527,22 @@ namespace OpenGEWindows
         public void GoToDeliveryNumber1()
         {
             botwindow.PressEscThreeTimes();
-            if (!dialog.isDialog()) TopMenu(12, 2, true);
+
+            if (!dialog.isDialog())
+                while (!isOpenMapReboldo())
+                {
+                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+                    if (dialog.isDialog()) break;
+                }
             //Pause(500);
-            if (!dialog.isDialog()) new Point(295 - 5 + xx, 324 - 5 + yy).PressMouseLL();
+
+            Random rand = new Random();
+            int randemNumber = rand.Next(1, 10);
+            if (randemNumber <= 7)
+                { if (!dialog.isDialog()) new Point(295 - 5 + xx, 324 - 5 + yy).PressMouseLL(); }
+            else
+                { if (!dialog.isDialog()) new Point(314 - 5 + xx, 325 - 5 + yy).PressMouseLL(); }
+
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7462,9 +7553,17 @@ namespace OpenGEWindows
         public void GoToDeliveryNumber2()
         {
             botwindow.PressEscThreeTimes();
-            if (!dialog.isDialog()) TopMenu(12, 2, true);
-            //Pause(500);
-            if (!dialog.isDialog()) new Point(220 - 5 + xx, 434 - 5 + yy).PressMouseLL();
+            if (!dialog.isDialog())
+                //while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+
+            Random rand = new Random();
+            int randemNumber = rand.Next(1, 10);
+            if (randemNumber <= 7)
+                { if (!dialog.isDialog()) new Point(220 - 5 + xx, 434 - 5 + yy).PressMouseLL(); }
+            else
+                { if (!dialog.isDialog()) new Point(235 - 5 + xx, 443 - 5 + yy).PressMouseLL(); }
+
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7475,9 +7574,17 @@ namespace OpenGEWindows
         public void GoToDeliveryNumber3()
         {
             botwindow.PressEscThreeTimes();
-            if (!dialog.isDialog()) TopMenu(12, 2, true);
-            //Pause(500);
-            if (!dialog.isDialog()) new Point(547 - 5 + xx, 606 - 5 + yy).PressMouseLL();
+            if (!dialog.isDialog())
+                //while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+
+            Random rand = new Random();
+            int randemNumber = rand.Next(1, 10);
+            if (randemNumber <= 7)
+                { if (!dialog.isDialog()) new Point(547 - 5 + xx, 606 - 5 + yy).PressMouseLL(); }
+            else
+                { if (!dialog.isDialog()) new Point(648 - 5 + xx, 532 - 5 + yy).PressMouseLL(); }
+            
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7488,9 +7595,18 @@ namespace OpenGEWindows
         public void GoToDeliveryNumber4()
         {
             botwindow.PressEscThreeTimes();
-            if (!dialog.isDialog()) TopMenu(12, 2, true);
-            //Pause(500);
-            if (!dialog.isDialog()) new Point(462 - 5 + xx, 479 - 5 + yy).PressMouseLL();
+
+            if (!dialog.isDialog())
+                //while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+
+            Random rand = new Random();
+            int randemNumber = rand.Next(1, 10);
+            if (randemNumber <= 7)
+                { if (!dialog.isDialog()) new Point(462 - 5 + xx, 479 - 5 + yy).PressMouseLL(); }
+            else
+                { if (!dialog.isDialog()) new Point(422 - 5 + xx, 462 - 5 + yy).PressMouseLL(); }
+
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7501,13 +7617,21 @@ namespace OpenGEWindows
         public void GoToDeliveryNumber5()
         {
             botwindow.PressEscThreeTimes();
-            if (!dialog.isDialog()) TopMenu(12, 2, true);
-            //Pause(500);
-            if (!dialog.isDialog()) new Point(675 - 5 + xx, 410 - 5 + yy).PressMouseLL();
+
+            if (!dialog.isDialog())
+                //while (!isOpenMapReboldo())
+                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+
+            Random rand = new Random();
+            int randemNumber = rand.Next(1, 10);
+            if (randemNumber <= 7)
+                { if (!dialog.isDialog()) new Point(675 - 5 + xx, 410 - 5 + yy).PressMouseLL(); }
+            else
+                { if (!dialog.isDialog()) new Point(645 - 5 + xx, 393 - 5 + yy).PressMouseLL(); }
+            
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
-
 
         /// <summary>
         /// идём в Ребольдо

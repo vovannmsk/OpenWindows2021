@@ -15,7 +15,8 @@ namespace States
         private static int IsItAlreadyPossibleToUploadNewSteam = 0;
 
         /// <summary>
-        /// если никакой бот не грузится, то переменная = 0. Если грузится, то переменная равна номеру окна (numberOfWindow)
+        /// Если никакое окно с игрой не грузится, то переменная = 0. 
+        /// Если окно грузится, то переменная равна номеру окна (numberOfWindow)
         /// </summary>
         private static int IsItAlreadyPossibleToUploadNewWindow = 0;
 
@@ -966,17 +967,18 @@ namespace States
                     //    //botParam.HowManyCyclesToSkip = 3;
                     //    break;
                     case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                             SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
-                            if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
                         break;
-                    case 23:                                    //есть окно стим
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    case 23:                                    //стим есть. только что нашли новое окно с игрой
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                            IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
@@ -997,8 +999,10 @@ namespace States
                         break;
                     case 31:
                         server.CloseSandboxieBH();              //закрываем все проги в песочнице
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) 
+                            IsItAlreadyPossibleToUploadNewSteam = 0;
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                            IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
                     case 33:
                         server.CloseError820();
@@ -1809,18 +1813,18 @@ namespace States
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
                     case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                             SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
-                            if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
                         break;
                     case 23:                                    //есть окно стим
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        // IsItAlreadyPossibleToUploadNewWindow = 0; //не факт, что надо
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                            IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
@@ -2110,7 +2114,7 @@ namespace States
             }
 
             //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;                         //  22-11-23
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
 
             //ворота
             if (dialog.isDialog())
@@ -2193,12 +2197,58 @@ namespace States
                         break;
 
                     case 6:                                         // town --> олень (диалог)
+                        botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
-                        server.GoToRudolphOnMap();
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                        }
+
+                        //botwindow.PressEscThreeTimes();
+                        //bool result = server.GoToRudolphOnMap();
+                        //if (!result)    //нет задания у Рудольфа, значит надо идти к следующему аккаунту
+                        //{
+                        //    server.RemoveSandboxieBH();                 //закрываем песочницу
+                        //    botParam.Stage = 1;
+                        //    botParam.HowManyCyclesToSkip = 1;
+                        //}
+                        server.GoToRudolph();
                         break;
                     case 8:                                         //Rudolph (dialog --> getting a job)
                         dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
-                        botParam.Stage = 2; 
+
+                        if (!server.GotTaskRudolph())               //такая ситуация возникает, когда остается непогашенное задание с прошлого дня
+                        {
+                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                            botParam.Stage = 2; 
+
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
@@ -2221,17 +2271,18 @@ namespace States
                                                                     //то нажимаем кнопку, чтобы войти обратно в барак
                         break;
                     case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                             SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
-                            if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
                         break;
                     case 23:                                    //есть окно стим
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                            IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
@@ -2336,7 +2387,7 @@ namespace States
             }
 
             //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;                         //  22-11-23
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
 
             //ворота
             if (dialog.isDialog())
@@ -2566,6 +2617,7 @@ namespace States
                     case 6:                                         // Ребольдо --> Коимбра
                         botwindow.Pause(500);
                         server.GoToCoimbra();
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 7:                                         // коимбра --> вторая доставка (диалог)
                         botwindow.Pause(500);
@@ -2897,6 +2949,7 @@ namespace States
                     case 6:                                         // Коимбра --> Ош
                         botwindow.Pause(500);
                         server.GoToAuch();
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 7:                                         // Auch --> доставка 4 (диалог)
                         botwindow.Pause(500);
@@ -3165,7 +3218,7 @@ namespace States
             //ворота
             if (dialog.isDialog())
             {
-                return 8;                       //если диалог с первым клиентом
+                return 8;                       //если диалог 
             }
 
             // если неправильная стойка
@@ -3228,13 +3281,14 @@ namespace States
                     case 6:                                         // Ош --> Reboldo
                         botwindow.Pause(500);
                         server.GoToReboldo();
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 7:                                         // Reboldo --> Rudolph (диалог)
                         botwindow.Pause(500);
                         server.GoToRudolph2();
                         break;
                     case 8:                                         // получаем награду у Рудольфа
-                        dialog.PressOkButton(2);
+                        dialog.PressOkButton(5);
                         botwindow.PressEscThreeTimes();
 
                         server.RemoveSandboxieBH();                 //закрываем песочницу
@@ -3281,20 +3335,7 @@ namespace States
         }
 
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
         #region Гильдия охотников BH (Infinity Multi)
 
         /// <summary>
@@ -4292,6 +4333,9 @@ namespace States
 
             //server.ReOpenWindow();
 
+
+            #region  доп проверки
+
             //if (!server.isBottlesOnLeftPanel()) server.MoveBottlesToTheLeftPanel();
             //MessageBox.Show("половина патронов? " + server.isBulletHalf());
             //MessageBox.Show("закончились патроны? " + server.isBulletOff());
@@ -4359,6 +4403,10 @@ namespace States
             //MessageBox.Show("появился сундук?" + server.isTreasureChest());   //22-11
 
             //botwindow.Pause(1000);
+
+            //MessageBox.Show("ош? " + server.isAuch());
+            //MessageBox.Show("Коимбра? " + server.isCoimbra());
+            //MessageBox.Show("Ребольдо? " + server.isReboldo());
 
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
@@ -4456,6 +4504,7 @@ namespace States
 
             //server.Buff(Hero[1], 1);
 
+            #endregion
 
             int xx, yy;
             xx = koordX[i - 1];
@@ -4487,8 +4536,8 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1060, 615, 1, 1);
-            //PointColor point2 = new PointColor(1060, 616, 1, 1);
+            //PointColor point1 = new PointColor(1127, 614, 1, 1);
+            //PointColor point2 = new PointColor(1127, 615, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
 
             //for (int ii = 4; ii <= 17; ii++)
@@ -4497,8 +4546,8 @@ namespace States
             //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
 
-            PointColor point1 = new PointColor(937 - 5 + xx, 253 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(937 - 5 + xx, 259 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(288 - 5 + xx, 319 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(289 - 5 + xx, 318 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

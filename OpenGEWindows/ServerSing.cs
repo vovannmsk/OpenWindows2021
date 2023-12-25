@@ -845,7 +845,9 @@ namespace OpenGEWindows
 
                 if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
                 {
-                    pointNewSteamOk.PressMouseL();
+                    //pointNewSteamOk.PressMouseL();
+                    AcceptUserAgreement();
+                    break;
                 }
 
                 //if (isContinueRunning())    //если аккаунт запущен на другом компе
