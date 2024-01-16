@@ -698,6 +698,9 @@ namespace States
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
 
+            //если окно игры открыто на другом компе
+            if (server.isOpenGEWindow()) return 37;
+
             //служба Steam
             if (server.isSteamService()) return 11;
 
@@ -1022,6 +1025,10 @@ namespace States
                         IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
                                                                   // а значит смело можно грузить окно еще раз
                         break;
+                    case 37:
+                        server.CloseSteamMessage();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
                 }
             }
             else
@@ -1060,6 +1067,9 @@ namespace States
 
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
+
+            //если окно игры открыто на другом компе
+            if (server.isOpenGEWindow()) return 37;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1255,6 +1265,10 @@ namespace States
                         IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
                                                                   // а значит смело можно грузить окно еще раз
                         break;
+                    case 37:
+                        server.CloseSteamMessage();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
                 }
             }
             else
@@ -1290,6 +1304,9 @@ namespace States
 
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
+
+            //если окно игры открыто на другом компе
+            if (server.isOpenGEWindow()) return 37;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1457,6 +1474,10 @@ namespace States
                         IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
                                                                   // а значит смело можно грузить окно еще раз
                         break;
+                    case 37:
+                        server.CloseSteamMessage();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
                 }
             }
             else
@@ -1583,6 +1604,9 @@ namespace States
 
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
+
+            //если окно игры открыто на другом компе
+            if (server.isOpenGEWindow()) return 37;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -1866,6 +1890,10 @@ namespace States
                         IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
                                                                   // а значит смело можно грузить окно еще раз
                         break;
+                    case 37:
+                        server.CloseSteamMessage();
+                        IsItAlreadyPossibleToUploadNewWindow = 0; 
+                        break;
                 }
             }
             else
@@ -1904,6 +1932,9 @@ namespace States
 
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
+
+            //если окно игры открыто на другом компе
+            if (server.isOpenGEWindow()) return 37;
 
             //служба Steam
             if (server.isSteamService()) return 11;
@@ -2050,6 +2081,10 @@ namespace States
                     case 36:
                         server.CloseUnexpectedError();
                         if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 37:
+                        server.CloseSteamMessage();
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
                         break;
                 }
             }
@@ -2225,17 +2260,8 @@ namespace States
                                 botParam.Stage = 2;
                                 break;
                             }
+                            server.GoToRudolph();
                         }
-
-                        //botwindow.PressEscThreeTimes();
-                        //bool result = server.GoToRudolphOnMap();
-                        //if (!result)    //нет задания у Рудольфа, значит надо идти к следующему аккаунту
-                        //{
-                        //    server.RemoveSandboxieBH();                 //закрываем песочницу
-                        //    botParam.Stage = 1;
-                        //    botParam.HowManyCyclesToSkip = 1;
-                        //}
-                        server.GoToRudolph();
                         break;
                     case 8:                                         //Rudolph (dialog --> getting a job)
                         dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
@@ -2952,8 +2978,17 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 7:                                         // Auch --> доставка 4 (диалог)
-                        botwindow.Pause(500);
-                        server.GoToDeliveryNumber4();
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 5;         //остаемся на этой эе стадии, чтобы еще раз попытаться перейти в Ош
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botwindow.Pause(500);
+                            server.GoToDeliveryNumber4();
+                            break;
+                        }
                         break;
                     case 8:                                         // доставка 4 завершена
                         dialog.PressOkButton(1);
@@ -3114,6 +3149,11 @@ namespace States
                         botParam.Stage = 1;
                         break;
                     case 6:                                         // Ош --> доставка 5 (диалог)
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 4;
+                            break;
+                        }
                         botwindow.Pause(500);
                         server.GoToDeliveryNumber5();
                         break;
@@ -3284,8 +3324,36 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 7:                                         // Reboldo --> Rudolph (диалог)
+                        botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
-                        server.GoToRudolph2();
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                            server.GoToRudolph2();
+                        }
                         break;
                     case 8:                                         // получаем награду у Рудольфа
                         dialog.PressOkButton(5);
@@ -4536,8 +4604,8 @@ namespace States
 
             //int xxx = 5;
             //int yyy = 5;
-            //PointColor point1 = new PointColor(1127, 614, 1, 1);
-            //PointColor point2 = new PointColor(1127, 615, 1, 1);
+            PointColor point1 = new PointColor(1223, 613, 1, 1);
+            PointColor point2 = new PointColor(1224, 613, 1, 1);
             //PointColor point3 = new PointColor(1151, 603, 1, 1);
 
             //for (int ii = 4; ii <= 17; ii++)
@@ -4545,9 +4613,11 @@ namespace States
             //PointColor point1 = new PointColor(837 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
             //PointColor point2 = new PointColor(843 - 5 + xx, 674 - 5 + yy - (ii - 1) * 19, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy - (ii - 1) * 19, 0, 0);
+            //int dx = 3;
+            //int dy = 2;
 
-            PointColor point1 = new PointColor(288 - 5 + xx, 319 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(289 - 5 + xx, 318 - 5 + yy, 0, 0);
+            //PointColor point1 = new PointColor(339 - 5 + xx, 116 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(339 - 5 + xx, 117 - 5 + yy, 0, 0);
             //PointColor point3 = new PointColor(840 - 5 + xx, 684 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

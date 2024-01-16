@@ -159,6 +159,8 @@ namespace OpenGEWindows
         protected iPointColor pointisOpenTopMenu122work;
         protected iPointColor pointisOpenTopMenu131;
         protected iPointColor pointisOpenTopMenu132;
+        protected iPointColor pointisOpenTopMenu161;
+        protected iPointColor pointisOpenTopMenu162;
         protected iPointColor pointisOpenMenuChooseChannel1;
         protected iPointColor pointisOpenMenuChooseChannel2;
         protected iPointColor pointIsCurrentChannel1;
@@ -844,6 +846,25 @@ namespace OpenGEWindows
         #region No Window
 
         /// <summary>
+        /// закрыть сообщение Steam о том, что окно игры открыто на другом компе
+        /// </summary>
+        public void CloseSteamMessage()
+        {
+            new Point(1223, 613).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// открыто ли окно с игрой на другом компе?
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenGEWindow()
+        {
+            return new PointColor(1223, 613, 15131615, 0).isColor() &&
+                   new PointColor(1224, 613, 15131615, 0).isColor();
+        }
+
+        /// <summary>
         /// Перемещает окно с ботом в заданные координаты.  не учитываются ширина и высота окна
         /// </summary>
         /// <returns>Если окно есть, то result = true, а если вылетело окно, то result = false.</returns>
@@ -944,7 +965,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isSafeIP()
         {
-            return (pointSafeIP1.isColor() && pointSafeIP2.isColor());
+            return pointSafeIP1.isColor() && pointSafeIP2.isColor();
         }
 
         /// <summary>
@@ -1125,7 +1146,7 @@ namespace OpenGEWindows
         public void AcceptUserAgreement()
         {
             new Point(1052, 832).PressMouseL();
-            Pause(200);
+            Pause(2000);
         }
 
         protected bool isSystemError()
@@ -1853,7 +1874,10 @@ namespace OpenGEWindows
                             (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor()); 
                     break;
                 case 13:
-                    result = (pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2());
+                    result = pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2();
+                    break;
+                case 16:
+                    result = pointisOpenTopMenu161.isColor2() && pointisOpenTopMenu162.isColor2();
                     break;
                 default:
                     result = true;
@@ -2013,9 +2037,9 @@ namespace OpenGEWindows
         /// <param name="punkt">пункт меню. номер п/п</param>
         public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
         {
-            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0 };  //количество пунктов меню в соответствующем разделе
-            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197, 0, 0, 0, 0 };    //координата X первого подпункта меню
-            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 118, 0, 0, 0, 0 }; //координата Y первого пункта меню
+            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 5 };  //количество пунктов меню в соответствующем разделе
+            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197, 0, 0, 0, 325 };    //координата X первого подпункта меню
+            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 118, 0, 0, 0, 118 }; //координата Y первого пункта меню
 
             if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
             {
@@ -7411,6 +7435,82 @@ namespace OpenGEWindows
         #region Delivery Event
 
         /// <summary>
+        /// нажать на кнопку "Trade"
+        /// </summary>
+        public void PressButtonRelic()
+        {
+            iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
+            for (int i = 1; i <= 500; i++)
+            {
+                botwindow.ActiveWindowBH();
+                p1.PressMouseL();
+                Pause(500);
+            }
+        }
+
+        /// <summary>
+        /// открываем ящики в открытом инвентаре
+        /// </summary>
+        public void OpenBoxes()
+        {
+            int dxBox = 0;
+            int dyBox = 0;
+
+            for (int dx = 0; dx <= 4; dx++)
+                for (int dy = 0; dy <= 5; dy++)
+                {
+                    if (new PointColor(724 - 5 + xx + dx * 58 + 40, 223 - 5 + yy + dy * 58 + 31, 5837047, 0).isColor() &&
+                        new PointColor(724 - 5 + xx + dx * 58 + 40, 223 - 5 + yy + dy * 58 + 32, 6426876, 0).isColor())
+                    {
+                        dxBox = dx;
+                        dyBox = dy;
+                        break;
+                    }
+
+                }
+
+            if ((dxBox == 0) && (dyBox == 0))
+            { 
+                botwindow.PressEscThreeTimes(); 
+            }
+            else
+            { 
+                while (new PointColor(724 - 5 + xx + dxBox * 58 + 40, 223 - 5 + yy + dyBox * 58 + 31, 5837047, 0).isColor() &&
+                        new PointColor(724 - 5 + xx + dxBox * 58 + 40, 223 - 5 + yy + dyBox * 58 + 32, 6426876, 0).isColor())
+                {
+
+                    new Point(724 - 5 + xx + dxBox * 58 + 20, 223 - 5 + yy + dyBox * 58 + 20).DoubleClickL();
+                    Pause(500);
+                    new Point(440 - 5 + xx, 440 - 5 + yy).Move();  //убираем мышь в сторону
+                    Pause(8500);
+
+                }
+            }
+
+            botwindow.PressEscThreeTimes();
+
+            //new Point(750 - 5 + xx, 206 - 5 + yy).PressMouseLL();  //тыкаем в выбранную закладку
+            //Pause(500);
+            //new Point(440 - 5 + xx, 440 - 5 + yy).Move();  //убираем мышь
+            //Pause(500);
+        }
+
+
+        /// <summary>
+        /// открываем закладку в уже открытом инвентаре
+        /// </summary>
+        /// <param name="number">номер закладки</param>
+        public void OpenInventoryBookmark(int number)
+        {
+            new Point(750 - 5 + (number - 1) * 65 + xx, 206 - 5 + yy).PressMouseLL();  //тыкаем в выбранную закладку
+            Pause(500); 
+            new Point(440 - 5 + xx, 440 - 5 + yy).Move();  //убираем мышь
+            Pause(500);
+        }
+
+
+
+        /// <summary>
         /// идём к Рудольфу по карте (карта уже открыта)
         /// </summary>
         public void GoToRudolph()
@@ -7497,27 +7597,38 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// идём к Рудольфу за наградой
+        /// идём к Рудольфу за наградой (карта уже открыта)
         /// </summary>
         public void GoToRudolph2()
         {
-            botwindow.PressEscThreeTimes();
-            if (isReboldo())
-            {
+            //botwindow.PressEscThreeTimes();
+            //if (isReboldo())
+            //{
 
-                botwindow.FirstHero();
-                while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);
+            //    botwindow.FirstHero();
+            //    while (!isOpenMapReboldo())
+            //        TopMenu(12, 2, true);
 
-                new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
-                Pause(12000);
+            //    new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
+            //    Pause(12000);
 
-                botwindow.PressEscThreeTimes();                         //убираем карту
-                new Point(290 - 5 + xx, 513 + yy).PressMouseL();    // тыкаем в Рудольфа
-                Pause(1000);
-                if (!dialog.isDialog())                                 // если не попали в Рудольфа
-                    new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
-            }
+            //    botwindow.PressEscThreeTimes();                         //убираем карту
+            //    new Point(290 - 5 + xx, 513 + yy).PressMouseL();    // тыкаем в Рудольфа
+            //    Pause(1000);
+            //    if (!dialog.isDialog())                                 // если не попали в Рудольфа
+            //        new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
+            //}
+
+
+            new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
+            Pause(1000);
+            botwindow.PressEscThreeTimes();                         //убираем карту
+            Pause(11000);
+
+            new Point(290 - 5 + xx, 513 + yy).PressMouseL();        // тыкаем в Рудольфа
+            Pause(1000);
+            if (!dialog.isDialog())                                 // если не попали в Рудольфа
+                new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
         }
 
 
@@ -7668,8 +7779,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isReboldo()
         {
-            return new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor() &&
-                   new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово Rebo под миникартой (буква R)
+            return new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor() &&
+                   new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово Rebo под миникартой (буква R)
 
         }
 
@@ -7679,8 +7790,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isCoimbra()
         {
-            return new PointColor(963 - 5 + xx, 254 - 5 + yy, 15000000, 6).isColor() &&
-                   new PointColor(963 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();        //слово Coimbra под миникартой (буква i)
+            return new PointColor(976 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor() &&
+                   new PointColor(976 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();        //слово Coimbra под миникартой (буква i)
 
         }
 
@@ -7690,8 +7801,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isAuch()
         {
-            return new PointColor(937 - 5 + xx, 253 - 5 + yy, 16000000, 6).isColor() &&
-                   new PointColor(937 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово of под миникартой (буква f)
+            return new PointColor(921 - 5 + xx, 252 - 5 + yy, 14000000, 6).isColor() &&
+                   new PointColor(921 - 5 + xx, 259 - 5 + yy, 14000000, 6).isColor();        //слово of под миникартой (буква f)
 
         }
 

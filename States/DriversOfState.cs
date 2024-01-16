@@ -579,13 +579,12 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-
-
-
+            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
 
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
-            botwindow.PressEscThreeTimes();
+            //botwindow.Pause(15000);
+
+            //botwindow.PressEscThreeTimes();
 
             //StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow));  // reOpen   чистое окно Стим
             //StateDriverRun(new StateGT275(botwindow), new StateGT277(botwindow));  //   надеваем бижутерию
@@ -600,11 +599,25 @@ namespace States
             //StateDriverRun(new StateGT266a(botwindow), new StateGT271(botwindow)); //   экипируем розовые крылья
             //botwindow.PressEscThreeTimes();
 
-            //закрываем проги в песочнице
-            //server.TopMenu(12, 2, true);
-            //new Point(499, 257).PressMouseLL();
+            //открываем инвентарь
+            //server.TopMenu(16, 1, true);
 
-            StateDriverRun(new StateGT169(botwindow),new StateGT170(botwindow));  // закрываем проги в песочнице
+            //открываем вторую закладку в инвентаре
+            //server.OpenInventoryBookmark(2);
+
+            //ищем мешки и открываем их
+            //server.OpenBoxes();
+
+            ////открываем карту
+            //server.OpenMapReboldo();
+
+            ////идём к ёлке
+            //server.GoToRudolph();
+
+            server.PressButtonRelic();
+
+            //закрываем проги в песочнице
+            StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
         /// <summary>
@@ -613,8 +626,9 @@ namespace States
         public void StateInputOutputCW()
         {
             // reOpen 
-            StateDriverRun(new StateGT308(botwindow), new StateGT315(botwindow)); 
+            StateDriverRun(new StateGT308(botwindow), new StateGT315(botwindow));
 
+            botwindow.Pause(2000);
             //закрываем чистое окно с игрой
             StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
         }

@@ -141,6 +141,8 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu122work = new PointColor(242 - 5 + xx, 146 - 5 + yy, 16700000, 5);        //буква М в слове Zone Map
             this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name (system menu)                                                        //проверено
             this.pointisOpenTopMenu132 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 12000000, 6);
+            this.pointisOpenTopMenu161 = new PointColor(339 - 5 + xx, 116 - 5 + yy, 15000000, 6);          //буква I (в слове Inventory)                                                        //проверено
+            this.pointisOpenTopMenu162 = new PointColor(339 - 5 + xx, 117 - 5 + yy, 15000000, 6);
             this.pointisOpenMenuChooseChannel1 = new PointColor(500 - 5 + xx, 253 - 5 + yy, 8036794, 0);   //Menu of Choose a channel
             this.pointisOpenMenuChooseChannel2 = new PointColor(501 - 5 + xx, 253 - 5 + yy, 8036794, 0);
             this.pointIsCurrentChannel1 = new PointColor(576 - 5 + xx, 288 - 5 + yy, 10000000, 6);          //Channel = 1
@@ -865,16 +867,52 @@ namespace OpenGEWindows
         /// </summary>
         public override void runClient()
         {
-            #region для песочницы
+
+            #region песочница. сначала Стим, потом игра
 
             AccountBusy = false;
 
-            //запускаем steam в песочнице (вариант 1)
+            //запускаем steam в песочнице
             Process process = new Process();
             process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
-            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
-            //steam://rungameid/319730
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
+            //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword();
             process.Start();
+
+//            Pause(55000);
+            while (!FindWindowSteamBool())
+            {
+                Pause(2000);
+            }
+
+            process = new Process();
+            process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -applaunch 663090 -silent";
+            process.Start();
+
+            Pause(5000);
+            for (int i = 1; i <= 10; i++)
+            {
+                Pause(1000);
+                if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
+                {
+                    AcceptUserAgreement();
+                    break;
+                }
+            }
+
+            #endregion
+
+            #region для песочницы
+
+            //AccountBusy = false;
+
+            ////запускаем steam в песочнице (вариант 1)
+            //Process process = new Process();
+            //process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
+            //process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " " + this.pathClient + " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            ////steam://rungameid/319730
+            //process.Start();
 
 
             //Pause(15000);
@@ -900,19 +938,21 @@ namespace OpenGEWindows
             //{
             //    CloseWhatNews();
 
-            //    Pause(1000);
+            //Pause(1000);
 
             //    if (isSystemError())  //если выскакивает системная ошибка, то нажимаем "Ок"     проверка не работает
             //    {
             //        OkSystemError();
             //    }
 
-            //    if (isNewSteam())
-            //    {
-            //        new Point(1040, 560).PressMouseL();   //нажимаем "Отмена" на предложение установить службу Стим
-            //        Pause(1000);
-            //        pointNewSteamOk.PressMouseL();  //нажимаем "Соглашаюсь"
-            //    }
+            //if (isNewSteam())
+            //{
+            //    //new Point(1040, 560).PressMouseL();   //нажимаем "Отмена" на предложение установить службу Стим
+            //    //Pause(1000);
+            //    //pointNewSteamOk.PressMouseL();  //нажимаем "Соглашаюсь"
+            //    AcceptUserAgreement();
+            //    break;
+            //}
 
             //    if (isContinueRunning())    //если аккаунт запущен на другом компе
             //    {
