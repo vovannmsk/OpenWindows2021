@@ -860,8 +860,12 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isOpenGEWindow()
         {
-            return new PointColor(1223, 613, 15131615, 0).isColor() &&
-                   new PointColor(1224, 613, 15131615, 0).isColor();
+            return (new PointColor(1223, 613, 15131615, 0).isColor() &&
+                   new PointColor(1224, 613, 15131615, 0).isColor())
+                   ||
+                   (new PointColor(1213, 603, 15131615, 0).isColor() &&
+                   new PointColor(1214, 603, 15131615, 0).isColor())
+                   ;
         }
 
         /// <summary>
@@ -5072,8 +5076,8 @@ namespace OpenGEWindows
                                      new Point(398 - 5 + xx, 335 - 5 + yy), //8
                                      new Point(398 - 5 + xx, 334 - 5 + yy),
                                      new Point(438 - 5 + xx, 297 - 5 + yy),
-                                     new Point(437 - 5 + xx, 285 - 5 + yy), //9
-                                     new Point(437 - 5 + xx, 282 - 5 + yy), 
+                                     //new Point(437 - 5 + xx, 285 - 5 + yy), //9
+                                     new Point(437 - 5 + xx, 280 - 5 + yy), 
                                      new Point(437 - 5 + xx, 225 - 5 + yy), //10
                                      new Point(439 - 5 + xx, 212 - 5 + yy), //11
                                   };
@@ -6740,7 +6744,6 @@ namespace OpenGEWindows
             AttackCtrl(x, y);
 
             //бафаемся
-            //тут надо бы сделать проверку, наложены ли уже баффы (хрин+принципал) или нет. И всё это вместе с баффами запихнуть в процедурку
             botwindow.ActiveAllBuffBH();
             botwindow.PressEscThreeTimes();
 
@@ -7440,7 +7443,7 @@ namespace OpenGEWindows
         public void PressButtonRelic()
         {
             iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
-            for (int i = 1; i <= 500; i++)
+            for (int i = 1; i <= 200; i++)
             {
                 botwindow.ActiveWindowBH();
                 p1.PressMouseL();

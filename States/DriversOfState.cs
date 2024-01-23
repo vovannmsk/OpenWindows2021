@@ -579,11 +579,12 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-
+            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
-            //botwindow.Pause(15000);
 
+            botwindow.Pause(5000); //12000
+
+            #region  архив 
             //botwindow.PressEscThreeTimes();
 
             //StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow));  // reOpen   чистое окно Стим
@@ -613,10 +614,13 @@ namespace States
 
             ////идём к ёлке
             //server.GoToRudolph();
+            #endregion
 
-            server.PressButtonRelic();
+            //server.PressButtonRelic();
 
             //закрываем проги в песочнице
+
+
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 

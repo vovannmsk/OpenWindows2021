@@ -2014,9 +2014,11 @@ namespace States
                             server.Buff(Hero[1], 1);
                             server.Buff(Hero[2], 2);
                             server.Buff(Hero[3], 3);
+                            botwindow.ActiveAllBuffBH();
+                            botwindow.PressEscThreeTimes();
                         }
 
-                        if (NextPointNumber <= 22)        //если еще не дошли до конца миссии
+                        if (NextPointNumber <= 21)        //если еще не дошли до конца миссии
                         {
                             server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
                             Pause(500);
@@ -3403,7 +3405,1073 @@ namespace States
         }
 
         #endregion
- 
+
+
+        #region  =================================== Bridge Stage 1 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemBridgeMultiStage1()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                return 8;                       //если диалог с оленем
+            }
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                return 6;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionBridgeMultiStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemBridgeMultiStage1();
+
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5)
+                    numberOfProblem = 31;
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //server.WriteToLogFileBH("case 1");
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        //server.WriteToLogFileBH("case 2");
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+
+                    case 6:                                         // town --> олень (диалог)
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                            server.GoToRudolph();
+                        }
+                        break;
+                    case 8:                                         //Rudolph (dialog --> getting a job)
+                        dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
+
+                        if (!server.GotTaskRudolph())               //такая ситуация возникает, когда остается непогашенное задание с прошлого дня
+                        {
+                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                            botParam.Stage = 2;
+
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseExpMerch();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 23:                                    //есть окно стим
+                                                                //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                        IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Bridge Stage 2 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemBridgeMultiStage2()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                return 8;                       //если диалог с оленем
+            }
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                return 6;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionBridgeMultiStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemBridgeMultiStage2();
+
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5)
+                    numberOfProblem = 31;
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //server.WriteToLogFileBH("case 1");
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        //server.WriteToLogFileBH("case 2");
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+
+                    case 6:                                         // town --> олень (диалог)
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                            server.GoToRudolph();
+                        }
+                        break;
+                    case 8:                                         //Rudolph (dialog --> getting a job)
+                        dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
+
+                        if (!server.GotTaskRudolph())               //такая ситуация возникает, когда остается непогашенное задание с прошлого дня
+                        {
+                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                            botParam.Stage = 2;
+
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseExpMerch();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 23:                                    //есть окно стим
+                                                                //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                        IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Bridge Stage 3 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemBridgeMultiStage3()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                return 8;                       //если диалог с оленем
+            }
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                return 6;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionBridgeMultiStage3()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemBridgeMultiStage3();
+
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5)
+                    numberOfProblem = 31;
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //server.WriteToLogFileBH("case 1");
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        //server.WriteToLogFileBH("case 2");
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+
+                    case 6:                                         // town --> олень (диалог)
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                            server.GoToRudolph();
+                        }
+                        break;
+                    case 8:                                         //Rudolph (dialog --> getting a job)
+                        dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
+
+                        if (!server.GotTaskRudolph())               //такая ситуация возникает, когда остается непогашенное задание с прошлого дня
+                        {
+                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                            botParam.Stage = 2;
+
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseExpMerch();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 23:                                    //есть окно стим
+                                                                //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                        IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+        #region  =================================== Bridge Stage 4 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemBridgeMultiStage4()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //ворота
+            if (dialog.isDialog())
+            {
+                return 8;                       //если диалог с оленем
+            }
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                return 6;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionBridgeMultiStage4()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemBridgeMultiStage4();
+
+                if (SteamLoaded) dateSteam = DateTime.Now;
+                dateNow = DateTime.Now;
+                if ((dateNow - dateSteam).TotalMinutes > 5)
+                    numberOfProblem = 31;
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //server.WriteToLogFileBH("case 1");
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        //server.WriteToLogFileBH("case 2");
+                        driver.StateFromBarackToTownBH();           // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+
+                    case 6:                                         // town --> олень (диалог)
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        if (server.isCoimbra())
+                        {
+                            botParam.Stage = 3;
+                            break;
+                        }
+                        if (server.isAuch())
+                        {
+                            botParam.Stage = 5;
+                            break;
+                        }
+                        if (server.isReboldo())
+                        {
+                            server.OpenMapReboldo();
+                            if ((!server.GotTask()) && (!server.GotTask2()))    //нет задания ни у рудольфа, ни у первого клиента.
+                                                                                //значит сегодня уже сходили. переходим к след. аккаунту
+                            {
+                                server.RemoveSandboxieBH();                 //закрываем песочницу
+                                botParam.Stage = 1;
+                                botParam.HowManyCyclesToSkip = 1;
+                                break;
+                            }
+                            if (server.GotTask2())
+                            {
+                                botParam.Stage = 2;
+                                break;
+                            }
+                            server.GoToRudolph();
+                        }
+                        break;
+                    case 8:                                         //Rudolph (dialog --> getting a job)
+                        dialog.PressOkButton(10);                   //получили задание у оленя Рудольфа
+
+                        if (!server.GotTaskRudolph())               //такая ситуация возникает, когда остается непогашенное задание с прошлого дня
+                        {
+                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                            botParam.Stage = 2;
+
+                        break;
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseExpMerch();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 23:                                    //есть окно стим
+                                                                //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                        IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+
         #region Гильдия охотников BH (Infinity Multi)
 
         /// <summary>
