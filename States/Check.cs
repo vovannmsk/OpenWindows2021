@@ -51,6 +51,7 @@ namespace States
         private BotParam botParam;
         //private System.Windows.Forms.Timer NowTimer = new System.Windows.Forms.Timer();
 
+        
         /// <summary>
         /// переменная нужна для отслеживания зависания в состоянии Logout
         /// </summary>
@@ -115,7 +116,7 @@ namespace States
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
-            NextPointNumber = -1;
+            NextPointNumber = 0;
             GoBarack = 0;
             numberOfState = 0;
             taskCompleted = false;
@@ -1778,8 +1779,6 @@ namespace States
                         break;
                     case 7:                                     // начало миссии
                                                                 // активируем пета и переходим к стадии 2
-                        //server.WriteToLogFileBH("начинаем обработку case 7");
-
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
 
@@ -1946,8 +1945,13 @@ namespace States
             {
                 if (server.isAssaultMode())    //значит ещё бегут к выбранной точке
                     return 4;
-                else
-                    return 3;                  //добежали до точки, всех перебили и остановились
+                else if (server.isBattleMode())
+                        return 5;                   //значит бежим к очередному боссу без Ctrl. пропустить 2-4 цикла
+                    else
+                        return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
+                                                    //но проверяем через 1-2 сек, не пропал ли Ctrl.
+                                                    //Это бы означало, что добежали до места, перебиты все монстры
+                                                    //надо собирать лут, далее включать пробел и менять целевую точку 
             }
 
             //служба Steam
@@ -1999,17 +2003,43 @@ namespace States
                         botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 3:                                                 // собираемся атаковать
+                    case 3:                                                 // собираемся атаковать. до этого просто бежали 
                         botwindow.PressEscThreeTimes();             
 
-                        NextPointNumber++;
+                        //NextPointNumber++;
 
-                        if (NextPointNumber != 0)       //если не только что  вошли. а уже повоевали
-                            server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));   //собираем лут 
+                        //if (NextPointNumber != 0)       //если не только что  вошли. а уже повоевали
+                        //    server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));   //собираем лут 
 
-                        if ((NextPointNumber == 0) || (NextPointNumber == 10))
+                        server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
+                        Pause(500);
+                        iPoint NextPoint = server.RouteNextPointMulti(NextPointNumber);  //получили точку маршрута 
+                        NextPoint.PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
+                        botwindow.PressEscThreeTimes();
+
+                        Pause(2000);
+                        if (!server.isAssaultMode())    //если боевой режим пропал
+                        {
+                            server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                            NextPointNumber++;
+                            server.BattleModeOnDem();
+                        }
+
+                        break;
+                    case 4:                                                 // бежим с Ctrl и ничего не делаем
+                        //server.MoveCursorOfMouse();
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
+                        break;
+                    case 5:
+                        // бафаемся перед перемещением дальше
+                        if ((NextPointNumber == 0) || (NextPointNumber == 4))
                         {
                             server.MoveCursorOfMouse();
+                            //Hero[1] = server.WhatsHero(1);
+                            //Hero[2] = server.WhatsHero(2);
+                            //Hero[3] = server.WhatsHero(3);
                             server.Buff(Hero[1], 1);
                             server.Buff(Hero[2], 2);
                             server.Buff(Hero[3], 3);
@@ -2017,13 +2047,14 @@ namespace States
                             botwindow.PressEscThreeTimes();
                         }
 
-                        if (NextPointNumber <= 21)        //если еще не дошли до конца миссии
+                        if (NextPointNumber <= 8)        //если еще не дошли до конца миссии //изменить число 21
                         {
                             server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
                             Pause(500);
-                            iPoint NextPoint = server.RouteNextPointMulti(NextPointNumber);  //получили следующую точку маршрута
-                            NextPoint.PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
-                            botwindow.PressEscThreeTimes();
+                            iPoint NextPointforRun = server.RouteNextPointMulti(NextPointNumber);  //получили следующую точку маршрута
+                            NextPointforRun.PressMouseL();  //тыкаем левой кнопкой в карту, чтобы бежал вперёд
+                            botwindow.PressEscThreeTimes();     //закрываем карту
+                            botParam.HowManyCyclesToSkip = 4;
                         }
                         else
                         {
@@ -2031,22 +2062,13 @@ namespace States
                             botParam.Stage = 1;
                             botParam.HowManyCyclesToSkip = 1;
                         }
-
-                        break;
-                    case 4:                                                 // бафаемся на бегу
-                        //server.MoveCursorOfMouse();
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
-                        break;
-                    case 5:                    
                         break;
                     case 10:
                         //если появился сундук
-                        server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
-                        Pause(5000);
-                        server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 2;
+                        //server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        //Pause(5000);
+                        //server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        //botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();

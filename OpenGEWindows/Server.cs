@@ -5041,34 +5041,33 @@ namespace OpenGEWindows
         /// <returns>точка iPoint</returns>
         public iPoint RouteNextPointMulti(int counter)
         {
-            iPoint[] routeMulti = {  new Point(372 - 5 + xx, 585 - 5 + yy), 
-                                     new Point(353 - 5 + xx, 572 - 5 + yy), //1+
-                                     new Point(347 - 5 + xx, 550 - 5 + yy),
-                                     new Point(343 - 5 + xx, 524 - 5 + yy), //2+
-                                     new Point(368 - 5 + xx, 495 - 5 + yy),
-                                     new Point(395 - 5 + xx, 489 - 5 + yy), //3+
-                                     new Point(417 - 5 + xx, 508 - 5 + yy),
-                                     new Point(436 - 5 + xx, 516 - 5 + yy),
-                                     new Point(448 - 5 + xx, 519 - 5 + yy), //4+
-                                     new Point(474 - 5 + xx, 511 - 5 + yy),
-                                     //new Point(481 - 5 + xx, 495 - 5 + yy),
-                                     new Point(478 - 5 + xx, 498 - 5 + yy),
-                                     new Point(477 - 5 + xx, 478 - 5 + yy), //5+
-                                     new Point(443 - 5 + xx, 432 - 5 + yy), //6+
-                                     new Point(407 - 5 + xx, 444 - 5 + yy), 
-                                     new Point(384 - 5 + xx, 416 - 5 + yy), //7+
-                                     new Point(359 - 5 + xx, 388 - 5 + yy),
-                                     new Point(355 - 5 + xx, 359 - 5 + yy),
-                                     new Point(391 - 5 + xx, 352 - 5 + yy),
-                                     new Point(398 - 5 + xx, 335 - 5 + yy), //8
-                                     new Point(398 - 5 + xx, 334 - 5 + yy),
-                                     new Point(438 - 5 + xx, 297 - 5 + yy),
+            iPoint[] routeMulti = {  
+                                     //new Point(372 - 5 + xx, 585 - 5 + yy),
+                                     new Point(353 - 5 + xx, 572 - 5 + yy), //1+ да
+                                     //new Point(347 - 5 + xx, 550 - 5 + yy),
+                                     new Point(343 - 5 + xx, 524 - 5 + yy), //2+ да 
+                                     //new Point(368 - 5 + xx, 495 - 5 + yy),
+                                     new Point(395 - 5 + xx, 489 - 5 + yy), //3+ да
+                                     //new Point(417 - 5 + xx, 508 - 5 + yy),
+                                     //new Point(436 - 5 + xx, 516 - 5 + yy),
+                                     //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
+                                     //new Point(474 - 5 + xx, 511 - 5 + yy),
+                                     //new Point(478 - 5 + xx, 498 - 5 + yy),
+                                     new Point(477 - 5 + xx, 478 - 5 + yy), //5+ да
+                                     new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да
+                                     //new Point(407 - 5 + xx, 444 - 5 + yy),
+                                     new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
+                                     //new Point(359 - 5 + xx, 388 - 5 + yy),
+                                     //new Point(355 - 5 + xx, 359 - 5 + yy),
+                                     //new Point(391 - 5 + xx, 352 - 5 + yy),
+                                     new Point(398 - 5 + xx, 335 - 5 + yy), //8+ да
+                                     new Point(398 - 5 + xx, 334 - 5 + yy),  //да
+                                     //new Point(438 - 5 + xx, 297 - 5 + yy),
                                      //new Point(437 - 5 + xx, 285 - 5 + yy), //9
-                                     new Point(437 - 5 + xx, 280 - 5 + yy), 
-                                     new Point(437 - 5 + xx, 225 - 5 + yy), //10
-                                     new Point(439 - 5 + xx, 212 - 5 + yy), //11
+                                     new Point(437 - 5 + xx, 280 - 5 + yy),     //9 да
+                                     new Point(437 - 5 + xx, 225 - 5 + yy), //10 нет
+                                     new Point(439 - 5 + xx, 212 - 5 + yy), //11 нет
                                   };
-
             iPoint result = routeMulti[counter];
 
             return result;
@@ -5081,54 +5080,37 @@ namespace OpenGEWindows
         /// <returns>время в милисекундах</returns>
         public int GetWaitingTimeForDropPicking (int counter)
         {
-            int[] WaitingTime = {   0, 
-                                    5000, 
+            int[] WaitingTime = {   
+                                    //0, 
+                                    //5000, 
                                     5000, //1
-                                    5000, 
+                                    //5000, 
                                     10000, //2
-                                    4000, 
+                                    //4000, 
                                     10000, //3
-                                    5000, 
-                                    5000, 
-                                    5000, //4
-                                    5000, 
-                                    5000, 
+                                    //5000, 
+                                    //5000, 
+                                    //5000, //4
+                                    //5000, 
+                                    //5000, 
                                     5000, //5
                                     5000, //6
-                                    5000, 
+                                    //5000, 
                                     9000, //7
-                                    5000, 
-                                    5000, 
-                                    5000, 
+                                    //5000, 
+                                    //5000, 
+                                    //5000, 
                                     5000, //8
                                     5000, 
-                                    5000, 
-                                    5000, //9
-                                    5000,
+                                    //5000, 
+                                    //5000, //9
+                                    5000,//9
                                     10000, //10
                                     10000,  //11
                                     5000
             };
 
             return WaitingTime[counter];
-        }
-
-        /// <summary>
-        /// подбор дропа в миссии Кастилия
-        /// </summary>
-        public void GetDropCastilia()
-        {
-            HarvestMode();
-            new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
-            Pause(5000);
-
-
-            BattleModeOnDem();
-            Pause(500);
-
-            HarvestMode();
-            new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
-            Pause(5000);
         }
 
         /// <summary>
