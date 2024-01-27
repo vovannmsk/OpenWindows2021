@@ -60,6 +60,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ChangingAccounts = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.bridge = new System.Windows.Forms.Button();
             this.NewYearDelivery = new System.Windows.Forms.Button();
             this.Castilia = new System.Windows.Forms.Button();
             this.DemonicStage2 = new System.Windows.Forms.Button();
@@ -67,7 +68,7 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.bridge = new System.Windows.Forms.Button();
+            this.PureOtiteNew = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -278,7 +279,7 @@
             // undressing
             // 
             this.undressing.BackColor = System.Drawing.Color.Peru;
-            this.undressing.Location = new System.Drawing.Point(17, 136);
+            this.undressing.Location = new System.Drawing.Point(17, 183);
             this.undressing.Name = "undressing";
             this.undressing.Size = new System.Drawing.Size(170, 35);
             this.undressing.TabIndex = 59;
@@ -328,7 +329,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 199);
+            this.tabControl1.Size = new System.Drawing.Size(386, 201);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -349,7 +350,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 173);
+            this.tabPage1.Size = new System.Drawing.Size(378, 175);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
@@ -413,9 +414,21 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 173);
+            this.tabPage2.Size = new System.Drawing.Size(378, 175);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
+            // 
+            // bridge
+            // 
+            this.bridge.BackColor = System.Drawing.Color.Yellow;
+            this.bridge.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bridge.Location = new System.Drawing.Point(202, 129);
+            this.bridge.Name = "bridge";
+            this.bridge.Size = new System.Drawing.Size(170, 35);
+            this.bridge.TabIndex = 69;
+            this.bridge.Text = "Мост";
+            this.bridge.UseVisualStyleBackColor = false;
+            this.bridge.Click += new System.EventHandler(this.bridge_Click);
             // 
             // NewYearDelivery
             // 
@@ -478,6 +491,7 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.LightCyan;
             this.tabPage3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage3.Controls.Add(this.PureOtiteNew);
             this.tabPage3.Controls.Add(this.PureOtiteMulti);
             this.tabPage3.Controls.Add(this.ButtonOpenWindow);
             this.tabPage3.Controls.Add(this.undressing);
@@ -489,7 +503,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 176);
+            this.tabPage3.Size = new System.Drawing.Size(378, 180);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -504,24 +518,23 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // bridge
+            // PureOtiteNew
             // 
-            this.bridge.BackColor = System.Drawing.Color.Yellow;
-            this.bridge.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.bridge.Location = new System.Drawing.Point(202, 129);
-            this.bridge.Name = "bridge";
-            this.bridge.Size = new System.Drawing.Size(170, 35);
-            this.bridge.TabIndex = 69;
-            this.bridge.Text = "Мост";
-            this.bridge.UseVisualStyleBackColor = false;
-            this.bridge.Click += new System.EventHandler(this.bridge_Click);
+            this.PureOtiteNew.BackColor = System.Drawing.Color.Tomato;
+            this.PureOtiteNew.Location = new System.Drawing.Point(17, 136);
+            this.PureOtiteNew.Name = "PureOtiteNew";
+            this.PureOtiteNew.Size = new System.Drawing.Size(170, 34);
+            this.PureOtiteNew.TabIndex = 61;
+            this.PureOtiteNew.Text = "Чистый Отит (новый)";
+            this.PureOtiteNew.UseVisualStyleBackColor = false;
+            this.PureOtiteNew.Click += new System.EventHandler(this.PureOtiteNew_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 199);
+            this.ClientSize = new System.Drawing.Size(386, 201);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -584,6 +597,7 @@
         private System.Windows.Forms.Button Castilia;
         private System.Windows.Forms.Button NewYearDelivery;
         private System.Windows.Forms.Button bridge;
+        private System.Windows.Forms.Button PureOtiteNew;
     }
 }
 

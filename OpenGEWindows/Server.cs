@@ -8,6 +8,7 @@ using System.Drawing;
 using GEBot.Data;
 using System.Diagnostics;
 using System.Runtime.InteropServices.ComTypes;
+using System.Windows.Media;
 
 namespace OpenGEWindows
 {
@@ -1528,22 +1529,12 @@ namespace OpenGEWindows
 
                 WriteToLogFileBH("нажимаем на кнопку connect");
 
-                //pointButtonOk.PressMouseL();  //кликаю в кнопку  "ОК"
-                //Pause(500);
-                //pointButtonOk2.PressMouseL();  //кликаю в кнопку  "ОК" 3 min
-                //Pause(500);
-                //server.serverSelection();          //выбираем из списка свой сервер
                 if (PressConnectButton())
                 {
                     Pause(1500);
                 }
                 else
                     return false;
-
-                //pointButtonOk.PressMouseL();  //кликаю в кнопку  "ОК"
-                //Pause(500);
-                //pointButtonOk2.PressMouseL();  //кликаю в кнопку  "ОК" 3 min
-                //Pause(500);
 
                 //если есть ошибки в логине-пароле, то возникает сообщение с кнопкой "OK". 
 
@@ -1561,7 +1552,7 @@ namespace OpenGEWindows
 
                     pointButtonOk2.PressMouseL();  //кликаю в кнопку  "ОК" 3 min
 
-                    EnterLoginAndPasword();
+                    //EnterLoginAndPasword();
                 }
                 else
                 {
@@ -1571,15 +1562,11 @@ namespace OpenGEWindows
             }
 
             bool result = true;
-            Pause(5000);
+            Pause(500);
             currentColor = point5050.GetPixelColor();
-            if (currentColor == Test_Color)      //проверка входа в казарму. 
-            {
-                //тыкнуть в Quit 
-                //PressMouseL(600, 530);          //если не вошли в казарму, то значит зависли и жмем кнопку Quit
-                //PressMouseL(600, 530);
+            if (currentColor == Test_Color)      //проверка входа в казарму, т.е. поменялся пиксель на экране логаута. 
                 result = false;
-            }
+
             return result;
 
             #endregion
@@ -5444,6 +5431,20 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// опускаем камеру ниже к земле
+        /// </summary>
+        /// <param name="n"> количество оборотов мышки </param>
+        public void MinHeight(int n)
+        {
+            new Point(555 - 5 + xx, 430 - 5 + yy).Move();
+            for (int i = 1; i <= n; i++)
+            {
+                new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelDown();
+                Pause(500); 
+            }
+        }
+
+        /// <summary>
         /// тыкаем в аппарат на ферме
         /// </summary>
         public void PressApparate()
@@ -6915,7 +6916,7 @@ namespace OpenGEWindows
         public bool Buff(int typeOfHero, int i)
         {
             bool result = false;
-            if (!isTreasureChest() && !isWhiteLabel())      //бафаемся, только в том случае, если не появился сундук
+            if (!isTreasureChest())      //бафаемся, только в том случае, если не появился сундук
                                                             //чтобы лишние записи не появились в чате
             {
                 MoveCursorOfMouse();
@@ -7032,7 +7033,7 @@ namespace OpenGEWindows
 
 
         /// <summary>
-        /// скилуем i-м героем (пока скилуем только мухами)
+        /// скилуем i-м героем
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
@@ -7317,7 +7318,8 @@ namespace OpenGEWindows
         /// <param name="i"></param>
         private void BuffLorch(int i)
         {
-            if (!FindBulletApilicon(i)) BuffY(i); 
+            if (!FindBulletApilicon(i)) BuffY(i);
+            Pause(1000);
             if (!FindShareFlint(i)) BuffW(i);
         }
 
@@ -7498,7 +7500,6 @@ namespace OpenGEWindows
             //Pause(500);
         }
 
-
         /// <summary>
         /// открываем закладку в уже открытом инвентаре
         /// </summary>
@@ -7510,8 +7511,6 @@ namespace OpenGEWindows
             new Point(440 - 5 + xx, 440 - 5 + yy).Move();  //убираем мышь
             Pause(500);
         }
-
-
 
         /// <summary>
         /// идём к Рудольфу по карте (карта уже открыта)
@@ -7586,7 +7585,6 @@ namespace OpenGEWindows
             }
         }
 
-
         /// <summary>
         /// проверяем, открыта ли карта Ребольдо (буква H  в надписи Repeption Hall)
         /// </summary>
@@ -7604,25 +7602,6 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToRudolph2()
         {
-            //botwindow.PressEscThreeTimes();
-            //if (isReboldo())
-            //{
-
-            //    botwindow.FirstHero();
-            //    while (!isOpenMapReboldo())
-            //        TopMenu(12, 2, true);
-
-            //    new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
-            //    Pause(12000);
-
-            //    botwindow.PressEscThreeTimes();                         //убираем карту
-            //    new Point(290 - 5 + xx, 513 + yy).PressMouseL();    // тыкаем в Рудольфа
-            //    Pause(1000);
-            //    if (!dialog.isDialog())                                 // если не попали в Рудольфа
-            //        new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
-            //}
-
-
             new Point(535 - 5 + xx, 435 - 5 + yy).PressMouseLL();   //тыкаем, куда бежать по карте
             Pause(1000);
             botwindow.PressEscThreeTimes();                         //убираем карту
@@ -7633,7 +7612,6 @@ namespace OpenGEWindows
             if (!dialog.isDialog())                                 // если не попали в Рудольфа
                 new Point(434 - 5 + xx, 540 - 5 + yy).PressMouseL();    // тыкаем ещё раз немного в другое место
         }
-
 
         /// <summary>
         /// идём к первому клиенту по карте
@@ -7811,5 +7789,238 @@ namespace OpenGEWindows
 
         #endregion
 
+
+        #region ================ Bridge =========================
+        /// <summary>
+        /// открываем карту Ребольдо с гарантией
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public void OpenMapBridge()
+        {
+            //botwindow.PressEscThreeTimes();
+
+            //надёжно открываем карту Alt+Z
+            while (!isOpenMapBridge())
+                    TopMenu(12, 2, true);
+        }
+
+        /// <summary>
+        /// проверяем, открыта ли карта Мост (буква M в надписи Zone Map)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool isOpenMapBridge()
+        {
+            return new PointColor(253 - 5 + xx, 125 - 5 + yy, 16382457, 0).isColor() &&
+                    new PointColor(253 - 5 + xx, 126 - 5 + yy, 16382457, 0).isColor();
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста тыкаем в Терезию (шестая строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoTeresia()
+        {
+            new Point(740 - 5 + xx, 267 - 5 + yy).DoubleClickL();   //тыкаем в Терезию (в списке справа от карты)
+            Pause(500);
+            new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(2000);
+            new Point(522 - 5 + xx, 231 - 5 + yy).PressMouseL();    //тыкаем в голову Терезии, чтобы войти в диалог
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста тыкаем в солдата (четвёртая строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoIndividualRaid()
+        {
+            new Point(740 - 5 + xx, 237 - 5 + yy).DoubleClickL();   //тыкаем в солдата Individual Raid Mission (в списке справа от карты)
+            Pause(500);
+            new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(2000);
+            new Point(525 - 5 + xx, 185 - 5 + yy).PressMouseL();    //тыкаем в голову Терезии, чтобы войти в диалог
+        }
+
+        /// <summary>
+        /// в диалоге с солдатом на мосту выбираем миссию для выполнения
+        /// </summary>
+        /// <param name="rank">ранг миссии</param>
+        /// <param name="typeOfMission"> 1 - миссия с плюсом. 3 - обычная </param>
+        public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
+        {
+            dialog.PressStringDialog(8 - rank);             //выбираем ранг
+            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
+            dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
+            dialog.PressStringDialog(1);                    // в миссию (join) 
+
+        }
+
+        /// <summary>
+        /// на мосту ли мы?
+        /// </summary>
+        /// <returns></returns>
+        public bool isBridge()
+        {
+            return     new PointColor(940 - 5 + xx, 252 - 5 + yy, 16711422, 0).isColor() 
+                    && new PointColor(940 - 5 + xx, 259 - 5 + yy, 16711422, 0).isColor()
+                    && new PointColor(983 - 5 + xx, 252 - 5 + yy, 16711422, 0).isColor()
+                    && new PointColor(983 - 5 + xx, 259 - 5 + yy, 16711422, 0).isColor();
+        }
+
+
+        /// <summary>
+        /// по карте миссии тыкаем в точку, где враг
+        /// </summary>
+        /// <param name="weekDay"> день недели по сингапурскому времени </param>
+        public void AttackTheEnemy(int weekDay)
+        {
+            iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, животные
+                                        new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, паук
+                                        //new Point(390 - 5 + xx, 550 - 5 + yy),      //1+ вторник, human
+                                        new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
+                                        //new Point(636 - 5 + xx, 495 - 5 + yy),      // 1+ среда, demon
+                                        //new Point(424 - 5 + xx, 240 - 5 + yy),      // 2+ среда, demon
+                                        new Point(553 - 5 + xx, 245 - 5 + yy),      // 3 среда, demon
+                                        new Point(422 - 5 + xx, 322 - 5 + yy),      // 1 четверг
+                                        //new Point(567 - 5 + xx, 479 - 5 + yy),    // 1+ пятница
+                                        //new Point(459 - 5 + xx, 408 - 5 + yy),    // 2 пятница не надёжно
+                                        //new Point(461 - 5 + xx, 501 - 5 + yy),      // 2+ пятница
+                                        new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
+                                        new Point(474 - 5 + xx, 478 - 5 + yy),
+                                        new Point(510 - 5 + xx, 479 - 5 + yy),
+            };
+            //открываем карту Alt+Z
+            TopMenu(12, 2, true);
+            Pause(500);
+
+            PixelOfAttack[weekDay - 1].PressMouseRR();
+
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+
+        /// <summary>
+        /// идём к сундуку и открываем его
+        /// </summary>
+        /// <param name="weekDay"> день недели по сингапурскому времени </param>
+        public void GoToChest(int weekDay)
+        {
+            iPoint[] PixelOfChest = {   //new Point(415 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, животные
+                                        new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, животные
+                                        //new Point(423 - 5 + xx, 611 - 5 + yy),      //1+ вторник, human
+                                        new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
+                                        //new Point(636 - 5 + xx, 495 - 5 + yy),      // 1+ среда, demon
+                                        //new Point(424 - 5 + xx, 240 - 5 + yy),      // 2+ среда, demon
+                                        new Point(553 - 5 + xx, 245 - 5 + yy),      // 3 среда, demon
+                                        new Point(422 - 5 + xx, 322 - 5 + yy),      // 1 четверг
+                                        //new Point(567 - 5 + xx, 479 - 5 + yy),    // 1+ пятница
+                                        //new Point(457 - 5 + xx, 405 - 5 + yy),    // 2 пятница                        
+                                        //new Point(461 - 5 + xx, 501 - 5 + yy),    // 2+ пятница
+                                        new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
+                                        new Point(474 - 5 + xx, 478 - 5 + yy),
+                                        new Point(510 - 5 + xx, 479 - 5 + yy),
+            };
+            iPoint[] PressChest = { new Point(396 - 5 + xx, 482 - 5 + yy),
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1 четверг
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1+, 2, 2+,3 пятница
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),
+                                    new Point(396 - 5 + xx, 482 - 5 + yy),
+            };
+
+
+            //открываем карту Alt+Z
+            TopMenu(12, 2, true);
+            Pause(500);
+
+            PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(2500);
+            //MinHeight(10);
+            PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
+            Pause(10000);                               //ждём рулетку
+
+        }
+
+
+        /// <summary>
+        /// Закончилась Activity?
+        /// </summary>
+        /// <returns></returns>
+        public bool isActivityOut()
+        {
+            return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4539892, 0).isColor()
+                 && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4539892, 0).isColor();
+        }
+
+
+        /// <summary>
+        /// комплекс действий при начале атаки в миссии на мосту
+        /// </summary>
+        /// <param name="weekDay">день недели по сингапуру</param>
+        public void BeginAttack(int weekDay)
+        {
+            //бафаемся
+            MoveCursorOfMouse();
+            int Hero1 = WhatsHero(1);
+            int Hero2 = WhatsHero(2);
+            int Hero3 = WhatsHero(3);
+            Buff(Hero1, 1);
+            Buff(Hero2, 2);
+            Buff(Hero3, 3);
+            botwindow.ActiveAllBuffBH();
+            botwindow.PressEscThreeTimes();
+
+            //идём в атаку с Ctrl
+            AttackTheEnemy(weekDay);
+            Pause(1000);
+
+            //активируем пета
+            ActivePetDem();
+        }
+
+        /// <summary>
+        /// активируем пета через пиктограмму 
+        /// считается, что изначально пет не активирован
+        /// </summary>
+        public void ActivePetDem()
+        {
+            uint colorBegin = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
+            uint colorCurrent = colorBegin;
+            if ((colorCurrent != 11381225) && (colorCurrent != 0))          //если текущий цвет не розовый 
+                                                                            // добавить цвет оленя вместо нуля
+            {
+                while (colorBegin == colorCurrent)  //сверяем текущий цвет пета и изначальный
+                                                    //если текущий цвет и изначальный различны, то значит мы активировали пета
+                {
+                    new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
+                    Pause(500);
+                    new Point(600 - 5 + xx, 385 - 5 + yy).Move();   //убираем курсор в сторонку
+                    Pause(500);
+                    colorCurrent = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();
+                }
+            }
+        }
+
+        /// <summary>
+        /// скиллуем всеми героями лучшим ударом
+        /// </summary>
+        public void SkillAll()
+        {
+            MoveCursorOfMouse();
+            int Hero1 = WhatsHero(1);
+            int Hero2 = WhatsHero(2);
+            int Hero3 = WhatsHero(3);
+            Skill(Hero1, 1, false);
+            Skill(Hero2, 2, false);
+            Skill(Hero3, 3, false);
+            MoveCursorOfMouse();
+        }
+
+        #endregion
     }
 }
