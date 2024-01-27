@@ -2054,7 +2054,7 @@ namespace States
                             iPoint NextPointforRun = server.RouteNextPointMulti(NextPointNumber);  //получили следующую точку маршрута
                             NextPointforRun.PressMouseL();  //тыкаем левой кнопкой в карту, чтобы бежал вперёд
                             botwindow.PressEscThreeTimes();     //закрываем карту
-                            botParam.HowManyCyclesToSkip = 4;
+                            botParam.HowManyCyclesToSkip = 6;
                         }
                         else
                         {

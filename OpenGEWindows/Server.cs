@@ -7301,7 +7301,7 @@ namespace OpenGEWindows
         private void BuffLorch(int i)
         {
             if (!FindBulletApilicon(i)) BuffY(i);
-            Pause(1000);
+            Pause(2000);
             if (!FindShareFlint(i)) BuffW(i);
         }
 
