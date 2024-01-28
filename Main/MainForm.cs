@@ -1387,24 +1387,18 @@ namespace Main
                             case 1:
                                 check[j].problemResolutionPureOtiteNewStage1();
                                 break;
-                            //case 2:
-                            //    check[j].problemResolutionPureOtiteNewStage2();
-                            //    break;
-                            //case 3:
-                            //    check[j].problemResolutionPureOtiteNewStage3();
-                            //    break;
-                            //case 4:
-                            //    check[j].problemResolutionPureOtiteNewStage4();
-                            //    break;
-                            //case 5:
-                            //    check[j].problemResolutionPureOtiteNewStage5();
-                            //    break;
-                            //case 6:
-                            //    check[j].problemResolutionPureOtiteNewStage6();
-                            //    break;
-                            //case 7:
-                            //    check[j].problemResolutionPureOtiteNewStage7();
-                            //    break;
+                            case 2:
+                                check[j].problemResolutionPureOtiteNewStage2();
+                                break;
+                            case 3:
+                                check[j].problemResolutionPureOtiteNewStage3();
+                                break;
+                            case 4:
+                                check[j].problemResolutionPureOtiteNewStage4();
+                                break;
+                            case 5:
+                                check[j].problemResolutionPureOtiteNewStage5();
+                                break;
                         }
                     }
                     else

@@ -138,10 +138,6 @@
         /// </summary>
         public override void GetTask()
         {
-            //dialog.PressStringDialog(3);
-            //dialog.PressOkButton(1);
-            //dialog.PressStringDialog(2);
-            //dialog.PressOkButton(2);
             dialog.PressStringDialog(3);
             botwindow.Pause(1000);
             dialog.PressStringDialog(2);

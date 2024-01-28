@@ -241,6 +241,23 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// подходим к Мамону, используя карту
+        /// </summary>
+        public void GoToMamonOnMap()
+        {
+            server.TopMenu(12, 2, true);      
+            Pause(1000);
+
+            new Point(720 - 5 + xx, 207 - 5 + yy).DoubleClickL();   //тыкаем в Мамона (в списке справа от карты)
+            Pause(500);
+            new Point(840 - 5 + xx, 646 - 5 + yy).PressMouseL();   //тыкаем в кнопку Move Now
+            Pause(500);
+
+            botwindow.PressEscThreeTimes();
+        }
+
+
+        /// <summary>
         /// тыкаем на старого мужика
         /// </summary>
         public void PressOldMan()

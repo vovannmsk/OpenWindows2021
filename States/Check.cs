@@ -1994,22 +1994,15 @@ namespace States
 
                 switch (numberOfProblem)
                 {
-                    case 1:                                                 // в логауте (при переходе в барак можем попасть в логаут)
-                        driver.StateFromLogoutToBarackBH();                 // Logout-->Barack   
-                        botParam.HowManyCyclesToSkip = 1;
-                        break;
-                    case 2:                                                 // в бараках
-                        server.RemoveSandboxieBH();                         //закрываем песочницу
+                    case 1:
+                    case 2:
+                    case 16:
+                    case 17:
+                    case 20:
                         botParam.Stage = 1;
-                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 3:                                                 // собираемся атаковать. до этого просто бежали 
                         botwindow.PressEscThreeTimes();             
-
-                        //NextPointNumber++;
-
-                        //if (NextPointNumber != 0)       //если не только что  вошли. а уже повоевали
-                        //    server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));   //собираем лут 
 
                         server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
                         Pause(500);
@@ -2024,7 +2017,6 @@ namespace States
                             NextPointNumber++;
                             server.BattleModeOnDem();
                         }
-
                         break;
                     case 4:                                                 // бежим с Ctrl и ничего не делаем
                         //server.MoveCursorOfMouse();
@@ -2034,7 +2026,7 @@ namespace States
                         break;
                     case 5:
                         // бафаемся перед перемещением дальше
-                        if ((NextPointNumber == 0) || (NextPointNumber == 4))
+                        if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
                         {
                             server.MoveCursorOfMouse();
                             //Hero[1] = server.WhatsHero(1);
@@ -2076,16 +2068,6 @@ namespace States
                     case 12:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
-                        break;
-                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
-                        //botwindow.PressEsc();                       // нажимаем Esc
-                        server.PressYesBarack();
-                        break;
-                    case 17:                                        // в бараках на стадии выбора группы
-                        botwindow.PressEsc();                       // нажимаем Esc
-                        break;
-                    case 20:
-                        server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
                         break;
                     case 29:                                        //если все убиты
                         server.GotoBarack();                        // идем в барак, чтобы потом перейти к стадии 3 (открытие сундука и проч.)
@@ -4761,7 +4743,7 @@ namespace States
         #region  =================================== PureOtiteNew Stage 1 ==============================================
 
         /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// проверяем, если ли проблемы при работе в миссии Pure Otite и возвращаем номер проблемы
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemPureOtiteNewStage1()
@@ -4819,20 +4801,34 @@ namespace States
             if (server.isBadFightingStance()) return 19;
 
             //ворота
-            if (dialog.isDialog())
+            if (dialog.isDialog())      //у мамона
             {
-                return 8;                       //если диалог, связанный с получением задания
+                return 8;                       
             }
 
             //город Ребольдо
             if (server.isTown())
             {
-                return 6;
+                if (server.isReboldo()) 
+                    return 6;   //в ребольдо
+                else
+                {       //В ЛосТолдосе
+                    if (otit.isNearOldMan())
+                    {
+                        if (otit.isTaskDone()) return 5;    //в Лос Толдосе и задание выполнено
+                        if (otit.isGetTask()) return 4;     //в Лос Толдосе, задание уже получено, но не выполнено
+                        else return 3;                      //в Лос Толдосе, задание не получено и не выполнено
+                    }
+                    else return 10;         //в Лос Толдосе, но не около ОлдМэна
+                }
+             
             }
 
             if (server.isWork())
-                if (server.isBridge())
+                if (server.isDesertedQuay())
                     return 7;
+                else
+                    return 9;   //в миссии
 
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
@@ -4846,7 +4842,7 @@ namespace States
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ
+        /// разрешение выявленных проблем в миссии Pure Otite
         /// </summary>
         public void problemResolutionPureOtiteNewStage1()
         {
@@ -4860,25 +4856,6 @@ namespace States
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemPureOtiteNewStage1();
-
-                //if (SteamLoaded) dateSteam = DateTime.Now;
-                //dateNow = DateTime.Now;
-                //if ((dateNow - dateSteam).TotalMinutes > 5)
-                //    numberOfProblem = 31;
-
-                //если зависли в каком-либо состоянии, то особые действия
-                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
-                {
-                    switch (numberOfProblem)
-                    {
-                        case 1:     //зависли в логауте
-                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
-                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
-                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
-                            break;
-                    }
-                }
-                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
                 Random rand = new Random();
 
@@ -4894,24 +4871,35 @@ namespace States
                         driver.StateFromBarackToTownBH();           // barack --> town              //сделано
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
-
-                    case 6:                                         // 
-                        botwindow.PressEscThreeTimes();
-                        botwindow.Pause(500);
-
-                        //если есть ивент, то бежим к квестодателю за заданием
-
-                        //если нет ивента, то на стадию 4 (там летим на мост)
-
-                        botParam.Stage = 4;
-
+                    case 3: //в Лос Толдосе, задание не получено и не выполнено
+                        botParam.Stage = 2;
                         break;
-                    case 7:     //если уже на мосту
+                    case 4: //в Лос Толдосе, задание уже получено, но не выполнено
+                        botParam.Stage = 3;
+                        break;
+                    case 5: //в Лос Толдосе и задание выполнено
                         botParam.Stage = 5;
                         break;
-                    case 8:                                         //квестодатель (dialog --> getting a job)
-
-
+                    case 6:        //в ребольдо
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        server.Teleport(1, true);                   // телепорт к Мамону        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы загрузилась местность
+                        break;
+                    case 7:     //у Мамона
+                        driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
+                        break;
+                    case 8:    //диалог у Мамона
+                        dialog.PressStringDialog(1);
+                        break;
+                    case 9:                                         //в миссии
+                        botParam.Stage = 4;
+                        break;
+                    case 10:                                        //в Лос Толдосе, но не около старика. Идём к старику
+                        botwindow.PressEscThreeTimes();
+                        botwindow.FirstHero();
+                        Pause(500);
+                        otit.GoToOldManMulti();
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
@@ -5000,6 +4988,682 @@ namespace States
 
         #endregion
 
+        #region  =================================== PureOtiteNew Stage 2 (Лос. Толдос. Задание не получено) ==========================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в миссии Pure Otite и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemPureOtiteNewStage2()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //ворота
+            if (dialog.isDialog())      //диалог со стариком
+            {
+                return 8;
+            }
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                if (server.isReboldo())
+                    return 6;   //в ребольдо
+                else
+                {                                       //В ЛосТолдосе    
+                    if (otit.isNearOldMan())
+                        return 3;                       //в Лос Толдосе, около старика. Задание не получено
+                    else 
+                        return 4;                       //в Лос Толдосе, но не около ОлдМэна
+                }
+
+            }
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в миссии Pure Otite
+        /// </summary>
+        public void problemResolutionPureOtiteNewStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemPureOtiteNewStage2();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                    case 2:                                         //если стоят в бараке
+                    case 4:                                         //в Лос Толдосе, но не около ОлдМэна
+                    case 6:                                         //в ребольдо
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    case 17:                                        // в бараках на стадии выбора группы
+                    case 20:                                        //если стоят на странице создания нового персонажа,
+                    case 22:                                        //если нет окна ГЭ в текущей песочнице
+                    case 23:                                        //есть окно стим, есть окно с игрой
+                    case 24:                                        //если нет стима, значит удалили песочницу
+                        botParam.Stage = 1;
+                        break;
+
+                    case 3:                                         //в Лос Толдосе, около старика. задание не получено
+                        otit.PressOldMan();                         // OldMan --> OldMan (dialog)
+                        break;
+                    case 8:                                         //диалог со стариком. получение задания
+                        otit.GetTask();
+                        botParam.Stage = 3;
+                        break;
+                    case 11:                                        // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 19:                                        // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+
+        #region  ====================== PureOtiteNew Stage 3 (Лос. Толдос. Задание получено. Идём в миссию) ======================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в миссии Pure Otite и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemPureOtiteNewStage3()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //ворота
+            if (dialog.isDialog())      //диалог со стариком. направляемся в миссию
+            {
+                return 8;
+            }
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                if (server.isReboldo())
+                    return 6;   //в ребольдо
+                else
+                {                                       //В ЛосТолдосе    
+                    if (otit.isNearOldMan())
+                        return 3;                       //в Лос Толдосе, около старика. Задание получено
+                    else
+                        return 4;                       //в Лос Толдосе, но не около ОлдМэна
+                }
+
+            }
+
+            // в миссии. только что вошли
+            if (server.isWork())
+                return 7;
+
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в миссии Pure Otite
+        /// </summary>
+        public void problemResolutionPureOtiteNewStage3()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemPureOtiteNewStage3();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                    case 2:                                         //если стоят в бараке
+                    case 4:                                         //в Лос Толдосе, но не около ОлдМэна
+                    case 6:                                         //в ребольдо
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    case 17:                                        // в бараках на стадии выбора группы
+                    case 20:                                        //если стоят на странице создания нового персонажа,
+                    case 22:                                        //если нет окна ГЭ в текущей песочнице
+                    case 23:                                        //есть окно стим, есть окно с игрой
+                    case 24:                                        //если нет стима, значит удалили песочницу
+                        botParam.Stage = 1;
+                        break;
+
+                    case 3:                                         //в Лос Толдосе, около старика. задание получено
+                        otit.PressOldMan();                         // OldMan --> OldMan (dialog)
+                        break;
+                    case 7:                                         // в миссии. только что вошли
+                        driver.FromMissionToFight();                //Mission-- > Mission (Fight begin)
+                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.Stage = 4;
+                        break;
+                    case 8:                                         //диалог со стариком. направляемся в миссию
+                        otit.EnterToTierraDeLosMuertus();
+                        break;
+                    case 11:                                        // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 19:                                        // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+
+        #region  ===================== PureOtiteNew Stage 4 (Лос. Толдос. Выполнение миссии) ===================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в миссии Pure Otite и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemPureOtiteNewStage4()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            // в миссии.
+            if (server.isWork())
+                if (!otit.isOpenMap())      //карта не открыта
+                    if (otit.isTaskDone())
+                        return 3;           //если карта закрыта и задание уже выполнено
+                    else
+                        return 4;           //если карта закрыта, но задание еще не выполнено
+                else                        // если карта уже открыта, то смотрим далее
+                {
+                    if (!otit.isTaskDone())
+                        if (!server.isAssaultMode())
+                            return 5;       //бежим к следующей точке маршрута с атакой
+                        else
+                            return 0;       //ничего не делаем, так как уже бежим и атакуем
+                    else
+                        return 6;           //карта открыта, но задание уже выполнено
+                }
+
+
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в миссии Pure Otite
+        /// </summary>
+        public void problemResolutionPureOtiteNewStage4()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemPureOtiteNewStage4();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                    case 2:                                         //если стоят в бараке
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    case 17:                                        // в бараках на стадии выбора группы
+                    case 20:                                        //если стоят на странице создания нового персонажа,
+                    case 22:                                        //если нет окна ГЭ в текущей песочнице
+                    case 23:                                        //есть окно стим, есть окно с игрой
+                    case 24:                                        //если нет стима, значит удалили песочницу
+                        botParam.Stage = 1;
+                        break;
+
+                    case 3:                                         //если карта закрыта и задание уже выполнено                            
+                        driver.TeleportToMamut();
+                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.Stage = 1;
+                        break;
+                    case 4:                                         //если карта закрыта, но задание еще не выполнено
+                        botwindow.PressEscThreeTimes();             //открываем карту в миссии
+                        server.TopMenu(12, 2, true);
+                        break;
+                    case 5:                                         //если карта уже открыта, бежим к следующей точке маршрута с атакой
+                        otit.GotoNextPointRouteMulti();             //Mission(Fight)-- > Fight To Next Point
+                        break;
+                    case 6:                                         //карта открыта, но задание уже выполнено
+                        driver.FightIsFinished();                   //бежим к следующей точке маршрута без атаки
+                        break;
+                    case 11:                                        // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 19:                                        // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
+
+
+        #region  ==================== PureOtiteNew Stage 5 (Лос. Толдос. Задание выполнено. Получаем награду) ======================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в миссии Pure Otite и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemPureOtiteNewStage5()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //ворота
+            if (dialog.isDialog())      //диалог со стариком. получаем награду
+            {
+                return 8;
+            }
+
+            //город Ребольдо
+            if (server.isTown())
+            {
+                if (server.isReboldo())
+                    return 6;   //в ребольдо
+                else
+                {                                       //В ЛосТолдосе    
+                    if (otit.isNearOldMan())
+                        return 3;                       //в Лос Толдосе, около старика. задание выполнено
+                    else
+                        return 4;                       //в Лос Толдосе, но не около ОлдМэна
+                }
+
+            }
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в миссии Pure Otite
+        /// </summary>
+        public void problemResolutionPureOtiteNewStage5()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemPureOtiteNewStage5();
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:                                         //в логауте
+                    case 2:                                         //если стоят в бараке
+                    case 4:                                         //в Лос Толдосе, но не около ОлдМэна
+                    case 6:                                         //в ребольдо
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    case 17:                                        // в бараках на стадии выбора группы
+                    case 20:                                        //если стоят на странице создания нового персонажа,
+                    case 22:                                        //если нет окна ГЭ в текущей песочнице
+                    case 23:                                        //есть окно стим, есть окно с игрой
+                    case 24:                                        //если нет стима, значит удалили песочницу
+                        botParam.Stage = 1;
+                        break;
+
+                    case 3:                                         //в Лос Толдосе, около старика. задание выполнено
+                        otit.PressOldMan();                         // OldMan --> OldMan (dialog)
+                        break;
+                    case 8:                                         //диалог со стариком. получаем награду
+                        otit.TakePureOtite();                       //Oldman(Dialog) --> Get Reward
+                        botParam.Stage = 1;
+                        break;
+                    case 11:                                        // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 19:                                        // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(1000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
 
 
 
@@ -6075,7 +6739,7 @@ namespace States
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
-            MessageBox.Show("Мост? " + server.isBridge());
+            //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
             //MessageBox.Show("ошибка 820? " + server.isError820());
@@ -6099,7 +6763,7 @@ namespace States
             //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
             //server.OpenDetailInfo();
             //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo(1));
-            MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());               //проверено
+            //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());               //проверено
             //MessageBox.Show("Undead " + server.isUndead());
             //MessageBox.Show("выбор команды " + server.isBarackTeamSelection());    //22-11
             //MessageBox.Show("в бараках? " + server.isBarack());  //22-11
@@ -6216,9 +6880,9 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            PointColor point1 = new PointColor(704 - 5 + xx, 565 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(704 - 5 + xx, 566 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(704 - 5 + xx, 567 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(927 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(927 - 5 + xx, 259 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(964 - 5 + xx, 259 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

@@ -7742,8 +7742,10 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isReboldo()
         {
-            return new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor() &&
-                   new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();        //слово Rebo под миникартой (буква R)
+            return new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
+                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()        
+                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
 
         }
 
@@ -7770,7 +7772,6 @@ namespace OpenGEWindows
         }
 
         #endregion
-
 
         #region ================ Bridge =========================
         /// <summary>
@@ -8004,5 +8005,22 @@ namespace OpenGEWindows
         }
 
         #endregion
+
+        #region Pure Otite New
+
+        /// <summary>
+        /// на мосту ли мы?
+        /// </summary>
+        /// <returns></returns>
+        public bool isDesertedQuay()
+        {
+            return new PointColor(924 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(924 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(975 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(975 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();
+        }
+
+        #endregion
+
     }
 }
