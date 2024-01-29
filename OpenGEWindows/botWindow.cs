@@ -765,6 +765,25 @@ namespace OpenGEWindows
         #region inTown
 
         /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Насление древних" /даётся на мосту/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindAncientBlessing(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (
+                        new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 15577230, 0).isColor() &&
+                        new PointColor(86 - 5 + xx + j * 14 + (i - 1) * 255, 593 - 5 + yy, 16028031, 0).isColor()          
+                   ) result = true;
+            if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
+
+            return result;
+        }
+
+
+        /// <summary>
         /// отодвинуть мышку в сторону, чтобы она не загораживала проверяемые точки
         /// </summary>
         public void ToMoveMouse()
@@ -823,9 +842,10 @@ namespace OpenGEWindows
             if (!FindSteroid(1)) PressBoxInLeftPanel(5);   //проверяем бафф на первом герое
             if (!FindPrincipal(1)) PressBoxInLeftPanel(6);   //проверяем бафф на первом герое
             PressBoxInLeftPanel(7);
+            PressBoxInLeftPanel(8);
 
         }
-        
+
 
 
 

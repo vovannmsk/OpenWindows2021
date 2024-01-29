@@ -1029,7 +1029,6 @@ namespace Main
 
         #endregion
 
-
         #region  ======================== Demonic Multi =============================================
 
         /// <summary>
@@ -1092,6 +1091,9 @@ namespace Main
                             case 3:
                                 check[j].problemResolutionDemMultiStage3();
                                 break;
+                            case 5:
+                                check[j].problemResolutionDemMultiStage5();
+                                break;
                         }
                     }
                     else
@@ -1110,8 +1112,6 @@ namespace Main
         }
 
         #endregion
-
-
 
         #region  ======================== Castilia Multi =============================================
 
@@ -1166,7 +1166,7 @@ namespace Main
                                 check[j].problemResolutionCastiliaMultiStage2();
                                 break;
                             case 3:
-                                //check[j].problemResolutionCastiliaMultiStage3();
+                                check[j].problemResolutionCastiliaMultiStage3();
                                 break;
                         }
                     }
@@ -1341,9 +1341,9 @@ namespace Main
             }
         }
 
-
-
         #endregion
+
+        #region ============================== Pure Otite New =============================
 
         private void PureOtiteNew_Click(object sender, EventArgs e)
         {
@@ -1412,7 +1412,7 @@ namespace Main
             }
         }
 
-
+        #endregion
 
     }// END class MainForm 
 }// END namespace OpenGEWindows

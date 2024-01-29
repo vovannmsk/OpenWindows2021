@@ -4995,7 +4995,7 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region Кастилия (миссия)
+        #region   ========== Кастилия (миссия) ==================
 
         /// <summary>
         /// проверяем, находимся ли в Кастилии   
@@ -5024,7 +5024,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToMissionCastilia()
         {
-            MaxHeight(8);
+            MaxHeight(14);
             botwindow.FirstHero();
             new Point(585 - 5 + xx, 50 - 5 + yy).PressMouseL();
             Pause(1000);
@@ -5053,7 +5053,7 @@ namespace OpenGEWindows
                                      //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
                                      //new Point(474 - 5 + xx, 511 - 5 + yy),
                                      //new Point(478 - 5 + xx, 498 - 5 + yy),
-                                     new Point(477 - 5 + xx, 478 - 5 + yy), //5+ да
+                                     new Point(473 - 5 + xx, 480 - 5 + yy), //5+ да 475, 479
                                      new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да
                                      //new Point(407 - 5 + xx, 444 - 5 + yy),
                                      new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
@@ -6378,6 +6378,23 @@ namespace OpenGEWindows
 
         #region  Demonic
 
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Насление древних" /даётся на мосту/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool isAncientBlessing(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 0; j < 15; j++)
+                if (
+                        new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 15577230, 0).isColor() &&
+                        new PointColor(86 - 5 + xx + j * 14 + (i - 1) * 255, 593 - 5 + yy, 16028031, 0).isColor()
+                   ) result = true;
+            if (isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
+
+            return result;
+        }
 
         /// <summary>
         /// тыкнуть в ворота Demonic
@@ -6662,6 +6679,32 @@ namespace OpenGEWindows
         //        new Point(525 - Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
         //}
 
+
+        /// <summary>
+        /// атакуем с CTRL максимально вправо (Demonic.FesoMap)
+        /// </summary>
+        public void AttackCtrlToRight()
+        {
+            for (int i=1; i<=5; i++)
+            {
+                AssaultMode();
+                new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
+            }
+        }
+
+        /// <summary>
+        /// атакуем с CTRL максимально влево (Demonic.FesoMap)
+        /// </summary>
+        public void AttackCtrlToLeft()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                AssaultMode();
+                new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
+            }
+        }
+
+
         /// <summary>
         /// пытаемся тыкнуть с CTRL в заданные координаты. Если не удалось, то тыкаем чуть ниже.  И так делаем 5 раз
         /// </summary>
@@ -6674,10 +6717,18 @@ namespace OpenGEWindows
             {
                 AssaultMode();
                 new Point(x, y).PressMouseL();
-                y += 10;
+                //старый проверенный вариант
+                //y += 10;
+                
+                //новый вариант=====
+                if (x < 525) x -= 20;
+                    else x += 20;
+                Pause(500);
+                //===================
                 count++;
             }
-            while (!isAssaultMode() && (count<5)); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL, либо тыкали уже больше пяти раз
+            while (!isAssaultMode() && (count <= 5)); 
+            //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL, либо тыкали уже больше пяти раз
         }
 
         /// <summary>
@@ -6686,12 +6737,13 @@ namespace OpenGEWindows
         /// <param name="Direction"> направление движения (влево или вправо)</param>
         public void AttackTheMonsters(int Direction)
         {
-            int DeltaX = 200; //амплитуда движения героев по оси Х
+            //int DeltaX = 200; //амплитуда движения героев по оси Х         //старый проверенный вариант
+            int DeltaX = 150; //амплитуда движения героев по оси Х  
             int DeltaY = 30;  //амплитуда движения героев по оси Y
             int x;
             int y;
 
-            //вариант 1. (Старый и сложный)
+            #region вариант 1. (Старый и сложный)
             //int x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
             //int y = 382 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз
             //bool IsBoss;
@@ -6707,8 +6759,9 @@ namespace OpenGEWindows
             //}
             //while (!isAssaultMode() && !IsBoss); //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL
             //проверка на "босса в прицеле" стоит для того, что не всегда удаётся перейти в Assault Mode, так как Кризалис загораживает весь экран и некуда тыкнуть, кроме как не в него
+            #endregion
 
-            //вариант 2. новый и простой, но не проверенный
+            //вариант 2. новый и простой
             // сначала атакуем в выбранном направлении
             x = 525 - 5 + xx + Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
             y = 412 - 5 + yy + Direction * DeltaY;    // за счет Direction при ходьбе влево-вправо будет немного смещаться вверх-вниз   //382
@@ -7124,7 +7177,7 @@ namespace OpenGEWindows
         public bool FindMysophoia(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (    
                     //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
                     //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
@@ -7142,7 +7195,7 @@ namespace OpenGEWindows
         public bool FindBulletApilicon(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (
                     //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
                     //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
@@ -7161,7 +7214,7 @@ namespace OpenGEWindows
         public bool FindShareFlint(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (
                     //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
                     //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
@@ -7180,7 +7233,7 @@ namespace OpenGEWindows
         public bool FindConcentracion(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (    
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
@@ -7201,7 +7254,7 @@ namespace OpenGEWindows
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 10861754, 0).isColor() &&
                         new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 11124411, 0).isColor()
                    ) result = true;
@@ -7218,7 +7271,7 @@ namespace OpenGEWindows
         {
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (    new PointColor(89 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 2503088, 0).isColor() &&
                         new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 1976470, 0).isColor()
                    ) result = true;
@@ -7234,7 +7287,7 @@ namespace OpenGEWindows
         public bool FindMarksmanship(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
                         new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
                    ) result = true;
@@ -7250,7 +7303,7 @@ namespace OpenGEWindows
         public bool FindHound(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < 8; j++)
                 if (
                     //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
                     //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
@@ -7387,7 +7440,8 @@ namespace OpenGEWindows
         /// </summary>
         public void PressOnFesoGate()
         {
-            new Point(539 - 5 + xx, 399 - 5 + yy).PressMouseL();
+            //new Point(539 - 5 + xx, 399 - 5 + yy).PressMouseL();
+            new Point(530 + xx, 397 + yy).PressMouseL();    //координаты со скриншота в игре, поэтому нет   "- 5"
         }
 
         /// <summary>
@@ -7774,6 +7828,7 @@ namespace OpenGEWindows
         #endregion
 
         #region ================ Bridge =========================
+        
         /// <summary>
         /// открываем карту Ребольдо с гарантией
         /// </summary>
@@ -7798,17 +7853,46 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// в уже открытой карте моста тыкаем в Терезию (шестая строчка в списке справа от карты Alt+Z)
+        /// в уже открытой карте моста идём к выбранному персонажу (в строке numberString )
         /// </summary>
-        public void GotoTeresia()
+        public void GotoPersonOnMapBridge(int numberString)
         {
-            new Point(740 - 5 + xx, 267 - 5 + yy).DoubleClickL();   //тыкаем в Терезию (в списке справа от карты)
+            new Point(740 - 5 + xx, 192 + (numberString - 1) * 15 - 5 + yy).DoubleClickL();   //тыкаем в статую (в списке справа от карты)
             Pause(500);
             new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
             Pause(500);
             botwindow.PressEscThreeTimes();
             Pause(2000);
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста тыкаем в Терезию (шестая строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoTeresia()
+        {
+            //new Point(740 - 5 + xx, 267 - 5 + yy).DoubleClickL();   //тыкаем в Терезию (в списке справа от карты)
+            //Pause(500);
+            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            //Pause(500);
+            //botwindow.PressEscThreeTimes();
+            //Pause(2000);
+            GotoPersonOnMapBridge(6);
             new Point(522 - 5 + xx, 231 - 5 + yy).PressMouseL();    //тыкаем в голову Терезии, чтобы войти в диалог
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста тыкаем в AncientBlessingStatue (первая строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoAncientBlessingStatue()
+        {
+            //new Point(740 - 5 + xx, 192 - 5 + yy).DoubleClickL();   //тыкаем в статую (в списке справа от карты)
+            //Pause(500);
+            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            //Pause(500);
+            //botwindow.PressEscThreeTimes();
+            //Pause(2000);
+            GotoPersonOnMapBridge(1);
+            new Point(522 - 5 + xx, 231 - 5 + yy).PressMouseL();    //тыкаем в статую, чтобы войти в диалог
         }
 
         /// <summary>
@@ -7816,13 +7900,14 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoIndividualRaid()
         {
-            new Point(740 - 5 + xx, 237 - 5 + yy).DoubleClickL();   //тыкаем в солдата Individual Raid Mission (в списке справа от карты)
-            Pause(500);
-            new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
-            Pause(500);
-            botwindow.PressEscThreeTimes();
-            Pause(2000);
-            new Point(525 - 5 + xx, 185 - 5 + yy).PressMouseL();    //тыкаем в голову Терезии, чтобы войти в диалог
+            //new Point(740 - 5 + xx, 237 - 5 + yy).DoubleClickL();   //тыкаем в солдата Individual Raid Mission (в списке справа от карты)
+            //Pause(500);
+            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            //Pause(500);
+            //botwindow.PressEscThreeTimes();
+            //Pause(2000);
+            GotoPersonOnMapBridge(4);
+            new Point(525 - 5 + xx, 185 - 5 + yy).PressMouseL();    //тыкаем в голову солдата, чтобы войти в диалог
         }
 
         /// <summary>
@@ -7833,7 +7918,7 @@ namespace OpenGEWindows
         public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
         {
             dialog.PressStringDialog(8 - rank);             //выбираем ранг
-            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
+            //dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
             dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
             dialog.PressStringDialog(1);                    // в миссию (join) 
 
@@ -7858,20 +7943,19 @@ namespace OpenGEWindows
         /// <param name="weekDay"> день недели по сингапурскому времени </param>
         public void AttackTheEnemy(int weekDay)
         {
-            iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, животные
-                                        new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, паук
-                                        //new Point(390 - 5 + xx, 550 - 5 + yy),      //1+ вторник, human
-                                        new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
+            iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, тигр
+                                        new Point(415 - 5 + xx, 303 - 5 + yy),          // 1+ понедельник, животные
+                                        //new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, паук
+                                        new Point(390 - 5 + xx, 550 - 5 + yy),      //1+ вторник, human
+                                        //new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
                                         //new Point(636 - 5 + xx, 495 - 5 + yy),      // 1+ среда, demon
                                         //new Point(424 - 5 + xx, 240 - 5 + yy),      // 2+ среда, demon
                                         new Point(553 - 5 + xx, 245 - 5 + yy),      // 3 среда, demon
                                         new Point(422 - 5 + xx, 322 - 5 + yy),      // 1 четверг
                                         //new Point(567 - 5 + xx, 479 - 5 + yy),    // 1+ пятница
                                         //new Point(459 - 5 + xx, 408 - 5 + yy),    // 2 пятница не надёжно
-                                        //new Point(461 - 5 + xx, 501 - 5 + yy),      // 2+ пятница
-                                        new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
-                                        new Point(474 - 5 + xx, 478 - 5 + yy),
-                                        new Point(510 - 5 + xx, 479 - 5 + yy),
+                                        new Point(461 - 5 + xx, 501 - 5 + yy),      // 2+ пятница
+                                        //new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
             };
             //открываем карту Alt+Z
             TopMenu(12, 2, true);
@@ -7890,42 +7974,40 @@ namespace OpenGEWindows
         /// <param name="weekDay"> день недели по сингапурскому времени </param>
         public void GoToChest(int weekDay)
         {
-            iPoint[] PixelOfChest = {   //new Point(415 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, животные
-                                        new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, животные
-                                        //new Point(423 - 5 + xx, 611 - 5 + yy),      //1+ вторник, human
-                                        new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
-                                        //new Point(636 - 5 + xx, 495 - 5 + yy),      // 1+ среда, demon
-                                        //new Point(424 - 5 + xx, 240 - 5 + yy),      // 2+ среда, demon
-                                        new Point(553 - 5 + xx, 245 - 5 + yy),      // 3 среда, demon
-                                        new Point(422 - 5 + xx, 322 - 5 + yy),      // 1 четверг
-                                        //new Point(567 - 5 + xx, 479 - 5 + yy),    // 1+ пятница
-                                        //new Point(457 - 5 + xx, 405 - 5 + yy),    // 2 пятница                        
-                                        //new Point(461 - 5 + xx, 501 - 5 + yy),    // 2+ пятница
-                                        new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
-                                        new Point(474 - 5 + xx, 478 - 5 + yy),
-                                        new Point(510 - 5 + xx, 479 - 5 + yy),
+            iPoint[] PixelOfChest = {   new Point(415 - 5 + xx, 303 - 5 + yy),          // 1+ понедельник, животные
+                                        //new Point(595 - 5 + xx, 296 - 5 + yy),        // 2+ понедельник, животные
+                                        new Point(423 - 5 + xx, 611 - 5 + yy),          // 1+ вторник, human
+                                        //new Point(430 - 5 + xx, 340 - 5 + yy),        // 2+ вторник, human
+                                        //new Point(636 - 5 + xx, 495 - 5 + yy),        // 1+ среда, demon
+                                        //new Point(424 - 5 + xx, 240 - 5 + yy),        // 2+ среда, demon
+                                        new Point(553 - 5 + xx, 245 - 5 + yy),          // 3  среда, demon
+                                        new Point(422 - 5 + xx, 322 - 5 + yy),          // 1  четверг
+                                        //new Point(567 - 5 + xx, 479 - 5 + yy),        // 1+ пятница
+                                        //new Point(457 - 5 + xx, 405 - 5 + yy),        // 2  пятница                        
+                                        new Point(461 - 5 + xx, 501 - 5 + yy),          // 2+ пятница
+                                        //new Point(335 - 5 + xx, 399 - 5 + yy),        // 3  пятница
             };
-            iPoint[] PressChest = { new Point(396 - 5 + xx, 482 - 5 + yy),
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1 четверг
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1+, 2, 2+,3 пятница
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),
-                                    new Point(396 - 5 + xx, 482 - 5 + yy),
-            };
+            //iPoint[] PressChest = { new Point(396 - 5 + xx, 482 - 5 + yy),
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1 четверг
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),      //* 1+, 2, 2+,3 пятница
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),
+            //                        new Point(396 - 5 + xx, 482 - 5 + yy),
+            //};
 
 
             //открываем карту Alt+Z
-            TopMenu(12, 2, true);
-            Pause(500);
+            //TopMenu(12, 2, true);
+            //Pause(500);
+            //PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
+            //Pause(500);
+            //botwindow.PressEscThreeTimes();
+            //Pause(2000);
 
-            PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
-            Pause(500);
-            botwindow.PressEscThreeTimes();
-            Pause(2500);
-            //MinHeight(10);
-            PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
-            Pause(10000);                               //ждём рулетку
+            new Point(396 - 5 + xx, 482 - 5 + yy).PressMouseL();  //нажимаем на сундук
+            //PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
+            Pause(4000);                               //ждём рулетку
 
         }
 

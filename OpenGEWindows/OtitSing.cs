@@ -144,6 +144,7 @@
             botwindow.Pause(1000);
             dialog.PressOkButton(1);
             botwindow.Pause(1000);
+            if (dialog.isDialog()) dialog.PressOkButton(1);
         }
 
         /// <summary>
@@ -157,6 +158,7 @@
             botwindow.Pause(1000);
             dialog.PressStringDialog(1);    //move  (в миссию)
             botwindow.Pause(1000);
+            if (dialog.isDialog()) dialog.PressOkButton(1);
         }
 
         /// <summary>
@@ -182,6 +184,7 @@
             botwindow.Pause(1000);
             dialog.PressOkButton(1);
             botwindow.Pause(1000);
+            if (dialog.isDialog()) dialog.PressOkButton(1);
         }
 
     }
