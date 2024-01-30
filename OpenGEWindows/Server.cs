@@ -5061,7 +5061,7 @@ namespace OpenGEWindows
                                      //new Point(355 - 5 + xx, 359 - 5 + yy),
                                      //new Point(391 - 5 + xx, 352 - 5 + yy),
                                      new Point(398 - 5 + xx, 335 - 5 + yy), //8+ да
-                                     new Point(398 - 5 + xx, 334 - 5 + yy),  //да
+                                     //new Point(398 - 5 + xx, 334 - 5 + yy),  //да
                                      //new Point(438 - 5 + xx, 297 - 5 + yy),
                                      //new Point(437 - 5 + xx, 285 - 5 + yy), //9
                                      new Point(437 - 5 + xx, 280 - 5 + yy),     //9 да
@@ -5101,7 +5101,7 @@ namespace OpenGEWindows
                                     //5000, 
                                     //5000, 
                                     5000, //8
-                                    5000, 
+                                    //5000, 
                                     //5000, 
                                     //5000, //9
                                     5000,//9
@@ -6408,10 +6408,9 @@ namespace OpenGEWindows
         /// <summary>
         /// активируем пета (быстрый способ)
         /// </summary>
-        /// <param name="N">номер героя</param>
         public void ActivatePetDemonic()
         {
-            new Point(272 - 5 + xx, 60 - 5 + yy).PressMouseL();
+            new Point(372 - 5 + xx, 60 - 5 + yy).PressMouseL();
             Pause(100);
         }
 
@@ -6679,13 +6678,36 @@ namespace OpenGEWindows
         //        new Point(525 - Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
         //}
 
+        /// <summary>
+        /// подбираем дроп, двигаясь влево (Demonic.FesoMap)
+        /// </summary>
+        public void PickUpToLeft()
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                HarvestMode();
+                new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
+            }
+        }
+
+        /// <summary>
+        /// подбираем дроп, двигаясь влево (Demonic.FesoMap)
+        /// </summary>
+        public void PickUpToRight()
+        {
+            for (int i = 1; i <= 3; i++)
+            {
+                HarvestMode();
+                new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
+            }
+        }
 
         /// <summary>
         /// атакуем с CTRL максимально вправо (Demonic.FesoMap)
         /// </summary>
         public void AttackCtrlToRight()
         {
-            for (int i=1; i<=5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 AssaultMode();
                 new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
@@ -6697,7 +6719,7 @@ namespace OpenGEWindows
         /// </summary>
         public void AttackCtrlToLeft()
         {
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= 3; i++)
             {
                 AssaultMode();
                 new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();

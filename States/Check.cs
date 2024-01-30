@@ -21,13 +21,13 @@ namespace States
         private static int IsItAlreadyPossibleToUploadNewWindow = 0;
 
         /// <summary>
+        /// если равна true, тогда атака на мобов закончена и надо подбирать дроп (фесо)
+        /// </summary>
+        private bool NeedToPickUpFeso;
+        /// <summary>
         /// день недели по сингапурскому времени
         /// </summary>
         private int WeekDay = 1;
-        /// <summary>
-        /// если равна 1, то надо идти в барак
-        /// </summary>
-        private int GoBarack;
         /// <summary>
         /// для миссии Кастилия. номер следующей точки маршрута
         /// </summary>
@@ -120,8 +120,8 @@ namespace States
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
+            NeedToPickUpFeso = false;
             NextPointNumber = 0;
-            GoBarack = 0;
             numberOfState = 0;
             taskCompleted = false;
             gotTask = false;
@@ -792,8 +792,6 @@ namespace States
         public void problemResolutionDemMultiStage1()
         {
             server.WriteToLogFileBH("перешли к выполнению стадии 1  HowManyCyclesToSkip " + botParam.HowManyCyclesToSkip);
-            GoBarack = 0;
-            
             
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
@@ -1133,7 +1131,7 @@ namespace States
                         //botParam.HowManyCyclesToSkip = 2;
                         server.MoveCursorOfMouse();
                         botParam.Stage = 3;
-                        DirectionOfMovement = 1;        //необходимо для стадии 4
+                        //DirectionOfMovement = 1;        //необходимо для стадии 4
                         break;
                     case 3:                                                 // собираемся атаковать
                         //botwindow.CommandMode();
@@ -1141,7 +1139,7 @@ namespace States
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      // атакуем с CTRL
 
-                        //server.AttackTheMonsters();
+
 
                         //бафаемся. Если бафались мушкетеры, то result = true
                         server.MoveCursorOfMouse();
@@ -1149,6 +1147,7 @@ namespace States
                                         server.Buff(Hero[2], 2) || 
                                         server.Buff(Hero[3], 3);
 
+                        server.BattleModeOnDem();
 
                         ////если не бафались и в прицеле моб или босс, то скиллуем мушкетерами скиллом E (массуха)
                         ////а потом пробел
@@ -1163,9 +1162,6 @@ namespace States
                         //    //server.MoveCursorOfMouse();
                         //}
                         ////Pause(500);
-                        
-
-                        server.BattleModeOnDem();
 
 
                         //вариант 2 (основной)
@@ -1217,10 +1213,11 @@ namespace States
                     case 10:
                         //если появился сундук
                         server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
-                        Pause(5000);
+                        //Pause(5000);
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         //botParam.HowManyCyclesToSkip = 1;
                         break;
+                    //===================================================================================
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -1306,18 +1303,19 @@ namespace States
             //а вообще это идеальное место для перехода к стадии 4 (добыча фесо)
             // т.е. после открытия сундука тыкаем в место, где должны открыться второта фесо, а здесь по диалогу проверяем,
             // удалось или нет
-            if (dialog.isDialog()) 
-                return 6;                    //закрываем песочницу и аккаунт
+            if (dialog.isDialog())
+                //return 6;                     //закрываем песочницу и аккаунт
+                return 8;                       //диалог в воротах фесо
             // если неправильная стойка
             if (server.isBadFightingStance()) return 12;
 
             //в миссии
             if (server.isWork())
             {
-                if (GoBarack == 1)              // уже тыкали в сундук 
-                    return 4;                   //можно удалять песочницу и переходить к следующему аккаунту
-                                                //сюда надо вставить тыкание в ворота фесо
-                else
+                //if (GoBarack == 1)              // уже тыкали в сундук 
+                //    return 4;                   //можно удалять песочницу и переходить к следующему аккаунту
+                //                                //сюда надо вставить тыкание в ворота фесо
+                //else
                     return 3;                   //надо тыкать в сундук
             }
             //==========================================================================================================
@@ -1369,21 +1367,55 @@ namespace States
                     //    break;
                     //====================================================================================================
                     case 3:                                             //в миссии, но сундук ещё не открыт
-                        server.ActivePetDem();                          //активируем пета (может он успеет собрать не подобранные вещи)
+                        //server.ActivePetDem();                          //активируем пета (может он успеет собрать не подобранные вещи)
                         server.OpeningTheChest();                       //тыкаем в сундук и запускаем рулетку
-                        //botwindow.Pause(500);
                         //driver.StateActivePetDem();                   //активируем пета (старый вариант)
-                        botParam.HowManyCyclesToSkip = 4;
-                        GoBarack = 1;
                         server.MaxHeight(10);                        //чтобы точно было видно вторые ворота
                         server.TopMenu(3,true);
-                        break;
-                    case 4:                                         //уже тыкали в сундук.
+
                         server.PressOnFesoGate();
-                        //server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
-                        //botParam.Stage = 1;
-                        //botParam.HowManyCyclesToSkip = 1;
+                        botwindow.Pause(2000);
+                        if (!dialog.isDialog())
+                        {
+                            botwindow.Pause(3000);
+                            server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                            botParam.Stage = 1;
+                            botParam.HowManyCyclesToSkip = 1;
+                        }
+                        else
+                        {
+                            dialog.PressStringDialog(1);
+                            dialog.PressStringDialog(1);
+                            dialog.PressOkButton(1);
+                            if (dialog.isDialog()) dialog.PressOkButton(1);
+                            botwindow.Pause(3000);
+                            server.AttackCtrlToLeft();
+                            server.ActivePetDem();
+                            botParam.Stage = 4;
+                        }
+
                         break;
+                    //case 4:                                         //уже тыкали в сундук. Тыкаем в ворота с фесо
+                    //    server.PressOnFesoGate();
+                    //    botwindow.Pause(2000);
+                    //    if (!dialog.isDialog())
+                    //    {
+                    //        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                    //        botParam.Stage = 1;
+                    //        botParam.HowManyCyclesToSkip = 1;
+                    //    }
+                    //    else
+                    //    {
+                    //        dialog.PressStringDialog(1);
+                    //        dialog.PressStringDialog(1);
+                    //        dialog.PressOkButton(1);
+                    //        if (dialog.isDialog()) dialog.PressOkButton(1);
+                    //        botwindow.Pause(3000);
+                    //        server.AttackCtrlToLeft();
+                    //        server.ActivePetDem();
+                    //        botParam.Stage = 4;
+                    //    }
+                    //    break;
                     //case 5:                                         // из БХ
                     //    server.systemMenu(3, true);                 // переход в стартовый город
                     //    botParam.HowManyCyclesToSkip = 3;
@@ -1399,10 +1431,16 @@ namespace States
                     //    //dialog.PressOkButton(1);
                     //    botParam.HowManyCyclesToSkip = 2;
                     //    break;
-                    //case 8:                                         // появились ворота вместо сундука
-                    //    server.GotoBarack();
-                    //    botParam.HowManyCyclesToSkip = 2;
-                    //    break;
+                    case 8:                                         // появились ворота фесо
+                        dialog.PressStringDialog(1);
+                        dialog.PressStringDialog(1);
+                        dialog.PressOkButton(1);
+                        if (dialog.isDialog()) dialog.PressOkButton(1);
+                        botwindow.Pause(3000);
+                        server.AttackCtrlToLeft();
+                        server.ActivePetDem();
+                        botParam.Stage = 4;
+                        break;
                     //case 9:                                         // появились ворота с фесо
                     //    //тыкаем в ворота с фесо и далее стадия 4
                     //    server.PressOnFesoGate();
@@ -1454,6 +1492,146 @@ namespace States
             {
                 botParam.HowManyCyclesToSkip--;
             }
+        }
+
+        #endregion =======================================================================================================
+
+        #region  =================================== Demonic Multi Stage 4 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemDemMultiStage4()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+            //если окно игры открыто на другом компе
+            //if (server.isOpenGEWindow()) return 37;
+            //служба Steam
+            if (server.isSteamService()) return 11;
+            //==========================================================================================================
+
+            //в миссии фесо
+            if (server.isWork())
+                if (server.isAssaultMode())
+                    return 3;
+                else
+                    if (NeedToPickUpFeso)
+                        return 5;
+                    else
+                        return 4;
+
+
+            //==========================================================================================================
+            //в городе или в БХ
+            if (server.isTown())                //если в городе или в БХ, то значит миссия закончилась и нас выкинуло
+                return 6;                   //закрываем песочницу и аккаунт
+            //в логауте
+            if (server.isLogout())          // если окно в логауте
+                return 6;                    //закрываем песочницу и аккаунт
+            //в бараке
+            if (server.isBarackCreateNewHero())         //если стоят на странице создания нового персонажа
+                return 6;                    //закрываем песочницу и аккаунт
+            if (server.isBarack())                    //если стоят в бараке 
+                return 6;                    //закрываем песочницу и аккаунт
+            if (server.isBarackWarningYes())
+                return 6;                    //закрываем песочницу и аккаунт
+            if (server.isBarackTeamSelection())    //если в бараках на стадии выбора группы
+                return 6;                    //закрываем песочницу и аккаунт
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 12;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадии 4
+        /// </summary>
+        public void problemResolutionDemMultiStage4()
+        {
+            //if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            //{
+            if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+            {
+                server.ActiveWindow();
+            }
+
+            //проверили, какие есть проблемы (на какой стадии находится бот)
+            int numberOfProblem = NumberOfProblemDemMultiStage4();
+
+
+            switch (numberOfProblem)
+            {
+                case 6:                                         
+                    server.RemoveSandboxieBH();                 //закрываем песочницу
+                    botParam.Stage = 1;
+                    botParam.HowManyCyclesToSkip = 1;
+                    break;
+                //=============================================================================================================
+                case 3:                                         //в комнате с фесо
+                    break;
+                case 4:                                         // в миссии. уже не бьём мобов
+                    DirectionOfMovement = 1;
+                    server.AttackCtrlToRight();                 //атакуем мобов по направлению вправо, 
+                    NeedToPickUpFeso = true;                    //а когда закончим, можно будет начинать собирать фесо
+                    break;
+                case 5:                                         // в миссии. уже не бьём мобов. пора собирать фесо
+                    DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                    if (DirectionOfMovement == -1)
+                        server.PickUpToLeft();
+                    else
+                        server.PickUpToRight();
+                    break;
+                //=============================================================================================================
+                case 11:                                         // закрыть службу Стим
+                    server.CloseSteam();
+                    break;
+                case 12:                                         // включить правильную стойку
+                    server.ProperFightingStanceOn();
+                    server.MoveCursorOfMouse();
+                    break;
+                case 33:
+                    server.CloseError820();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 34:
+                    server.AcceptUserAgreement();
+                    break;
+                case 35:
+                    server.CloseErrorSandboxie();
+                    break;
+                case 36:
+                    server.CloseUnexpectedError();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 37:
+                    server.CloseSteamMessage();
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+
+            }
+            //}
+            //else
+            //{
+            //    botParam.HowManyCyclesToSkip--;
+            //}
         }
 
         #endregion =======================================================================================================
@@ -1618,98 +1796,6 @@ namespace States
         #endregion =======================================================================================================
 
 
-
-        // это стадия только для работы в воротах с фесо /не используется/
-        #region  =================================== Demonic Multi Stage 4 ==============================================
-
-        /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
-        /// </summary>
-        /// <returns>порядковый номер проблемы</returns>
-        public int NumberOfProblemDemMultiStage4()
-        {
-            //если диалог, то выбрать вход в комнату с фесо
-            if (dialog.isDialog()) return 7;
-
-            // если неправильная стойка
-            if (server.isBadFightingStance()) return 12;
-
-            //в миссии
-            if (server.isWork())
-            {
-                return 3;        
-            }
-
-            //в городе или в БХ
-            if (server.isTown())
-            {
-                if (server.isBH()) return 5;        //в БХ
-                else return 6;                      //в стартовом городе
-            }
-
-            //в логауте
-            if (server.isLogout()) return 1;                    // если окно в логауте
-
-            //в бараке
-            if (server.isBarackCreateNewHero()) return 20;      //если стоят на странице создания нового персонажа
-            if (server.isBarack()) return 2;                    //если стоят в бараке 
-
-            if (server.isBarackTeamSelection()) return 17;      //если в бараках на стадии выбора группы
-
-            //если проблем не найдено
-            return 0;
-        }
-
-        /// <summary>
-        /// разрешение выявленных проблем в БХ Демоник стадии 4
-        /// </summary>
-        public void problemResolutionDemMultiStage4()
-        {
-            //if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
-            //{
-                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
-                {
-                    server.ActiveWindow();
-                }
-
-                //проверили, какие есть проблемы (на какой стадии находится бот)
-                int numberOfProblem = NumberOfProblemDemMultiStage4();
-
-
-                switch (numberOfProblem)
-                {
-                    case 1:                                         //в логауте
-                    case 2:                                         //в бараках
-                    case 5:                                         // в БХ
-                    case 6:                                         // в городе
-                        botParam.Stage = 3;
-                        break;
-                    case 3:                                         //в комнате с фесо
-                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
-                        server.AttackTheMonsters2(DirectionOfMovement);     // атакуем с CTRL и подбираем лут
-                        break;
-                    case 7:                                         // в диалоге ворот (зайти в комнату с фесо)
-                        dialog.PressStringDialog(1);
-                        dialog.PressOkButton(1);
-                        //botParam.HowManyCyclesToSkip = 1;
-                        break;
-                    case 12:                                         // включить правильную стойку
-                        server.ProperFightingStanceOn();
-                        server.MoveCursorOfMouse();
-                        break;
-                    case 17:                                        // в бараках на стадии выбора группы
-                            botwindow.PressEsc();                       // нажимаем Esc
-                            break;
-            }
-            //}
-            //else
-            //{
-            //    botParam.HowManyCyclesToSkip--;
-            //}
-        }
-
-        #endregion =======================================================================================================
-
         #region  =================================== Castilia Multi Stage 1 ==============================================
 
         /// <summary>
@@ -1809,7 +1895,6 @@ namespace States
         public void problemResolutionCastiliaMultiStage1()
         {
             //server.WriteToLogFileBH("перешли к выполнению стадии 1,  HowManyCyclesToSkip " + botParam.HowManyCyclesToSkip);
-            GoBarack = 0;
 
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
@@ -2135,7 +2220,7 @@ namespace States
                             botwindow.PressEscThreeTimes();
                         }
 
-                        if (NextPointNumber <= 8)        //если еще не дошли до конца миссии //изменить число 21
+                        if (NextPointNumber <= 7)        //если еще не дошли до конца миссии //изменить число 21
                         {
                             server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
                             Pause(500);
@@ -3667,7 +3752,6 @@ namespace States
 
         #endregion
 
-
         #region  =================================== Bridge Stage 1 ==============================================
 
         /// <summary>
@@ -4995,8 +5079,6 @@ namespace States
 
         #endregion
 
-
-
         #region  =================================== PureOtiteNew Stage 1 ==============================================
 
         /// <summary>
@@ -5412,7 +5494,6 @@ namespace States
 
         #endregion
 
-
         #region  ====================== PureOtiteNew Stage 3 (Лос. Толдос. Задание получено. Идём в миссию) ======================
 
         /// <summary>
@@ -5587,7 +5668,6 @@ namespace States
 
         #endregion
 
-
         #region  ===================== PureOtiteNew Stage 4 (Лос. Толдос. Выполнение миссии) ===================================
 
         /// <summary>
@@ -5757,7 +5837,6 @@ namespace States
 
         #endregion
 
-
         #region  ==================== PureOtiteNew Stage 5 (Лос. Толдос. Задание выполнено. Получаем награду) ======================
 
         /// <summary>
@@ -5923,8 +6002,6 @@ namespace States
         }
 
         #endregion
-
-
 
         #region Гильдия охотников BH (Infinity Multi)
 
