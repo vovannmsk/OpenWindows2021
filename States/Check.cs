@@ -115,7 +115,7 @@ namespace States
         }
 
         /// <summary>
-        /// конструктор основной
+        /// ============================= конструктор основной =============================================
         /// </summary>
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
@@ -158,44 +158,6 @@ namespace States
             SteamLoaded = false;
         }
 
-        ///// <summary>
-        ///// продаем одно окно с ботом (кнопка "Направить все окна на продажу" )
-        ///// </summary>
-        //public void NewWhiteButton()
-        //{
-        //    driver.StateGotoTrade();
-        //}
-
-        ///// <summary>
-        ///// возвращает номер телепорта для продажи
-        ///// </summary>
-        ///// <returns></returns>
-        //public int getNumberTeleport()
-        //{
-        //    return botwindow.getNomerTeleport();
-        //}
-
-        ///// <summary>
-        ///// если находимся на алхимическом столе, то true
-        ///// </summary>
-        ///// <returns></returns>
-        //public bool isAlchemy()
-        //{
-        //    return server.isAlchemy();
-        //}
-
-        ///// <summary>
-        ///// выполняет действия по открытию окна с игрой
-        ///// </summary>
-        //public void OpenWindow ()
-        //{
-        //    server.ReOpenWindow();
-        //}
-
-        //public bool EndOfList()
-        //{
-        //    return botParam.EndOfList();
-        //}
 
         /// <summary>
         /// закрываем песочницу и переходим к следующему аккаунту
@@ -891,7 +853,7 @@ namespace States
                         pet.ActivePetDem();                     //ноая функция  22-11
 
                         
-                        server.MaxHeight(7);                      
+                        server.MaxHeight(12);                      
                         botParam.Stage = 2;
                         break;
                     case 8:                                         //Gate --> Mission Lobby
@@ -1041,7 +1003,7 @@ namespace States
 
         #endregion
 
-        #region  =================================== Demonic Multi Stage 2 ==============================================
+        #region  =================================== Demonic Multi Stage 2 (миссия Демоник) =============================
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -1271,7 +1233,7 @@ namespace States
 
         #endregion ======================================================================================================
 
-        #region  =================================== Demonic Multi Stage 3 ==============================================
+        #region  =================================== Demonic Multi Stage 3 (открытие сундука и переход в ворота фесо) ===
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -1329,7 +1291,7 @@ namespace States
             if (server.isBarackCreateNewHero())         //если стоят на странице создания нового персонажа
                 return 6;                    //закрываем песочницу и аккаунт
             if (server.isBarack())                    //если стоят в бараке 
-                return 6;                    //закрываем песочницу и аккаунт
+                return 2;                    //закрываем песочницу и аккаунт
             if (server.isBarackWarningYes())
                 return 6;                    //закрываем песочницу и аккаунт
             if (server.isBarackTeamSelection())    //если в бараках на стадии выбора группы
@@ -1361,11 +1323,13 @@ namespace States
                     //    driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок
                     //    botParam.HowManyCyclesToSkip = 1;
                     //    break;
-                    //case 2:                                         //в бараках  (этот пункт не использую)
-                    //    driver.StateFromBarackToTownBH();           // идем в город (это нужно для Инфинити, а то они начнут со старого места в БХ)
-                    //    botParam.HowManyCyclesToSkip = 2;
-                    //    break;
                     //====================================================================================================
+                    case 2:                         //в бараках   ======== этот пункт нельзя комментить ==========
+                                                    // т.к. при возврате в миссию для открытия сундука сработает
+                                                    // условие,  (если барак, то RemoveSandboxie)  // тогда мы не сможем открыть сундук
+                        driver.StateFromBarackToTownBH();           // идем в город 
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
                     case 3:                                             //в миссии, но сундук ещё не открыт
                         //server.ActivePetDem();                          //активируем пета (может он успеет собрать не подобранные вещи)
                         server.OpeningTheChest();                       //тыкаем в сундук и запускаем рулетку
@@ -1389,7 +1353,8 @@ namespace States
                             dialog.PressOkButton(1);
                             if (dialog.isDialog()) dialog.PressOkButton(1);
                             botwindow.Pause(3000);
-                            server.AttackCtrlToLeft();
+                            //server.AttackCtrlToLeft();        //старый вариант
+                            server.BattleModeOnDem();           //новый вариант
                             server.ActivePetDem();
                             botParam.Stage = 4;
                         }
@@ -1441,11 +1406,6 @@ namespace States
                         server.ActivePetDem();
                         botParam.Stage = 4;
                         break;
-                    //case 9:                                         // появились ворота с фесо
-                    //    //тыкаем в ворота с фесо и далее стадия 4
-                    //    server.PressOnFesoGate();
-                    //    botParam.Stage = 4;
-                    //    break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -1496,7 +1456,7 @@ namespace States
 
         #endregion =======================================================================================================
 
-        #region  =================================== Demonic Multi Stage 4 ==============================================
+        #region  =================================== Demonic Multi Stage 4 (фесо) =======================================
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
@@ -1525,13 +1485,18 @@ namespace States
 
             //в миссии фесо
             if (server.isWork())
-                if (server.isAssaultMode())
-                    return 3;
-                else
-                    if (NeedToPickUpFeso)
-                        return 5;
+                if (server.isBattleMode())
+                {
+                    if (NeedToPickUpFeso == false)
+                        return 3;
                     else
-                        return 4;
+                        return 8;
+                }
+                else
+                    //if (NeedToPickUpFeso)         
+                    return 5;
+                //else
+                //    return 4;
 
 
             //==========================================================================================================
@@ -1582,18 +1547,18 @@ namespace States
                     break;
                 //=============================================================================================================
                 case 3:                                         //в комнате с фесо
+                    NeedToPickUpFeso = true;
                     break;
-                case 4:                                         // в миссии. уже не бьём мобов
-                    DirectionOfMovement = 1;
-                    server.AttackCtrlToRight();                 //атакуем мобов по направлению вправо, 
-                    NeedToPickUpFeso = true;                    //а когда закончим, можно будет начинать собирать фесо
-                    break;
+                //case 4:                                         // в миссии. уже не бьём мобов
+                //    DirectionOfMovement = 1;
+                //    server.AttackCtrlToRight();                 //атакуем мобов по направлению вправо, 
+                //    NeedToPickUpFeso = true;                    //а когда закончим, можно будет начинать собирать фесо
+                //    break;
                 case 5:                                         // в миссии. уже не бьём мобов. пора собирать фесо
-                    DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
-                    if (DirectionOfMovement == -1)
-                        server.PickUpToLeft();
-                    else
-                        server.PickUpToRight();
+                    server.PickUpToLeft();
+                    break;
+                case 8:
+                    server.PickUpToRight();
                     break;
                 //=============================================================================================================
                 case 11:                                         // закрыть службу Стим
@@ -1636,7 +1601,7 @@ namespace States
 
         #endregion =======================================================================================================
 
-        #region  =================================== Demonic Multi Stage 5 ==============================================
+        #region  =================================== Demonic Multi Stage 5 (берём бафф Наследие древних на мосту ) ======
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
@@ -1730,10 +1695,12 @@ namespace States
                         break;
                     //===========================================================================================
                     case 4:                                         //на мосту и получили бафф наследие
-                        botwindow.PressEscThreeTimes();
-                        botwindow.Pause(500);
-                        server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузились ворота Демоник.
+                        //botwindow.PressEscThreeTimes();
+                        //botwindow.Pause(500);
+                        //server.MinHeight(3);
+                        //server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)
+                        server.Logout();
+                        botParam.HowManyCyclesToSkip = 2;           
                         botParam.Stage = 1;
                         break;
                     case 5:                                         //на мосту, но пока не получили бафф наследие. карта открыта
@@ -2120,6 +2087,7 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 12;
 
+            //======================================================================================================
             //в миссии
             if (server.isWork() || 
                 server.isKillFirstHero())       //проверить
@@ -2134,7 +2102,7 @@ namespace States
                                                     //Это бы означало, что добежали до места, перебиты все монстры
                                                     //надо собирать лут, далее включать пробел и менять целевую точку 
             }
-
+            //======================================================================================================
             //служба Steam
             if (server.isSteamService()) return 11;
 
@@ -2182,6 +2150,7 @@ namespace States
                     case 20:
                         botParam.Stage = 1;
                         break;
+                    //====================================================================================
                     case 3:                                                 // собираемся атаковать. до этого просто бежали 
                         botwindow.PressEscThreeTimes();             
 
@@ -2199,20 +2168,19 @@ namespace States
                             server.BattleModeOnDem();
                         }
                         break;
-                    case 4:                                                 // бежим с Ctrl и ничего не делаем
-                        //server.MoveCursorOfMouse();
-                        //server.Buff(Hero[1], 1);
-                        //server.Buff(Hero[2], 2);
-                        //server.Buff(Hero[3], 3);
+                    case 4:                                                 // бежим с Ctrl. на всякий случай даём указание бить в ту же точку,
+                                                                            // так как бывают случаи, что не все герои бьются, а только 1-2
+                        botwindow.PressEsc();
+                        server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
+                        Pause(500);
+                        server.RouteNextPointMulti(NextPointNumber).PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
+                        botwindow.PressEsc();
                         break;
                     case 5:
                         // бафаемся перед перемещением дальше
                         if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
                         {
                             server.MoveCursorOfMouse();
-                            //Hero[1] = server.WhatsHero(1);
-                            //Hero[2] = server.WhatsHero(2);
-                            //Hero[3] = server.WhatsHero(3);
                             server.Buff(Hero[1], 1);
                             server.Buff(Hero[2], 2);
                             server.Buff(Hero[3], 3);
@@ -2220,7 +2188,7 @@ namespace States
                             botwindow.PressEscThreeTimes();
                         }
 
-                        if (NextPointNumber <= 7)        //если еще не дошли до конца миссии //изменить число 21
+                        if (NextPointNumber <= 7)        //если еще не дошли до конца миссии 
                         {
                             server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
                             Pause(500);
@@ -2236,13 +2204,7 @@ namespace States
                             botParam.HowManyCyclesToSkip = 1;
                         }
                         break;
-                    case 10:
-                        //если появился сундук
-                        //server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
-                        //Pause(5000);
-                        //server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
-                        //botParam.HowManyCyclesToSkip = 2;
-                        break;
+                    //====================================================================================
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -3752,6 +3714,7 @@ namespace States
 
         #endregion
 
+
         #region  =================================== Bridge Stage 1 ==============================================
 
         /// <summary>
@@ -5079,6 +5042,7 @@ namespace States
 
         #endregion
 
+
         #region  =================================== PureOtiteNew Stage 1 ==============================================
 
         /// <summary>
@@ -6002,6 +5966,7 @@ namespace States
         }
 
         #endregion
+
 
         #region Гильдия охотников BH (Infinity Multi)
 
@@ -7097,7 +7062,7 @@ namespace States
             //MessageBox.Show("открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
-            //MessageBox.Show("Открыта карта города ??? " + town.isOpenMap());
+            MessageBox.Show("Открыта карта Юстиара ??? " + server.isOpenMapUstiar());
             //server.OpenDetailInfo();
             //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo(1));
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());               //проверено
@@ -7217,9 +7182,9 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            PointColor point1 = new PointColor(740 - 5 + xx, 71 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(754 - 5 + xx, 267 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(752 - 5 + xx, 484 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(114 - 5 + xx, 318 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(114 - 5 + xx, 325 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(961 - 5 + xx, 259 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

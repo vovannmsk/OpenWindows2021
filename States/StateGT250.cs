@@ -71,7 +71,7 @@ namespace States
             //if (!server.isOpenTopMenu(13))
             //{
                 botwindow.ClickSpaceBH();                     //переходим в боевой режим. Если есть в кого стрелять, то стреляем. 
-                server.GotoBarack(true);                       //если не в кого стрелять, уходим в барак
+                server.GotoBarack();                       //если не в кого стрелять, уходим в барак
             //}
 
             if (server.isBoxOverflow()) botParam.StatusOfSale = 1;

@@ -1091,6 +1091,9 @@ namespace Main
                             case 3:
                                 check[j].problemResolutionDemMultiStage3();
                                 break;
+                            case 4:
+                                check[j].problemResolutionDemMultiStage4();
+                                break;
                             case 5:
                                 check[j].problemResolutionDemMultiStage5();
                                 break;

@@ -1877,16 +1877,17 @@ namespace OpenGEWindows
             return result;
         }
 
+        /// <summary>
+        /// открыт ли список телепортов
+        /// </summary>
+        /// <returns></returns>
         public bool isOpenWarpList()
         {
             return isOpenTopMenu(5);
-            //return pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor();
-            //return new PointColor(485 - 5 + xx, 126 - 5 + yy, 13034463, 0).isColor()
-            //    && new PointColor(485 - 5 + xx, 127 - 5 + yy, 13034463, 0).isColor(); 
         }
 
         /// <summary>
-        /// Открыть городской телепорт (Alt + F3) без проверок и while (для паттерна Состояние)  StateGT
+        /// Открыть городской телепорт (Alt + F3) без проверок и while (для паттерна Состояние)  StateGT  //=== точно не работает ===
         /// </summary>
         public void OpenTownTeleportForState()
         {
@@ -1895,15 +1896,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Открыть карту местности (Alt + Z) на работе. Без проверок  
+        /// Открыть карту местности (Alt + Z) на работе
         /// </summary>
         public void OpenMapForState()
         {
-            TopMenu(12, true);
-            Pause(1000);
-            new Point(197 - 5 + xx, 144 - 5 + yy).PressMouseL();
+            TopMenu(12, 2, true);
             Pause(500);
-
+            //new Point(197 - 5 + xx, 144 - 5 + yy).PressMouseL();
+            //Pause(500);
         }
 
         /// <summary>
@@ -1911,7 +1911,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GoToEnd()
         {
-            systemMenu(7);
+            systemMenu(7, true);
         }
 
         /// <summary>
@@ -1919,7 +1919,7 @@ namespace OpenGEWindows
         /// </summary>
         public void Logout()
         {
-            systemMenu(6);
+            systemMenu(6, true);
         }
 
         /// <summary>
@@ -1935,30 +1935,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoSavePoint()
         {
-            systemMenu(3);
-        }
-
-        /// <summary>
-        /// Идем в казармы через верхнее меню 
-        /// </summary>
-        /// <param name="status"> false, если без проверки открытия системного меню </param>
-        public void GotoBarack(bool status)                    
-        {
-            systemMenu(4, status);  //22-11
-        }
-
-        /// <summary>
-        /// переход по системному меню 
-        /// </summary>
-        /// <param name="number"> номер пункта меню </param>
-        public void systemMenu(int number)
-        {
-            //if (!isOpenTopMenu(13))
-            TopMenu(9);      //22-11
-            Pause(1000);
-            new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouse();
-            if (number == 4 || number == 6 || number == 7)
-                botwindow.PressEsc(); //убираем системное меню
+            systemMenu(3, true);
         }
 
         /// <summary>
@@ -1977,27 +1954,15 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// телепортируемся в город продажи по Alt+W (улетаем из БХ или другого города)
+        /// телепортируемся в город продажи по Alt+W (улетаем из БХ или другого города)     /21-12-23/
         /// </summary>
         public void TeleportAltW_BH()
         {
-            int teleport = botwindow.getNomerTeleport();
-
-            if (teleport >= 15)
-            {
-                teleport = 1;              //если номер телепорта больше 14 (катовия и отит), то летим в Ребольдо
-            }
-
-            iPoint pointTeleportToTownAltW = new Point(800 + xx, 517 + yy + (teleport - 1) * 17);
-
-            TopMenu(6, 1);
-            Pause(1000);
-            pointTeleportToTownAltW.PressMouse();           //было два нажатия левой, решил попробовать RRL
-            //            botwindow.Pause(2000);
+            TeleportAltW(botwindow.getNomerTeleport());
         }
 
         /// <summary>
-        /// нажмает на выбранный раздел верхнего меню (используется для БХ)  22-11-2023
+        /// нажмает на выбранный раздел верхнего меню     ===== 22-11-2023 =======
         /// </summary>
         /// <param name="numberOfThePartitionMenu"></param>
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
@@ -2015,11 +1980,10 @@ namespace OpenGEWindows
             do
             {
                 pointMenu.PressMouseL();
-                botwindow.Pause(1000);
+                botwindow.Pause(500);           //было 1000
                 count++; if (count > 3) break;
             } while ((!isOpenTopMenu(numberOfThePartitionMenu)) && status);
         }
-
 
         /// <summary>
         /// нажать на выбранный раздел верхнего меню, а далее на пункт раскрывшегося списка
@@ -2060,10 +2024,8 @@ namespace OpenGEWindows
             new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();        
         }
 
-
-
         /// <summary>
-        /// открываем список телепоров, проверяем, есть ли телепорт в Катовию и летим туда
+        /// открываем список телепоров, проверяем, есть ли телепорт в Катовию и летим туда             //не работает
         /// </summary>
         /// <returns>true, если улетели. false, если не улетели, т.к. нет нужного телепорта</returns>
         public bool TeleportKatovia()
@@ -2093,7 +2055,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, является ли третий телепорт телепортом в Катовию
+        /// проверяем, является ли третий телепорт телепортом в Катовию             //не работает
         /// </summary>
         /// <returns>true, если является</returns>
         public bool isKatoviaTeleport()
@@ -2104,10 +2066,10 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// в открытом меню телепортов выбираем нужную строчку и летим по выбранному телепорту  22-11
+        /// в открытом меню телепортов выбираем нужную строчку и летим по выбранному телепорту  ===== 22-11-2023 =======
         /// </summary>
         /// <param name="NumberOfLine">номер строки в списке сохраненных телепортов</param>
-        public void FlyByTeleport(int NumberOfLine)
+        private void FlyByTeleport(int NumberOfLine)
         {
             Point pointTeleportNumbertLine = new Point(132 - 5 + xx, 200 - 5 + (NumberOfLine - 1) * 15 + yy);    //    вычисляем точку на экране, куда тыкать
 
@@ -2118,7 +2080,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// вызываем телепорт через верхнее меню и телепортируемся по указанному номеру телепорта (используется для БХ)
+        /// вызываем телепорт через верхнее меню и телепортируемся по указанному номеру телепорта 
         /// </summary>
         /// <param name="NumberOfLine"></param>
         /// <param name="status">если false, то не проверяется сработало ли нажатие</param>
@@ -2128,13 +2090,6 @@ namespace OpenGEWindows
             Pause(500);
 
             FlyByTeleport(NumberOfLine);
-
-            //Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 185 - 5 + (NumberOfLine - 1) * 15 + yy);    //    тыкаем в указанную строчку телепорта 
-
-            //pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
-            //Pause(500);
-
-            //pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
         }
 
         /// <summary>
@@ -2142,28 +2097,12 @@ namespace OpenGEWindows
         /// </summary>
         public void Teleport1()
         {
-            Point pointTeleportNumbertLine = new Point(405 - 5 + xx, 180 - 5  + yy);    //    тыкаем в указанную строчку телепорта 
-
-            pointTeleportNumbertLine.DoubleClickL();   // Указанная строка в списке телепортов
-            Pause(500);
-
-            pointTeleportExecute.PressMouseL();        // Click on button Execute in Teleport menu
-        }
-
-
-
-        /// <summary>
-        /// нажимаем на кнопку "Телепорт" в верхнем меню (для лучшей надёжности)
-        /// </summary>
-        public void TopMenuTeleport()
-        {
-            iPoint pointMenu = new Point(705 - 5 + xx, 55 - 5 + yy);
-            pointMenu.PressMouseL();
+            FlyByTeleport(1);
         }
 
         public abstract void Teleport(int numberOfLine);
-        public abstract void TopMenu(int numberOfThePartitionMenu);
-        public abstract void TopMenu(int numberOfThePartitionMenu, int punkt);
+        public abstract void TopMenu(int numberOfThePartitionMenu);                 //не работает
+        public abstract void TopMenu(int numberOfThePartitionMenu, int punkt);      //не работает
         public abstract void TeleportToTownAltW(int i);
 
         #endregion
@@ -5053,7 +4992,7 @@ namespace OpenGEWindows
                                      //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
                                      //new Point(474 - 5 + xx, 511 - 5 + yy),
                                      //new Point(478 - 5 + xx, 498 - 5 + yy),
-                                     new Point(473 - 5 + xx, 480 - 5 + yy), //5+ да 475, 479
+                                     new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да    473, 481
                                      new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да
                                      //new Point(407 - 5 + xx, 444 - 5 + yy),
                                      new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
@@ -5114,21 +5053,45 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// собираем дроп слева от героев. время сбора = Period милисекунд
+        /// </summary>
+        /// <param name="Period">время сбора</param>
+        private void GetDropCastiliaLeft (int Period)
+        {
+            for (int i = 1; i <= 1; i++)
+            {
+                HarvestMode();
+                new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
+            }
+            Pause(Period);
+        }
+
+        /// <summary>
+        /// собираем дроп справа от героев. время сбора = Period милисекунд
+        /// </summary>
+        /// <param name="Period">время сбора</param>
+        private void GetDropCastiliaRight(int Period)
+        {
+            for (int i = 1; i <= 1; i++)
+            {
+                HarvestMode();
+                new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
+            }
+            Pause(Period);
+        }
+
+        /// <summary>
         /// подбор дропа в миссии Кастилия 
         /// </summary>
         /// <param name="Period">кол-во милисекунд ожидания подбора</param>
         public void GetDropCastilia(int Period)
         {
-            HarvestMode();
-            new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
-            Pause(Period);
+            GetDropCastiliaRight(Period);
 
             BattleModeOnDem();
-            Pause(2000);
+            Pause(1500);
 
-            HarvestMode();
-            new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
-            Pause(Period);
+            GetDropCastiliaLeft(Period);
         }
 
         /// <summary>
@@ -5394,127 +5357,6 @@ namespace OpenGEWindows
             AnswerYesOrNo(true);
 
         }
-
-        #endregion
-
-        #region Ферма
-
-        /// <summary>
-        /// поднимаем камеру в верхнюю точку
-        /// </summary>
-        public void MaxHeight(int n)
-        {
-            new Point(555 - 5 + xx, 430 - 5 + yy).Move();
-            for (int i = 1; i <= n; i++)
-            {
-                new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelUp();
-                //Pause(500); 
-            }
-        }
-
-        /// <summary>
-        /// опускаем камеру ниже к земле
-        /// </summary>
-        /// <param name="n"> количество оборотов мышки </param>
-        public void MinHeight(int n)
-        {
-            new Point(555 - 5 + xx, 430 - 5 + yy).Move();
-            for (int i = 1; i <= n; i++)
-            {
-                new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelDown();
-                Pause(500); 
-            }
-        }
-
-        /// <summary>
-        /// тыкаем в аппарат на ферме
-        /// </summary>
-        public void PressApparate()
-        {
-            new Point(100 - 5 + xx, 100 - 5 + yy).PressMouseL();
-        }
-
-        /// <summary>
-        /// положить яблоки в первый аппарат
-        /// </summary>
-        public void PutAppleToFirstStorage()
-        {
-            //Thing Apple = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 7465471, 0), 
-            //                        new PointColor(704 - 5 + xx, 180 - 5 + yy, 42495, 0));
-
-            DragItemToXY(Apple, 529 - 5 + xx, 181 - 5 + yy);  //перекладываем яблоки на аппарат
-            Pause(2000);
-
-            new Point(612 - 5 + xx, 398 - 5 + yy).PressMouseL();  //ок. подтверждаем количество
-            Pause(3000);
-
-            new Point(812 - 5 + xx, 339 - 5 + yy).PressMouseL();    //нажимаем "Insert"
-            Pause(1500);
-            new Point(950 - 5 + xx, 369 - 5 + yy).PressMouseL();    //нажимаем  "Ok"
-            Pause(1500);
-
-            botwindow.PressEscThreeTimes();
-            Pause(500);
-
-        }
-
-        /// <summary>
-        /// положить мед во второй аппарат
-        /// </summary>
-        public void PutHoneyToSecondStorage()
-        {
-            //Thing Honey = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 4289893, 0), new PointColor(703 - 5 + xx, 180 - 5 + yy, 4487011, 0));
-
-            DragItemToXY(Honey, 492 - 5 + xx, 112 - 5 + yy);
-            Pause(1000);
-
-            new Point(612 - 5 + xx, 398 - 5 + yy).PressMouseL();
-            Pause(2000);
-
-            new Point(814 - 5 + xx, 339 - 5 + yy).PressMouseL();
-            Pause(500);
-            new Point(954 - 5 + xx, 369 - 5 + yy).PressMouseL();
-            Pause(500);
-
-            botwindow.PressEscThreeTimes();
-            Pause(500);
-
-        }
-
-        /// <summary>
-        /// нажать OK в форме о ежедневной награде
-        /// </summary>
-        public void PressOkDailyReward()
-        {
-            new Point(520 - 5 + xx, 444 - 5 + yy).PressMouseL();
-        }
-
-        /// <summary>
-        /// выскочила ли форма о ежедневной награде на ферме
-        /// </summary>
-        /// <returns></returns>
-        public bool IsDailyReward()
-        {
-            return new PointColor(522 - 5 + xx, 440 - 5 + yy, 7727344, 0).isColor() && 
-                   new PointColor(522 - 5 + xx, 441 - 5 + yy, 7727344, 0).isColor();
-        }
-
-        /// <summary>
-        /// нажать на карте на точку #1, близкую к аппарату
-        /// </summary>
-        public void PressPointNearlyApparatus1()
-        {
-            new Point(437 - 5 + xx, 470 - 5 + yy).PressMouseL();
-        }
-        
-        /// <summary>
-        /// нажать на карте на точку #2, близкую к аппарату
-        /// </summary>
-        public void PressPointNearlyApparatus2()
-        {
-            new Point(437 - 5 + xx, 501 - 5 + yy).PressMouseL();
-        }
-
 
         #endregion
 
@@ -6686,7 +6528,8 @@ namespace OpenGEWindows
             for (int i = 1; i <= 3; i++)
             {
                 HarvestMode();
-                new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                //new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                new Point(220 - 5 + xx, 432 - 5 + yy).PressMouseL();
             }
         }
 
@@ -7376,7 +7219,7 @@ namespace OpenGEWindows
         private void BuffLorch(int i)
         {
             if (!FindBulletApilicon(i)) BuffY(i);
-            Pause(2000);
+//            Pause(2000);
             if (!FindShareFlint(i)) BuffW(i);
         }
 
@@ -7463,7 +7306,7 @@ namespace OpenGEWindows
         public void PressOnFesoGate()
         {
             //new Point(539 - 5 + xx, 399 - 5 + yy).PressMouseL();
-            new Point(530 + xx, 397 + yy).PressMouseL();    //координаты со скриншота в игре, поэтому нет   "- 5"
+            new Point(530 - 5 + xx + 13, 397 - 5 + yy + 35).PressMouseL();    //  y можно пробовать =405
         }
 
         /// <summary>
@@ -7958,7 +7801,6 @@ namespace OpenGEWindows
                     && new PointColor(983 - 5 + xx, 259 - 5 + yy, 16711422, 0).isColor();
         }
 
-
         /// <summary>
         /// по карте миссии тыкаем в точку, где враг
         /// </summary>
@@ -7988,7 +7830,6 @@ namespace OpenGEWindows
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
-
 
         /// <summary>
         /// идём к сундуку и открываем его
@@ -8033,7 +7874,6 @@ namespace OpenGEWindows
 
         }
 
-
         /// <summary>
         /// Закончилась Activity?
         /// </summary>
@@ -8043,7 +7883,6 @@ namespace OpenGEWindows
             return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4539892, 0).isColor()
                  && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4539892, 0).isColor();
         }
-
 
         /// <summary>
         /// комплекс действий при начале атаки в миссии на мосту
@@ -8122,6 +7961,212 @@ namespace OpenGEWindows
                     && new PointColor(924 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
                     && new PointColor(975 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(975 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();
+        }
+
+        #endregion
+
+        #region  ========================= Ферма ===============================
+
+        /// <summary>
+        /// поднимаем камеру в верхнюю точку
+        /// </summary>
+        public void MaxHeight(int n)
+        {
+            new Point(555 - 5 + xx, 430 - 5 + yy).Move();
+            for (int i = 1; i <= n; i++)
+            {
+                new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelUp();
+                //Pause(500); 
+            }
+        }
+
+        /// <summary>
+        /// опускаем камеру ниже к земле
+        /// </summary>
+        /// <param name="n"> количество оборотов мышки </param>
+        public void MinHeight(int n)
+        {
+            new Point(555 - 5 + xx, 430 - 5 + yy).Move();
+            for (int i = 1; i <= n; i++)
+            {
+                new Point(555 - 5 + xx, 430 - 5 + yy).PressMouseWheelDown();
+                Pause(500);
+            }
+        }
+
+        /// <summary>
+        /// тыкаем в аппарат на ферме
+        /// </summary>
+        public void PressApparate()
+        {
+            new Point(100 - 5 + xx, 100 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// положить яблоки в первый аппарат
+        /// </summary>
+        public void PutAppleToFirstStorage()
+        {
+            //Thing Apple = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 7465471, 0), 
+            //                        new PointColor(704 - 5 + xx, 180 - 5 + yy, 42495, 0));
+
+            DragItemToXY(Apple, 529 - 5 + xx, 181 - 5 + yy);  //перекладываем яблоки на аппарат
+            Pause(2000);
+
+            new Point(612 - 5 + xx, 398 - 5 + yy).PressMouseL();  //ок. подтверждаем количество
+            Pause(3000);
+
+            new Point(812 - 5 + xx, 339 - 5 + yy).PressMouseL();    //нажимаем "Insert"
+            Pause(1500);
+            new Point(950 - 5 + xx, 369 - 5 + yy).PressMouseL();    //нажимаем  "Ok"
+            Pause(1500);
+
+            botwindow.PressEscThreeTimes();
+            Pause(500);
+
+        }
+
+        /// <summary>
+        /// положить мед во второй аппарат
+        /// </summary>
+        public void PutHoneyToSecondStorage()
+        {
+            //Thing Honey = new Thing(new PointColor(697 - 5 + xx, 180 - 5 + yy, 4289893, 0), new PointColor(703 - 5 + xx, 180 - 5 + yy, 4487011, 0));
+
+            DragItemToXY(Honey, 492 - 5 + xx, 112 - 5 + yy);
+            Pause(1000);
+
+            new Point(612 - 5 + xx, 398 - 5 + yy).PressMouseL();
+            Pause(2000);
+
+            new Point(814 - 5 + xx, 339 - 5 + yy).PressMouseL();
+            Pause(500);
+            new Point(954 - 5 + xx, 369 - 5 + yy).PressMouseL();
+            Pause(500);
+
+            botwindow.PressEscThreeTimes();
+            Pause(500);
+
+        }
+
+        /// <summary>
+        /// нажать OK в форме о ежедневной награде
+        /// </summary>
+        public void PressOkDailyReward()
+        {
+            new Point(520 - 5 + xx, 444 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// выскочила ли форма о ежедневной награде на ферме
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDailyReward()
+        {
+            return new PointColor(522 - 5 + xx, 440 - 5 + yy, 7727344, 0).isColor() &&
+                   new PointColor(522 - 5 + xx, 441 - 5 + yy, 7727344, 0).isColor();
+        }
+
+        /// <summary>
+        /// нажать на карте на точку #1, близкую к аппарату
+        /// </summary>
+        public void PressPointNearlyApparatus1()
+        {
+            new Point(437 - 5 + xx, 470 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// нажать на карте на точку #2, близкую к аппарату
+        /// </summary>
+        public void PressPointNearlyApparatus2()
+        {
+            new Point(437 - 5 + xx, 501 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// на мосту ли мы?
+        /// </summary>
+        public bool isUstiar()
+        {
+            return     new PointColor(940 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(940 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(983 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(983 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// проверяем, открыта ли карта Мост (буква M в надписи Zone Map)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool isOpenMapUstiar()
+        {
+            return new PointColor(253 - 5 + xx, 125 - 5 + yy, 16382457, 0).isColor() &&
+                    new PointColor(253 - 5 + xx, 126 - 5 + yy, 16382457, 0).isColor();
+        }
+
+        /// <summary>
+        /// открываем карту Ребольдо с гарантией
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public void OpenMapUstiar()
+        {
+
+            //надёжно открываем карту Alt+Z
+            while (!isOpenMapUstiar())
+                TopMenu(12, 2, true);
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста идём к выбранному персонажу (в строке numberString )
+        /// </summary>
+        public void GotoPersonOnMapUstiar(int numberString)
+        {
+            new Point(740 - 5 + xx, 192 + (numberString - 1) * 15 - 5 + yy).DoubleClickL();   //тыкаем в указанную строку
+            Pause(500);
+            new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(2000);
+        }
+
+        /// <summary>
+        /// в уже открытой карте моста идём к Farm Manager
+        /// </summary>
+        public void GotoFarmManagerOnMapUstiar()
+        {
+            GotoPersonOnMapUstiar(4);
+        }
+
+        /// <summary>
+        /// проверяем, открыт ли городской телепорт (Alt+F3)  (буква l в слове Alt)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool isOpenTownTeleport()
+        {
+            return  new PointColor(114 - 5 + xx, 318 - 5 + yy, 11000000, 6).isColor() &&
+                    new PointColor(114 - 5 + xx, 325 - 5 + yy, 11000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// Открыть городской телепорт (Alt + F3) 
+        /// </summary>
+        public void OpenTownTeleport()
+        {
+            //надёжно открываем  городской телепорт (Alt + F3)
+            while (!isOpenTownTeleport())
+                TopMenu(12, 3);
+            Pause(500);
+        }
+
+        /// <summary>
+        /// переход по городскому телепорту (Alt + F3)
+        /// </summary>
+        /// <param name="NumberOfTeleport">номер телепорта по порядку (вверху - первый)</param>
+        public void WARP(int NumberOfTeleport)
+        {
+            OpenTownTeleport();
+            new Point(80 - 5 + xx, 363 - 5 + yy + (NumberOfTeleport - 1) * 30).DoubleClickL();
+
         }
 
         #endregion
