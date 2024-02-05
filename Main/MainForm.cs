@@ -1417,6 +1417,162 @@ namespace Main
 
         #endregion
 
+        #region ============================== Ферма (ежедневный подарок) =============================
+        private void Farm_Click(object sender, EventArgs e)
+        {
+            Farm.BackColor = Color.OrangeRed;
+            Thread myFarm = new Thread(funcFarm);
+            myFarm.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой Farm (ФЕРМА)
+        /// </summary>
+        private void funcFarm()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionFarmStage1();
+                                break;
+                            //case 2:
+                            //    check[j].problemResolutionBridgeMultiStage2();
+                            //    break;
+                            //case 3:
+                            //    check[j].problemResolutionBridgeMultiStage3();
+                            //    break;
+                            //case 4:
+                            //    check[j].problemResolutionBridgeMultiStage4();
+                            //    break;
+                            //case 5:
+                            //    check[j].problemResolutionBridgeMultiStage5();
+                            //    break;
+                            //case 6:
+                            //    check[j].problemResolutionBridgeMultiStage6();
+                            //    break;
+                                //case 7:
+                                //    check[j].problemResolutionBridgeMultiStage7();
+                                //    break;
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+
+
+
+        #endregion
+
+        /// <summary>
+        /// Все миссии на одной кнопке (пока Demonic+Castilia)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllinOne_Click(object sender, EventArgs e)
+        {
+            AllinOne.BackColor = Color.OrangeRed;
+            Thread myAllinOne = new Thread(funcAllinOne);
+            myAllinOne.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой AllinOne (Demonic+Castilia)
+        /// </summary>
+        private void funcAllinOne()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionDeliveryMultiStage1();
+                                break;
+                                //case 2:
+                                //    check[j].problemResolutionBridgeMultiStage2();
+                                //    break;
+                                //case 3:
+                                //    check[j].problemResolutionBridgeMultiStage3();
+                                //    break;
+                                //case 4:
+                                //    check[j].problemResolutionBridgeMultiStage4();
+                                //    break;
+                                //case 5:
+                                //    check[j].problemResolutionBridgeMultiStage5();
+                                //    break;
+                                //case 6:
+                                //    check[j].problemResolutionBridgeMultiStage6();
+                                //    break;
+                                //case 7:
+                                //    check[j].problemResolutionBridgeMultiStage7();
+                                //    break;
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+
     }// END class MainForm 
 }// END namespace OpenGEWindows
 

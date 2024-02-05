@@ -27,7 +27,7 @@ namespace States
         /// <summary>
         /// день недели по сингапурскому времени
         /// </summary>
-        private int WeekDay = 1;
+        private int WeekDay = 5;
         /// <summary>
         /// для миссии Кастилия. номер следующей точки маршрута
         /// </summary>
@@ -689,8 +689,7 @@ namespace States
             //if (server.isOpenSteamWindow()) { server.CloseSteamWindow(); server.CloseSteam(); }
             //служба Steam
             //if (server.isSteamService())    return 11;
-            //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;                         //не актуально в новой версии игры     22-11-23
+            
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
 
@@ -698,10 +697,12 @@ namespace States
             //ворота
             if (dialog.isDialog())
             {
+                if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;                         
                 if (server.isMissionNotAvailable())
-                    return 10;                      //если стоим в воротах Demonic и миссия не доступна
+                    return 10;                          //если стоим в воротах Demonic и миссия не доступна
                 else
-                    return 8;                       //если стоим в воротах Demonic и миссия доступна
+                    return 8;                           //если стоим в воротах Demonic и миссия доступна
             }
 
             //Mission Lobby
@@ -881,8 +882,8 @@ namespace States
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
-                    case 12:                                         // закрыть магазин //не актуально 22-11
-                        server.CloseExpMerch();
+                    case 12:                                         // закрыть магазин 
+                        server.CloseMerchReboldo();
                         break;
 
                     //case 14:
@@ -1177,6 +1178,7 @@ namespace States
                         server.BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
                         //Pause(5000);
                         server.GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        botwindow.PressEscThreeTimes();
                         //botParam.HowManyCyclesToSkip = 1;
                         break;
                     //===================================================================================
@@ -1335,7 +1337,7 @@ namespace States
                         server.OpeningTheChest();                       //тыкаем в сундук и запускаем рулетку
                         //driver.StateActivePetDem();                   //активируем пета (старый вариант)
                         server.MaxHeight(10);                        //чтобы точно было видно вторые ворота
-                        server.TopMenu(3,true);
+                        //server.TopMenu(3,true);                       //скриншот
 
                         server.PressOnFesoGate();
                         botwindow.Pause(2000);
@@ -1803,8 +1805,8 @@ namespace States
                 if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
             //в логауте
             if (server.isLogout()) return 1;
-            //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;                         //  22-11-23
+            ////случайно зашли в магазин Expedition Merchant в городе
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
 
@@ -1812,6 +1814,8 @@ namespace States
             // диалог
             if (dialog.isDialog())
             {
+                if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
                 if (server.isMissionCastiliaNotAvailable())
                     return 10;                      //если стоим в воротах Castilia и миссия не доступна
                 else
@@ -1953,7 +1957,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -2590,7 +2594,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -2798,7 +2802,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -2968,7 +2972,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -3130,7 +3134,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -3309,7 +3313,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -3476,7 +3480,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -3677,7 +3681,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -3728,22 +3732,16 @@ namespace States
             if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
-
             //если ошибка 820 (зависло окно ГЭ при загрузке)
             if (server.isError820()) return 33;
-
             //если выскочило сообщение о пользовательском соглашении
             if (server.isNewSteam()) return 34;
-
             //если ошибка Sandboxie 
             if (server.isErrorSandboxie()) return 35;
-
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
-
             //служба Steam
             if (server.isSteamService()) return 11;
-
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
@@ -3765,20 +3763,20 @@ namespace States
             {
                 if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
             }
-
             //случайно зашли в магазин Expedition Merchant в городе
-            //if (server.isExpedMerch()) return 12;                         //  22-11-23
-
+            if (server.isExpedMerch()) return 12;                         //  22-11-23
             //в логауте
             if (server.isLogout()) return 1;
-
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
-
+            //=========================================================================================================
             //ворота
             if (dialog.isDialog())
             {
-                return 8;                       //если диалог, связанный с получением задания
+                if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+                else
+                    return 8;                       //если диалог, связанный с получением задания
             }
 
             //город Ребольдо
@@ -3790,14 +3788,14 @@ namespace States
             if (server.isWork())
                 if (server.isBridge())
                     return 7;
-
+                else
+                    return 9;
+            //=========================================================================================================
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
-
-
             //если проблем не найдено
             return 0;
         }
@@ -3817,11 +3815,6 @@ namespace States
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemBridgeMultiStage1();
-
-                //if (SteamLoaded) dateSteam = DateTime.Now;
-                //dateNow = DateTime.Now;
-                //if ((dateNow - dateSteam).TotalMinutes > 5)
-                //    numberOfProblem = 31;
 
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
@@ -3870,11 +3863,14 @@ namespace States
 
 
                         break;
+                    case 9:                                         //в миссии
+                        botParam.Stage = 5;
+                        break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -4138,7 +4134,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -4404,7 +4400,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -4632,7 +4628,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -4730,7 +4726,10 @@ namespace States
             //диалог
             if (dialog.isDialog())
             {
-                return 8;                       //если диалог с квестодателем на мосту
+                if (server.isActivityOut())
+                    return 15;
+                else
+                    return 8;                       //если диалог с квестодателем на мосту
             }
             //город Ребольдо
             if (server.isTown())
@@ -4806,21 +4805,19 @@ namespace States
                         botParam.Stage = 6;
                         break;
                     case 8:                                         //Солдат. Диалог. Получение задания
-                        server.GotoIndividualMission(1, 1, WeekDay);         //ранг (1-7), тип миссии (1 - плюсовая, 3 - обычная), и день недели 
-                        if (dialog.isDialog() && server.isActivityOut())  //если всё еще в диалоге и выскочило сообщение о нехватке Activity
-                        {
-                            server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
-                            botParam.Stage = 1;
-                            botParam.HowManyCyclesToSkip = 1;
-                        }
-                        else
-                            botwindow.Pause(1000);
+                        server.GotoIndividualMission(1, 3, WeekDay);         //ранг (1-7), тип миссии (1 - плюсовая, 3 - обычная), и день недели 
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
+                        break;
+                    case 15:                                         // закончилась активность
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -4849,7 +4846,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                if (globalParam.TotalNumberOfAccounts == 1) Pause(2000);
                 //server.WriteToLogFileBH("Пауза 1000");
                 //server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
@@ -4911,18 +4908,17 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
 
-            ////ворота (не должно)
-            //if (dialog.isDialog())
-            //{
-            //    return 8;                       
-            //}
+            //диалог
+            if (dialog.isDialog())
+                if (server.isActivityOut())
+                    return 15;
 
             //город Ребольдо (не должно)
             if (server.isTown())
             {
                 return 6;
             }
-
+            //=====================================================================================================
             //если в миссии
             if (server.isWork())
             {
@@ -4934,11 +4930,17 @@ namespace States
                 {
                     if (server.isAssaultMode())
                         return 9;
+                    if (server.isBattleMode())
+                        if (server.isBossOrMobBridge())
+                            return 8;
+                        else
+                            return 7;
                     else
-                        return 7;
+                        return 10;  //не боевой и не ассаульт режим
                 }
             }
 
+            //=====================================================================================================
             //в логауте
             if (server.isLogout()) return 1;
 
@@ -4998,14 +5000,26 @@ namespace States
 
                         botParam.Stage = 5;
                         break;
+                    case 8:
+                        server.SkillAll();
+                        break;
                     case 9:
                         server.SkillAll();
+                        break;
+                    case 10:
+                        server.BattleModeOnDem();
+                        botParam.HowManyCyclesToSkip = 4;
                         break;
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
+                        break;
+                    case 15:                                         // на мосту в диалоге с солдатом. Закончилась активность
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
@@ -5034,7 +5048,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                if (globalParam.TotalNumberOfAccounts == 1) Pause(2000);
                 server.WriteToLogFileBH("Пауза 1000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
@@ -5056,22 +5070,16 @@ namespace States
             if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
             if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
             if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
-
             //если ошибка 820 (зависло окно ГЭ при загрузке)
             if (server.isError820()) return 33;
-
             //если выскочило сообщение о пользовательском соглашении
             if (server.isNewSteam()) return 34;
-
             //если ошибка Sandboxie 
             if (server.isErrorSandboxie()) return 35;
-
             //если ошибка Unexpected
             if (server.isUnexpectedError()) return 36;
-
             //служба Steam
             if (server.isSteamService()) return 11;
-
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
@@ -5093,20 +5101,18 @@ namespace States
             {
                 if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
             }
-
-            //случайно зашли в магазин Expedition Merchant в городе
-            //if (server.isExpedMerch()) return 12;                         //  22-11-23
-
             //в логауте
             if (server.isLogout()) return 1;
-
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
-
-            //ворота
-            if (dialog.isDialog())      //у мамона
+            //=================================================================================================
+            // диалог
+            if (dialog.isDialog())      
             {
-                return 8;                       
+                if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+                else
+                    return 8;           //у мамона            
             }
 
             //город Ребольдо
@@ -5132,7 +5138,7 @@ namespace States
                     return 7;
                 else
                     return 9;   //в миссии
-
+            //=================================================================================================
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
@@ -5208,7 +5214,7 @@ namespace States
                         server.CloseSteam();
                         break;
                     case 12:                                         // закрыть магазин 
-                        server.CloseExpMerch();
+                        server.CloseMerchReboldo();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -5967,6 +5973,259 @@ namespace States
 
         #endregion
 
+
+        #region  =================================== Farm Stage 1 ==============================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemFarmStage1()
+        {
+            //если открыто окно Стим
+            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (server.isError820()) return 33;
+
+            //если выскочило сообщение о пользовательском соглашении
+            if (server.isNewSteam()) return 34;
+
+            //если ошибка Sandboxie 
+            if (server.isErrorSandboxie()) return 35;
+
+            //если ошибка Unexpected
+            if (server.isUnexpectedError()) return 36;
+
+            //служба Steam
+            if (server.isSteamService()) return 11;
+
+            //если нет окна
+            if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                //return 21;
+
+                if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                {
+                    return 24;
+                }
+                else    //если Стим уже загружен
+                {
+                    if (server.FindWindowGEforBHBool())
+                        return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    else
+                        return 22;          //если нет окна ГЭ в текущей песочнице
+                }
+            }
+            else            //если окно с нужным HWND нашлось
+            {
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            }
+
+            //случайно зашли в магазин Expedition Merchant в городе
+            if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //в логауте
+            if (server.isLogout()) return 1;
+
+            // если неправильная стойка
+            if (server.isBadFightingStance()) return 19;
+
+            //============================================================================================================
+            //диалог
+            if (dialog.isDialog())
+            {
+                if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+                else
+                    return 8;        //Farm Manager               
+            }
+
+            //город
+            if (server.isTown())
+            {
+                if (server.isReboldo())
+                    return 6;               
+                if (server.isUstiar())
+                    return 5;
+            }
+
+            //на ферме
+            if (server.isWork())
+                if (server.isRewardAvailable())
+                    return 7;
+                else
+                    return 9;
+
+            //============================================================================================================
+
+            //в бараке
+            if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (server.isBarack()) return 2;                    //если стоят в бараке 
+            if (server.isBarackWarningYes()) return 16;
+            if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionFarmStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (server.isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    server.ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemFarmStage1();
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 1:     //зависли в логауте
+                        case 23:    //загруженное окно зависло и не смещается на нужное место (окно ГЭ есть, но isLogout() не срабатывает)
+                            server.WriteToLogFileBH("зависли в состоянии 1 или 23");
+                            numberOfProblem = 31;  //закрываем песочницу без перехода к следующему аккаунту
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                Random rand = new Random();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        driver.StateFromLogoutToBarackBH();         // Logout-->Barack   //ок   //сделано
+                        botParam.HowManyCyclesToSkip = 2;  //1
+                        break;
+                    case 2:
+                        server.FromBarackToTown();
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    //=========================================================================================
+                    case 5:                                         // в Юстиаре
+                        botwindow.PressEscThreeTimes();
+                        server.GotoFarmManager();
+                        break;
+                    case 6:                                         // в Ребольдо
+                        server.GoToUstiar();
+                        Pause(12000);
+                        break;
+                    case 7:                                         // на ферме. доступна награда
+                        server.GetRreward();
+                        Pause(1000);
+                        server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 8:                                         //диалог (Farm Manager --> Farm)
+                        dialog.PressStringDialog(1);
+                        if (dialog.isDialog()) dialog.PressOkButton(1);
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 9:                                         //на ферме. пока не доступна награда
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    //===========================================================================================
+                    case 11:                                         // закрыть службу Стим
+                        server.CloseSteam();
+                        break;
+                    case 12:                                         // закрыть магазин 
+                        server.CloseMerchReboldo();
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        server.PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 19:                                         // включить правильную стойку
+                        server.ProperFightingStanceOn();
+                        server.MoveCursorOfMouse();
+                        break;
+                    case 20:
+                        server.ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                                    //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                    case 22:
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            SteamLoaded = true;
+                            botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 23:                                    //есть окно стим
+                                                                //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                        IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        break;
+                    case 24:                //если нет стима, значит удалили песочницу
+                                            //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                        if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                        {
+                            botwindow = new botWindow(numberOfWindow);
+                            ServerFactory serverFactory = new ServerFactory(botwindow);
+                            this.server = serverFactory.create();
+                            this.globalParam = new GlobalParam();
+                            this.botParam = new BotParam(numberOfWindow);
+                            //************************ запускаем стим ************************************************************
+                            dateSteam = DateTime.Now;
+                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
+                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                        }
+                        break;
+                    case 31:
+                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        break;
+                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                        server.CloseError820();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                    case 34:
+                        server.AcceptUserAgreement();
+                        break;
+                    case 35:
+                        server.CloseErrorSandboxie();
+                        break;
+                    case 36:
+                        server.CloseUnexpectedError();
+                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                                  // а значит смело можно грузить окно еще раз
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts == 1) Pause(2000);
+                server.WriteToLogFileBH("Пауза 1000");
+                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+            }
+        }
+
+        #endregion
 
         #region Гильдия охотников BH (Infinity Multi)
 
@@ -7037,10 +7296,11 @@ namespace States
             //MessageBox.Show("появился сундук?" + server.isTreasureChest());   //22-11
 
             //botwindow.Pause(1000);
-
+            //server.WARP(3);
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
+            //MessageBox.Show("Юстиар ??? " + server.isUstiar());
             //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
@@ -7062,7 +7322,8 @@ namespace States
             //MessageBox.Show("открыта карта??? " + otit.isOpenMap());
             //MessageBox.Show("красное слово? " + dialog.isRedSerendbite());
             //MessageBox.Show("есть бутылки?" + server.isBottlesOnLeftPanel());
-            MessageBox.Show("Открыта карта Юстиара ??? " + server.isOpenMapUstiar());
+            //MessageBox.Show("Открыта карта Юстиара ??? " + server.isOpenMapUstiar());
+
             //server.OpenDetailInfo();
             //MessageBox.Show("Открыт Detail Info? " + server.isOpenDetailInfo(1));
             //MessageBox.Show("Штурмовой режим ? " + server.isAssaultMode());               //проверено
@@ -7106,6 +7367,9 @@ namespace States
             //MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
+            //MessageBox.Show("закончилась активность?" + server.isActivityOut());
+            //MessageBox.Show("магазин?" + (server.isExpedMerch() || server.isFactionMerch()));
+            //server.CloseMerchReboldo();
             //server.TopMenu(12, 3,true);
 
             //server.isBarackLastPoint();
@@ -7117,6 +7381,7 @@ namespace States
             //bool ff = aa.Contains(725272);
             //int tt = Array.IndexOf(aa, 7272);
             //MessageBox.Show(" " + ff + " " + tt);
+            //MessageBox.Show(" " + server.isExpedMerch());
 
             //server.FightToPoint(997 + 25, 160 + 25, 3);
             //server.Turn180();
@@ -7182,9 +7447,9 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            PointColor point1 = new PointColor(114 - 5 + xx, 318 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(114 - 5 + xx, 325 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(961 - 5 + xx, 259 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(378 - 5 + xx, 539 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(378 - 5 + xx, 540 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(983 - 5 + xx, 252 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

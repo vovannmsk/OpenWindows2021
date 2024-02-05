@@ -41,7 +41,6 @@
             this.button5 = new System.Windows.Forms.Button();
             this.buttonNewAcc = new System.Windows.Forms.Button();
             this.RunToCrater = new System.Windows.Forms.Button();
-            this.ButtonOpenWindow = new System.Windows.Forms.Button();
             this.sharpening = new System.Windows.Forms.Button();
             this.Nintendo = new System.Windows.Forms.Button();
             this.TransferVis = new System.Windows.Forms.Button();
@@ -55,6 +54,12 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.Farm = new System.Windows.Forms.Button();
+            this.ButtonOpenWindow = new System.Windows.Forms.Button();
+            this.PureOtiteNew = new System.Windows.Forms.Button();
+            this.Castilia = new System.Windows.Forms.Button();
+            this.DemonicStage2 = new System.Windows.Forms.Button();
+            this.Demonic = new System.Windows.Forms.Button();
             this.changing_accounts = new System.Windows.Forms.Button();
             this.startAccount = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -62,13 +67,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.bridge = new System.Windows.Forms.Button();
             this.NewYearDelivery = new System.Windows.Forms.Button();
-            this.Castilia = new System.Windows.Forms.Button();
-            this.DemonicStage2 = new System.Windows.Forms.Button();
-            this.Demonic = new System.Windows.Forms.Button();
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.PureOtiteNew = new System.Windows.Forms.Button();
+            this.AllinOne = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -101,7 +103,7 @@
             // buttonSuperSell
             // 
             this.buttonSuperSell.BackColor = System.Drawing.Color.Aqua;
-            this.buttonSuperSell.Location = new System.Drawing.Point(9, 50);
+            this.buttonSuperSell.Location = new System.Drawing.Point(198, 214);
             this.buttonSuperSell.Name = "buttonSuperSell";
             this.buttonSuperSell.Size = new System.Drawing.Size(170, 35);
             this.buttonSuperSell.TabIndex = 3;
@@ -122,7 +124,7 @@
             // button_StandUp
             // 
             this.button_StandUp.BackColor = System.Drawing.Color.PaleGreen;
-            this.button_StandUp.Location = new System.Drawing.Point(200, 49);
+            this.button_StandUp.Location = new System.Drawing.Point(198, 255);
             this.button_StandUp.Name = "button_StandUp";
             this.button_StandUp.Size = new System.Drawing.Size(170, 35);
             this.button_StandUp.TabIndex = 20;
@@ -133,7 +135,7 @@
             // buttonWarning
             // 
             this.buttonWarning.BackColor = System.Drawing.Color.SkyBlue;
-            this.buttonWarning.Location = new System.Drawing.Point(200, 9);
+            this.buttonWarning.Location = new System.Drawing.Point(9, 214);
             this.buttonWarning.Name = "buttonWarning";
             this.buttonWarning.Size = new System.Drawing.Size(170, 35);
             this.buttonWarning.TabIndex = 22;
@@ -145,7 +147,7 @@
             // 
             this.buttonGotoTradeTest.BackColor = System.Drawing.Color.White;
             this.buttonGotoTradeTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonGotoTradeTest.Location = new System.Drawing.Point(9, 91);
+            this.buttonGotoTradeTest.Location = new System.Drawing.Point(198, 296);
             this.buttonGotoTradeTest.Name = "buttonGotoTradeTest";
             this.buttonGotoTradeTest.Size = new System.Drawing.Size(170, 35);
             this.buttonGotoTradeTest.TabIndex = 45;
@@ -178,24 +180,13 @@
             // RunToCrater
             // 
             this.RunToCrater.BackColor = System.Drawing.Color.Lime;
-            this.RunToCrater.Location = new System.Drawing.Point(193, 230);
+            this.RunToCrater.Location = new System.Drawing.Point(193, 15);
             this.RunToCrater.Name = "RunToCrater";
             this.RunToCrater.Size = new System.Drawing.Size(170, 35);
             this.RunToCrater.TabIndex = 50;
             this.RunToCrater.Text = "Бежим до кратера";
             this.RunToCrater.UseVisualStyleBackColor = false;
             this.RunToCrater.Click += new System.EventHandler(this.RunToCrater_Click);
-            // 
-            // ButtonOpenWindow
-            // 
-            this.ButtonOpenWindow.BackColor = System.Drawing.Color.Gold;
-            this.ButtonOpenWindow.Location = new System.Drawing.Point(193, 15);
-            this.ButtonOpenWindow.Name = "ButtonOpenWindow";
-            this.ButtonOpenWindow.Size = new System.Drawing.Size(170, 35);
-            this.ButtonOpenWindow.TabIndex = 52;
-            this.ButtonOpenWindow.Text = "ФЕРМА";
-            this.ButtonOpenWindow.UseVisualStyleBackColor = false;
-            this.ButtonOpenWindow.Click += new System.EventHandler(this.ButtonOpenWindow_Click);
             // 
             // sharpening
             // 
@@ -279,7 +270,7 @@
             // undressing
             // 
             this.undressing.BackColor = System.Drawing.Color.Peru;
-            this.undressing.Location = new System.Drawing.Point(17, 183);
+            this.undressing.Location = new System.Drawing.Point(17, 136);
             this.undressing.Name = "undressing";
             this.undressing.Size = new System.Drawing.Size(170, 35);
             this.undressing.TabIndex = 59;
@@ -329,13 +320,20 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 201);
+            this.tabControl1.Size = new System.Drawing.Size(386, 396);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.SeaShell;
             this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage1.Controls.Add(this.AllinOne);
+            this.tabPage1.Controls.Add(this.Farm);
+            this.tabPage1.Controls.Add(this.ButtonOpenWindow);
+            this.tabPage1.Controls.Add(this.PureOtiteNew);
+            this.tabPage1.Controls.Add(this.Castilia);
+            this.tabPage1.Controls.Add(this.DemonicStage2);
+            this.tabPage1.Controls.Add(this.Demonic);
             this.tabPage1.Controls.Add(this.changing_accounts);
             this.tabPage1.Controls.Add(this.startAccount);
             this.tabPage1.Controls.Add(this.label2);
@@ -350,9 +348,74 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 175);
+            this.tabPage1.Size = new System.Drawing.Size(378, 370);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
+            // 
+            // Farm
+            // 
+            this.Farm.BackColor = System.Drawing.Color.Gold;
+            this.Farm.Location = new System.Drawing.Point(198, 50);
+            this.Farm.Name = "Farm";
+            this.Farm.Size = new System.Drawing.Size(170, 35);
+            this.Farm.TabIndex = 75;
+            this.Farm.Text = "ФЕРМА (подарок)";
+            this.Farm.UseVisualStyleBackColor = false;
+            this.Farm.Click += new System.EventHandler(this.Farm_Click);
+            // 
+            // ButtonOpenWindow
+            // 
+            this.ButtonOpenWindow.BackColor = System.Drawing.Color.Gold;
+            this.ButtonOpenWindow.Location = new System.Drawing.Point(9, 296);
+            this.ButtonOpenWindow.Name = "ButtonOpenWindow";
+            this.ButtonOpenWindow.Size = new System.Drawing.Size(170, 35);
+            this.ButtonOpenWindow.TabIndex = 74;
+            this.ButtonOpenWindow.Text = "ФЕРМА(Алхимия)";
+            this.ButtonOpenWindow.UseVisualStyleBackColor = false;
+            this.ButtonOpenWindow.Click += new System.EventHandler(this.ButtonOpenWindow_Click);
+            // 
+            // PureOtiteNew
+            // 
+            this.PureOtiteNew.BackColor = System.Drawing.Color.Tomato;
+            this.PureOtiteNew.Location = new System.Drawing.Point(198, 10);
+            this.PureOtiteNew.Name = "PureOtiteNew";
+            this.PureOtiteNew.Size = new System.Drawing.Size(170, 34);
+            this.PureOtiteNew.TabIndex = 73;
+            this.PureOtiteNew.Text = "Чистый Отит (новый)";
+            this.PureOtiteNew.UseVisualStyleBackColor = false;
+            this.PureOtiteNew.Click += new System.EventHandler(this.PureOtiteNew_Click);
+            // 
+            // Castilia
+            // 
+            this.Castilia.BackColor = System.Drawing.Color.Turquoise;
+            this.Castilia.Location = new System.Drawing.Point(9, 91);
+            this.Castilia.Name = "Castilia";
+            this.Castilia.Size = new System.Drawing.Size(170, 35);
+            this.Castilia.TabIndex = 72;
+            this.Castilia.Text = "Castilia. Много окон";
+            this.Castilia.UseVisualStyleBackColor = false;
+            this.Castilia.Click += new System.EventHandler(this.Castilia_Click);
+            // 
+            // DemonicStage2
+            // 
+            this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
+            this.DemonicStage2.Location = new System.Drawing.Point(9, 50);
+            this.DemonicStage2.Name = "DemonicStage2";
+            this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
+            this.DemonicStage2.TabIndex = 71;
+            this.DemonicStage2.Text = "Demonic. Много окон";
+            this.DemonicStage2.UseVisualStyleBackColor = false;
+            this.DemonicStage2.Click += new System.EventHandler(this.DemonicStage2_Click);
+            // 
+            // Demonic
+            // 
+            this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
+            this.Demonic.Location = new System.Drawing.Point(9, 255);
+            this.Demonic.Name = "Demonic";
+            this.Demonic.Size = new System.Drawing.Size(170, 35);
+            this.Demonic.TabIndex = 70;
+            this.Demonic.Text = "Demonic. Одно окно";
+            this.Demonic.UseVisualStyleBackColor = false;
             // 
             // changing_accounts
             // 
@@ -391,7 +454,7 @@
             this.ChangingAccounts.Name = "ChangingAccounts";
             this.ChangingAccounts.Size = new System.Drawing.Size(170, 35);
             this.ChangingAccounts.TabIndex = 66;
-            this.ChangingAccounts.Text = "Потоковая продажа аккаунтов";
+            this.ChangingAccounts.Text = "Перебор аккаунтов (песочница)";
             this.ChangingAccounts.UseVisualStyleBackColor = false;
             this.ChangingAccounts.Click += new System.EventHandler(this.ChangingAccounts_Click_1);
             // 
@@ -401,9 +464,6 @@
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabPage2.Controls.Add(this.bridge);
             this.tabPage2.Controls.Add(this.NewYearDelivery);
-            this.tabPage2.Controls.Add(this.Castilia);
-            this.tabPage2.Controls.Add(this.DemonicStage2);
-            this.tabPage2.Controls.Add(this.Demonic);
             this.tabPage2.Controls.Add(this.LoadSteams);
             this.tabPage2.Controls.Add(this.alchemy);
             this.tabPage2.Controls.Add(this.labelEnchanting);
@@ -414,7 +474,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 175);
+            this.tabPage2.Size = new System.Drawing.Size(378, 173);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -422,7 +482,7 @@
             // 
             this.bridge.BackColor = System.Drawing.Color.Yellow;
             this.bridge.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.bridge.Location = new System.Drawing.Point(202, 129);
+            this.bridge.Location = new System.Drawing.Point(202, 47);
             this.bridge.Name = "bridge";
             this.bridge.Size = new System.Drawing.Size(170, 35);
             this.bridge.TabIndex = 69;
@@ -434,46 +494,13 @@
             // 
             this.NewYearDelivery.BackColor = System.Drawing.Color.Yellow;
             this.NewYearDelivery.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.NewYearDelivery.Location = new System.Drawing.Point(202, 211);
+            this.NewYearDelivery.Location = new System.Drawing.Point(6, 88);
             this.NewYearDelivery.Name = "NewYearDelivery";
             this.NewYearDelivery.Size = new System.Drawing.Size(170, 35);
             this.NewYearDelivery.TabIndex = 68;
             this.NewYearDelivery.Text = "Новогодняя доставка";
             this.NewYearDelivery.UseVisualStyleBackColor = false;
             this.NewYearDelivery.Click += new System.EventHandler(this.NewYearDelivery_Click);
-            // 
-            // Castilia
-            // 
-            this.Castilia.BackColor = System.Drawing.Color.Turquoise;
-            this.Castilia.Location = new System.Drawing.Point(202, 47);
-            this.Castilia.Name = "Castilia";
-            this.Castilia.Size = new System.Drawing.Size(170, 35);
-            this.Castilia.TabIndex = 67;
-            this.Castilia.Text = "Castilia. Много окон";
-            this.Castilia.UseVisualStyleBackColor = false;
-            this.Castilia.Click += new System.EventHandler(this.Castilia_Click);
-            // 
-            // DemonicStage2
-            // 
-            this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
-            this.DemonicStage2.Location = new System.Drawing.Point(6, 129);
-            this.DemonicStage2.Name = "DemonicStage2";
-            this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
-            this.DemonicStage2.TabIndex = 66;
-            this.DemonicStage2.Text = "Demonic. Много окон";
-            this.DemonicStage2.UseVisualStyleBackColor = false;
-            this.DemonicStage2.Click += new System.EventHandler(this.DemonicStage2_Click);
-            // 
-            // Demonic
-            // 
-            this.Demonic.BackColor = System.Drawing.Color.GreenYellow;
-            this.Demonic.Location = new System.Drawing.Point(6, 88);
-            this.Demonic.Name = "Demonic";
-            this.Demonic.Size = new System.Drawing.Size(170, 35);
-            this.Demonic.TabIndex = 65;
-            this.Demonic.Text = "Demonic. Одно окно";
-            this.Demonic.UseVisualStyleBackColor = false;
-            this.Demonic.Click += new System.EventHandler(this.Demonic_Click);
             // 
             // LoadSteams
             // 
@@ -491,9 +518,7 @@
             // 
             this.tabPage3.BackColor = System.Drawing.Color.LightCyan;
             this.tabPage3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabPage3.Controls.Add(this.PureOtiteNew);
             this.tabPage3.Controls.Add(this.PureOtiteMulti);
-            this.tabPage3.Controls.Add(this.ButtonOpenWindow);
             this.tabPage3.Controls.Add(this.undressing);
             this.tabPage3.Controls.Add(this.button5);
             this.tabPage3.Controls.Add(this.GoldenEggFruit);
@@ -503,7 +528,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 180);
+            this.tabPage3.Size = new System.Drawing.Size(378, 173);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -518,23 +543,23 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // PureOtiteNew
+            // AllinOne
             // 
-            this.PureOtiteNew.BackColor = System.Drawing.Color.Tomato;
-            this.PureOtiteNew.Location = new System.Drawing.Point(17, 136);
-            this.PureOtiteNew.Name = "PureOtiteNew";
-            this.PureOtiteNew.Size = new System.Drawing.Size(170, 34);
-            this.PureOtiteNew.TabIndex = 61;
-            this.PureOtiteNew.Text = "Чистый Отит (новый)";
-            this.PureOtiteNew.UseVisualStyleBackColor = false;
-            this.PureOtiteNew.Click += new System.EventHandler(this.PureOtiteNew_Click);
+            this.AllinOne.BackColor = System.Drawing.Color.GreenYellow;
+            this.AllinOne.Location = new System.Drawing.Point(198, 173);
+            this.AllinOne.Name = "AllinOne";
+            this.AllinOne.Size = new System.Drawing.Size(170, 35);
+            this.AllinOne.TabIndex = 76;
+            this.AllinOne.Text = "Demonic+Castilia";
+            this.AllinOne.UseVisualStyleBackColor = false;
+            this.AllinOne.Click += new System.EventHandler(this.AllinOne_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 201);
+            this.ClientSize = new System.Drawing.Size(386, 396);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -570,7 +595,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button buttonNewAcc;
         private System.Windows.Forms.Button RunToCrater;
-        private System.Windows.Forms.Button ButtonOpenWindow;
         private System.Windows.Forms.Button sharpening;
         private System.Windows.Forms.Button Nintendo;
         private System.Windows.Forms.Button TransferVis;
@@ -591,13 +615,16 @@
         private System.Windows.Forms.NumericUpDown startAccount;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button PureOtiteMulti;
-        private System.Windows.Forms.Button Demonic;
-        private System.Windows.Forms.Button DemonicStage2;
         private System.Windows.Forms.Button changing_accounts;
-        private System.Windows.Forms.Button Castilia;
         private System.Windows.Forms.Button NewYearDelivery;
         private System.Windows.Forms.Button bridge;
+        private System.Windows.Forms.Button Castilia;
+        private System.Windows.Forms.Button DemonicStage2;
+        private System.Windows.Forms.Button Demonic;
+        private System.Windows.Forms.Button ButtonOpenWindow;
         private System.Windows.Forms.Button PureOtiteNew;
+        private System.Windows.Forms.Button Farm;
+        private System.Windows.Forms.Button AllinOne;
     }
 }
 

@@ -539,50 +539,19 @@ namespace States
             }
         }
 
-        /// <summary>
-        /// получение журнала по ивенту на фонтане для всех серверов
-        /// </summary>
-        public void StateInputOutput5()
-        {
-            if (!server.isHwnd())   //если окно еще не загружено, то грузим и идём в миссию
-            {
-                botParam.NumberOfInfinity = globalParam.Infinity;
-                globalParam.Infinity++;
-                StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
 
-                StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // временно поставил эту строку   // закрываем проги в песочнице
-
-                //if (Server.AccountBusy)
-                //{
-                //    StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
-                //}
-                //else
-                //{
-                //    StateDriverRun(new StateGT251(botwindow), new StateGT259(botwindow));  // Фонтан-Диалог-Миссия
-                //}
-
-            }
-            //else      // а если окно уже есть, то значит миссия уже пройдена и надо получить награду и удалить песочницу
-            //{
-            //    botwindow.ReOpenWindow();
-            //    if (server.isTown())  //если уже вышли из миссии
-            //    {
-            //        StateDriverRun(new StateGT257(botwindow), new StateGT259(botwindow));  // Фонтан-Диалог-Фонтан
-            //        StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
-            //    }
-            //}
-
-        }
 
         /// <summary>
         /// продажа всех аккаунтов в Катовии один за другим
         /// </summary>
         public void StateInputOutput6()
         {
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
+            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            //botwindow.Pause(5000); //12000
 
-            botwindow.Pause(5000); //12000
+            //создание новой команды FERMA
+            StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
+            server.NewTeamCreating();
 
             #region  архив 
             //botwindow.PressEscThreeTimes();

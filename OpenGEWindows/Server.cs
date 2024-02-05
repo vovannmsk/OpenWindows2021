@@ -2010,18 +2010,29 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, открыт ли мировой телепорт (Alt+W)  (буква M в слове Managed)
+        /// </summary>
+        /// <returns>true, если открыт</returns>
+        public bool isOpenWorldTeleport()
+        {
+            return new PointColor(747 - 5 + xx, 252 - 5 + yy, 13000000, 6).isColor() &&
+                   new PointColor(747 - 5 + xx, 260 - 5 + yy, 13000000, 6).isColor();
+        }
+
+        /// <summary>
         /// телепортируемся в город по Alt+W             /21-12-23/
         /// </summary>
+        /// <param name="NumberOfTown">номер телепорта, начиная сверху</param>
         public void TeleportAltW(int NumberOfTown)
         {
-            if (NumberOfTown >= 15)
-            {
-                NumberOfTown = 1;              //если номер телепорта больше 15, то летим в Ребольдо
-            }
+            if (NumberOfTown > 15) NumberOfTown = 1;              //если номер телепорта больше 15, то летим в Ребольдо
 
-            TopMenu(12, 1,true);
-            Pause(1000);
-            new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();        
+            while (!isOpenWorldTeleport())
+            {
+                TopMenu(12, 1, true);
+                Pause(500);
+            }
+            new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();
         }
 
         /// <summary>
@@ -6286,16 +6297,29 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isExpedMerch()
         {
-            return new PointColor(843 - 5 + xx, 616 - 5 + yy, 12118521, 0).isColor() &&
-                    new PointColor(843 - 5 + xx, 616 - 5 + yy, 12118521, 0).isColor();
+            return new PointColor(420 - 5 + xx, 539 - 5 + yy, 7400000, 5).isColor() &&
+                    new PointColor(420 - 5 + xx, 540 - 5 + yy, 7400000, 5).isColor();
         }
 
         /// <summary>
+        /// находимся в Expedition Merchant ?
+        /// </summary>
+        /// <returns></returns>
+        public bool isFactionMerch()
+        {
+            return new PointColor(378 - 5 + xx, 539 - 5 + yy, 7400000, 5).isColor() &&
+                    new PointColor(378 - 5 + xx, 540 - 5 + yy, 7400000, 5).isColor();
+        }
+        /// <summary>
         /// закрываем магазин Exped Merch
         /// </summary>
-        public void CloseExpMerch()
+        public void CloseMerchReboldo()
         {
-            new Point(843 - 5 + xx, 616 - 5 + yy).PressMouseL();
+            //new Point(843 - 5 + xx, 616 - 5 + yy).PressMouseL();
+            //dialog.PressStringDialog(2);
+            dialog.PressOkButton(1);
+            Pause(500);
+            if (dialog.isDialog()) dialog.PressOkButton(1);
         }
 
 
@@ -7346,7 +7370,7 @@ namespace OpenGEWindows
         public void PressButtonRelic()
         {
             iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
-            for (int i = 1; i <= 200; i++)
+            for (int i = 1; i <= 2000; i++)
             {
                 botwindow.ActiveWindowBH();
                 p1.PressMouseL();
@@ -7695,7 +7719,7 @@ namespace OpenGEWindows
         #region ================ Bridge =========================
         
         /// <summary>
-        /// открываем карту Ребольдо с гарантией
+        /// открываем карту Моста с гарантией
         /// </summary>
         /// <returns>true, если есть</returns>
         public void OpenMapBridge()
@@ -7783,7 +7807,7 @@ namespace OpenGEWindows
         public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
         {
             dialog.PressStringDialog(8 - rank);             //выбираем ранг
-            //dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
+            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
             dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
             dialog.PressStringDialog(1);                    // в миссию (join) 
 
@@ -7807,19 +7831,20 @@ namespace OpenGEWindows
         /// <param name="weekDay"> день недели по сингапурскому времени </param>
         public void AttackTheEnemy(int weekDay)
         {
-            iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),      //1+ понедельник, тигр
+            iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),        //1+ понедельник, тигр
                                         new Point(415 - 5 + xx, 303 - 5 + yy),          // 1+ понедельник, животные
-                                        //new Point(595 - 5 + xx, 296 - 5 + yy),      //2+ понедельник, паук
-                                        new Point(390 - 5 + xx, 550 - 5 + yy),      //1+ вторник, human
-                                        //new Point(430 - 5 + xx, 340 - 5 + yy),      // 2+ вторник, human
-                                        //new Point(636 - 5 + xx, 495 - 5 + yy),      // 1+ среда, demon
-                                        //new Point(424 - 5 + xx, 240 - 5 + yy),      // 2+ среда, demon
-                                        new Point(553 - 5 + xx, 245 - 5 + yy),      // 3 среда, demon
-                                        new Point(422 - 5 + xx, 322 - 5 + yy),      // 1 четверг
-                                        //new Point(567 - 5 + xx, 479 - 5 + yy),    // 1+ пятница
-                                        //new Point(459 - 5 + xx, 408 - 5 + yy),    // 2 пятница не надёжно
-                                        new Point(461 - 5 + xx, 501 - 5 + yy),      // 2+ пятница
-                                        //new Point(335 - 5 + xx, 399 - 5 + yy),      // 3 пятница
+                                        //new Point(595 - 5 + xx, 296 - 5 + yy),        //2+ понедельник, паук
+                                        new Point(390 - 5 + xx, 550 - 5 + yy),          //1+ вторник, human
+                                        //new Point(430 - 5 + xx, 340 - 5 + yy),        // 2+ вторник, human
+                                        //new Point(636 - 5 + xx, 495 - 5 + yy),        // 1+ среда, demon
+                                        //new Point(424 - 5 + xx, 240 - 5 + yy),        // 2+ среда, demon
+                                        new Point(553 - 5 + xx, 245 - 5 + yy),          // 3 среда, demon
+                                        new Point(422 - 5 + xx, 322 - 5 + yy),          // 1 четверг
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 пятница (undead череп)
+                                        //new Point(567 - 5 + xx, 479 - 5 + yy),        // 1+ пятница
+                                        //new Point(459 - 5 + xx, 408 - 5 + yy),        // 2 пятница не надёжно
+                                        //new Point(461 - 5 + xx, 501 - 5 + yy),        // 2+ пятница
+                                        //new Point(335 - 5 + xx, 399 - 5 + yy),        // 3 пятница
             };
             //открываем карту Alt+Z
             TopMenu(12, 2, true);
@@ -7845,9 +7870,10 @@ namespace OpenGEWindows
                                         //new Point(424 - 5 + xx, 240 - 5 + yy),        // 2+ среда, demon
                                         new Point(553 - 5 + xx, 245 - 5 + yy),          // 3  среда, demon
                                         new Point(422 - 5 + xx, 322 - 5 + yy),          // 1  четверг
+                                        new Point(567 - 5 + xx, 479 - 5 + yy),        // 1 пятница
                                         //new Point(567 - 5 + xx, 479 - 5 + yy),        // 1+ пятница
                                         //new Point(457 - 5 + xx, 405 - 5 + yy),        // 2  пятница                        
-                                        new Point(461 - 5 + xx, 501 - 5 + yy),          // 2+ пятница
+                                        //new Point(461 - 5 + xx, 501 - 5 + yy),          // 2+ пятница
                                         //new Point(335 - 5 + xx, 399 - 5 + yy),        // 3  пятница
             };
             //iPoint[] PressChest = { new Point(396 - 5 + xx, 482 - 5 + yy),
@@ -7868,7 +7894,7 @@ namespace OpenGEWindows
             //botwindow.PressEscThreeTimes();
             //Pause(2000);
 
-            new Point(396 - 5 + xx, 482 - 5 + yy).PressMouseL();  //нажимаем на сундук
+            new Point(356 - 5 + xx, 462 - 5 + yy).PressMouseL();  //нажимаем на сундук      //было 396 482
             //PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
             Pause(4000);                               //ждём рулетку
 
@@ -7880,8 +7906,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isActivityOut()
         {
-            return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4539892, 0).isColor()
-                 && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4539892, 0).isColor();
+            return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4530000, 4).isColor()
+                 && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4530000, 4).isColor();
         }
 
         /// <summary>
@@ -7945,6 +7971,23 @@ namespace OpenGEWindows
             Skill(Hero2, 2, false);
             Skill(Hero3, 3, false);
             MoveCursorOfMouse();
+        }
+
+        /// <summary>
+        /// есть ли кто в прицеле? только для миссий на мосту
+        /// </summary>
+        /// <returns>true, если кто-то есть в прицеле</returns>
+        public bool isBossOrMobBridge()
+        {
+            //проверяем букву D в слове Ancient
+
+            //return new PointColor(456 - 5 + xx, 103 - 5 + yy, 12434870, 1).isColor() ||
+            //            new PointColor(456 - 5 + xx, 103 - 5 + yy, 4000000, 6).isColor() ||
+            //            new PointColor(456 - 5 + xx, 103 - 5 + yy, 7314875, 0).isColor() ||
+            //            new PointColor(456 - 5 + xx, 103 - 5 + yy, 7462629, 0).isColor();
+
+            return false;
+
         }
 
         #endregion
@@ -8084,14 +8127,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// на мосту ли мы?
+        /// мы в Юстиаре?
         /// </summary>
         public bool isUstiar()
         {
-            return     new PointColor(940 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(940 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(983 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
-                    && new PointColor(983 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
+            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
         }
 
         /// <summary>
@@ -8105,7 +8148,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открываем карту Ребольдо с гарантией
+        /// открываем карту Юстиара с гарантией
         /// </summary>
         /// <returns>true, если есть</returns>
         public void OpenMapUstiar()
@@ -8126,15 +8169,20 @@ namespace OpenGEWindows
             new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
             Pause(500);
             botwindow.PressEscThreeTimes();
-            Pause(2000);
         }
 
         /// <summary>
-        /// в уже открытой карте моста идём к Farm Manager
+        /// идём к Farm Manager
         /// </summary>
-        public void GotoFarmManagerOnMapUstiar()
+        public void GotoFarmManager()
         {
+            WARP(3);
+            MinHeight(10);
+            OpenMapUstiar();
+            Pause(500);
             GotoPersonOnMapUstiar(4);
+            Pause(2000);
+            PressOnFarmManager();
         }
 
         /// <summary>
@@ -8154,7 +8202,10 @@ namespace OpenGEWindows
         {
             //надёжно открываем  городской телепорт (Alt + F3)
             while (!isOpenTownTeleport())
-                TopMenu(12, 3);
+                if (isTown())
+                    TopMenu(12, 3, true);
+                else
+                    break;      //выход из while
             Pause(500);
         }
 
@@ -8166,8 +8217,92 @@ namespace OpenGEWindows
         {
             OpenTownTeleport();
             new Point(80 - 5 + xx, 363 - 5 + yy + (NumberOfTeleport - 1) * 30).DoubleClickL();
-
         }
+
+        /// <summary>
+        /// идём в Ребольдо
+        /// </summary>
+        public void GoToUstiar()
+        {
+            botwindow.PressEscThreeTimes();
+            TeleportAltW(4);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// переход из казарм в стартовый город
+        /// </summary>
+        public void FromBarackToTown()
+        {
+            //============ выбор персонажей  ===========
+            TeamSelection(3);  
+            Pause(500);
+
+            //============ выбор канала ===========
+            botwindow.SelectChannel(3);                 //12.03.2023
+
+            //============ выход в город  ===========
+            NewPlace();                //начинаем в ребольдо  
+
+            botwindow.Pause(1000);
+            botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку 
+
+            if (isBarackWarningYes()) PressYesBarack();    //сделано
+            botwindow.Pause(500);
+
+            botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
+        }
+
+        /// <summary>
+        /// тыкаем в голову Farm Manager
+        /// </summary>
+        public void PressOnFarmManager()
+        {
+            new Point(536 - 5 + xx, 125 - 5 + yy).DoubleClickL();
+        }
+
+        /// <summary>
+        /// проверяем, доступна ли награда на ферме (буква К в слове Ок на кнопке)
+        /// </summary>
+        /// <returns>true, если есть</returns>
+        public bool isRewardAvailable()
+        {
+            return new PointColor(827 - 5 + xx, 456 - 5 + yy, 11000000, 6).isColor() &&
+                    new PointColor(827 - 5 + xx, 457 - 5 + yy, 11000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// получить награду на ферме
+        /// </summary>
+        public void GetRreward()
+        {
+            new Point(827 - 5 + xx, 460 - 5 + yy).DoubleClickL();
+        }
+
+        /// <summary>
+        /// делаем в бараке новую команду для фермы
+        /// </summary>
+        public void NewTeamCreating()
+        {
+            pointTeamSelection1.DoubleClickL();                         // Нажимаем кнопку вызова списка групп
+            Pause(500);
+
+            new Point(680 - 5 + xx, 120 - 5 + yy).PressMouseL();        //выбираем третьего героя
+            new Point(680 - 5 + xx, 120 - 5 + yy).DoubleClickL();        //убираем из команды третьего героя
+            Pause(500);
+            new Point(530 - 5 + xx, 120 - 5 + yy).PressMouseL();        //выбираем второго героя
+            new Point(530 - 5 + xx, 120 - 5 + yy).DoubleClickL();        //убираем из команды второго героя
+            Pause(500);
+
+            new Point(97 - 5 + xx, 590 - 5 + yy).PressMouseL();         //тыкаем 
+            new Point(97 - 5 + xx, 661 - 5 + yy).PressMouseL();         //тыкаем в поле с названием команды
+            Pause(500);
+            SendKeys.SendWait("FERMA");
+            Pause(500);
+            new Point(189 - 5 + xx, 661 - 5 + yy).PressMouseL();        //save
+            Pause(500);
+        }
+
 
         #endregion
 
