@@ -9,6 +9,7 @@ using GEBot.Data;
 using System.Diagnostics;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Media;
+using OpenGEWindows;
 
 namespace OpenGEWindows
 {
@@ -32,6 +33,18 @@ namespace OpenGEWindows
 
 
         #region статические переменные
+
+        /// <summary>
+        /// Если никакой Steam не грузится, то переменная = 0. Значит можно грузить новый Стим.
+        /// Если Стим грузится, то переменная равна номеру окна (numberOfWindow)
+        /// </summary>
+        private static int IsItAlreadyPossibleToUploadNewSteam = 0;
+
+        /// <summary>
+        /// Если никакое окно с игрой не грузится, то переменная = 0. 
+        /// Если окно грузится, то переменная равна номеру окна (numberOfWindow)
+        /// </summary>
+        private static int IsItAlreadyPossibleToUploadNewWindow = 0;
 
         /// <summary>
         /// true, если окно загружено на другом компе
@@ -60,6 +73,7 @@ namespace OpenGEWindows
         protected int yy;
         protected int xxx;
         protected int yyy;
+        protected int numberOfWindow;
 
         #endregion
 
@@ -74,16 +88,16 @@ namespace OpenGEWindows
         #region параметры, зависящие от сервера
 
         protected string pathClient;
-        
+
         /// <summary>
         /// это свойство можно использовать везде вместо метода isActive()
         /// </summary>
-        protected bool isActiveServer;                       
+        protected bool isActiveServer;
 
         #endregion
 
         #region No Window
-        
+
         protected iPointColor pointSafeIP1;
         protected iPointColor pointSafeIP2;
         protected iPointColor pointisSteam1;
@@ -264,7 +278,7 @@ namespace OpenGEWindows
         protected iPointColor pointisBulletOff1;       //если патронов почти нет (красный значок) первый перс
         protected iPointColor pointisBulletOff2;       //если патронов почти нет (красный значок) второй перс
         protected iPointColor pointisBulletOff3;       //если патронов почти нет (красный значок) третий перс
-        protected iPointColor pointisAssaultMode1;    
+        protected iPointColor pointisAssaultMode1;
         protected iPointColor pointisAssaultMode2;
         #endregion
 
@@ -618,8 +632,8 @@ namespace OpenGEWindows
         #endregion
 
         #region Вход-выход
-            protected iPointColor pointisBeginOfMission1;
-            protected iPointColor pointisBeginOfMission2;
+        protected iPointColor pointisBeginOfMission1;
+        protected iPointColor pointisBeginOfMission2;
         #endregion
 
         #region Работа с инвентарем и CASH-инвентарем
@@ -687,9 +701,9 @@ namespace OpenGEWindows
         Item Steroid10Hours2 = new Item(36, 211, 11690052);
         Item Steroid10Hours = new Item(36, 211, 11296065);
         Item Principle10Hours = new Item(37, 210, 3226091);
-        Item SteroidOneHour = new Item(36, 216, 15082944);     
+        Item SteroidOneHour = new Item(36, 216, 15082944);
         Item Steroid10HoursHP = new Item(43, 213, 16732560);
-        Item PrincipleOneHour = new Item(43, 214, 16756209);    
+        Item PrincipleOneHour = new Item(43, 214, 16756209);
         Item Principle10HoursHP = new Item(0, 0, 0);     // не сделано
         Item Triumph = new Item(35, 209, 47612);
 
@@ -698,7 +712,7 @@ namespace OpenGEWindows
         Item TriumphLeftPanel = new Item(31 + 5, 304 + 5, 47612);          //AR+DR
         Item SteroidOneHourLeftPanel = new Item(38, 249, 13836720);
         Item PrincipleOneHourLeftPanel = new Item(29, 282, 11943268);
-        Item Steroid10HoursHPLeftPanel = new Item(37, 249, 16724347);        
+        Item Steroid10HoursHPLeftPanel = new Item(37, 249, 16724347);
         Item Principle10HoursHPLeftPanel = new Item(29, 282, 11943268);     // не сделано
         /// <summary>
         /// розовые крылья
@@ -718,8 +732,32 @@ namespace OpenGEWindows
 
         #endregion
 
+        #region All in One
 
+        /// <summary>
+        /// номер проблемы на предыдущем цикле
+        /// </summary>
+        protected int prevProblem;
+        /// <summary>
+        /// номер проблемы на предпредыдущем цикле
+        /// </summary>
+        protected int prevPrevProblem;
+        /// <summary>
+        /// информация о том, какие герои в нашей команде: Hero[1] - первый герой, Hero[2] - второй, Hero[3] - третий
+        /// 0 - герой не определён, 1 - мушкетёр или Берка(Флинт), 2 - Бернелли (Superior Blaster), 3 - М.Лорч, 4 - Джайна
+        /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
+        /// </summary>
+        protected int[] Hero;
+        /// <summary>
+        /// направление движения (1 - вправо, -1 - влево)
+        /// </summary>
+        protected int DirectionOfMovement;
+        /// <summary>
+        /// если равна true, тогда атака на мобов закончена и надо подбирать дроп (фесо)
+        /// </summary>
+        protected bool NeedToPickUpFeso;
 
+        #endregion
         // ===========================================  Методы ==========================================
 
         #region общие методы
@@ -925,7 +963,7 @@ namespace OpenGEWindows
             {
                 while (true)
                 {
-                   Pause(3000);
+                    Pause(3000);
                     UIntPtr hwnd = FindWindowGE();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
                     if (hwnd != (UIntPtr)0) break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из цикла
                 }
@@ -979,7 +1017,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isOpenSteamWindow()
         {
-            return  (new PointColor(1559, 161, 9603704, 0).isColor() && 
+            return (new PointColor(1559, 161, 9603704, 0).isColor() &&
                     new PointColor(1560, 161, 9603704, 0).isColor());
         }
 
@@ -1107,7 +1145,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isUnexpectedError()
         {
-            return  new PointColor(1100, 609, 3473504, 0).isColor() &&
+            return new PointColor(1100, 609, 3473504, 0).isColor() &&
                     new PointColor(1100, 610, 96, 0).isColor()
                     ||
                     new PointColor(1127, 614, 3539040, 0).isColor() &&
@@ -1231,13 +1269,13 @@ namespace OpenGEWindows
             //if (globalParam.Infinity)
             //{
             //    //если ходим в Инфинити вместо обычного ботоводства, 
-             
+
             //}
             //else   //обычное ботоводство
             //{
             //    pointSteamSavePassword.PressMouseL();
             //}
-            if (botParam.NumberOfInfinity == 0)  pointSteamSavePassword.PressMouseL(); //если обычный режим бота
+            if (botParam.NumberOfInfinity == 0) pointSteamSavePassword.PressMouseL(); //если обычный режим бота
         }
 
         /// <summary>
@@ -1260,7 +1298,7 @@ namespace OpenGEWindows
             CheckSteamSavePassword();
             PressSteamOk();
             //WriteToLogFile(botParam.NumberOfInfinity + " "+ botParam.Logins[botParam.NumberOfInfinity] + 
-                //" " + botParam.Passwords[botParam.NumberOfInfinity] + " " + botParam.Parametrs[botParam.NumberOfInfinity]);
+            //" " + botParam.Passwords[botParam.NumberOfInfinity] + " " + botParam.Parametrs[botParam.NumberOfInfinity]);
         }
 
 
@@ -1275,7 +1313,7 @@ namespace OpenGEWindows
             if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
             botParam.NumberOfInfinity = result;
             //new Point(1597, 1060).Move();   //перемещаем мышь вниз 
-            MoveMouseDown(); 
+            MoveMouseDown();
             Pause(400);
 
             //вариант с песочницей
@@ -1692,7 +1730,7 @@ namespace OpenGEWindows
         {
             WriteToLogFileBH("выбираем сервер из списка серверов начало");
             int count = 0;
-            while ((!IsServerSelection())&&(count<5))
+            while ((!IsServerSelection()) && (count < 5))
             {
                 pointserverSelection.PressMouseLL();
                 Pause(500);
@@ -1852,7 +1890,7 @@ namespace OpenGEWindows
                     result = pointisOpenTopMenu51.isColor() && pointisOpenTopMenu52.isColor(); //телепорт 22-11
                     break;
                 case 6:
-                    result = pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor(); 
+                    result = pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor();
                     break;
                 case 8:
                     result = (pointisOpenTopMenu81.isColor() && pointisOpenTopMenu82.isColor());
@@ -1862,7 +1900,7 @@ namespace OpenGEWindows
                     break;
                 case 12:
                     result = (pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor()) ||
-                            (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor()); 
+                            (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor());
                     break;
                 case 13:
                     result = pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2();
@@ -1927,7 +1965,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoBarack()
         {
-            systemMenu(4,true);
+            systemMenu(4, true);
         }
 
         /// <summary>
@@ -2071,8 +2109,8 @@ namespace OpenGEWindows
         /// <returns>true, если является</returns>
         public bool isKatoviaTeleport()
         {
-            return new PointColor(348 - 5 + xx, 205 - 5 + yy, 16711422, 0).isColor() 
-                && new PointColor(348 - 5 + xx, 209 - 5 + yy, 16711422, 0).isColor() 
+            return new PointColor(348 - 5 + xx, 205 - 5 + yy, 16711422, 0).isColor()
+                && new PointColor(348 - 5 + xx, 209 - 5 + yy, 16711422, 0).isColor()
                 && new PointColor(348 - 5 + xx, 213 - 5 + yy, 16711422, 0).isColor();
         }
 
@@ -2447,7 +2485,7 @@ namespace OpenGEWindows
         /// <returns> true, если неправильная </returns>
         public bool isBadFightingStance()
         {
-            return pointisBadFightingStance1.isColor() && pointisBadFightingStance2.isColor() ;
+            return pointisBadFightingStance1.isColor() && pointisBadFightingStance2.isColor();
         }
 
         /// <summary>
@@ -2482,8 +2520,8 @@ namespace OpenGEWindows
         /// <returns> true, еслм карман переполнен </returns>
         public bool isBoxOverflow()
         {
-            return 
-                //(pointisBoxOverflow1.isColor() && pointisBoxOverflow2.isColor()) ||     //всплывающее окно на экране
+            return
+                 //(pointisBoxOverflow1.isColor() && pointisBoxOverflow2.isColor()) ||     //всплывающее окно на экране
                  pointisBoxOverflow3.isColor() && pointisBoxOverflow4.isColor();          //оранжевая надпись (эта строка)
         }
 
@@ -2504,7 +2542,7 @@ namespace OpenGEWindows
         {
             bool result = false;
             switch (i)
-                {
+            {
                 case 1:
                     result = pointisKillHero1.isColor();
                     break;
@@ -2514,7 +2552,7 @@ namespace OpenGEWindows
                 case 3:
                     result = pointisKillHero3.isColor();
                     break;
-                }
+            }
             return result;
         }
 
@@ -2885,14 +2923,14 @@ namespace OpenGEWindows
         {
             for (int j = 1; j <= n; j++)
             {
-                pointCure1.PressMouseL();  
+                pointCure1.PressMouseL();
                 pointMana1.PressMouseL();
 
-                pointCure2.PressMouseL(); 
-                pointMana2.PressMouseL(); 
-                
-                pointCure3.PressMouseL(); 
-                pointMana3.PressMouseL(); 
+                pointCure2.PressMouseL();
+                pointMana2.PressMouseL();
+
+                pointCure3.PressMouseL();
+                pointMana3.PressMouseL();
             }
             Pause(500);
 
@@ -3021,7 +3059,7 @@ namespace OpenGEWindows
         /// </summary>
         public void buttonExitFromBarack()
         {
-            pointButtonLogoutFromBarack.DoubleClickL(); 
+            pointButtonLogoutFromBarack.DoubleClickL();
             Pause(500);
 
         }
@@ -3063,7 +3101,7 @@ namespace OpenGEWindows
         /// <returns> true, если бот в бараках </returns>
         public bool isBarack()
         {
-            return 
+            return
                     //(pointisBarack1.isColor() && pointisBarack2.isColor()) || 
                     (pointisBarack3.isColor() && pointisBarack4.isColor());
         }
@@ -3076,7 +3114,7 @@ namespace OpenGEWindows
         /// <returns> true, если выскочило </returns>
         public bool isBarackWarningYes()
         {
-            return  new PointColor(482 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor() &&
+            return new PointColor(482 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor() &&
                     new PointColor(483 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor();
         }
 
@@ -3086,7 +3124,7 @@ namespace OpenGEWindows
         /// </summary>
         public void PressYesBarack()
         {
-            new Point (471 - 5 + xx, 437 - 5 + yy).PressMouseL();   // Нажимаем кнопку Yes
+            new Point(471 - 5 + xx, 437 - 5 + yy).PressMouseL();   // Нажимаем кнопку Yes
         }
 
 
@@ -3126,7 +3164,7 @@ namespace OpenGEWindows
         /// </summary>
         public bool isBarackLastPoint()
         {
-//            pointLastPoint.PressMouseR();    // наводим мышку на кнопку Last Point в бараке
+            //            pointLastPoint.PressMouseR();    // наводим мышку на кнопку Last Point в бараке
             pointLastPoint.Move();    // наводим мышку на кнопку Last Point в бараке
             return (pointisBHLastPoint1.isColor() && pointisBHLastPoint2.isColor());
         }
@@ -3327,10 +3365,10 @@ namespace OpenGEWindows
             //Pause(1000);
 
             dialog.PressStringDialog(1);
-            
+
 
             dialog.PressOkButton(1);
-//            ButtonOkDialog.PressMouse();    // Нажимаем на Ok в диалоге
+            //            ButtonOkDialog.PressMouse();    // Нажимаем на Ok в диалоге
             //Pause(1000);
 
             dialog.PressStringDialog(2);
@@ -3556,7 +3594,7 @@ namespace OpenGEWindows
         /// </summary>
         public void RunToNunez()
         {
-            
+
             pointRunNunies.DoubleClickL();   // Нажимаем кнопку вызова списка групп
             Pause(25000);
         }
@@ -3671,7 +3709,7 @@ namespace OpenGEWindows
         /// <returns>true, если казарма переполнена</returns>
         public bool isBarackFull()
         {
-            return new PointColor(522 - 5 + xx + 5, 427 - 5 + yy + 5, 7727344, 0).isColor() 
+            return new PointColor(522 - 5 + xx + 5, 427 - 5 + yy + 5, 7727344, 0).isColor()
                 && new PointColor(522 - 5 + xx + 5, 428 - 5 + yy + 5, 7727344, 0).isColor();
         }
 
@@ -3683,7 +3721,7 @@ namespace OpenGEWindows
         {
             PressCreateButton();
 
-            if (isBarackFull()) 
+            if (isBarackFull())
                 return false;
 
             pointMenuSelectTypeHeroes.PressMouse();
@@ -3865,7 +3903,7 @@ namespace OpenGEWindows
         {
             return pointIsActiveInventory.isColor();
         }
-        
+
         /// <summary>
         /// проверяем, был ли переложен предмет экипировки на место для заточки
         /// </summary>
@@ -3889,7 +3927,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isPlus4()
         {
-            return (pointIsPlus41.isColor() && pointIsPlus42.isColor()) || 
+            return (pointIsPlus41.isColor() && pointIsPlus42.isColor()) ||
                     (pointIsPlus43.isColor() && pointIsPlus44.isColor());  //либо одни две точки либо другие две
         }
 
@@ -3979,8 +4017,8 @@ namespace OpenGEWindows
             bool result = false;
 
             if (isDef15() && isHP()) result = true;
-//            if (isDef15()) result = true;
-//            if (isHP()) result = true;
+            //            if (isDef15()) result = true;
+            //            if (isHP()) result = true;
 
 
             return result;
@@ -4004,7 +4042,7 @@ namespace OpenGEWindows
             bool result = false;
             for (int i = 1; i <= 5; i++)
             {
-                if ( new PointColor(355 - 5 + 5 + 5, 277 - 5 + 5 + 5 + (i - 1) * 15, 7400000, 5).isColor() )
+                if (new PointColor(355 - 5 + 5 + 5, 277 - 5 + 5 + 5 + (i - 1) * 15, 7400000, 5).isColor())
                 {
                     result = true;
                     break;
@@ -4226,8 +4264,8 @@ namespace OpenGEWindows
                     break;
                 case 10:
                     if ((isAtk40() || isAtk39() || isAtk38() || isAtk37()) &&
-                        (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) && 
-                        (isHuman() || isWild() || isLifeless() || isUndead() || isDemon()))  result = true;
+                        (isAtkSpeed30() || isAtkSpeed29() || isAtkSpeed28() || isAtkSpeed27()) &&
+                        (isHuman() || isWild() || isLifeless() || isUndead() || isDemon())) result = true;
                     break;
             }
             return result;
@@ -4255,7 +4293,7 @@ namespace OpenGEWindows
         /// <summary>
         /// для передачи песо торговцу. Идем на место и предложение персональной торговли                        
         /// </summary>
-        public void GotoPlaceTradeBot()      
+        public void GotoPlaceTradeBot()
         {
             //идем на место передачи песо
             botwindow.PressEscThreeTimes();
@@ -4333,7 +4371,7 @@ namespace OpenGEWindows
         public void PressButtonYesTrade()
         {
             pointYesTrade.DoubleClickL();
-            Pause(500);        
+            Pause(500);
         }
 
         /// <summary>
@@ -4373,7 +4411,7 @@ namespace OpenGEWindows
 
             // нажимаем Ок для подтверждения передаваемой суммы фесо
             pointOkSum.DoubleClickL();
-        
+
         }
 
         /// <summary>
@@ -4436,7 +4474,7 @@ namespace OpenGEWindows
         /// <summary>
         /// открыть вкладку Sell в фесо шопе
         /// </summary>
-        public  void OpenBookmarkSell()
+        public void OpenBookmarkSell()
         {
             pointBookmarkFesoSell.DoubleClickL();
             Pause(1500);
@@ -4538,7 +4576,7 @@ namespace OpenGEWindows
                 pointShowEquipment.PressMouseL();      //нажимаем на кнопку "Show Equipment"
                 Pause(1000);
                 ff = (pointEquipment1.isColor()) && (pointEquipment2.isColor());
-                ff = ! ff;
+                ff = !ff;
             }
 
             for (int i = 1; i <= 4; i++)
@@ -4683,7 +4721,7 @@ namespace OpenGEWindows
             //writer.WriteLine(timeNow + botwindow.getNumberWindow().ToString() + " " + strLog);
             //writer.Close();
         }
-        
+
         /// <summary>
         /// нажимаем левой кнопкой мыши на точку с указанными координатами
         /// </summary>
@@ -4691,16 +4729,16 @@ namespace OpenGEWindows
         /// <param name="y">коорд Y</param>
         public void FightToPoint(int x, int y, int t)
         {
-             //старый вариант
-             //Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
-             //Point pointFightBH = new Point(x - 30 + xx, y - 30 + yy);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
+            //старый вариант
+            //Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
+            //Point pointFightBH = new Point(x - 30 + xx, y - 30 + yy);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
 
-             //pointSabreBottonBH.PressMouseL();
-             //pointFightBH.PressMouseL();
-             //Pause(t * 1000);
-             
+            //pointSabreBottonBH.PressMouseL();
+            //pointFightBH.PressMouseL();
+            //Pause(t * 1000);
+
             //новый вариант
-//            Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
+            //            Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
             Point pointFightBH = new Point(x - 30 + xx + 5, y - 30 + yy + 5);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
 
             AssaultMode();
@@ -4740,7 +4778,7 @@ namespace OpenGEWindows
             uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
             color = color / 1000;
             //int tt = Array.IndexOf(arrayOfColors, color);
-            
+
             bool result = this.arrayOfColors.Contains(color);                                                         // проверяем, есть ли цвет контрольной точки в массиве цветов
             //if (!result) WriteToLogFileBH("неизвестная миссия, цвет " + color);
 
@@ -4754,7 +4792,7 @@ namespace OpenGEWindows
         public void MissionNotFoundBH()
         {
             //botwindow.setStatusOfAtk(1);
-            
+
             uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
             WriteToLogFileBH("неизвестная миссия!!!, цвет " + color);
 
@@ -4906,7 +4944,7 @@ namespace OpenGEWindows
         public void TurnUp()
         {
             Point pointBegin = new Point(560 - 30 + xx, 430 - 30 + 1 + yy);
-            Point pointEnd   = new Point(560 - 30 + xx, 430 - 30 + yy);
+            Point pointEnd = new Point(560 - 30 + xx, 430 - 30 + yy);
             pointBegin.Turn(pointEnd);
         }
 
@@ -4916,7 +4954,7 @@ namespace OpenGEWindows
         public void TurnDown()
         {
             Point pointBegin = new Point(560 - 30 + xx, 430 - 30 - 1 + yy);
-            Point pointEnd   = new Point(560 - 30 + xx, 430 - 30 + yy);
+            Point pointEnd = new Point(560 - 30 + xx, 430 - 30 + yy);
             pointBegin.Turn(pointEnd);
         }
 
@@ -4928,7 +4966,7 @@ namespace OpenGEWindows
         public void TurnL(int gradus)
         {
             Point pointBegin = new Point(560 + gradus - 30 + xx, 430 - 30 + yy);
-            Point pointEnd   = new Point(560          - 30 + xx, 430 - 30 + yy);
+            Point pointEnd = new Point(560 - 30 + xx, 430 - 30 + yy);
             pointBegin.Turn(pointEnd);
         }
 
@@ -4939,7 +4977,7 @@ namespace OpenGEWindows
         public void TurnR(int gradus)
         {
             Point pointBegin = new Point(560 - gradus - 30 + xx, 430 - 30 + yy);
-            Point pointEnd   = new Point(560          - 30 + xx, 430 - 30 + yy);
+            Point pointEnd = new Point(560 - 30 + xx, 430 - 30 + yy);
             pointBegin.Turn(pointEnd);
         }
 
@@ -4955,7 +4993,7 @@ namespace OpenGEWindows
         {
             return new PointColor(924 - 5 + xx, 254 - 5 + yy, 15658991, 0).isColor() &&
                    new PointColor(924 - 5 + xx, 255 - 5 + yy, 15658991, 0).isColor();        //слово Castilla под миникартой (буква l)
-            
+
         }
 
         /// <summary>
@@ -5028,7 +5066,7 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="counter">номер точки маршрута</param>
         /// <returns>время в милисекундах</returns>
-        public int GetWaitingTimeForDropPicking (int counter)
+        public int GetWaitingTimeForDropPicking(int counter)
         {
             int[] WaitingTime = {   
                                     //0, 
@@ -5067,7 +5105,7 @@ namespace OpenGEWindows
         /// собираем дроп слева от героев. время сбора = Period милисекунд
         /// </summary>
         /// <param name="Period">время сбора</param>
-        private void GetDropCastiliaLeft (int Period)
+        private void GetDropCastiliaLeft(int Period)
         {
             for (int i = 1; i <= 1; i++)
             {
@@ -5254,7 +5292,7 @@ namespace OpenGEWindows
         {
             TopMenu(9, 9);
 
-            while (new PointColor (937 - 5 + xx, 175 - 5 + yy, 15986174, 0).isColor() )
+            while (new PointColor(937 - 5 + xx, 175 - 5 + yy, 15986174, 0).isColor())
             {
                 new Point(937 - 5 + xx, 175 - 5 + yy).PressMouseL();
                 new Point(500 - 5 + xx, 500 - 5 + yy).FastMove();
@@ -5380,7 +5418,7 @@ namespace OpenGEWindows
         /// выбор i-го героя
         /// </summary>
         /// <param name="i"></param>
-        protected void Hero(int i)
+        protected void SelectHero(int i)
         {
             switch (i)
             {
@@ -5403,7 +5441,7 @@ namespace OpenGEWindows
         public void WearJewerly(int i)
         {
             OpenDetailInfo(i);
-            Hero(i);
+            SelectHero(i);
 
             iPoint Inventory = new Point(840 - 5 + xx, 100 - 5 + yy);
             iPoint DetailInfo = new Point(63 - 5 + xx + (i - 1) * 255, 346 - 5 + yy);
@@ -5419,21 +5457,21 @@ namespace OpenGEWindows
                 UseItem(DesapioBoots);
                 DetailInfo.PressMouseLL();
             }
-            if (isEmptyEarrings(i)) 
+            if (isEmptyEarrings(i))
             {
-                Inventory.PressMouseLL(); 
+                Inventory.PressMouseLL();
                 UseItem(DesapioEarrings);
                 DetailInfo.PressMouseLL();
             }
-            if (isEmptyGloves(i)) 
-            { 
-                Inventory.PressMouseLL(); 
+            if (isEmptyGloves(i))
+            {
+                Inventory.PressMouseLL();
                 UseItem(DesapioGloves);
                 DetailInfo.PressMouseLL();
             }
-            if (isEmptyNecklace(i)) 
-            { 
-                Inventory.PressMouseLL(); 
+            if (isEmptyNecklace(i))
+            {
+                Inventory.PressMouseLL();
                 UseItem(DesapioNecklace);
                 DetailInfo.PressMouseLL();
             }
@@ -5583,7 +5621,7 @@ namespace OpenGEWindows
         protected void DragItemToSlot(int i, int j, int Slot)
         {
             iPoint pointBegin = new Point(700 - 5 + xx + (j - 1) * 39, 182 - 5 + yy + (i - 1) * 38);
-            iPoint pointSlot  = new Point(244 - 5 + xx + (Slot - 1) * 255, 700 - 5 + yy);   //конечная точка перемещения
+            iPoint pointSlot = new Point(244 - 5 + xx + (Slot - 1) * 255, 700 - 5 + yy);   //конечная точка перемещения
 
             pointBegin.Drag(pointSlot);
             Pause(1000);
@@ -5633,7 +5671,7 @@ namespace OpenGEWindows
         {
             bool result = false;   //объект в кармане пока не найден
             int i, j;
-            
+
             if (FindItem(thing, out i, out j))
             {
                 DragItemToXY(i, j, x, y);
@@ -5732,21 +5770,21 @@ namespace OpenGEWindows
 
             botwindow.FirstHero();
             PuttingItem(PinkWings);
-//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            //            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
 
             botwindow.SecondHero();
             PuttingItem(PinkWings);
-//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            //            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
 
             botwindow.ThirdHero();
             PuttingItem(PinkWings);
-//            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
+            //            new Point(36 - 5 + xx, 211 - 5 + yy).DoubleClickL();
             Pause(500);
             AnswerYesOrNo(true);
             Pause(500);
@@ -5801,7 +5839,7 @@ namespace OpenGEWindows
         {
             SpecInventoryBookmark(3);
 
-            PuttingItem(Journal);     
+            PuttingItem(Journal);
 
             AnswerYesOrNo(true);
         }
@@ -5845,7 +5883,7 @@ namespace OpenGEWindows
         protected bool PuttingItem(Item item)
         {
             Point point;
-            
+
             if (FindItemFromSpecInventory(item, 0, out point))
             {
                 point.DoubleClickL();
@@ -5858,8 +5896,8 @@ namespace OpenGEWindows
                 return false;
             }
 
-              
-        } 
+
+        }
 
         /// <summary>
         /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке
@@ -6048,7 +6086,7 @@ namespace OpenGEWindows
         /// <returns>true, если слот пуст</returns>
         public bool isEmptyGloves(int i)
         {
-//            return new PointColor(198 + (i - 1) * 255 - 5 + xx, 438 - 5 + yy, 11711155, 0).isColor();
+            //            return new PointColor(198 + (i - 1) * 255 - 5 + xx, 438 - 5 + yy, 11711155, 0).isColor();
             return new PointColor(192 + (i - 1) * 255 - 5 + xx, 450 - 5 + yy, 3223604, 0).isColor();
         }
 
@@ -6057,7 +6095,7 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если слот пуст</returns>
-        public bool isEmptyBoots (int i)
+        public bool isEmptyBoots(int i)
         {
             return new PointColor(195 + (i - 1) * 255 - 5 + xx, 485 - 5 + yy, 4079167, 0).isColor();
         }
@@ -6287,7 +6325,7 @@ namespace OpenGEWindows
         /// <param name="N">номер героя</param>
         public void ActiveHeroDem(int N)
         {
-            new Point(213 + (N-1) * 250 - 5 + xx, 636 - 5 + yy).DoubleClickL();
+            new Point(213 + (N - 1) * 250 - 5 + xx, 636 - 5 + yy).DoubleClickL();
             MoveCursorOfMouse();
         }
 
@@ -6332,7 +6370,7 @@ namespace OpenGEWindows
             //return new PointColor(1380, 451, 2000000, 6).isColor() &&
             //        new PointColor(1380, 452, 2000000, 6).isColor();
             return new PointColor(1380, 453, 2000000, 6).isColor()
-                    && new PointColor(1380, 454, 2000000, 6).isColor() 
+                    && new PointColor(1380, 454, 2000000, 6).isColor()
                     && new PointColor(1380, 455, 2000000, 6).isColor();
         }
 
@@ -6366,7 +6404,7 @@ namespace OpenGEWindows
         /// <returns>true, если находимся</returns>
         public bool isMissionLobby()
         {
-            return  new PointColor(242 - 5 + xx, 163 - 5 + yy, 13800000, 5).isColor() &&
+            return new PointColor(242 - 5 + xx, 163 - 5 + yy, 13800000, 5).isColor() &&
                     new PointColor(242 - 5 + xx, 164 - 5 + yy, 13800000, 5).isColor();  //22-11   буква М
         }
 
@@ -6391,7 +6429,7 @@ namespace OpenGEWindows
         /// <returns>true, если находимся</returns>
         public bool isWaitingRoom()
         {
-            return  new PointColor(177 - 5 + xx, 155 - 5 + yy, 12829635, 0).isColor() &&
+            return new PointColor(177 - 5 + xx, 155 - 5 + yy, 12829635, 0).isColor() &&
                     new PointColor(177 - 5 + xx, 156 - 5 + yy, 12829635, 0).isColor();      //22-11   буква М
         }
 
@@ -6428,7 +6466,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// стартуем миссию
+        /// стартуем миссию Demonic
         /// </summary>
         public void MissionStart()
         {
@@ -6461,7 +6499,7 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffE(int i)
         {
-//            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
+            //            new Point(89 - 5 + xx + (i - 1) * 255, 701 - 5 + yy).PressMouseL();
             new Point(96 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).DoubleClickL();
             //MoveCursorOfMouse();
         }
@@ -6521,10 +6559,10 @@ namespace OpenGEWindows
         /// <returns>true, если появилась</returns>
         public bool isWhiteLabel()
         {
-            return 
+            return
                     new PointColor(300 - 5 + xx, 145 - 5 + yy, 16711422, 0).isColor() &&
-                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 16711422, 0).isColor();   
-                    //белая надпись (миссия закончится через 2 минуты )
+                    new PointColor(300 - 5 + xx, 146 - 5 + yy, 16711422, 0).isColor();
+            //белая надпись (миссия закончится через 2 минуты )
         }
 
         ///// <summary>
@@ -6549,11 +6587,12 @@ namespace OpenGEWindows
         /// </summary>
         public void PickUpToLeft()
         {
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 1; i++)
             {
                 HarvestMode();
                 //new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
-                new Point(220 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                //new Point(220 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                new Point(250 - 5 + xx, 432 - 5 + yy).PressMouseL();
             }
         }
 
@@ -6562,7 +6601,7 @@ namespace OpenGEWindows
         /// </summary>
         public void PickUpToRight()
         {
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 1; i++)
             {
                 HarvestMode();
                 new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
@@ -6608,15 +6647,15 @@ namespace OpenGEWindows
                 new Point(x, y).PressMouseL();
                 //старый проверенный вариант
                 //y += 10;
-                
+
                 //новый вариант=====
                 if (x < 525) x -= 20;
-                    else x += 20;
+                else x += 20;
                 Pause(500);
                 //===================
                 count++;
             }
-            while (!isAssaultMode() && (count <= 5)); 
+            while (!isAssaultMode() && (count <= 5));
             //выходим из цикла, если получилось перейти в боевой режим (AssaultMode), т.е. атака с CTRL, либо тыкали уже больше пяти раз
         }
 
@@ -6697,11 +6736,11 @@ namespace OpenGEWindows
         public void AttackTheMonsters()
         {
             //смещение движения героев по оси Х
-            int DeltaX; 
+            int DeltaX;
 
             //смещение движения героев по оси Y
-            int DeltaY;  
-            
+            int DeltaY;
+
             //проверка цвета реперных точек на экране
 
             PointColor LeftUP = new PointColor(85 - 5 + xx, 85 - 5 + yy, 0, 0);
@@ -6718,21 +6757,21 @@ namespace OpenGEWindows
                 DeltaY = 150;
             else
                 if (LeftDownColor < 400000 && RightDownColor < 400000)
-                    DeltaY = - 150;
-                else
-                    DeltaY = 0;
+                DeltaY = -150;
+            else
+                DeltaY = 0;
 
             if (LeftUpColor < 400000 && LeftDownColor < 400000)
                 DeltaX = 250;
             else
                 if (RightUpColor < 400000 && RightDownColor < 400000)
-                    DeltaX = -250;
-                else
-                    DeltaX = 250;
+                DeltaX = -250;
+            else
+                DeltaX = 250;
 
             //вычисляем координаты точки, куда будем тыкать мышкой
-            int x = 525 - 5 + xx + DeltaX;    
-            int y = 382 - 5 + yy + DeltaY;    
+            int x = 525 - 5 + xx + DeltaX;
+            int y = 382 - 5 + yy + DeltaY;
 
             AssaultMode();
             new Point(x, y).PressMouseL();
@@ -6749,7 +6788,7 @@ namespace OpenGEWindows
         /// </summary>
         public void AssaultMode()
         {
-//            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseLL();
+            //            new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseLL();
             new Point(91 - 5 + xx, 526 - 5 + yy).PressMouseL();
         }
 
@@ -6823,11 +6862,11 @@ namespace OpenGEWindows
                 result = 4;    //Джайна
                 return result;
             }
-//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
-                                                                                                                //C.Daria
-//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
-//            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
-//            if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
+            //            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
+            //C.Daria
+            //            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
+            //            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
+            //            if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
 
             return result;
         }
@@ -6841,7 +6880,7 @@ namespace OpenGEWindows
         {
             bool result = false;
             if (!isTreasureChest())      //бафаемся, только в том случае, если не появился сундук
-                                                            //чтобы лишние записи не появились в чате
+                                         //чтобы лишние записи не появились в чате
             {
                 MoveCursorOfMouse();
                 switch (typeOfHero)
@@ -6888,10 +6927,10 @@ namespace OpenGEWindows
         /// есть ли кто в прицеле?
         /// </summary>
         /// <returns>true, если кто-то есть в прицеле</returns>
-        public bool isBossOrMob ()
+        public bool isBossOrMob()
         {
             //проверяем букву D в слове Демоник
-            return      new PointColor(456 - 5 + xx, 103 - 5 + yy, 12434870, 1).isColor() ||
+            return new PointColor(456 - 5 + xx, 103 - 5 + yy, 12434870, 1).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 4000000, 6).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7314875, 0).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7462629, 0).isColor();
@@ -6905,7 +6944,7 @@ namespace OpenGEWindows
         public bool isMob()
         {
             //проверяем букву E и h в слове Enhance
-            return     (new PointColor(521 - 5 + xx, 100 - 5 + yy, 13355979, 0).isColor() &&
+            return (new PointColor(521 - 5 + xx, 100 - 5 + yy, 13355979, 0).isColor() &&
                         new PointColor(521 - 5 + xx, 109 - 5 + yy, 13355979, 0).isColor() &&
                         new PointColor(532 - 5 + xx, 100 - 5 + yy, 13355979, 0).isColor() &&
                         new PointColor(532 - 5 + xx, 109 - 5 + yy, 13355979, 0).isColor())
@@ -6930,9 +6969,9 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public bool isSkillMuskT (int i)
+        public bool isSkillMuskT(int i)
         {
-            return new PointColor(152 - 5 + xx + ( i - 1 ) * 255, 704 - 5 + yy, 12491137, 0).isColor();
+            return new PointColor(152 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 12491137, 0).isColor();
         }
 
         /// <summary>
@@ -6962,7 +7001,7 @@ namespace OpenGEWindows
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
         /// <param name="isMobs"true, если в прицеле мобы</param>
-        public void Skill (int typeOfHero, int i, bool isMobs)
+        public void Skill(int typeOfHero, int i, bool isMobs)
         {
             switch (typeOfHero)
             {
@@ -7036,9 +7075,9 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
-                if (    new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 787682, 0).isColor() &&
+                if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 787682, 0).isColor() &&
                         new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 1906639, 0).isColor()
-                   )    result = true;
+                   ) result = true;
             return result;
         }
 
@@ -7067,9 +7106,9 @@ namespace OpenGEWindows
         {
             bool result = false;    //бафа нет
             for (int j = 0; j < 8; j++)
-                if (    
-                    //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
-                    //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
+                if (
+                        //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
+                        //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
                         new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
                         new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()           //23-11
                     ) result = true;
@@ -7107,7 +7146,7 @@ namespace OpenGEWindows
                 if (
                     //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
                     //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
-                    new PointColor(79 - 5 + xx + j * 14 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&    
+                    new PointColor(79 - 5 + xx + j * 14 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
                         new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()  //23-11
                     ) result = true;
 
@@ -7123,7 +7162,7 @@ namespace OpenGEWindows
         {
             bool result = false;    //бафа нет
             for (int j = 0; j < 8; j++)
-                if (    
+                if (
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
                         new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
@@ -7144,7 +7183,7 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 8; j++)
-                if (    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 10861754, 0).isColor() &&
+                if (new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 10861754, 0).isColor() &&
                         new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 11124411, 0).isColor()
                    ) result = true;
 
@@ -7161,7 +7200,7 @@ namespace OpenGEWindows
             //MoveCursorOfMouse();
             bool result = false;    //бафа нет
             for (int j = 0; j < 8; j++)
-                if (    new PointColor(89 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 2503088, 0).isColor() &&
+                if (new PointColor(89 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 2503088, 0).isColor() &&
                         new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 1976470, 0).isColor()
                    ) result = true;
 
@@ -7243,7 +7282,7 @@ namespace OpenGEWindows
         private void BuffLorch(int i)
         {
             if (!FindBulletApilicon(i)) BuffY(i);
-//            Pause(2000);
+            //            Pause(2000);
             if (!FindShareFlint(i)) BuffW(i);
         }
 
@@ -7297,9 +7336,9 @@ namespace OpenGEWindows
         private void BuffMisa(int i)
         {
             //if (!FindWindUp(i)) 
-                //BuffY(i);
-                // не бафаем Мису, бафф снижает меткость
-            
+            //BuffY(i);
+            // не бафаем Мису, бафф снижает меткость
+
         }
 
         /// <summary>
@@ -7308,7 +7347,7 @@ namespace OpenGEWindows
         /// <returns>true, если появились</returns>
         public bool isGate()
         {
-            return  new PointColor(599 - 5 + xx, 397 - 5 + yy, 5700000, 5).isColor() &&
+            return new PointColor(599 - 5 + xx, 397 - 5 + yy, 5700000, 5).isColor() &&
                     new PointColor(599 - 5 + xx, 398 - 5 + yy, 5700000, 5).isColor();
         }
 
@@ -7341,7 +7380,7 @@ namespace OpenGEWindows
             if (Direction == -1)  //если идем влево, то мочим всех
             {
                 AssaultMode();
-                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();   
+                new Point(525 + Direction * 200 - 5 + xx, 392 - 5 + yy).PressMouseL();
             }
             else  //если идем направо, то собираем лут
             {
@@ -7400,11 +7439,11 @@ namespace OpenGEWindows
                 }
 
             if ((dxBox == 0) && (dyBox == 0))
-            { 
-                botwindow.PressEscThreeTimes(); 
+            {
+                botwindow.PressEscThreeTimes();
             }
             else
-            { 
+            {
                 while (new PointColor(724 - 5 + xx + dxBox * 58 + 40, 223 - 5 + yy + dyBox * 58 + 31, 5837047, 0).isColor() &&
                         new PointColor(724 - 5 + xx + dxBox * 58 + 40, 223 - 5 + yy + dyBox * 58 + 32, 6426876, 0).isColor())
                 {
@@ -7432,7 +7471,7 @@ namespace OpenGEWindows
         public void OpenInventoryBookmark(int number)
         {
             new Point(750 - 5 + (number - 1) * 65 + xx, 206 - 5 + yy).PressMouseLL();  //тыкаем в выбранную закладку
-            Pause(500); 
+            Pause(500);
             new Point(440 - 5 + xx, 440 - 5 + yy).Move();  //убираем мышь
             Pause(500);
         }
@@ -7460,7 +7499,7 @@ namespace OpenGEWindows
             return new PointColor(533 - 5 + xx, 413 - 5 + yy, 5784856, 0).isColor() &&
                     new PointColor(534 - 5 + xx, 413 - 5 + yy, 5456151, 0).isColor();
 
-            
+
         }
 
         /// <summary>
@@ -7469,7 +7508,7 @@ namespace OpenGEWindows
         /// <returns>true, если есть</returns>
         public bool GotTask2()
         {
-            return  new PointColor(288 - 5 + xx, 319 - 5 + yy, 16777215, 0).isColor() &&
+            return new PointColor(288 - 5 + xx, 319 - 5 + yy, 16777215, 0).isColor() &&
                     new PointColor(289 - 5 + xx, 318 - 5 + yy, 16777215, 0).isColor();
         }
 
@@ -7477,7 +7516,7 @@ namespace OpenGEWindows
         /// проверяем, получено ли задание у Рудольфа (синий кружок на карте на месте первого клиента)
         /// </summary>
         /// <returns>true, если есть</returns>
-        public bool GotTaskRudolph ()
+        public bool GotTaskRudolph()
         {
             botwindow.PressEscThreeTimes();
 
@@ -7490,7 +7529,7 @@ namespace OpenGEWindows
             bool result = GotTask2();  //проверяем, получено ли задание у Рудольфа
 
             botwindow.PressEscThreeTimes(); //закрываем карту
-            
+
             return result;
         }
 
@@ -7556,9 +7595,9 @@ namespace OpenGEWindows
             Random rand = new Random();
             int randemNumber = rand.Next(1, 10);
             if (randemNumber <= 7)
-                { if (!dialog.isDialog()) new Point(295 - 5 + xx, 324 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(295 - 5 + xx, 324 - 5 + yy).PressMouseLL(); }
             else
-                { if (!dialog.isDialog()) new Point(314 - 5 + xx, 325 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(314 - 5 + xx, 325 - 5 + yy).PressMouseLL(); }
 
             Pause(500);
             botwindow.PressEscThreeTimes();
@@ -7572,14 +7611,14 @@ namespace OpenGEWindows
             botwindow.PressEscThreeTimes();
             if (!dialog.isDialog())
                 //while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+                TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
 
             Random rand = new Random();
             int randemNumber = rand.Next(1, 10);
             if (randemNumber <= 7)
-                { if (!dialog.isDialog()) new Point(220 - 5 + xx, 434 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(220 - 5 + xx, 434 - 5 + yy).PressMouseLL(); }
             else
-                { if (!dialog.isDialog()) new Point(235 - 5 + xx, 443 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(235 - 5 + xx, 443 - 5 + yy).PressMouseLL(); }
 
             Pause(500);
             botwindow.PressEscThreeTimes();
@@ -7593,15 +7632,15 @@ namespace OpenGEWindows
             botwindow.PressEscThreeTimes();
             if (!dialog.isDialog())
                 //while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+                TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
 
             Random rand = new Random();
             int randemNumber = rand.Next(1, 10);
             if (randemNumber <= 7)
-                { if (!dialog.isDialog()) new Point(547 - 5 + xx, 606 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(547 - 5 + xx, 606 - 5 + yy).PressMouseLL(); }
             else
-                { if (!dialog.isDialog()) new Point(648 - 5 + xx, 532 - 5 + yy).PressMouseLL(); }
-            
+            { if (!dialog.isDialog()) new Point(648 - 5 + xx, 532 - 5 + yy).PressMouseLL(); }
+
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7615,14 +7654,14 @@ namespace OpenGEWindows
 
             if (!dialog.isDialog())
                 //while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+                TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
 
             Random rand = new Random();
             int randemNumber = rand.Next(1, 10);
             if (randemNumber <= 7)
-                { if (!dialog.isDialog()) new Point(462 - 5 + xx, 479 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(462 - 5 + xx, 479 - 5 + yy).PressMouseLL(); }
             else
-                { if (!dialog.isDialog()) new Point(422 - 5 + xx, 462 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(422 - 5 + xx, 462 - 5 + yy).PressMouseLL(); }
 
             Pause(500);
             botwindow.PressEscThreeTimes();
@@ -7637,15 +7676,15 @@ namespace OpenGEWindows
 
             if (!dialog.isDialog())
                 //while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
+                TopMenu(12, 2, true);               //если мы сейчас не в диалоге, то пытаемся открыть карту города
 
             Random rand = new Random();
             int randemNumber = rand.Next(1, 10);
             if (randemNumber <= 7)
-                { if (!dialog.isDialog()) new Point(675 - 5 + xx, 410 - 5 + yy).PressMouseLL(); }
+            { if (!dialog.isDialog()) new Point(675 - 5 + xx, 410 - 5 + yy).PressMouseLL(); }
             else
-                { if (!dialog.isDialog()) new Point(645 - 5 + xx, 393 - 5 + yy).PressMouseLL(); }
-            
+            { if (!dialog.isDialog()) new Point(645 - 5 + xx, 393 - 5 + yy).PressMouseLL(); }
+
             Pause(500);
             botwindow.PressEscThreeTimes();
         }
@@ -7665,7 +7704,7 @@ namespace OpenGEWindows
         public void GoToCoimbra()
         {
             botwindow.PressEscThreeTimes();
-            TeleportAltW(2); 
+            TeleportAltW(2);
             botwindow.PressEscThreeTimes();
         }
 
@@ -7687,7 +7726,7 @@ namespace OpenGEWindows
         {
             return new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
-                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()        
+                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
                     && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
 
         }
@@ -7717,7 +7756,7 @@ namespace OpenGEWindows
         #endregion
 
         #region ================ Bridge =========================
-        
+
         /// <summary>
         /// открываем карту Моста с гарантией
         /// </summary>
@@ -7728,7 +7767,7 @@ namespace OpenGEWindows
 
             //надёжно открываем карту Alt+Z
             while (!isOpenMapBridge())
-                    TopMenu(12, 2, true);
+                TopMenu(12, 2, true);
         }
 
         /// <summary>
@@ -7819,7 +7858,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isBridge()
         {
-            return     new PointColor(940 - 5 + xx, 252 - 5 + yy, 16711422, 0).isColor() 
+            return new PointColor(940 - 5 + xx, 252 - 5 + yy, 16711422, 0).isColor()
                     && new PointColor(940 - 5 + xx, 259 - 5 + yy, 16711422, 0).isColor()
                     && new PointColor(983 - 5 + xx, 252 - 5 + yy, 16711422, 0).isColor()
                     && new PointColor(983 - 5 + xx, 259 - 5 + yy, 16711422, 0).isColor();
@@ -7906,7 +7945,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isActivityOut()
         {
-            return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4530000, 4).isColor()
+            return new PointColor(704 - 5 + xx, 565 - 5 + yy, 4530000, 4).isColor()
                  && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4530000, 4).isColor();
         }
 
@@ -8131,7 +8170,7 @@ namespace OpenGEWindows
         /// </summary>
         public bool isUstiar()
         {
-            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+            return new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
                     && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
@@ -8191,7 +8230,7 @@ namespace OpenGEWindows
         /// <returns>true, если есть</returns>
         public bool isOpenTownTeleport()
         {
-            return  new PointColor(114 - 5 + xx, 318 - 5 + yy, 11000000, 6).isColor() &&
+            return new PointColor(114 - 5 + xx, 318 - 5 + yy, 11000000, 6).isColor() &&
                     new PointColor(114 - 5 + xx, 325 - 5 + yy, 11000000, 6).isColor();
         }
 
@@ -8232,10 +8271,10 @@ namespace OpenGEWindows
         /// <summary>
         /// переход из казарм в стартовый город
         /// </summary>
-        public void FromBarackToTown()
+        public void FromBarackToTown(int NumberOfTeam)
         {
             //============ выбор персонажей  ===========
-            TeamSelection(3);  
+            TeamSelection(NumberOfTeam);
             Pause(500);
 
             //============ выбор канала ===========
@@ -8306,5 +8345,739 @@ namespace OpenGEWindows
 
         #endregion
 
+        #region =================================== All in One ==================================================
+
+        #region ======================== Поиск стандартных проблем ===============================
+
+        /// <summary>
+        /// проверяем, если ли проблемы и возвращаем номер проблемы.  
+        /// Проблемы общие для всех миссий 1,2,11,12,16,17,19,20,22,23,24,33,34,35,36,37
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemCommonForAll()
+        {
+            //если открыто окно Стим
+            if (isOpenSteamWindow()) CloseSteamWindow();
+            if (isOpenSteamWindow2()) CloseSteamWindow2();
+            if (isOpenSteamWindow3()) CloseSteamWindow3();
+            if (isOpenSteamWindow4()) CloseSteamWindow4();
+            //если ошибка 820 (зависло окно ГЭ при загрузке)
+            if (isError820()) return 33;
+            //если выскочило сообщение о пользовательском соглашении
+            if (isNewSteam()) return 34;
+            //если ошибка Sandboxie 
+            if (isErrorSandboxie()) return 35;
+            //если ошибка Unexpected
+            if (isUnexpectedError()) return 36;
+            //если окно игры открыто на другом компе
+            if (isOpenGEWindow()) return 37;
+            //служба Steam
+            if (isSteamService()) return 11;
+            //если нет окна
+            if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (!FindWindowSteamBool())  //если Стима тоже нет
+                    return 24;
+                else    //если Стим уже загружен
+                    if (FindWindowGEforBHBool())
+                    return 23;    //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                else
+                    return 22;                  //если нет окна ГЭ в текущей песочнице
+            }
+            else            //если окно с нужным HWND нашлось
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            //в логауте
+            if (isLogout()) return 1;
+            // если неправильная стойка
+            if (isBadFightingStance()) return 19;
+            //диалог
+            if (dialog.isDialog())
+                if (isExpedMerch() || isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+            //в бараке
+            if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (isBarack()) return 2;                    //если стоят в бараке 
+            if (isBarackWarningYes()) return 16;
+            if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //если стандартных проблем не найдено
+            return 0;
+        }
+
+        #endregion ===============================================================================
+
+        #region ======================== Поиск проблем в Демонике ================================
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic (стадия 1) и возвращаем номер проблемы
+        /// 3, 4, 5, 6, 7, 8, 9, 10
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage1()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //диалог
+            if (dialog.isDialog())
+                if (isMissionNotAvailable())
+                    return 10;                          //если стоим в воротах Demonic и миссия не доступна
+                else
+                    return 8;                           //если стоим в воротах Demonic и миссия доступна
+
+            //Mission Lobby
+            if (isMissionLobby()) return 5;      //22-11
+
+            //Waiting Room //Mission Room 22-11
+            if (isWaitingRoom()) return 3;      //22-11
+
+            //город или БХ
+            if (isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!isKillFirstHero())
+                {
+                    if (isBH())     //в БХ     
+                    {
+                        return 4;   // стоим в правильном месте (около ворот Demonic)
+                    }
+                    else   // в городе, но не в БХ
+                    {
+                        if (isAncientBlessing(1))
+                            return 6;
+                        else
+                            return 9;
+                    }
+                }
+            }
+            //в миссии (если убит первый персонаж, то это точно миссия
+            if (isWork() || isKillFirstHero()) return 7;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// 3, 6, 10 
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage2()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //в миссии
+            if (isWork() || isKillFirstHero())
+            {
+                //если розовая надпись в чате "Treasure chest...", значит появился сундук и надо идти в барак и далее стадия 3
+                if (isTreasureChest())
+                    return 10;                        //надо собрать дроп, идти в барак и далее - стадия 3
+                else
+                    return 3;                         //продолжаем атаковать
+            }
+
+            //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
+            if (isTown() && isBH() && !isKillHero())
+                return 6;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// 3,6,8
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage3()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //диалог 
+            //после открытия сундука тыкаем в место, где должны открыться второта фесо, а здесь по диалогу проверяем, удалось или нет
+            if (dialog.isDialog())
+                return 8;                       //диалог в воротах фесо
+
+            //в миссии
+            if (isWork())
+                return 3;                       //надо тыкать в сундук
+            //в городе или в БХ
+            if (isTown())                       //если в городе или в БХ, то значит миссия закончилась и нас выкинуло
+                return 6;                       //закрываем песочницу и аккаунт
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
+        /// 3,5,6,8
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage4()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //в миссии фесо
+            if (isWork())
+                if (isBattleMode())
+                {
+                    if (NeedToPickUpFeso == false)
+                        return 3;
+                    else
+                        return 8;
+                }
+                else
+                    return 5;
+            //в городе или в БХ
+            if (isTown())                           //если в городе или в БХ, то значит миссия закончилась и нас выкинуло
+                return 6;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// 3, 4, 5, 7, 8
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage5()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //если диалог 
+            if (dialog.isDialog())
+                return 7;                    //получаем бафф "наследие"
+            //в миссии
+            if (isWork())
+            {
+                if (isBridge())
+                    if (isAncientBlessing(1))
+                        return 4;           //на мосту и получили бафф наследие
+                    else
+                        if (isOpenMapBridge())
+                            return 5;           //на мосту, но пока не получили бафф наследие. карта Alt+Z открыта
+                    else
+                            return 3;           //на мосту, но пока не получили бафф наследие. карта Alt+Z не открыта
+            }
+            //в городе
+            if (isTown())
+                return 8;                   //в городе. летим на мост
+
+            //если проблем не найдено
+            return 0;
+        }
+
+
+        #endregion ================================================================================
+
+
+        #region ======================== Решение стандартных проблем ================================
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы (для стадии 1)
+        /// 1,11,12,16,17,19,20,22,23,24,33,34,35,36,37
+        /// </summary>
+        public void problemResolutionCommonForStage1(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:
+                    QuickConnect();                             // Logout-->Barack   //ок   //сделано
+                    botParam.HowManyCyclesToSkip = 2;  //1
+                    break;
+                case 2:
+                    FromBarackToTown(2);                        // barack --> town              //сделано
+                    botParam.HowManyCyclesToSkip = 3;  //2
+                    break;
+                case 11:                                         // закрыть службу Стим
+                    CloseSteam();
+                    break;
+                case 12:                                         // закрыть магазин 
+                    CloseMerchReboldo();
+                    break;
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    PressYesBarack();
+                    break;
+                case 17:                                        // в бараках на стадии выбора группы
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                case 19:                                         // включить правильную стойку
+                    ProperFightingStanceOn();
+                    MoveCursorOfMouse();
+                    break;
+                case 20:
+                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                    break;
+                case 22:
+                    if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                    if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                    {
+                        RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                        botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
+                        IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                    }
+                    break;
+                case 23:                                    //стим есть. только что нашли новое окно с игрой
+                                                            //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+                case 24:                //если нет стима, значит удалили песочницу
+                                        //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                    if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                    {
+                        //************************ запускаем стим ************************************************************
+                        runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
+                        IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                    }
+                    break;
+                case 33:
+                    CloseError820();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 34:
+                    AcceptUserAgreement();
+                    break;
+                case 35:
+                    CloseErrorSandboxie();
+                    break;
+                case 36:
+                    CloseUnexpectedError();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 37:
+                    CloseSteamMessage();
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы для Демоник (для стадий 2+)
+        /// 1,12,22,23,24 - на стадию 1.         6,11,16,17,19,20,33,34,35,36,37
+        /// </summary>
+        public void problemResolutionCommonDemonicForStageFrom2To(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:                                         //логаут
+                case 12:                                        //закрыть магазин 
+                case 22:                                        //если нет окна ГЭ в текущей песочнице
+                case 23:                                        //есть окно стим
+                case 24:                                        //если нет стима, значит удалили песочницу
+                    botParam.Stage = 1;
+                    break;
+
+                case 6:                                     // Миссия окончена 
+                    //RemoveSandboxieBH();                  //закрываем песочницу //старый вариант
+                    Teleport(4, true);                      //телепорт в Кастилию
+                    botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
+                    botParam.HowManyCyclesToSkip = 4;
+                    break;
+                case 11:                                         // закрыть службу Стим
+                    CloseSteam();
+                    break;
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    PressYesBarack();
+                    break;
+                case 17:                                        // в бараках на стадии выбора группы
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                case 19:                                         // включить правильную стойку
+                    ProperFightingStanceOn();
+                    MoveCursorOfMouse();
+                    break;
+                case 20:
+                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                    break;
+                case 33:
+                    CloseError820();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 34:
+                    AcceptUserAgreement();
+                    break;
+                case 35:
+                    CloseErrorSandboxie();
+                    break;
+                case 36:
+                    CloseUnexpectedError();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 37:
+                    CloseSteamMessage();
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+            }
+        }
+
+        #endregion ==================================================================================
+
+        #region ======================== Решение проблем Демоник ====================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionAllinOneStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage1();
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 4:     //зависли в БХ
+                            numberOfProblem = 18;
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                switch (numberOfProblem)
+                {
+                    case 2:
+                        FromBarackToTown(2);                        // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        MissionStart();
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 4:
+                        AddBullets();
+                        GoToInfinityGateDem();
+                        break;
+                    case 5:
+                        CreatingMission();
+                        break;
+                    case 6:                                         // town --> BH
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(3, true);                  // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузились ворота Демоник.
+                        break;
+                    case 7:                                 // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                        botwindow.CommandMode();
+                        BattleModeOnDem();                   //пробел
+
+                        botwindow.ThirdHero();          //эксперимент 29-01-2024
+
+                        ChatFifthBookmark();
+                        Hero[1] = WhatsHero(1);
+                        Hero[2] = WhatsHero(2);
+                        Hero[3] = WhatsHero(3);
+
+                        ActivePetDem();                     //новая функция  22-11
+
+                        MaxHeight(12);
+
+                        botParam.Stage = 2;
+                        break;
+                    case 8:                                         //Gate --> Mission Lobby
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
+                        break;
+                    case 9:                                         //нет наследия. летим на мост
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        botParam.Stage = 5;
+                        break;
+                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
+                        RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 18:
+                        //новый вариант                             //переход по телепорту в БХ к воротам
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        PressToGateDemonic();
+                        prevProblem = 6;                    // делаем предыдущее состояние = город        
+                                                            // а иначе программа считает, что мы всё еще застряли в БХ и стоим не там 
+                                                            // и опять попадаем сюда же (бесконечный цикл)
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    default:
+                        problemResolutionCommonForStage1(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                //Pause(1000);
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Demonic
+        /// 2, 3, 10
+        /// </summary>
+        public void problemResolutionAllinOneStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage2();
+
+                switch (numberOfProblem)
+                {
+                    case 2:                                                 // в бараках
+                        ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
+                        MoveCursorOfMouse();
+                        botParam.Stage = 3;
+                        break;
+                    case 3:                                                 // собираемся атаковать
+                        DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
+                        AttackTheMonsters(DirectionOfMovement);             // атакуем с CTRL
+
+                        MoveCursorOfMouse();
+                        Buff(Hero[1], 1);
+                        Buff(Hero[2], 2);
+                        Buff(Hero[3], 3);
+
+                        BattleModeOnDem();
+                        break;
+                    //case 6:                                     // Миссия окончена 
+                    //    //RemoveSandboxieBH();                  //закрываем песочницу
+                    //    Teleport(4, true);                      //телепорт в Кастилию
+                    //    botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
+                    //    botParam.HowManyCyclesToSkip = 4;
+                    //    break;
+                    case 10:
+                        //если появился сундук
+                        BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
+                        GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
+                        botwindow.PressEscThreeTimes();
+                        break;
+
+                    default:
+                        problemResolutionCommonDemonicForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадия 3
+        /// 2, 3, 8
+        /// </summary>
+        public void problemResolutionAllinOneStage3()
+        {
+            WriteToLogFileBH("перешли к выполнению стадии 3");
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage3();
+
+                switch (numberOfProblem)
+                {
+                    case 2:                         //в бараках   ======== этот пункт нельзя комментить ==========
+                                                    // т.к. при возврате в миссию для открытия сундука сработает
+                                                    // условие,  (если барак, то RemoveSandboxie)  // тогда мы не сможем открыть сундук
+                        FromBarackToTown(2);        //здесь по идее можно писать, что угодно. лишь бы не удаление песочницы
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 3:                                         //в миссии, но сундук ещё не открыт
+                        OpeningTheChest();                          //тыкаем в сундук и запускаем рулетку
+                        ActivePetDem();                             //активируем пета (может он успеет собрать не подобранные вещи)
+                        //driver.StateActivePetDem();               //активируем пета (старый вариант)
+                        MaxHeight(10);                              //чтобы точно было видно вторые ворота
+                        PressOnFesoGate();
+                        botwindow.Pause(2000);
+                        if (!dialog.isDialog())
+                        {
+                            botwindow.Pause(3000);                  //ждём рулетку
+                            //RemoveSandboxieBH();                    //закрываем песочницу и берём следующего бота в работу
+                            //botParam.Stage = 1;
+                            //botParam.HowManyCyclesToSkip = 1;
+                            Teleport(4, true);                      //телепорт в Кастилию
+                            botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
+                            botParam.HowManyCyclesToSkip = 4;
+                        }
+                        else
+                        {
+                            dialog.PressStringDialog(1);
+                            dialog.PressStringDialog(1);
+                            dialog.PressOkButton(1);
+                            if (dialog.isDialog()) dialog.PressOkButton(1);
+                            botwindow.Pause(3000);
+                            //AttackCtrlToLeft();        //старый вариант
+                            BattleModeOnDem();           //новый вариант
+                            ActivePetDem();
+                            //botParam.HowManyCyclesToSkip = 1;
+                            botParam.Stage = 4;
+                        }
+                        break;
+                    //case 6:
+                    //    RemoveSandboxieBH();                 //закрываем песочницу
+                    //    botParam.Stage = 1;
+                    //    botParam.HowManyCyclesToSkip = 1;
+                    //    break;
+                    case 8:                                         // появились ворота фесо
+                        dialog.PressStringDialog(1);
+                        dialog.PressStringDialog(1);
+                        dialog.PressOkButton(1);
+                        if (dialog.isDialog()) dialog.PressOkButton(1);
+                        botwindow.Pause(3000);
+                        AttackCtrlToLeft();
+                        ActivePetDem();
+                        botParam.Stage = 4;
+                        break;
+
+                    default:
+                        problemResolutionCommonDemonicForStageFrom2To(numberOfProblem);
+                        break;
+
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадии 4
+        /// 3,5,8
+        /// </summary>
+        public void problemResolutionAllinOneStage4()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage4();
+
+                switch (numberOfProblem)
+                {
+                    //case 6:
+                    //    RemoveSandboxieBH();                 //закрываем песочницу
+                    //    botParam.Stage = 1;
+                    //    botParam.HowManyCyclesToSkip = 1;
+                    //    break;
+                    case 2:                                         //в бараках. если из карты с фесо попали в барак, то на стадию 1 (???)
+                        botParam.Stage = 1;
+                        break;
+                    case 3:                                         //в комнате с фесо
+                        NeedToPickUpFeso = true;
+                        break;
+                    case 5:                                         // в миссии. уже не бьём мобов. пора собирать фесо
+                        PickUpToLeft();
+                        break;
+                    case 8:
+                        PickUpToRight();
+                        break;
+                    default:
+                        problemResolutionCommonDemonicForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ Демоник стадия 5
+        /// 2, 3, 4, 5, 7, 8
+        /// </summary>
+        public void problemResolutionAllinOneStage5()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage5();
+
+                switch (numberOfProblem)
+                {
+
+                    case 2:                                         //в бараках  
+                        botParam.Stage = 1;
+                        break;
+                    case 3:                                         //на мосту, но пока не получили бафф наследие. карта не открыта
+                        MinHeight(10);
+                        OpenMapBridge();
+                        break;
+                    case 4:                                         //на мосту и получили бафф наследие
+                        //GotoBarack();
+                        Logout();
+                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.Stage = 1;
+                        break;
+                    case 5:                                         //на мосту, но пока не получили бафф наследие. карта открыта
+                        GotoAncientBlessingStatue();
+                        break;
+                    case 7:                                         //получаем бафф "наследие"
+                        dialog.PressStringDialog(1);
+                        dialog.PressStringDialog(1);
+                        break;
+                    case 8:                                         //в городе. летим на мост
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(2500);
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        break;
+                    default:
+                        problemResolutionCommonDemonicForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+            }
+        }
+
+        #endregion ==================================================================================
+
+        #endregion ===============================================================================================    
     }
 }

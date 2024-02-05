@@ -36,6 +36,9 @@ namespace States
         /// номер проблемы на предыдущем цикле
         /// </summary>
         private int prevProblem;
+        /// <summary>
+        /// номер проблемы на предпредыдущем цикле
+        /// </summary>
         private int prevPrevProblem;
         /// <summary>
         /// номер окна по порядку (в том порядке, на каком оно находится на экране. Самое левое верхнее левое окно имеет #1)
@@ -55,19 +58,6 @@ namespace States
         private BotParam botParam;
         //private System.Windows.Forms.Timer NowTimer = new System.Windows.Forms.Timer();
 
-        
-        /// <summary>
-        /// переменная нужна для отслеживания зависания в состоянии Logout
-        /// </summary>
-        private bool SteamLoaded;
-        /// <summary>
-        /// текущее дата и время
-        /// </summary>
-        private DateTime dateNow;
-        /// <summary>
-        /// время запуска Стим для этого окна
-        /// </summary>
-        private DateTime dateSteam;
         /// <summary>
         /// номер состояния бота (место, где бот сейчас находится)
         /// </summary>
@@ -153,9 +143,6 @@ namespace States
             //botParam.HowManyCyclesToSkip = 0;
             DirectionOfMovement = 1;
             Hero = new int[4] {0,0,0,0};
-            dateNow = DateTime.Now;
-            dateSteam = DateTime.Now;
-            SteamLoaded = false;
         }
 
 
@@ -936,7 +923,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -955,7 +941,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -1199,10 +1184,10 @@ namespace States
                     case 20:
                         server.ButtonToBarack(); //если стоят на странице создания нового персонажа, то нажимаем кнопку, чтобы войти обратно в барак
                         break;
-                    case 29:                                        //если все убиты
-                        server.GotoBarack();                        // идем в барак, чтобы потом перейти к стадии 3 (открытие сундука и проч.)
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
+                    //case 29:                                        //если все убиты
+                    //    server.GotoBarack();                        // идем в барак, чтобы потом перейти к стадии 3 (открытие сундука и проч.)
+                    //    botParam.HowManyCyclesToSkip = 2;
+                    //    break;
                     case 33:
                         server.CloseError820();
                         //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
@@ -1990,7 +1975,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -2009,7 +1993,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -2511,11 +2494,6 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage1();
 
-                if (SteamLoaded) dateSteam = DateTime.Now;
-                dateNow = DateTime.Now;
-                if ((dateNow - dateSteam).TotalMinutes > 5)
-                    numberOfProblem = 31;
-
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
                 {
@@ -2615,7 +2593,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -2634,7 +2611,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -3891,7 +3867,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -3910,7 +3885,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -4051,11 +4025,6 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemBridgeMultiStage2();
 
-                if (SteamLoaded) dateSteam = DateTime.Now;
-                dateNow = DateTime.Now;
-                if ((dateNow - dateSteam).TotalMinutes > 5)
-                    numberOfProblem = 31;
-
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
                 {
@@ -4155,7 +4124,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -4174,7 +4142,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -4317,11 +4284,6 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemBridgeMultiStage3();
 
-                if (SteamLoaded) dateSteam = DateTime.Now;
-                dateNow = DateTime.Now;
-                if ((dateNow - dateSteam).TotalMinutes > 5)
-                    numberOfProblem = 31;
-
                 //если зависли в каком-либо состоянии, то особые действия
                 if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
                 {
@@ -4421,7 +4383,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -4440,7 +4401,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -5235,7 +5195,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -5254,7 +5213,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -6112,7 +6070,7 @@ namespace States
                         botParam.HowManyCyclesToSkip = 2;  //1
                         break;
                     case 2:
-                        server.FromBarackToTown();
+                        server.FromBarackToTown(3);
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     //=========================================================================================
@@ -6165,7 +6123,6 @@ namespace States
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
                             server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                            SteamLoaded = true;
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                         }
@@ -6184,7 +6141,6 @@ namespace States
                             this.globalParam = new GlobalParam();
                             this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            dateSteam = DateTime.Now;
                             server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
                             server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
                             botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
@@ -7197,6 +7153,46 @@ namespace States
 
         #endregion
 
+
+        #region  =================================== All in One Stage ==============================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionAllinOneStage(int NumberOfStage)
+        {
+            switch (NumberOfStage)
+            {  
+                case 1:
+                    server.problemResolutionAllinOneStage1();
+                    break;
+                case 2:
+                    server.problemResolutionAllinOneStage2();
+                    break;
+                case 3:
+                    server.problemResolutionAllinOneStage3();
+                    break;
+                case 4:
+                    server.problemResolutionAllinOneStage4();
+                    break;
+                case 5:
+                    server.problemResolutionAllinOneStage5();
+                    break;
+                //case 6:
+                //    server.problemResolutionAllinOneStage1();
+                //    break;
+                //case 7:
+                //    server.problemResolutionAllinOneStage1();
+                //    break;
+                //case 8:
+                //    server.problemResolutionAllinOneStage1();
+                //    break;
+
+            }
+
+        }
+
+        #endregion =================================================================================================
 
         /// <summary>
         /// тестовая кнопка

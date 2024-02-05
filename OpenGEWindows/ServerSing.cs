@@ -25,12 +25,13 @@ namespace OpenGEWindows
             #region общие
 
             this.botwindow = botwindow;
+            numberOfWindow = botwindow.getNumberWindow();
             //this.xx = botwindow.getX();
             //this.yy = botwindow.getY();
             this.globalParam = new GlobalParam();
-            ServerParamFactory serverParamFactory = new ServerParamFactory(botwindow.getNumberWindow());
+            ServerParamFactory serverParamFactory = new ServerParamFactory(numberOfWindow);
             this.serverParam = serverParamFactory.create();
-            this.botParam = new BotParam(botwindow.getNumberWindow());
+            this.botParam = new BotParam(numberOfWindow);
             this.xx = botParam.X;
             this.yy = botParam.Y;
             this.xxx = 5;
@@ -682,6 +683,16 @@ namespace OpenGEWindows
             this.pointisOpenInventory2 = new PointColor(745 - 5 + xx, 87 - 5 + yy, 8549475, 0);
 
             #endregion
+
+            #region All in One
+
+            this.Hero = new int[4] { 0, 0, 0, 0 };
+            this.DirectionOfMovement = 1;
+            this.NeedToPickUpFeso = false;
+
+            #endregion
+
+
         }
 
         ///// <summary>

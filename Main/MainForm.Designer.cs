@@ -54,6 +54,7 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.AllinOne = new System.Windows.Forms.Button();
             this.Farm = new System.Windows.Forms.Button();
             this.ButtonOpenWindow = new System.Windows.Forms.Button();
             this.PureOtiteNew = new System.Windows.Forms.Button();
@@ -70,7 +71,6 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.AllinOne = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -320,7 +320,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 396);
+            this.tabControl1.Size = new System.Drawing.Size(386, 199);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -348,9 +348,20 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 370);
+            this.tabPage1.Size = new System.Drawing.Size(378, 173);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
+            // 
+            // AllinOne
+            // 
+            this.AllinOne.BackColor = System.Drawing.Color.GreenYellow;
+            this.AllinOne.Location = new System.Drawing.Point(198, 173);
+            this.AllinOne.Name = "AllinOne";
+            this.AllinOne.Size = new System.Drawing.Size(170, 35);
+            this.AllinOne.TabIndex = 76;
+            this.AllinOne.Text = "Demonic+Castilia";
+            this.AllinOne.UseVisualStyleBackColor = false;
+            this.AllinOne.Click += new System.EventHandler(this.AllinOne_Click);
             // 
             // Farm
             // 
@@ -474,7 +485,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 173);
+            this.tabPage2.Size = new System.Drawing.Size(378, 370);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -528,7 +539,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 173);
+            this.tabPage3.Size = new System.Drawing.Size(378, 370);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -543,23 +554,12 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // AllinOne
-            // 
-            this.AllinOne.BackColor = System.Drawing.Color.GreenYellow;
-            this.AllinOne.Location = new System.Drawing.Point(198, 173);
-            this.AllinOne.Name = "AllinOne";
-            this.AllinOne.Size = new System.Drawing.Size(170, 35);
-            this.AllinOne.TabIndex = 76;
-            this.AllinOne.Text = "Demonic+Castilia";
-            this.AllinOne.UseVisualStyleBackColor = false;
-            this.AllinOne.Click += new System.EventHandler(this.AllinOne_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 396);
+            this.ClientSize = new System.Drawing.Size(386, 199);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;

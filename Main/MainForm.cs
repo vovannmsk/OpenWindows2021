@@ -1536,35 +1536,10 @@ namespace Main
                         botParam[j].Stage = 1;
                     }
                     if (check[j].IsActiveServer)
-                    {
-                        switch (botParam[j].Stage)
-                        {
-                            case 1:
-                                check[j].problemResolutionDeliveryMultiStage1();
-                                break;
-                                //case 2:
-                                //    check[j].problemResolutionBridgeMultiStage2();
-                                //    break;
-                                //case 3:
-                                //    check[j].problemResolutionBridgeMultiStage3();
-                                //    break;
-                                //case 4:
-                                //    check[j].problemResolutionBridgeMultiStage4();
-                                //    break;
-                                //case 5:
-                                //    check[j].problemResolutionBridgeMultiStage5();
-                                //    break;
-                                //case 6:
-                                //    check[j].problemResolutionBridgeMultiStage6();
-                                //    break;
-                                //case 7:
-                                //    check[j].problemResolutionBridgeMultiStage7();
-                                //    break;
-                        }
-                    }
+                        check[j].problemResolutionAllinOneStage(botParam[j].Stage);
                     else
                     {
-                        check[j].RemoveSandboxie();
+                        check[j].RemoveSandboxie();         //скорее всего это не нужно. достаточно сделать вычисление нового бота
                         check[j] = new Check(j);
                         botParam[j] = new BotParam(j);
                         botParam[j].Stage = 1;
