@@ -13,13 +13,19 @@ namespace States
         /// Если Стим грузится, то переменная равна номеру окна (numberOfWindow)
         /// </summary>
         private static int IsItAlreadyPossibleToUploadNewSteam = 0;
-
         /// <summary>
         /// Если никакое окно с игрой не грузится, то переменная = 0. 
         /// Если окно грузится, то переменная равна номеру окна (numberOfWindow)
         /// </summary>
         private static int IsItAlreadyPossibleToUploadNewWindow = 0;
-
+        /// <summary>
+        /// нужно собирать дроп, двигаясь вправо (Кастилия)
+        /// </summary>
+        private bool NeedToPickUpRight;
+        /// <summary>
+        /// нужно собирать дроп, двигаясь влево (Кастилия)
+        /// </summary>
+        private bool NeedToPickUpLeft;
         /// <summary>
         /// если равна true, тогда атака на мобов закончена и надо подбирать дроп (фесо)
         /// </summary>
@@ -110,6 +116,8 @@ namespace States
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
+            NeedToPickUpRight=false;
+            NeedToPickUpLeft=false;
             NeedToPickUpFeso = false;
             NextPointNumber = 0;
             numberOfState = 0;
@@ -2079,15 +2087,22 @@ namespace States
             if (server.isWork() || 
                 server.isKillFirstHero())       //проверить
             {
-                if (server.isAssaultMode())    //значит ещё бегут к выбранной точке
-                    return 4;
+                if (server.isAssaultMode())     //значит ещё бегут к выбранной точке
+                    return 4;                   //тыкаем туда же ещё раз
                 if (server.isBattleMode())
-                    return 5;                   //значит бежим к очередному боссу без Ctrl. пропустить 2-4 цикла
+                {
+                    if (NeedToPickUpRight)
+                        return 7;
+                    if (NeedToPickUpLeft)
+                        return 8;
+                    else
+                        return 5;               //значит бежим к очередному боссу без Ctrl. пропустить 2-4 цикла
+                }
                 else
                     return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
                                                     //но проверяем через 1-2 сек, не пропал ли Ctrl.
                                                     //Это бы означало, что добежали до места, перебиты все монстры
-                                                    //надо собирать лут, далее включать пробел и менять целевую точку 
+                                                    //надо собирать лут
             }
             //======================================================================================================
             //служба Steam
@@ -2138,32 +2153,23 @@ namespace States
                         botParam.Stage = 1;
                         break;
                     //====================================================================================
-                    case 3:                                                 // собираемся атаковать. до этого просто бежали 
-                        botwindow.PressEscThreeTimes();             
-
-                        server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
-                        Pause(500);
-                        iPoint NextPoint = server.RouteNextPointMulti(NextPointNumber);  //получили точку маршрута 
-                        NextPoint.PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
-                        botwindow.PressEscThreeTimes();
-
+                    case 3:                                                 // ни пробела, ни Ctrl на нажато (значит бежали до этого)
+                        server.AssaultToNextPoint(NextPointNumber);
                         Pause(2000);
-                        if (!server.isAssaultMode())    //если боевой режим пропал
+                        if (!server.isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
                         {
-                            server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));
-                            NextPointNumber++;
+                            NeedToPickUpRight = true;
+                            //старый вариант
+                            //server.GetDropCastilia(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                            //NextPointNumber++;
                             server.BattleModeOnDem();
                         }
                         break;
                     case 4:                                                 // бежим с Ctrl. на всякий случай даём указание бить в ту же точку,
                                                                             // так как бывают случаи, что не все герои бьются, а только 1-2
-                        botwindow.PressEsc();
-                        server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
-                        Pause(500);
-                        server.RouteNextPointMulti(NextPointNumber).PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
-                        botwindow.PressEsc();
+                        server.AssaultToNextPoint(NextPointNumber);
                         break;
-                    case 5:
+                    case 5:                                                 //стоим на пробеле, NeedToPickUpRight=false, NeedToPickUpLeft=false
                         // бафаемся перед перемещением дальше
                         if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
                         {
@@ -2177,19 +2183,28 @@ namespace States
 
                         if (NextPointNumber <= 7)        //если еще не дошли до конца миссии 
                         {
-                            server.TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
-                            Pause(500);
-                            iPoint NextPointforRun = server.RouteNextPointMulti(NextPointNumber);  //получили следующую точку маршрута
-                            NextPointforRun.PressMouseL();  //тыкаем левой кнопкой в карту, чтобы бежал вперёд
-                            botwindow.PressEscThreeTimes();     //закрываем карту
+                            server.MoveToNextPoint(NextPointNumber);
                             botParam.HowManyCyclesToSkip = 6;
                         }
                         else
                         {
-                            server.RemoveSandboxieBH();                 //закрываем песочницу
+                            server.RemoveSandboxieBH();                     //закрываем песочницу
                             botParam.Stage = 1;
                             botParam.HowManyCyclesToSkip = 1;
                         }
+                        break;
+                    case 7:                                                 //на пробеле, NeedToPickUpRight=true, NeedToPickUpLeft = false,
+                        NeedToPickUpRight = false;  
+                        NeedToPickUpLeft = true;
+                        server.GetDropCastiliaRight(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                        server.BattleModeOnDem();
+                        break;
+                    case 8:                                                 //на пробеле, NeedToPickUpLeft=true
+                        NeedToPickUpLeft = false;
+                        NeedToPickUpRight = false;
+                        server.GetDropCastiliaLeft(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                        server.BattleModeOnDem();
+                        NextPointNumber++;
                         break;
                     //====================================================================================
                     case 11:                                         // закрыть службу Стим
@@ -7153,7 +7168,6 @@ namespace States
 
         #endregion
 
-
         #region  =================================== All in One Stage ==============================================
 
         /// <summary>
@@ -7178,18 +7192,19 @@ namespace States
                 case 5:
                     server.problemResolutionAllinOneStage5();
                     break;
-                //case 6:
-                //    server.problemResolutionAllinOneStage1();
-                //    break;
-                //case 7:
-                //    server.problemResolutionAllinOneStage1();
-                //    break;
-                //case 8:
-                //    server.problemResolutionAllinOneStage1();
-                //    break;
-
+                case 6:
+                    server.problemResolutionAllinOneStage6();
+                    break;
+                case 7:
+                    server.problemResolutionAllinOneStage7();
+                    break;
+                case 8:
+                    server.problemResolutionAllinOneStage8();
+                    break;
+                case 9:
+                    server.problemResolutionAllinOneStage9();
+                    break;
             }
-
         }
 
         #endregion =================================================================================================

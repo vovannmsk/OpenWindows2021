@@ -689,7 +689,9 @@ namespace OpenGEWindows
             this.Hero = new int[4] { 0, 0, 0, 0 };
             this.DirectionOfMovement = 1;
             this.NeedToPickUpFeso = false;
-
+            this.NeedToPickUpRight = false;
+            this.NeedToPickUpLeft = false;
+            this.NextPointNumber = 0;
             #endregion
 
 

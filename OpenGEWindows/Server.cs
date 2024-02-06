@@ -756,6 +756,18 @@ namespace OpenGEWindows
         /// если равна true, тогда атака на мобов закончена и надо подбирать дроп (фесо)
         /// </summary>
         protected bool NeedToPickUpFeso;
+        /// <summary>
+        /// нужно собирать дроп, двигаясь вправо (Кастилия)
+        /// </summary>
+        protected bool NeedToPickUpRight;
+        /// <summary>
+        /// нужно собирать дроп, двигаясь влево (Кастилия)
+        /// </summary>
+        protected bool NeedToPickUpLeft;
+        /// <summary>
+        /// для миссии Кастилия. номер следующей точки маршрута
+        /// </summary>
+        protected int NextPointNumber;
 
         #endregion
         // ===========================================  Методы ==========================================
@@ -2058,7 +2070,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// телепортируемся в город по Alt+W             /21-12-23/
+        /// телепортируемся в город по Alt+W. Актуальный             /21-12-23/
         /// </summary>
         /// <param name="NumberOfTown">номер телепорта, начиная сверху</param>
         public void TeleportAltW(int NumberOfTown)
@@ -5062,6 +5074,33 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// бежим с Ctrl к указанной точке маршрута
+        /// </summary>
+        /// <param name="NextPointNumber">точка маршрута</param>
+        public void AssaultToNextPoint(int NextPointNumber)
+        {
+            botwindow.PressEsc();
+            TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
+            Pause(500);
+            RouteNextPointMulti(NextPointNumber).PressMouseR();  //тыкаем правой кнопкой в карту, чтобы бежал вперёд с Ctrl
+            botwindow.PressEsc();
+        }
+
+        /// <summary>
+        /// бежим к указанной точке маршрута
+        /// </summary>
+        /// <param name="NextPointNumber">точка маршрута</param>
+        public void MoveToNextPoint(int NextPointNumber)
+        {
+            botwindow.PressEsc();
+            TopMenu(12, 2, true);                       //открываем карту в миссии (LocalMap)
+            Pause(500);
+            RouteNextPointMulti(NextPointNumber).PressMouseL();              //тыкаем левой кнопкой в карту, чтобы бежал к точке
+            botwindow.PressEsc();                       //закрываем карту
+        }
+
+
+        /// <summary>
         /// возвращает время ожидания подбора дропа для выбранной точки маршрута
         /// </summary>
         /// <param name="counter">номер точки маршрута</param>
@@ -5105,7 +5144,7 @@ namespace OpenGEWindows
         /// собираем дроп слева от героев. время сбора = Period милисекунд
         /// </summary>
         /// <param name="Period">время сбора</param>
-        private void GetDropCastiliaLeft(int Period)
+        public void GetDropCastiliaLeft(int Period)
         {
             for (int i = 1; i <= 1; i++)
             {
@@ -5119,7 +5158,7 @@ namespace OpenGEWindows
         /// собираем дроп справа от героев. время сбора = Period милисекунд
         /// </summary>
         /// <param name="Period">время сбора</param>
-        private void GetDropCastiliaRight(int Period)
+        public void GetDropCastiliaRight(int Period)
         {
             for (int i = 1; i <= 1; i++)
             {
@@ -8573,9 +8612,169 @@ namespace OpenGEWindows
             return 0;
         }
 
-
         #endregion ================================================================================
 
+        #region ======================== Поиск проблем в Кастилии =================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Кастилии (стадия 1.Вход в миссию) и возвращаем номер проблемы
+        /// 3,4,5,6,7,8,9,10
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage6()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            // диалог
+            if (dialog.isDialog())
+            {
+                if (isMissionCastiliaNotAvailable())
+                    return 10;                              //если стоим в воротах Castilia и миссия не доступна
+                else
+                    return 8;                               //если стоим в воротах Castilia и миссия доступна
+            }
+            //Mission Lobby
+            if (isMissionLobby()) return 5;      //22-11
+            //Waiting Room //Mission Room 22-11
+            if (isWaitingRoom()) return 3;      //22-11
+            //город или БХ
+            if (isTown())
+            {
+                botwindow.PressEscThreeTimes();                 //27-10-2021
+                if (!isKillFirstHero()) // эта проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                {
+                    if (isCastilia())                           //в Кастилии     
+                        if (isAncientBlessing(1))
+                            return 4;                           // стоим в правильном месте (около зеленой стрелки в миссию)
+                        else
+                            return 9;                           //нет наследия. идём на мост
+                    else                                        // в городе, но не в Кастилии (значит в Ребольдо)
+                        return 6;                               // из Ребольдо в Кастилию
+                }
+            }
+
+            //в миссии (если убит первый персонаж, то это точно миссия
+            if (isWork() || isKillFirstHero()) return 7;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Кастилии (стадия 2. Миссия) и возвращаем номер проблемы
+        /// 3,4,5,6,7,8
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage7()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //в миссии
+            if (isWork() ||
+                isKillFirstHero())       //проверить
+            {
+                if (isAssaultMode())     //значит ещё бегут к выбранной точке
+                    return 4;                   //тыкаем туда же ещё раз
+                if (isBattleMode())
+                {
+                    if (NeedToPickUpRight)
+                        return 7;
+                    if (NeedToPickUpLeft)
+                        return 8;
+                    else
+                        if (NextPointNumber > 7)    //дошли до конца миссии
+                        return 6;               //летим на ферму
+                    else
+                        return 5;               //значит бежим к очередному боссу без Ctrl
+                }
+                else
+                    return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
+                                                //но проверяем через 1-2 сек, не пропал ли Ctrl.
+                                                //Это бы означало, что добежали до места, перебиты все монстры
+                                                //надо собирать лут
+            }
+            //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
+            if (isTown() && isCastilia())
+                return 6;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Кастилии (стадия 3. Мост) и возвращаем номер проблемы
+        /// 4,5,7,8,9
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage8()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //если диалог 
+            if (dialog.isDialog())
+                return 7;                       //получаем бафф "наследие"
+            //в миссии
+            if (isWork())
+            {
+                if (isBridge())
+                    if (isAncientBlessing(1))
+                        return 4;               //на мосту и получили бафф наследие
+                    else
+                        if (isOpenMapBridge())
+                        return 5;               //на мосту, но пока не получили бафф наследие. карта открыта
+                    else
+                        return 9;               //на мосту, но пока не получили бафф наследие. карта не открыта
+            }
+            //в городе
+            if (isTown())
+                return 8;                       //в городе. летим на мост
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        #endregion 
+
+        #region ======================== Поиск проблем на ФЕРМЕ =================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе на ферме (стадия 1.Вход в миссию) и возвращаем номер проблемы
+        /// 5,6,7,8,9
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage9()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //диалог
+            if (dialog.isDialog())
+                return 8;        //Farm Manager               
+
+            //город
+            if (isTown())
+            {
+                if (isReboldo())
+                    return 6;
+                if (isUstiar())
+                    return 5;
+            }
+
+            //на ферме
+            if (isWork())
+                if (isRewardAvailable())
+                    return 7;
+                else
+                    return 9;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        #endregion
 
         #region ======================== Решение стандартных проблем ================================
 
@@ -8613,7 +8812,7 @@ namespace OpenGEWindows
                     break;
                 case 20:
                     ButtonToBarack();                    //если стоят на странице создания нового персонажа,
-                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                                                            //то нажимаем кнопку, чтобы войти обратно в барак
                     break;
                 case 22:
                     if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
@@ -8642,7 +8841,7 @@ namespace OpenGEWindows
                     CloseError820();
                     //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
                     IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                              // а значит смело можно грузить окно еще раз
+                                                                // а значит смело можно грузить окно еще раз
                     break;
                 case 34:
                     AcceptUserAgreement();
@@ -8654,7 +8853,7 @@ namespace OpenGEWindows
                     CloseUnexpectedError();
                     //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
                     IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                              // а значит смело можно грузить окно еще раз
+                                                                // а значит смело можно грузить окно еще раз
                     break;
                 case 37:
                     CloseSteamMessage();
@@ -8726,6 +8925,64 @@ namespace OpenGEWindows
                     break;
             }
         }
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы для Кастилии (для стадий 2+)
+        /// 1,12,22,23,24 - на стадию 1.         6,11,16,17,19,20,33,34,35,36,37
+        /// </summary>
+        public void problemResolutionCommonCastiliaForStageFrom2To(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:                                         //логаут
+                case 12:                                        //закрыть магазин 
+                case 22:                                        //если нет окна ГЭ в текущей песочнице
+                case 23:                                        //есть окно стим
+                case 24:                                        //если нет стима, значит удалили песочницу
+                case 2:                                         // в бараках  
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                case 17:                                        // в бараках на стадии выбора группы
+                case 20:                                        // если стоят на странице создания нового персонажа
+                    botParam.Stage = 6;
+                    break;
+                case 6:                                         // Миссия окончена. Летим на ферму
+                    GotoBarack();                               // идём в барак, так как для фермы надо выбрать другую команду героев
+                    //TeleportAltW(4);
+                    botParam.Stage = 9;                         //ферма
+                    botParam.HowManyCyclesToSkip = 4;
+                    break;
+                case 11:                                         // закрыть службу Стим
+                    CloseSteam();
+                    break;
+                case 19:                                         // включить правильную стойку
+                    ProperFightingStanceOn();
+                    MoveCursorOfMouse();
+                    break;
+                case 33:
+                    CloseError820();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 34:
+                    AcceptUserAgreement();
+                    break;
+                case 35:
+                    CloseErrorSandboxie();
+                    break;
+                case 36:
+                    CloseUnexpectedError();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 37:
+                    CloseSteamMessage();
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+            }
+        }
+
 
         #endregion ==================================================================================
 
@@ -9078,6 +9335,293 @@ namespace OpenGEWindows
 
         #endregion ==================================================================================
 
-        #endregion ===============================================================================================    
+        #region ======================== Решение проблем Кастилия ===================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в Кастилии (стадия 1)
+        /// 2-10, 18
+        /// </summary>
+        public void problemResolutionAllinOneStage6()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage6();
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 4:  //зависли в Кастилии
+                            numberOfProblem = 18; //переходим по телепорту снова к зелёной стрелке
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                switch (numberOfProblem)
+                {
+                    case 2:
+                        FromBarackToTown(2);                        // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        MissionStart();
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 4:                                         // Castilia --> Green Arrow
+                        AddBullets();
+                        GoToMissionCastilia();
+                        break;
+                    case 5:                                         //Mission Lobby --> Mission Room
+                        CreatingMission();
+                        break;
+                    case 6:                                         // town --> Castilia
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(4, true);                          // телепорт в Кастилию
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 7:                                         // начало миссии
+                                                                    // активируем пета и переходим к стадии 2
+                        botwindow.CommandMode();
+                        BattleModeOnDem();                          //пробел
+
+                        Hero[1] = WhatsHero(1);
+                        Hero[2] = WhatsHero(2);
+                        Hero[3] = WhatsHero(3);
+
+                        ActivePetDem();                             //новая функция  22-11
+
+                        botParam.Stage = 7;
+                        break;
+                    case 8:                                         //Green Arrow --> Mission Lobby
+                        dialog.PressStringDialog(1);                //I want to play
+                        dialog.PressStringDialog(2);                //Normal Mode
+                        break;
+                    case 9:                                         //town --> bridge
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        botParam.Stage = 8;                         //мост. наследие
+                        break;
+                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);
+                        //TeleportAltW(4);
+                        GotoBarack();
+                        botParam.Stage = 9;                          //ферма
+                        botParam.HowManyCyclesToSkip = 4;
+                        //старый вариант
+                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующий бот для работы
+                        //botParam.Stage = 1;
+                        //botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 18:
+                        //новый вариант                             //переход по телепорту в Кастилии к воротам
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(4, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        //PressToGateDemonic();
+                        prevProblem = 6;                            // делаем предыдущее состояние = город        
+                                                                    // а иначе программа считает, что мы всё еще застряли в Кастилии,
+                                                                    // стоим не там и опять попадаем сюда же (бесконечный цикл)
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    default:
+                        problemResolutionCommonForStage1(numberOfProblem);
+                        break;
+                }
+            }
+            else
+                botParam.HowManyCyclesToSkip--;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Кастилии (стадия 2)
+        /// 3,4,5,7,8
+        /// </summary>
+        public void problemResolutionAllinOneStage7()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage7();
+
+                switch (numberOfProblem)
+                {
+                    case 3:                                                 // ни пробела, ни Ctrl не нажато (значит бежали до этого)
+                        AssaultToNextPoint(NextPointNumber);
+                        Pause(2000);
+                        if (!isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
+                        {
+                            NeedToPickUpRight = true;
+                            BattleModeOnDem();
+                        }
+                        break;
+                    case 4:                                                 // бежим с Ctrl. на всякий случай даём указание бить в ту же точку,
+                                                                            // так как бывают случаи, что не все герои бьются, а только 1-2
+                        AssaultToNextPoint(NextPointNumber);
+                        break;
+                    case 5:                                                 //стоим на пробеле, NeedToPickUpRight=false, NeedToPickUpLeft=false
+                        // бафаемся перед перемещением дальше
+                        if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
+                        {
+                            MoveCursorOfMouse();
+                            Buff(Hero[1], 1);
+                            Buff(Hero[2], 2);
+                            Buff(Hero[3], 3);
+                            botwindow.ActiveAllBuffBH();
+                            botwindow.PressEscThreeTimes();
+                        }
+                        MoveToNextPoint(NextPointNumber);
+                        botParam.HowManyCyclesToSkip = 6;
+                        break;
+                    case 7:                                                 //на пробеле, NeedToPickUpRight=true, NeedToPickUpLeft = false,
+                        NeedToPickUpRight = false;
+                        NeedToPickUpLeft = true;
+                        GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
+                        BattleModeOnDem();
+                        break;
+                    case 8:                                                 //на пробеле, NeedToPickUpLeft=true
+                        NeedToPickUpLeft = false;
+                        NeedToPickUpRight = false;
+                        GetDropCastiliaLeft(GetWaitingTimeForDropPicking(NextPointNumber));
+                        BattleModeOnDem();
+                        NextPointNumber++;
+                        break;
+                    default:
+                        problemResolutionCommonCastiliaForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+                botParam.HowManyCyclesToSkip--;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Кастилии (стадия 3)
+        /// 4,5,7,8,9
+        /// </summary>
+        public void problemResolutionAllinOneStage8()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage8();
+
+                switch (numberOfProblem)
+                {
+                    case 4:                                         //на мосту и получили бафф наследие
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        MaxHeight(12);
+                        Teleport(4, true);                          // телепорт в Кастилию (четвёртый телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        botParam.Stage = 6;
+                        break;
+                    case 5:                                         //на мосту, но пока не получили бафф наследие. карта открыта
+                        GotoAncientBlessingStatue();
+                        break;
+                    case 9:                                         //на мосту, но пока не получили бафф наследие. карта не открыта
+                        MinHeight(10);
+                        OpenMapBridge();
+                        break;
+                    case 7:                                         //получаем бафф "наследие"
+                        dialog.PressStringDialog(1);
+                        dialog.PressStringDialog(1);
+                        break;
+                    case 8:                                         //в городе. летим на мост
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(2500);
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        break;
+                    //===========================================================================================
+                    default:
+                        problemResolutionCommonCastiliaForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+                botParam.HowManyCyclesToSkip--;
+        }
+
+        #endregion
+
+        #region ======================== Решение проблем ФЕРМА ======================================
+
+        /// <summary>
+        /// разрешение выявленных проблем на ферме (стадия 1)
+        /// 2,5,6,7,8,9
+        /// </summary>
+        public void problemResolutionAllinOneStage9()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage9();
+
+
+                switch (numberOfProblem)
+                {
+                    case 2:
+                        FromBarackToTown(3);
+                        botParam.HowManyCyclesToSkip = 3;           //из барака в город
+                        break;
+                    case 5:                                         // в Юстиаре
+                        botwindow.PressEscThreeTimes();
+                        GotoFarmManager();
+                        break;
+                    case 6:                                         // в Ребольдо
+                        GoToUstiar();
+                        botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 7:                                         // на ферме. доступна награда
+                        GetRreward();
+                        Pause(1000);
+                        RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 8:                                         //диалог (Farm Manager --> Farm)
+                        dialog.PressStringDialog(1);
+                        if (dialog.isDialog()) dialog.PressOkButton(1);
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 9:                                         //на ферме. пока не доступна награда
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    default:
+                        problemResolutionCommonForStage1(numberOfProblem);
+                        break;
+                }
+            }
+            else
+                botParam.HowManyCyclesToSkip--;
+        }
+
+        #endregion
+
+
+        #endregion ================================= All in One (end) =========================================== 
+
+
+
     }
 }
