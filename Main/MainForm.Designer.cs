@@ -240,7 +240,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(199, 139);
+            this.label1.Location = new System.Drawing.Point(194, 175);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 20);
             this.label1.TabIndex = 56;
@@ -249,7 +249,7 @@
             // numberOfAccounts
             // 
             this.numberOfAccounts.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numberOfAccounts.Location = new System.Drawing.Point(327, 137);
+            this.numberOfAccounts.Location = new System.Drawing.Point(322, 173);
             this.numberOfAccounts.Name = "numberOfAccounts";
             this.numberOfAccounts.Size = new System.Drawing.Size(43, 26);
             this.numberOfAccounts.TabIndex = 57;
@@ -320,7 +320,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 199);
+            this.tabControl1.Size = new System.Drawing.Size(386, 243);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -348,18 +348,18 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 173);
+            this.tabPage1.Size = new System.Drawing.Size(378, 217);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
             // AllinOne
             // 
             this.AllinOne.BackColor = System.Drawing.Color.GreenYellow;
-            this.AllinOne.Location = new System.Drawing.Point(198, 173);
+            this.AllinOne.Location = new System.Drawing.Point(198, 91);
             this.AllinOne.Name = "AllinOne";
             this.AllinOne.Size = new System.Drawing.Size(170, 35);
             this.AllinOne.TabIndex = 76;
-            this.AllinOne.Text = "Demonic+Castilia";
+            this.AllinOne.Text = "Demonic+Castilia+Farm";
             this.AllinOne.UseVisualStyleBackColor = false;
             this.AllinOne.Click += new System.EventHandler(this.AllinOne_Click);
             // 
@@ -442,7 +442,7 @@
             // startAccount
             // 
             this.startAccount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.startAccount.Location = new System.Drawing.Point(327, 100);
+            this.startAccount.Location = new System.Drawing.Point(322, 136);
             this.startAccount.Name = "startAccount";
             this.startAccount.Size = new System.Drawing.Size(43, 26);
             this.startAccount.TabIndex = 68;
@@ -452,7 +452,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(199, 102);
+            this.label2.Location = new System.Drawing.Point(194, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(97, 20);
             this.label2.TabIndex = 67;
@@ -485,7 +485,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 370);
+            this.tabPage2.Size = new System.Drawing.Size(378, 173);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -539,7 +539,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 370);
+            this.tabPage3.Size = new System.Drawing.Size(378, 173);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -559,7 +559,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 199);
+            this.ClientSize = new System.Drawing.Size(386, 243);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;

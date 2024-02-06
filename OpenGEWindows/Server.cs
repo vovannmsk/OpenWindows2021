@@ -770,6 +770,7 @@ namespace OpenGEWindows
         protected int NextPointNumber;
 
         #endregion
+
         // ===========================================  Методы ==========================================
 
         #region общие методы
@@ -4997,6 +4998,20 @@ namespace OpenGEWindows
 
         #region   ========== Кастилия (миссия) ==================
 
+
+
+        /// <summary>
+        /// проверяем, находимся ли в Castilia.Mine (в миссии)
+        /// </summary>
+        /// <returns></returns>
+        public bool isCastiliaMine()
+        {
+            return new PointColor(946 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor() 
+                && new PointColor(946 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
+                && new PointColor(949 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                && new PointColor(949 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();        //слово Castilla под миникартой (две буквы l)
+        }
+
         /// <summary>
         /// проверяем, находимся ли в Кастилии   
         /// </summary>
@@ -6379,7 +6394,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// находимся в Expedition Merchant ?
+        /// находимся в Faction Merchant ?
         /// </summary>
         /// <returns></returns>
         public bool isFactionMerch()
@@ -6387,6 +6402,39 @@ namespace OpenGEWindows
             return new PointColor(378 - 5 + xx, 539 - 5 + yy, 7400000, 5).isColor() &&
                     new PointColor(378 - 5 + xx, 540 - 5 + yy, 7400000, 5).isColor();
         }
+
+        /// <summary>
+        /// находимся в Expedition Merchant (на странице с товарами)?
+        /// </summary>
+        /// <returns></returns>
+        public bool isExpedMerch2()
+        {
+            return new PointColor(722 - 5 + xx, 613 - 5 + yy, 12000000, 6).isColor() 
+                && new PointColor(722 - 5 + xx, 623 - 5 + yy, 12000000, 6).isColor()
+                && new PointColor(843 - 5 + xx, 613 - 5 + yy, 12000000, 6).isColor()
+                && new PointColor(843 - 5 + xx, 623 - 5 + yy, 12000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// находимся в Faction Merchant (на странице с товарами)?
+        /// </summary>
+        /// <returns></returns>
+        public bool isFactionMerch2()
+        {
+            return isExpedMerch2();
+        }
+
+        /// <summary>
+        /// закрываем магазин Exped Merch, нажав кнопку "Close"
+        /// </summary>
+        public void CloseMerchReboldo2()
+        {
+            new Point(843 - 5 + xx, 618 - 5 + yy).PressMouseL();
+        }
+
+
+
+
         /// <summary>
         /// закрываем магазин Exped Merch
         /// </summary>
@@ -6626,12 +6674,13 @@ namespace OpenGEWindows
         /// </summary>
         public void PickUpToLeft()
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 2; i++)
             {
-                HarvestMode();
-                //new Point(72 - 5 + xx, 432 - 5 + yy).PressMouseL();
-                //new Point(220 - 5 + xx, 432 - 5 + yy).PressMouseL();
-                new Point(250 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                if (!isHarvestMode())
+                {
+                    HarvestMode();
+                    new Point(250 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                }
             }
         }
 
@@ -6640,10 +6689,13 @@ namespace OpenGEWindows
         /// </summary>
         public void PickUpToRight()
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 2; i++)
             {
-                HarvestMode();
-                new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                if (!isHarvestMode())
+                {
+                    HarvestMode();
+                    new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                }
             }
         }
 
@@ -7144,7 +7196,7 @@ namespace OpenGEWindows
         public bool FindMysophoia(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (
                         //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
                         //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
@@ -7162,7 +7214,7 @@ namespace OpenGEWindows
         public bool FindBulletApilicon(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (
                     //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
                     //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
@@ -7181,7 +7233,7 @@ namespace OpenGEWindows
         public bool FindShareFlint(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (
                     //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
                     //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
@@ -7200,7 +7252,7 @@ namespace OpenGEWindows
         public bool FindConcentracion(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
@@ -7254,7 +7306,7 @@ namespace OpenGEWindows
         public bool FindMarksmanship(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
                         new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
                    ) result = true;
@@ -7270,7 +7322,7 @@ namespace OpenGEWindows
         public bool FindHound(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
+            for (int j = 3; j < 8; j++)
                 if (
                     //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
                     //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
@@ -7763,10 +7815,10 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isReboldo()
         {
-            return new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
-                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
-                    && new PointColor(964 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
+            return     new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
+                    && new PointColor(960 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(960 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
 
         }
 
@@ -8429,6 +8481,8 @@ namespace OpenGEWindows
             if (isLogout()) return 1;
             // если неправильная стойка
             if (isBadFightingStance()) return 19;
+            //если в магазине на странице с товарами
+            if (isExpedMerch2()) return 13;
             //диалог
             if (dialog.isDialog())
                 if (isExpedMerch() || isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
@@ -8448,7 +8502,7 @@ namespace OpenGEWindows
         #region ======================== Поиск проблем в Демонике ================================
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic (стадия 1) и возвращаем номер проблемы
-        /// 3, 4, 5, 6, 7, 8, 9, 10
+        /// 3, 4, 5, 6, 7, 8, 9, 10, 40
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemAllinOneStage1()
@@ -8490,14 +8544,18 @@ namespace OpenGEWindows
                 }
             }
             //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero()) return 7;
+            if (isWork() || isKillFirstHero())
+                if (isCastiliaMine())
+                    return 40;
+                else
+                    return 7;
 
             //если проблем не найдено
             return 0;
         }
 
         /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// проверяем, если ли проблемы при работе в Demonic (стадия 2) и возвращаем номер проблемы
         /// 3, 6, 10 
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
@@ -8525,7 +8583,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// проверяем, если ли проблемы при работе в Demonic  (стадия 3) и возвращаем номер проблемы
         /// 3,6,8
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
@@ -8551,8 +8609,8 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic на стадии 4 и возвращаем номер проблемы
-        /// 3,5,6,8
+        /// проверяем, если ли проблемы при работе в Demonic (стадия 4) и возвращаем номер проблемы
+        /// 3,5,6,7,8
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemAllinOneStage4()
@@ -8562,6 +8620,9 @@ namespace OpenGEWindows
 
             //в миссии фесо
             if (isWork())
+            {
+                if (isHarvestMode())
+                    return 7;
                 if (isBattleMode())
                 {
                     if (NeedToPickUpFeso == false)
@@ -8571,6 +8632,8 @@ namespace OpenGEWindows
                 }
                 else
                     return 5;
+            }
+
             //в городе или в БХ
             if (isTown())                           //если в городе или в БХ, то значит миссия закончилась и нас выкинуло
                 return 6;
@@ -8580,7 +8643,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, если ли проблемы при работе в Demonic и возвращаем номер проблемы
+        /// проверяем, если ли проблемы при работе в Demonic (стадия 5) и возвращаем номер проблемы
         /// 3, 4, 5, 7, 8
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
@@ -8757,10 +8820,12 @@ namespace OpenGEWindows
             //город
             if (isTown())
             {
-                if (isReboldo())
-                    return 6;
+                //if (isReboldo())
+                //    return 6;
                 if (isUstiar())
                     return 5;
+                else
+                    return 6;       //если не Юстиар, то летим в Юстиар
             }
 
             //на ферме
@@ -8794,11 +8859,14 @@ namespace OpenGEWindows
                     FromBarackToTown(2);                        // barack --> town              //сделано
                     botParam.HowManyCyclesToSkip = 3;  //2
                     break;
-                case 11:                                         // закрыть службу Стим
+                case 11:                                        // закрыть службу Стим
                     CloseSteam();
                     break;
-                case 12:                                         // закрыть магазин 
+                case 12:                                        // закрыть магазин 
                     CloseMerchReboldo();
+                    break;
+                case 13:                                        // закрыть магазин 
+                    CloseMerchReboldo2();
                     break;
                 case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                     PressYesBarack();
@@ -8806,7 +8874,7 @@ namespace OpenGEWindows
                 case 17:                                        // в бараках на стадии выбора группы
                     botwindow.PressEsc();                       // нажимаем Esc
                     break;
-                case 19:                                         // включить правильную стойку
+                case 19:                                        // включить правильную стойку
                     ProperFightingStanceOn();
                     MoveCursorOfMouse();
                     break;
@@ -8928,7 +8996,7 @@ namespace OpenGEWindows
 
         /// <summary>
         /// разрешение выявленных проблем. Стандартные проблемы для Кастилии (для стадий 2+)
-        /// 1,12,22,23,24 - на стадию 1.         6,11,16,17,19,20,33,34,35,36,37
+        /// 1,12,22,23,24 - на стадию 6.         6,11,16,17,19,20,33,34,35,36,37
         /// </summary>
         public void problemResolutionCommonCastiliaForStageFrom2To(int numberOfProblem)
         {
@@ -8989,7 +9057,7 @@ namespace OpenGEWindows
         #region ======================== Решение проблем Демоник ====================================
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ
+        /// разрешение выявленных проблем в Демонике. стадия 1. Вход в миссию
         /// </summary>
         public void problemResolutionAllinOneStage1()
         {
@@ -9067,9 +9135,14 @@ namespace OpenGEWindows
                         botParam.Stage = 5;
                         break;
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
-                        RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
-                        botParam.Stage = 1;
-                        botParam.HowManyCyclesToSkip = 2;
+                        dialog.PressOkButton(1);                    //выходим из диалога
+                        Pause(1000);
+                        Teleport(4, true);                          //телепорт в Кастилию
+                        botParam.Stage = 6;                         //переходим на стадию Кастилия (Stage 1)    
+                        botParam.HowManyCyclesToSkip = 4;
+                        //RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
+                        //botParam.Stage = 1;
+                        //botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 18:
                         //новый вариант                             //переход по телепорту в БХ к воротам
@@ -9082,6 +9155,9 @@ namespace OpenGEWindows
                                                             // а иначе программа считает, что мы всё еще застряли в БХ и стоим не там 
                                                             // и опять попадаем сюда же (бесконечный цикл)
                         botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 40:
+                        botParam.Stage = 7;
                         break;
                     default:
                         problemResolutionCommonForStage1(numberOfProblem);
@@ -9096,7 +9172,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в Demonic
+        /// разрешение выявленных проблем в Демонике. стадия 2. Миссия
         /// 2, 3, 10
         /// </summary>
         public void problemResolutionAllinOneStage2()
@@ -9152,7 +9228,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ Демоник стадия 3
+        /// разрешение выявленных проблем в Демонике. стадия 3. открытие сундука
         /// 2, 3, 8
         /// </summary>
         public void problemResolutionAllinOneStage3()
@@ -9234,8 +9310,8 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ Демоник стадии 4
-        /// 3,5,8
+        /// разрешение выявленных проблем в Демонике. стадия 4. Фесо
+        /// 3,5,7,8
         /// </summary>
         public void problemResolutionAllinOneStage4()
         {
@@ -9263,6 +9339,8 @@ namespace OpenGEWindows
                     case 5:                                         // в миссии. уже не бьём мобов. пора собирать фесо
                         PickUpToLeft();
                         break;
+                    case 7:                                         // в миссии. в процессе сбора фесо
+                        break;
                     case 8:
                         PickUpToRight();
                         break;
@@ -9278,7 +9356,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ Демоник стадия 5
+        /// разрешение выявленных проблем в Демонике. стадия 5. Мост. Бафф Наследие
         /// 2, 3, 4, 5, 7, 8
         /// </summary>
         public void problemResolutionAllinOneStage5()
@@ -9395,7 +9473,7 @@ namespace OpenGEWindows
                         Hero[3] = WhatsHero(3);
 
                         ActivePetDem();                             //новая функция  22-11
-
+                        botwindow.ThirdHero();
                         botParam.Stage = 7;
                         break;
                     case 8:                                         //Green Arrow --> Mission Lobby

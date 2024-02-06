@@ -846,9 +846,7 @@ namespace States
                         //server.messageWindowExtension();     //не актуально 22-11-23
 
                         //driver.StateActivePetDem();
-                        pet.ActivePetDem();                     //ноая функция  22-11
-
-                        
+                        server.ActivePetDem();                     //ноая функция  22-11
                         server.MaxHeight(12);                      
                         botParam.Stage = 2;
                         break;
@@ -7379,7 +7377,7 @@ namespace States
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
-            //MessageBox.Show("магазин?" + (server.isExpedMerch() || server.isFactionMerch()));
+            MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
             //server.CloseMerchReboldo();
             //server.TopMenu(12, 3,true);
 
@@ -7458,9 +7456,9 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            PointColor point1 = new PointColor(378 - 5 + xx, 539 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(378 - 5 + xx, 540 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(983 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(722 - 5 + xx, 613 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(722 - 5 + xx, 623 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(843 - 5 + xx, 623 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
