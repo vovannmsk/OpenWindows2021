@@ -6354,8 +6354,8 @@ namespace OpenGEWindows
         public void CloseMerchReboldo()
         {
             //new Point(843 - 5 + xx, 616 - 5 + yy).PressMouseL();
-            //dialog.PressStringDialog(2);
-            dialog.PressOkButton(1);
+            dialog.PressStringDialog(3);
+            //dialog.PressOkButton(1);
             Pause(500);
             if (dialog.isDialog()) dialog.PressOkButton(1);
         }
