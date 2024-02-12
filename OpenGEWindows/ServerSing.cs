@@ -107,12 +107,12 @@ namespace OpenGEWindows
 
             #region Pet
 
-            this.pointisSummonPet1 = new PointColor(494 - 5 + xx, 304 - 5 + yy, 13000000, 6);
-            this.pointisSummonPet2 = new PointColor(494 - 5 + xx, 305 - 5 + yy, 13000000, 6);
-            this.pointisActivePet1 = new PointColor(493 - 5 + xx, 310 - 5 + yy, 13000000, 6);
-            this.pointisActivePet2 = new PointColor(494 - 5 + xx, 309 - 5 + yy, 13000000, 6);
-            this.pointisActivePet3 = new PointColor(829 - 5 + xx, 186 - 5 + yy, 12000000, 6); // для проверки периодической еды на месяц                                      //не проверено
-            this.pointisActivePet4 = new PointColor(829 - 5 + xx, 185 - 5 + yy, 12000000, 6); // для проверки периодической еды на месяц
+            this.pointisSummonPet1 = new PointColor(380 - 5 + xx, 88 - 5 + yy, 9400000, 5);
+            this.pointisSummonPet2 = new PointColor(390 - 5 + xx, 88 - 5 + yy, 9500000, 5);
+            this.pointisActivePet1 = new PointColor(380 - 5 + xx, 88 - 5 + yy, 8000000, 5);
+            this.pointisActivePet2 = new PointColor(390 - 5 + xx, 88 - 5 + yy, 8000000, 5);
+            //this.pointisActivePet3 = new PointColor(829 - 5 + xx, 186 - 5 + yy, 12000000, 6); // для проверки периодической еды на месяц                                      //не проверено
+            //this.pointisActivePet4 = new PointColor(829 - 5 + xx, 185 - 5 + yy, 12000000, 6); // для проверки периодической еды на месяц
             this.pointisOpenMenuPet1 = new PointColor(474 - 5 + xx, 219 - 5 + yy, 12000000, 6);      //834 - 5, 98 - 5, 12400000, 835 - 5, 98 - 5, 12400000, 5);             //проверено
             this.pointisOpenMenuPet2 = new PointColor(474 - 5 + xx, 220 - 5 + yy, 12000000, 6);
             this.pointCancelSummonPet = new Point(410 - 5 + xx, 390 - 5 + yy);   //750, 265                    //проверено
@@ -142,6 +142,8 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu122work = new PointColor(242 - 5 + xx, 146 - 5 + yy, 16700000, 5);        //буква М в слове Zone Map
             this.pointisOpenTopMenu131 = new PointColor(516 - 5 + xx, 269 - 5 + yy, 12000000, 6);          //Quest Name (system menu)                                                        //проверено
             this.pointisOpenTopMenu132 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 12000000, 6);
+            this.pointisOpenTopMenu141 = new PointColor(275 - 5 + xx, 291 - 5 + yy, 16700000, 5);        //буква E в слове Expedition Team   
+            this.pointisOpenTopMenu142 = new PointColor(275 - 5 + xx, 292 - 5 + yy, 16700000, 5);        //буква E в слове Expedition Team
             this.pointisOpenTopMenu161 = new PointColor(339 - 5 + xx, 116 - 5 + yy, 15000000, 6);          //буква I (в слове Inventory)                                                        //проверено
             this.pointisOpenTopMenu162 = new PointColor(339 - 5 + xx, 117 - 5 + yy, 15000000, 6);
             this.pointisOpenMenuChooseChannel1 = new PointColor(500 - 5 + xx, 253 - 5 + yy, 8036794, 0);   //Menu of Choose a channel
@@ -315,8 +317,8 @@ namespace OpenGEWindows
             this.pointisBarack6 = new PointColor(907 - 5 + xx, 671 - 5 + yy, 11723248, 0);            //буква Т в слове "To Barack"
             this.pointToBarack = new Point(945 - 5 + xx, 675 - 5 + yy);                       // кнопка "To Barack" на странице создания перса 22-11
 
-            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 11723248, 0);            //Team Member буква T
-            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 11723248, 0);            // 22-11
+            this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 11000000, 6);            //Team Member буква T
+            this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 11000000, 6);            // 22-11
             // кнопка вызова списка групп в бараке "View Character List"
             this.pointTeamSelection1 = new Point(140 - 5 + xx, 583 - 5 + yy);                   //22-11-2023
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
@@ -692,6 +694,8 @@ namespace OpenGEWindows
             this.NeedToPickUpRight = false;
             this.NeedToPickUpLeft = false;
             this.NextPointNumber = 0;
+            this.Counter = 3;
+
             #endregion
 
 

@@ -174,6 +174,8 @@ namespace OpenGEWindows
         protected iPointColor pointisOpenTopMenu122work;
         protected iPointColor pointisOpenTopMenu131;
         protected iPointColor pointisOpenTopMenu132;
+        protected iPointColor pointisOpenTopMenu141;
+        protected iPointColor pointisOpenTopMenu142;
         protected iPointColor pointisOpenTopMenu161;
         protected iPointColor pointisOpenTopMenu162;
         protected iPointColor pointisOpenMenuChooseChannel1;
@@ -768,7 +770,10 @@ namespace OpenGEWindows
         /// для миссии Кастилия. номер следующей точки маршрута
         /// </summary>
         protected int NextPointNumber;
-
+        /// <summary>
+        /// счётчик для миссии Демоник. Показывает, пора ли уже бафаться
+        /// </summary>
+        protected int Counter;
         #endregion
 
         // ===========================================  Методы ==========================================
@@ -1762,14 +1767,17 @@ namespace OpenGEWindows
         /// </summary>
         public void QuickConnect()
         {
-            //нажимаем на кнопки, которые могут появиться из-за сбоев входа в игру
-            new Point(520 - 5 + xx, 420 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
-            Pause(500);
-            new Point(525 - 5 + xx, 450 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
-            Pause(500);
+            if (isLogout())
+            {
+                //нажимаем на кнопки, которые могут появиться из-за сбоев входа в игру
+                new Point(520 - 5 + xx, 420 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
+                Pause(500);
+                new Point(525 - 5 + xx, 450 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
+                Pause(500);
 
-            serverSelection();
-            PressConnectButton();
+                serverSelection();
+                PressConnectButton();
+            }
         }
 
         ///// <summary>
@@ -1783,67 +1791,99 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region Pet (перенесено в другой класс Pet)
+        #region Pet
+
+        /// <summary>
+        /// открыто ли меню с коллекцией доступных петов
+        /// </summary>
+        /// <returns></returns>
+        public bool isOpenFamilyCollection()
+        {
+            return new PointColor(224 - 5 + xx, 156 - 5 + yy, 13200000, 5).isColor()
+                && new PointColor(224 - 5 + xx, 157 - 5 + yy, 13200000, 5).isColor();
+        }
 
 
         /// <summary>
-        /// выбираем первого пета и нажимаем кнопку Summon в меню пет
+        /// призываем пета через верхнее меню
         /// </summary>
-        public void buttonSummonPet()
+        public void SummonPet()
         {
-            pointSummonPet1.PressMouseL();      //Click Pet
-            pointSummonPet1.PressMouseL();
-            Pause(500);
-            pointSummonPet2.PressMouseL();      //Click кнопку "Summon"
-            pointSummonPet2.PressMouseL();
-            Pause(1000);
+            TopMenu(14, 7, true);
+
+            if (isOpenFamilyCollection())
+            {
+                new Point(244 - 5 + xx, 281 - 5 + yy).DoubleClickL();       //выбираем пета для призыва
+                Pause(500);
+                new Point(180 - 5 + xx, 525 - 5 + yy).DoubleClickL();       //кнопка Summon
+                Pause(500);
+            }
+            botwindow.PressEscThreeTimes();
         }
 
         /// <summary>
-        /// нажимаем кнопку Cancel Summon в меню пет
-        /// </summary>
-        public void buttonCancelSummonPet()
-        {
-            pointCancelSummonPet.PressMouseL();   //Click Cancel Summon
-            pointCancelSummonPet.PressMouseL();
-            Pause(1000);
-        }
-
-        /// <summary>
-        /// метод проверяет, открылось ли меню с петом Alt + P
-        /// </summary>
-        /// <returns> true, если открыто </returns>
-        public bool isOpenMenuPet()
-        {
-            return (pointisOpenMenuPet1.isColor() && pointisOpenMenuPet2.isColor());
-        }
-
-        /// <summary>
-        /// проверяет, активирован ли пет (зависит от сервера)
+        /// проверяет, активирован ли пет (т.е. пет призван и активирован = иконка поросёнка розовая)  10/02/24
         /// </summary>
         /// <returns></returns>
         public bool isActivePet()
         {
-            return ((pointisActivePet1.isColor() && pointisActivePet2.isColor()) || (pointisActivePet3.isColor() && pointisActivePet4.isColor()));
+            return pointisActivePet1.isColor() && pointisActivePet2.isColor();
         }
 
         /// <summary>
-        /// активируем уже призванного пета
+        /// активируем уже призванного пета нажатием на пиктограмму пета          10/02/24
         /// </summary>
         public void ActivePet()
         {
-            pointActivePet.PressMouse(); //Click Button Active Pet
-            Pause(2500);
+            new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
         }
 
         /// <summary>
-        /// проверяет, призван ли пет
+        /// проверяет, призван ли пет (т.е. пет призван, но не активирован = иконка поросёнка серая)  10/02/24
         /// </summary>
         /// <returns> true, если призван </returns>
         public bool isSummonPet()
         {
-            return (pointisSummonPet1.isColor() && pointisSummonPet2.isColor());
+            return pointisSummonPet1.isColor() && pointisSummonPet2.isColor();
         }
+
+        /// <summary>
+        /// активируем пета через пиктограмму 
+        /// считается, что изначально пет не активирован
+        /// </summary>
+        public void ActivePetDem()
+        {
+            //старый вариант
+            //uint colorBegin = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
+            //uint colorCurrent = colorBegin;
+            //if ((colorCurrent != 11381225) && (colorCurrent != 0))          //если текущий цвет не розовый 
+            //                                                                // добавить цвет оленя вместо нуля
+            //{
+            //    while (colorBegin == colorCurrent)  //сверяем текущий цвет пета и изначальный
+            //                                        //если текущий цвет и изначальный различны, то значит мы активировали пета
+            //    {
+            //        new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
+            //        Pause(500);
+            //        new Point(600 - 5 + xx, 385 - 5 + yy).Move();   //убираем курсор в сторонку
+            //        Pause(500);
+            //        colorCurrent = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();
+            //    }
+            //}
+
+            //новый вариант
+            if (!isActivePet())
+            {
+                if (isSummonPet())
+                {
+                    ActivePet();
+                }
+                else
+                {
+                    SummonPet();
+                }
+            }
+        }
+
 
         #endregion
 
@@ -1897,26 +1937,29 @@ namespace OpenGEWindows
             switch (numberOfThePartitionMenu)
             {
                 case 2:
-                    result = (pointisOpenTopMenu21.isColor() && pointisOpenTopMenu22.isColor());
+                    //result = (pointisOpenTopMenu21.isColor() && pointisOpenTopMenu22.isColor());
                     break;
                 case 5:
                     result = pointisOpenTopMenu51.isColor() && pointisOpenTopMenu52.isColor(); //телепорт 22-11
                     break;
                 case 6:
-                    result = pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor();
+                    //result = pointisOpenTopMenu61.isColor() && pointisOpenTopMenu62.isColor();
                     break;
                 case 8:
-                    result = (pointisOpenTopMenu81.isColor() && pointisOpenTopMenu82.isColor());
+                    //result = (pointisOpenTopMenu81.isColor() && pointisOpenTopMenu82.isColor());
                     break;
                 case 9:
                     result = pointisOpenTopMenu91.isColor() && pointisOpenTopMenu92.isColor(); //системное меню 22-11
                     break;
                 case 12:
                     result = (pointisOpenTopMenu121.isColor() && pointisOpenTopMenu122.isColor()) ||
-                            (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor());
+                            (pointisOpenTopMenu121work.isColor() && pointisOpenTopMenu122work.isColor());  //карты   22/11/23
                     break;
                 case 13:
                     result = pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2();
+                    break;
+                case 14:
+                    result = (pointisOpenTopMenu141.isColor() && pointisOpenTopMenu142.isColor());   //пет   10/02/24
                     break;
                 case 16:
                     result = pointisOpenTopMenu161.isColor2() && pointisOpenTopMenu162.isColor2();
@@ -1995,11 +2038,11 @@ namespace OpenGEWindows
         /// <param name="number"> номер пункта меню </param>
         public void systemMenu(int number, bool status)
         {
-            if (!isOpenTopMenu(9))
-            {
+            //if (!isOpenTopMenu(9))
+            //{
                 TopMenu(9, status);       //если не открыто системное меню, то открыть
                 Pause(500);
-            }
+            //}
             iPoint pointCurrentMenu = new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy);  //строчка в меню
             if (!isRouletteBH() && isOpenTopMenu(9)) pointCurrentMenu.PressMouse();   //нажимаем на указанный пункт меню
         }
@@ -2043,9 +2086,9 @@ namespace OpenGEWindows
         /// <param name="punkt">пункт меню. номер п/п</param>
         public void TopMenu(int numberOfThePartitionMenu, int punkt, bool status)
         {
-            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 5 };  //количество пунктов меню в соответствующем разделе
-            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197, 0, 0, 0, 325 };    //координата X первого подпункта меню
-            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 118, 0, 0, 0, 118 }; //координата Y первого пункта меню
+            int[] numberOfPunkt = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 9, 0, 5 };  //количество пунктов меню в соответствующем разделе
+            int[] PunktX = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 197, 0, 262, 0, 325 };    //координата X первого подпункта меню
+            int[] FirstPunktOfMenuKoordY = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 118, 0, 118, 0, 118 }; //координата Y первого пункта меню
 
             if (punkt <= numberOfPunkt[numberOfThePartitionMenu - 1])
             {
@@ -2080,10 +2123,16 @@ namespace OpenGEWindows
 
             while (!isOpenWorldTeleport())
             {
-                TopMenu(12, 1, true);
-                Pause(500);
+                if (isTown() || isWork())               //защита от бесконечного цикла
+                {
+                    TopMenu(12, 1, true);
+                    Pause(1000);
+                }
+                else
+                    break;
             }
-            new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();
+            if (isOpenWorldTeleport())
+                new Point(700 - 5 + xx, 282 - 5 + yy + (NumberOfTown - 1) * 31).DoubleClickL();
         }
 
         /// <summary>
@@ -4998,8 +5047,6 @@ namespace OpenGEWindows
 
         #region   ========== Кастилия (миссия) ==================
 
-
-
         /// <summary>
         /// проверяем, находимся ли в Castilia.Mine (в миссии)
         /// </summary>
@@ -5127,28 +5174,28 @@ namespace OpenGEWindows
                                     //5000, 
                                     5000, //1
                                     //5000, 
-                                    10000, //2
+                                    6000, //2
                                     //4000, 
-                                    10000, //3
+                                    6000, //3
                                     //5000, 
                                     //5000, 
                                     //5000, //4
                                     //5000, 
                                     //5000, 
-                                    5000, //5
-                                    5000, //6
+                                    1000, //5  Кризалис
+                                    1000, //6  Пауки
                                     //5000, 
-                                    9000, //7
+                                    5000, //7
                                     //5000, 
                                     //5000, 
                                     //5000, 
-                                    5000, //8
+                                    1000, //8
                                     //5000, 
                                     //5000, 
                                     //5000, //9
-                                    5000,//9
-                                    10000, //10
-                                    10000,  //11
+                                    6000,//9
+                                    5000, //10
+                                    5000,  //11
                                     5000
             };
 
@@ -5161,10 +5208,14 @@ namespace OpenGEWindows
         /// <param name="Period">время сбора</param>
         public void GetDropCastiliaLeft(int Period)
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 2; i++)
             {
-                HarvestMode();
-                new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
+                if (!isHarvestMode())
+                {
+                    HarvestMode();
+                    new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
+                    Pause(500);
+                }
             }
             Pause(Period);
         }
@@ -5175,10 +5226,14 @@ namespace OpenGEWindows
         /// <param name="Period">время сбора</param>
         public void GetDropCastiliaRight(int Period)
         {
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 2; i++)
             {
-                HarvestMode();
-                new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
+                if (!isHarvestMode())
+                {
+                    HarvestMode();
+                    new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
+                    Pause(500);
+                }
             }
             Pause(Period);
         }
@@ -5203,7 +5258,7 @@ namespace OpenGEWindows
         public void HarvestMode()
         {
             new Point(123 - 5 + xx + 5, 526 - 5 + yy + 5).PressMouseL();    //нажимаем на сундук (иконка подбора)
-            Pause(200);
+            Pause(500);
         }
 
         #endregion
@@ -6680,6 +6735,7 @@ namespace OpenGEWindows
                 {
                     HarvestMode();
                     new Point(250 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                    Pause(1000);
                 }
             }
         }
@@ -6695,6 +6751,7 @@ namespace OpenGEWindows
                 {
                     HarvestMode();
                     new Point(766 - 5 + xx, 432 - 5 + yy).PressMouseL();
+                    Pause(1000);
                 }
             }
         }
@@ -6793,14 +6850,23 @@ namespace OpenGEWindows
             {
                 y = y - 60;
             }
-
             //AssaultMode();
             //new Point(x, y).PressMouseL();
             AttackCtrl(x, y);
 
-            //бафаемся
-            botwindow.ActiveAllBuffBH();
-            botwindow.PressEscThreeTimes();
+
+            if (this.Counter >= 3)
+            {
+                //бафаемся один раз в 3 хода
+                botwindow.ActiveAllBuffBH();
+                botwindow.PressEscThreeTimes();
+                Buff(Hero[1], 1);
+                Buff(Hero[2], 2);
+                Buff(Hero[3], 3);
+                this.Counter = 0;
+            }
+            this.Counter++;
+
 
             //потом атакуем в обратном направлении и переходим в исходную точку
             x = 525 - 5 + xx - Direction * DeltaX;    //за счет Direction будет ходить влево-вправо
@@ -7636,7 +7702,10 @@ namespace OpenGEWindows
             if (isReboldo())
             {
                 while (!isOpenMapReboldo())
-                    TopMenu(12, 2, true);
+                    if (isReboldo())                //защита от бесконечного цикла. А то бывает, что мы в магазине, но пытаемся открыть карту города
+                        TopMenu(12, 2, true);
+                    else
+                        break;
             }
         }
 
@@ -7815,10 +7884,10 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isReboldo()
         {
-            return     new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
-                    && new PointColor(960 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
-                    && new PointColor(960 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
+            return     new PointColor(927 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(927 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()        //слово Rebo под миникартой (буква R)
+                    && new PointColor(957 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(957 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();       //слово Rebo под миникартой (буква l)
 
         }
 
@@ -7858,7 +7927,9 @@ namespace OpenGEWindows
 
             //надёжно открываем карту Alt+Z
             while (!isOpenMapBridge())
-                TopMenu(12, 2, true);
+                if (isBridge())
+                    TopMenu(12, 2, true);
+                else break;
         }
 
         /// <summary>
@@ -7889,12 +7960,6 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoTeresia()
         {
-            //new Point(740 - 5 + xx, 267 - 5 + yy).DoubleClickL();   //тыкаем в Терезию (в списке справа от карты)
-            //Pause(500);
-            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
-            //Pause(500);
-            //botwindow.PressEscThreeTimes();
-            //Pause(2000);
             GotoPersonOnMapBridge(6);
             new Point(522 - 5 + xx, 231 - 5 + yy).PressMouseL();    //тыкаем в голову Терезии, чтобы войти в диалог
         }
@@ -7904,12 +7969,6 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoAncientBlessingStatue()
         {
-            //new Point(740 - 5 + xx, 192 - 5 + yy).DoubleClickL();   //тыкаем в статую (в списке справа от карты)
-            //Pause(500);
-            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
-            //Pause(500);
-            //botwindow.PressEscThreeTimes();
-            //Pause(2000);
             GotoPersonOnMapBridge(1);
             new Point(522 - 5 + xx, 231 - 5 + yy).PressMouseL();    //тыкаем в статую, чтобы войти в диалог
         }
@@ -7919,12 +7978,6 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoIndividualRaid()
         {
-            //new Point(740 - 5 + xx, 237 - 5 + yy).DoubleClickL();   //тыкаем в солдата Individual Raid Mission (в списке справа от карты)
-            //Pause(500);
-            //new Point(840 - 5 + xx, 646 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
-            //Pause(500);
-            //botwindow.PressEscThreeTimes();
-            //Pause(2000);
             GotoPersonOnMapBridge(4);
             new Point(525 - 5 + xx, 185 - 5 + yy).PressMouseL();    //тыкаем в голову солдата, чтобы войти в диалог
         }
@@ -7937,8 +7990,8 @@ namespace OpenGEWindows
         public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
         {
             dialog.PressStringDialog(8 - rank);             //выбираем ранг
-            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию ()животные, андиды. лайфлесы и проч)  //только в выходные//
-            dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
+            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+            //dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
             dialog.PressStringDialog(1);                    // в миссию (join) 
 
         }
@@ -8065,28 +8118,6 @@ namespace OpenGEWindows
             ActivePetDem();
         }
 
-        /// <summary>
-        /// активируем пета через пиктограмму 
-        /// считается, что изначально пет не активирован
-        /// </summary>
-        public void ActivePetDem()
-        {
-            uint colorBegin = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
-            uint colorCurrent = colorBegin;
-            if ((colorCurrent != 11381225) && (colorCurrent != 0))          //если текущий цвет не розовый 
-                                                                            // добавить цвет оленя вместо нуля
-            {
-                while (colorBegin == colorCurrent)  //сверяем текущий цвет пета и изначальный
-                                                    //если текущий цвет и изначальный различны, то значит мы активировали пета
-                {
-                    new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
-                    Pause(500);
-                    new Point(600 - 5 + xx, 385 - 5 + yy).Move();   //убираем курсор в сторонку
-                    Pause(500);
-                    colorCurrent = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();
-                }
-            }
-        }
 
         /// <summary>
         /// скиллуем всеми героями лучшим ударом
@@ -8261,7 +8292,7 @@ namespace OpenGEWindows
         /// </summary>
         public bool isUstiar()
         {
-            return new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
                     && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
@@ -8286,7 +8317,9 @@ namespace OpenGEWindows
 
             //надёжно открываем карту Alt+Z
             while (!isOpenMapUstiar())
-                TopMenu(12, 2, true);
+                if (isUstiar())
+                    TopMenu(12, 2, true);
+                else break;
         }
 
         /// <summary>
@@ -8461,7 +8494,7 @@ namespace OpenGEWindows
             //если ошибка Unexpected
             if (isUnexpectedError()) return 36;
             //если окно игры открыто на другом компе
-            if (isOpenGEWindow()) return 37;
+            //if (isOpenGEWindow()) return 37;
             //служба Steam
             if (isSteamService()) return 11;
             //если нет окна
@@ -8479,8 +8512,6 @@ namespace OpenGEWindows
                 if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
             //в логауте
             if (isLogout()) return 1;
-            // если неправильная стойка
-            if (isBadFightingStance()) return 19;
             //если в магазине на странице с товарами
             if (isExpedMerch2()) return 13;
             //диалог
@@ -8492,7 +8523,8 @@ namespace OpenGEWindows
             if (isBarack()) return 2;                    //если стоят в бараке 
             if (isBarackWarningYes()) return 16;
             if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
-
+                                                       
+            if (isBadFightingStance()) return 19;       // если неправильная стойка
             //если стандартных проблем не найдено
             return 0;
         }
@@ -8502,7 +8534,7 @@ namespace OpenGEWindows
         #region ======================== Поиск проблем в Демонике ================================
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic (стадия 1) и возвращаем номер проблемы
-        /// 3, 4, 5, 6, 7, 8, 9, 10, 40
+        /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemAllinOneStage1()
@@ -8531,11 +8563,11 @@ namespace OpenGEWindows
                 if (!isKillFirstHero())
                 {
                     if (isBH())     //в БХ     
-                    {
                         return 4;   // стоим в правильном месте (около ворот Demonic)
-                    }
                     else   // в городе, но не в БХ
                     {
+                        if (!isSummonPet() && !isActivePet())
+                            return 41;
                         if (isAncientBlessing(1))
                             return 6;
                         else
@@ -8556,7 +8588,7 @@ namespace OpenGEWindows
 
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic (стадия 2) и возвращаем номер проблемы
-        /// 3, 6, 10 
+        /// 3, 4, 6, 10 
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemAllinOneStage2()
@@ -8565,13 +8597,16 @@ namespace OpenGEWindows
             if (result != 0) return result;
 
             //в миссии
-            if (isWork() || isKillFirstHero())
+            if (isWork() || isKillFirstHero()) 
             {
                 //если розовая надпись в чате "Treasure chest...", значит появился сундук и надо идти в барак и далее стадия 3
                 if (isTreasureChest())
                     return 10;                        //надо собрать дроп, идти в барак и далее - стадия 3
                 else
-                    return 3;                         //продолжаем атаковать
+                    if (!isActivePet())                 //пет не активирован
+                        return 4;
+                    else
+                        return 3;                         //продолжаем атаковать
             }
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
@@ -8852,11 +8887,11 @@ namespace OpenGEWindows
             switch (numberOfProblem)
             {
                 case 1:
-                    QuickConnect();                             // Logout-->Barack   //ок   //сделано
+                    QuickConnect();                             // Logout-->Barack  
                     botParam.HowManyCyclesToSkip = 2;  //1
                     break;
                 case 2:
-                    FromBarackToTown(2);                        // barack --> town              //сделано
+                    FromBarackToTown(2);                        // barack --> town
                     botParam.HowManyCyclesToSkip = 3;  //2
                     break;
                 case 11:                                        // закрыть службу Стим
@@ -8923,10 +8958,10 @@ namespace OpenGEWindows
                     IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
                                                                 // а значит смело можно грузить окно еще раз
                     break;
-                case 37:
-                    CloseSteamMessage();
-                    IsItAlreadyPossibleToUploadNewWindow = 0;
-                    break;
+                //case 37:
+                //    CloseSteamMessage();
+                //    IsItAlreadyPossibleToUploadNewWindow = 0;
+                //    break;
             }
         }
 
@@ -9094,7 +9129,8 @@ namespace OpenGEWindows
                         MissionStart();
                         botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 4:
+                    case 4:                                         // BH --> Gate
+                        Pause(1000);
                         AddBullets();
                         GoToInfinityGateDem();
                         break;
@@ -9103,23 +9139,22 @@ namespace OpenGEWindows
                         break;
                     case 6:                                         // town --> BH
                         botwindow.PressEscThreeTimes();
-                        botwindow.Pause(500);
-                        Teleport(3, true);                  // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        Pause(500);
+                        Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
                         botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузились ворота Демоник.
                         break;
-                    case 7:                                 // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                    case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         botwindow.CommandMode();
-                        BattleModeOnDem();                   //пробел
+                        BattleModeOnDem();                          //пробел
 
-                        botwindow.ThirdHero();          //эксперимент 29-01-2024
+                        botwindow.ThirdHero();                      //эксперимент 29-01-2024
 
                         ChatFifthBookmark();
                         Hero[1] = WhatsHero(1);
                         Hero[2] = WhatsHero(2);
                         Hero[3] = WhatsHero(3);
 
-                        ActivePetDem();                     //новая функция  22-11
-
+                        ActivePetDem();                             //новая функция  22-11
                         MaxHeight(12);
 
                         botParam.Stage = 2;
@@ -9159,21 +9194,21 @@ namespace OpenGEWindows
                     case 40:
                         botParam.Stage = 7;
                         break;
+                    case 41:
+                        SummonPet();
+                        break;
                     default:
                         problemResolutionCommonForStage1(numberOfProblem);
                         break;
                 }
             }
             else
-            {
                 botParam.HowManyCyclesToSkip--;
-                //Pause(1000);
-            }
         }
 
         /// <summary>
         /// разрешение выявленных проблем в Демонике. стадия 2. Миссия
-        /// 2, 3, 10
+        /// 2, 3, 4, 10
         /// </summary>
         public void problemResolutionAllinOneStage2()
         {
@@ -9197,9 +9232,7 @@ namespace OpenGEWindows
                         AttackTheMonsters(DirectionOfMovement);             // атакуем с CTRL
 
                         MoveCursorOfMouse();
-                        Buff(Hero[1], 1);
-                        Buff(Hero[2], 2);
-                        Buff(Hero[3], 3);
+
 
                         BattleModeOnDem();
                         break;
@@ -9209,6 +9242,9 @@ namespace OpenGEWindows
                     //    botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
                     //    botParam.HowManyCyclesToSkip = 4;
                     //    break;
+                    case 4:
+                        ActivePet();
+                        break;
                     case 10:
                         //если появился сундук
                         BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
@@ -9222,9 +9258,7 @@ namespace OpenGEWindows
                 }
             }
             else
-            {
                 botParam.HowManyCyclesToSkip--;
-            }
         }
 
         /// <summary>
@@ -9237,8 +9271,10 @@ namespace OpenGEWindows
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
                     ActiveWindow();
-
+                    Pause(1000);
+                }
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemAllinOneStage3();
 
@@ -9273,11 +9309,12 @@ namespace OpenGEWindows
                             dialog.PressStringDialog(1);
                             dialog.PressOkButton(1);
                             if (dialog.isDialog()) dialog.PressOkButton(1);
-                            botwindow.Pause(3000);
+                            botwindow.Pause(5000);
                             //AttackCtrlToLeft();        //старый вариант
                             BattleModeOnDem();           //новый вариант
+                            BattleModeOnDem();           //новый вариант
                             ActivePetDem();
-                            //botParam.HowManyCyclesToSkip = 1;
+                            botParam.HowManyCyclesToSkip = 1;
                             botParam.Stage = 4;
                         }
                         break;
@@ -9304,9 +9341,7 @@ namespace OpenGEWindows
                 }
             }
             else
-            {
                 botParam.HowManyCyclesToSkip--;
-            }
         }
 
         /// <summary>
@@ -9350,9 +9385,7 @@ namespace OpenGEWindows
                 }
             }
             else
-            {
                 botParam.HowManyCyclesToSkip--;
-            }
         }
 
         /// <summary>
@@ -9424,7 +9457,11 @@ namespace OpenGEWindows
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
                     ActiveWindow();
+                    Pause(1000);
+                }
+
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemAllinOneStage6();
@@ -9650,7 +9687,10 @@ namespace OpenGEWindows
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
                     ActiveWindow();
+                    Pause(1000);
+                }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemAllinOneStage9();
@@ -9679,10 +9719,19 @@ namespace OpenGEWindows
                         break;
                     case 8:                                         //диалог (Farm Manager --> Farm)
                         dialog.PressStringDialog(1);
-                        if (dialog.isDialog()) dialog.PressOkButton(1);
+                        if (dialog.isDialog())
+                        {
+                            dialog.PressStringDialog(1);
+                            dialog.PressOkButton(1);
+                        }
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 9:                                         //на ферме. пока не доступна награда
+                        Pause(2000);
+                        GetRreward();
+                        Pause(1000);
+                        RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
                         break;
                     default:

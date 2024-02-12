@@ -33,7 +33,7 @@ namespace States
         /// <summary>
         /// день недели по сингапурскому времени
         /// </summary>
-        private int WeekDay = 5;
+        private int WeekDay = 1;
         /// <summary>
         /// для миссии Кастилия. номер следующей точки маршрута
         /// </summary>
@@ -4778,7 +4778,7 @@ namespace States
                         botParam.Stage = 6;
                         break;
                     case 8:                                         //Солдат. Диалог. Получение задания
-                        server.GotoIndividualMission(1, 3, WeekDay);         //ранг (1-7), тип миссии (1 - плюсовая, 3 - обычная), и день недели 
+                        server.GotoIndividualMission(1, 1, WeekDay);         //ранг (1-7), тип миссии (1 - плюсовая, 3 - обычная), и день недели 
                         botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 11:                                         // закрыть службу Стим
@@ -7249,7 +7249,8 @@ namespace States
             //server.MoveSpecInventory(sdvig);
             //Pause(500);
 
-            //server.Logout();
+            //MessageBox.Show("" + server.NumberOfProblemCommonForAll());
+
             //if (server.isLogout()) server.CloseExpMerch();
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
@@ -7303,6 +7304,7 @@ namespace States
             //MessageBox.Show("на работе?" + server.isWork());   //22-11
             //MessageBox.Show("убит первый перс?" + server.isKillFirstHero());   //22-11
             //MessageBox.Show("появился сундук?" + server.isTreasureChest());   //22-11
+            MessageBox.Show("петы?" + server.isOpenFamilyCollection());   //22-11
 
             //botwindow.Pause(1000);
             //server.WARP(3);
@@ -7377,7 +7379,7 @@ namespace States
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
-            MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
+            //MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
             //server.CloseMerchReboldo();
             //server.TopMenu(12, 3,true);
 
@@ -7439,7 +7441,7 @@ namespace States
             //Pause(400);
             //pointLeaveGame.PressMouseLL();
 
-            //server.systemMenu(4,true);
+            //server.SummonPet();
 
 
             //int xxx = 5;
@@ -7456,9 +7458,9 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            PointColor point1 = new PointColor(722 - 5 + xx, 613 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(722 - 5 + xx, 623 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(843 - 5 + xx, 623 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(224 - 5 + xx, 156 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(224 - 5 + xx, 157 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(475 - 5 + xx, 66 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
