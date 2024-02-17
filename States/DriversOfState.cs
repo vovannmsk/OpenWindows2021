@@ -546,7 +546,7 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             //botwindow.Pause(5000); //12000
 
             //создание новой команды FERMA
@@ -585,12 +585,12 @@ namespace States
             //server.GoToRudolph();
             #endregion
 
-            //server.PressButtonRelic();
+            server.PressButtonRelic();
 
             //закрываем проги в песочнице
 
 
-            
+
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 

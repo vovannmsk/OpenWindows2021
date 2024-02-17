@@ -33,7 +33,7 @@ namespace States
         /// <summary>
         /// день недели по сингапурскому времени
         /// </summary>
-        private int WeekDay = 1;
+        private int WeekDay;
         /// <summary>
         /// для миссии Кастилия. номер следующей точки маршрута
         /// </summary>
@@ -116,7 +116,8 @@ namespace States
         /// <param name="numberOfWindow"></param>
         public Check(int numberOfWindow)
         {
-            NeedToPickUpRight=false;
+            WeekDay = 2;
+            NeedToPickUpRight =false;
             NeedToPickUpLeft=false;
             NeedToPickUpFeso = false;
             NextPointNumber = 0;
@@ -6096,7 +6097,7 @@ namespace States
                         Pause(12000);
                         break;
                     case 7:                                         // на ферме. доступна награда
-                        server.GetRreward();
+                        server.GetReward();
                         Pause(1000);
                         server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
@@ -7380,6 +7381,7 @@ namespace States
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
             //MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
+            //MessageBox.Show("системное меню?" + server.isOpenTopMenu(9));
             //server.CloseMerchReboldo();
             //server.TopMenu(12, 3,true);
 

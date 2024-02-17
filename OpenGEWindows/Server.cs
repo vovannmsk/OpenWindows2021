@@ -2038,13 +2038,13 @@ namespace OpenGEWindows
         /// <param name="number"> номер пункта меню </param>
         public void systemMenu(int number, bool status)
         {
-            //if (!isOpenTopMenu(9))
-            //{
+            if (!isOpenTopMenu(9) && status)
+            {
                 TopMenu(9, status);       //если не открыто системное меню, то открыть
                 Pause(500);
-            //}
-            iPoint pointCurrentMenu = new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy);  //строчка в меню
-            if (!isRouletteBH() && isOpenTopMenu(9)) pointCurrentMenu.PressMouse();   //нажимаем на указанный пункт меню
+            }
+            if (isOpenTopMenu(9)) 
+                new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouseL();   //нажимаем на указанный пункт меню
         }
 
         /// <summary>
@@ -7566,7 +7566,7 @@ namespace OpenGEWindows
         public void PressButtonRelic()
         {
             iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
-            for (int i = 1; i <= 2000; i++)
+            for (int i = 1; i <= 200; i++)
             {
                 botwindow.ActiveWindowBH();
                 p1.PressMouseL();
@@ -7990,8 +7990,8 @@ namespace OpenGEWindows
         public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
         {
             dialog.PressStringDialog(8 - rank);             //выбираем ранг
-            dialog.PressStringDialog(6 - weekDay);          //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
-            //dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
+            //dialog.PressStringDialog(6 - weekDay);          //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+            dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
             dialog.PressStringDialog(1);                    // в миссию (join) 
 
         }
@@ -8070,12 +8070,12 @@ namespace OpenGEWindows
 
 
             //открываем карту Alt+Z
-            //TopMenu(12, 2, true);
-            //Pause(500);
-            //PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
-            //Pause(500);
-            //botwindow.PressEscThreeTimes();
-            //Pause(2000);
+            TopMenu(12, 2, true);
+            Pause(500);
+            PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(2000);
 
             new Point(356 - 5 + xx, 462 - 5 + yy).PressMouseL();  //нажимаем на сундук      //было 396 482
             //PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
@@ -8437,7 +8437,7 @@ namespace OpenGEWindows
         /// <summary>
         /// получить награду на ферме
         /// </summary>
-        public void GetRreward()
+        public void GetReward()
         {
             new Point(827 - 5 + xx, 460 - 5 + yy).DoubleClickL();
         }
@@ -8475,7 +8475,7 @@ namespace OpenGEWindows
 
         /// <summary>
         /// проверяем, если ли проблемы и возвращаем номер проблемы.  
-        /// Проблемы общие для всех миссий 1,2,11,12,16,17,19,20,22,23,24,33,34,35,36,37
+        /// Проблемы общие для всех миссий 1,2,11,12,16,17,19,20,22,23,24,33,34,35,36,37,38
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemCommonForAll()
@@ -8525,6 +8525,7 @@ namespace OpenGEWindows
             if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
                                                        
             if (isBadFightingStance()) return 19;       // если неправильная стойка
+            if (isOpenWorldTeleport()) return 38;
             //если стандартных проблем не найдено
             return 0;
         }
@@ -8534,7 +8535,7 @@ namespace OpenGEWindows
         #region ======================== Поиск проблем в Демонике ================================
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic (стадия 1) и возвращаем номер проблемы
-        /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41
+        /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41, 42, 43
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemAllinOneStage1()
@@ -8570,8 +8571,12 @@ namespace OpenGEWindows
                             return 41;
                         if (isAncientBlessing(1))
                             return 6;
+                        if (isUstiar())
+                            return 42;
+                        if (isCastilia())
+                            return 43;
                         else
-                            return 9;
+                            return 9;           //скорее всего в стартовом городе (ребольдо)
                     }
                 }
             }
@@ -8880,7 +8885,7 @@ namespace OpenGEWindows
 
         /// <summary>
         /// разрешение выявленных проблем. Стандартные проблемы (для стадии 1)
-        /// 1,11,12,16,17,19,20,22,23,24,33,34,35,36,37
+        /// 1,11,12,16,17,19,20,22,23,24,33,34,35,36,37,38
         /// </summary>
         public void problemResolutionCommonForStage1(int numberOfProblem)
         {
@@ -8962,6 +8967,9 @@ namespace OpenGEWindows
                 //    CloseSteamMessage();
                 //    IsItAlreadyPossibleToUploadNewWindow = 0;
                 //    break;
+                case 38:
+                    botwindow.PressEsc();
+                    break;
             }
         }
 
@@ -9197,6 +9205,12 @@ namespace OpenGEWindows
                     case 41:
                         SummonPet();
                         break;
+                    case 42:
+                        botParam.Stage = 9;     //Юстиар
+                        break;
+                    case 43:
+                        botParam.Stage = 6;     //Кастилия (около шахты)
+                        break;
                     default:
                         problemResolutionCommonForStage1(numberOfProblem);
                         break;
@@ -9314,7 +9328,7 @@ namespace OpenGEWindows
                             BattleModeOnDem();           //новый вариант
                             BattleModeOnDem();           //новый вариант
                             ActivePetDem();
-                            botParam.HowManyCyclesToSkip = 1;
+                            botParam.HowManyCyclesToSkip = 2;
                             botParam.Stage = 4;
                         }
                         break;
@@ -9711,7 +9725,7 @@ namespace OpenGEWindows
                         botParam.HowManyCyclesToSkip = 3;
                         break;
                     case 7:                                         // на ферме. доступна награда
-                        GetRreward();
+                        GetReward();
                         Pause(1000);
                         RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
@@ -9728,7 +9742,7 @@ namespace OpenGEWindows
                         break;
                     case 9:                                         //на ферме. пока не доступна награда
                         Pause(2000);
-                        GetRreward();
+                        GetReward();
                         Pause(1000);
                         RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
