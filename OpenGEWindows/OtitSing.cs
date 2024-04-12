@@ -25,13 +25,13 @@
             this.pointOldMan1 = new PointColor(907 - 5 + xx, 675 - 5 + yy, 7800000, 5);
             this.pointOldMan2 = new PointColor(907 - 5 + xx, 676 - 5 + yy, 7800000, 5);
              
-            this.pointTask1 = new PointColor(891 - 5 + xx, 152 - 5 + yy, 7800000, 5);   //цифра 1 в числе 100    
-            this.pointTask2 = new PointColor(891 - 5 + xx, 153 - 5 + yy, 7800000, 5);   //23-11
+            this.pointTask1 = new PointColor(938 - 5 + xx, 161 - 5 + yy, 8300000, 5);   //буква l в слове Complete
+            this.pointTask2 = new PointColor(938 - 5 + xx, 162 - 5 + yy, 8300000, 5);   //22.03
 
-            //this.pointGetTask1 = new PointColor(764 - 5 + xx, 383 - 5 + yy, 16100000, 5); 
-            //this.pointGetTask2 = new PointColor(764 - 5 + xx, 384 - 5 + yy, 16100000, 5);
-            this.pointGetTask1 = new PointColor(783 - 5 + xx, 151 - 5 + yy, 16100000, 5);  //буква R в слове Refined
-            this.pointGetTask2 = new PointColor(783 - 5 + xx, 152 - 5 + yy, 16100000, 5);
+            //this.pointGetTask1 = new PointColor(783 - 5 + xx, 151 - 5 + yy, 16100000, 5);  //буква R в слове Refined
+            //this.pointGetTask2 = new PointColor(783 - 5 + xx, 152 - 5 + yy, 16100000, 5);
+            this.pointGetTask1 = new PointColor(778 - 5 + xx, 155 - 5 + yy, 16100000, 5);  //буква R в слове Refined
+            this.pointGetTask2 = new PointColor(778 - 5 + xx, 156 - 5 + yy, 16100000, 5);
 
             //this.pointIsOpenMap1 = new PointColor(245 - 5 + xx, 108 - 5 + yy, 8000000, 6);
             //this.pointIsOpenMap2 = new PointColor(246 - 5 + xx, 108 - 5 + yy, 8000000, 6);
@@ -94,18 +94,18 @@
         public override iPoint RouteNextPointMulti(int counter)
         {
             iPoint[,] routeMulti ={
-                                  { new Point(510 - 5 + xx, 510 - 5 + yy), new Point(467 - 5 + xx, 473 - 5 + yy), new Point(510 - 5 + xx, 479 - 5 + yy) },
+                                  { new Point(505 - 5 + xx, 526 - 5 + yy), new Point(465 - 5 + xx, 488 - 5 + yy), new Point(506 - 5 + xx, 487 - 5 + yy) },
                                   { new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) },
                                   { new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) },
                                   { new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) },
                                   { new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) },
                                   { new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
-                                  //{ new Point(505 - 5 + xx, 505 - 5 + yy), new Point(462 - 5 + xx, 468 - 5 + yy), new Point(505 - 5 + xx, 474 - 5 + yy) },
-                                  //{ new Point(569 - 5 + xx, 414 - 5 + yy), new Point(511 - 5 + xx, 436 - 5 + yy), new Point(563 - 5 + xx, 444 - 5 + yy) },
-                                  //{ new Point(334 - 5 + xx, 375 - 5 + yy), new Point(287 - 5 + xx, 350 - 5 + yy), new Point(286 - 5 + xx, 400 - 5 + yy) },
-                                  //{ new Point(404 - 5 + xx, 339 - 5 + yy), new Point(362 - 5 + xx, 319 - 5 + yy), new Point(410 - 5 + xx, 289 - 5 + yy) },
-                                  //{ new Point(379 - 5 + xx, 352 - 5 + yy), new Point(306 - 5 + xx, 347 - 5 + yy), new Point(350 - 5 + xx, 312 - 5 + yy) },
-                                  //{ new Point(540 - 5 + xx, 479 - 5 + yy), new Point(476 - 5 + xx, 467 - 5 + yy), new Point(521 - 5 + xx, 442 - 5 + yy) }
+                                  //{ new Point(510 - 5 + xx, 510 - 5 + yy), new Point(467 - 5 + xx, 473 - 5 + yy), new Point(510 - 5 + xx, 479 - 5 + yy) },
+                                  //{ new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) },
+                                  //{ new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) },
+                                  //{ new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) },
+                                  //{ new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) },
+                                  //{ new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
                               };
 
             iPoint result = routeMulti[numberOfRoute, counter];

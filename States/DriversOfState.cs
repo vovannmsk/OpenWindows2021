@@ -546,7 +546,7 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
             //botwindow.Pause(5000); //12000
 
             //создание новой команды FERMA
@@ -585,10 +585,10 @@ namespace States
             //server.GoToRudolph();
             #endregion
 
-            server.PressButtonRelic();
+            //переделываем Ancient Relic Piece в Ancient Gold Relic
+            //server.PressButtonRelic();
 
             //закрываем проги в песочнице
-
 
 
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
@@ -615,7 +615,7 @@ namespace States
         {
             botwindow.Pause(300);
             //if (server.isAlchemy())
-            for (int i = 0; i < 250; i++)
+            for (int i = 0; i < 2500; i++)
             {
                 StateDriverRun(new StateGT092(botwindow), new StateGT093(botwindow));
 

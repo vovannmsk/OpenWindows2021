@@ -64,7 +64,7 @@ namespace States
             botwindow.Pause(1000);
 
             //============ выбор канала ===========
-            botwindow.SelectChannel(1);
+            botwindow.SelectChannel(2);
             //botwindow.Pause(1000);
 
             //============ выход в город  ===========

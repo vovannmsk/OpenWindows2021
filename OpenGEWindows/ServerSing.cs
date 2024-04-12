@@ -144,8 +144,10 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu132 = new PointColor(517 - 5 + xx, 269 - 5 + yy, 12000000, 6);
             this.pointisOpenTopMenu141 = new PointColor(275 - 5 + xx, 291 - 5 + yy, 16700000, 5);        //буква E в слове Expedition Team   
             this.pointisOpenTopMenu142 = new PointColor(275 - 5 + xx, 292 - 5 + yy, 16700000, 5);        //буква E в слове Expedition Team
-            this.pointisOpenTopMenu161 = new PointColor(339 - 5 + xx, 116 - 5 + yy, 15000000, 6);          //буква I (в слове Inventory)                                                        //проверено
-            this.pointisOpenTopMenu162 = new PointColor(339 - 5 + xx, 117 - 5 + yy, 15000000, 6);
+            //this.pointisOpenTopMenu161 = new PointColor(339 - 5 + xx, 116 - 5 + yy, 15000000, 6);        //буква I (в слове Inventory)                                                        //проверено
+            //this.pointisOpenTopMenu162 = new PointColor(339 - 5 + xx, 117 - 5 + yy, 15000000, 6);
+            this.pointisOpenTopMenu161 = new PointColor(339 - 5 + xx, 190 - 5 + yy, 16700000, 5);        //буква E (в слове Equip Lumin)                                                        //проверено
+            this.pointisOpenTopMenu162 = new PointColor(339 - 5 + xx, 197 - 5 + yy, 16700000, 5);
             this.pointisOpenMenuChooseChannel1 = new PointColor(500 - 5 + xx, 253 - 5 + yy, 8036794, 0);   //Menu of Choose a channel
             this.pointisOpenMenuChooseChannel2 = new PointColor(501 - 5 + xx, 253 - 5 + yy, 8036794, 0);
             this.pointIsCurrentChannel1 = new PointColor(576 - 5 + xx, 288 - 5 + yy, 10000000, 6);          //Channel = 1
@@ -200,7 +202,7 @@ namespace OpenGEWindows
             //this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};   до 22-11-2023
             this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995 };
             this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562, 0, 1522 };
-            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
+                                                 // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
 
 
             this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //22-11

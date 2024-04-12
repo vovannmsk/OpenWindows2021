@@ -1803,22 +1803,144 @@ namespace OpenGEWindows
                 && new PointColor(224 - 5 + xx, 157 - 5 + yy, 13200000, 5).isColor();
         }
 
+        /// <summary>
+        /// в открытом окне выбора пета (Family Collection) ищем пета Koko (цыплёнок)
+        /// возвращает 0, если пет не найден в первых пяти строках
+        /// </summary>
+        /// <returns>номер строки, в которой стоит пет</returns>
+        public int FindKoko()
+        {
+            int NumberString = -1;
+            for (int i = 0; i <= 4; i++)
+            {
+                if (new PointColor(310 - 5 + xx, 278 - 5 + yy + i * 50, 13300000, 5).isColor() && 
+                    new PointColor(310 - 5 + xx, 285 - 5 + yy + i * 50, 13300000, 5).isColor())
+                {
+                    NumberString = i;
+                    break;
+                }
+            }
+            return NumberString + 1;
+        }
+
+        /// <summary>
+        /// в открытом окне выбора пета (Family Collection) ищем пета PigLing (поросёнок).
+        /// возвращает 0, если пет не найден в первых пяти строках
+        /// </summary>
+        /// <returns>номер строки, в которой стоит пет</returns>
+        private int FindPiggy()
+        {
+            int NumberString = -1;
+            for (int i = 0; i <= 4; i++)
+            {
+                if (new PointColor(305 - 5 + xx, 278 - 5 + yy + i * 50, 13300000, 5).isColor() &&
+                    new PointColor(305 - 5 + xx, 285 - 5 + yy + i * 50, 13300000, 5).isColor())
+                {
+                    NumberString = i;
+                    break;
+                }
+            }
+            return NumberString + 1;
+        }
+
+        /// <summary>
+        /// в открытом окне "Family Collection" нажимаем кнопку "Cancel"
+        /// </summary>
+        private void PressCancelButton()
+        {
+            new Point(180 - 5 + xx, 555 - 5 + yy).PressMouseLL();       
+            Pause(500);
+        }
+
+        /// <summary>
+        /// в открытом окне "Family Collection" нажимаем кнопку "Summon"
+        /// </summary>
+        private void PressSummonButton()
+        {
+            new Point(180 - 5 + xx, 525 - 5 + yy).PressMouseLL();       //кнопка Summon
+            Pause(500);
+        }
+
+        /// <summary>
+        /// в открытом окне "Family Collection" выбираем пета в выбранной строке
+        /// </summary>
+        /// <param name="NumberString">номер строки</param>
+        private void SelectPetString(int NumberString)
+        {
+            if (NumberString <= 0 || NumberString >= 5) NumberString = 1;   //если номер строки не в пределах от 1 до 5,
+                                                                            //то берём первую строку (там поросёнок)
+            new Point(244 - 5 + xx, 281 - 5 + yy + (NumberString - 1) * 50).PressMouseLL();     
+            Pause(500);
+        }
+
+        /// <summary>
+        /// призываем пета "поросёнок" через верхнее меню
+        /// </summary>
+        public void SummonPetPiggy()
+        {
+            if (!isSummonPetPiggy() && !isActivePetPiggy())
+            {
+                TopMenu(14, 7, true);
+
+                if (isOpenFamilyCollection())
+                {
+                    PressCancelButton();
+
+                    SelectPetString(FindPiggy());
+
+                    PressSummonButton();
+                }
+                botwindow.PressEscThreeTimes();
+            }
+        }
+
+        /// <summary>
+        /// призываем пета через верхнее меню
+        /// </summary>
+        public void SummonPetKoko()
+        {
+            if (!isSummonPetKoko() && !isActivePetKoko())
+            {
+                TopMenu(14, 7, true);
+
+                if (isOpenFamilyCollection())
+                {
+                    PressCancelButton();
+
+                    SelectPetString(FindKoko());
+
+                    PressSummonButton();
+                }
+                botwindow.PressEscThreeTimes();
+            }
+        }
 
         /// <summary>
         /// призываем пета через верхнее меню
         /// </summary>
         public void SummonPet()
         {
-            TopMenu(14, 7, true);
+            SummonPetPiggy();
+            //SummonPetKoko();
+        }
 
-            if (isOpenFamilyCollection())
-            {
-                new Point(244 - 5 + xx, 281 - 5 + yy).DoubleClickL();       //выбираем пета для призыва
-                Pause(500);
-                new Point(180 - 5 + xx, 525 - 5 + yy).DoubleClickL();       //кнопка Summon
-                Pause(500);
-            }
-            botwindow.PressEscThreeTimes();
+        /// <summary>
+        /// проверяет, активирован ли пет поросёнок (т.е. пет призван и активирован = иконка поросёнка розовая)  10/02/24
+        /// </summary>
+        /// <returns></returns>
+        public bool isActivePetPiggy()
+        {
+            return pointisActivePet1.isColor() && pointisActivePet2.isColor();
+        }
+
+        /// <summary>
+        /// проверяет, активирован ли пет цыплёнок (т.е. пет призван и активирован = иконка цыплёнка жёлтая)  10/02/24
+        /// </summary>
+        /// <returns></returns>
+        public bool isActivePetKoko()
+        {
+            return new PointColor(384 - 5 + xx, 92 - 5 + yy, 8642801, 0).isColor() &&
+                   new PointColor(385 - 5 + xx, 92 - 5 + yy, 8052981, 0).isColor();
         }
 
         /// <summary>
@@ -1827,7 +1949,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isActivePet()
         {
-            return pointisActivePet1.isColor() && pointisActivePet2.isColor();
+            return isActivePetPiggy() || isActivePetKoko();
         }
 
         /// <summary>
@@ -1835,7 +1957,26 @@ namespace OpenGEWindows
         /// </summary>
         public void ActivePet()
         {
-            new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
+            new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пета вверху слева экрана
+        }
+
+        /// <summary>
+        /// проверяет, призван ли поросёнок (т.е. пет призван, но не активирован = иконка поросёнка серая)  10/02/24
+        /// </summary>
+        /// <returns> true, если призван </returns>
+        public bool isSummonPetPiggy()
+        {
+            return pointisSummonPet1.isColor() && pointisSummonPet2.isColor();
+        }
+
+        /// <summary>
+        /// проверяет, призван ли цыплёнок (т.е. пет призван, но не активирован = иконка цыплёнка серая)  12-03-24
+        /// </summary>
+        /// <returns> true, если призван </returns>
+        public bool isSummonPetKoko()
+        {
+            return new PointColor(384 - 5 + xx, 92 - 5 + yy, 14408667, 0).isColor() &&
+                   new PointColor(385 - 5 + xx, 92 - 5 + yy, 14408667, 0).isColor();
         }
 
         /// <summary>
@@ -1844,7 +1985,7 @@ namespace OpenGEWindows
         /// <returns> true, если призван </returns>
         public bool isSummonPet()
         {
-            return pointisSummonPet1.isColor() && pointisSummonPet2.isColor();
+            return isSummonPetPiggy() || isSummonPetKoko();
         }
 
         /// <summary>
@@ -1853,34 +1994,12 @@ namespace OpenGEWindows
         /// </summary>
         public void ActivePetDem()
         {
-            //старый вариант
-            //uint colorBegin = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
-            //uint colorCurrent = colorBegin;
-            //if ((colorCurrent != 11381225) && (colorCurrent != 0))          //если текущий цвет не розовый 
-            //                                                                // добавить цвет оленя вместо нуля
-            //{
-            //    while (colorBegin == colorCurrent)  //сверяем текущий цвет пета и изначальный
-            //                                        //если текущий цвет и изначальный различны, то значит мы активировали пета
-            //    {
-            //        new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пете вверху слева экрана
-            //        Pause(500);
-            //        new Point(600 - 5 + xx, 385 - 5 + yy).Move();   //убираем курсор в сторонку
-            //        Pause(500);
-            //        colorCurrent = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();
-            //    }
-            //}
-
             //новый вариант
             if (!isActivePet())
             {
-                if (isSummonPet())
-                {
-                    ActivePet();
-                }
-                else
-                {
-                    SummonPet();
-                }
+                if (!isSummonPet()) SummonPet();
+                Pause(500);
+                ActivePet();
             }
         }
 
@@ -1959,7 +2078,7 @@ namespace OpenGEWindows
                     result = pointisOpenTopMenu131.isColor2() && pointisOpenTopMenu132.isColor2();
                     break;
                 case 14:
-                    result = (pointisOpenTopMenu141.isColor() && pointisOpenTopMenu142.isColor());   //пет   10/02/24
+                    result = pointisOpenTopMenu141.isColor() && pointisOpenTopMenu142.isColor();   //пет   10/02/24
                     break;
                 case 16:
                     result = pointisOpenTopMenu161.isColor2() && pointisOpenTopMenu162.isColor2();
@@ -2043,8 +2162,11 @@ namespace OpenGEWindows
                 TopMenu(9, status);       //если не открыто системное меню, то открыть
                 Pause(500);
             }
-            if (isOpenTopMenu(9)) 
+            if (isOpenTopMenu(9))
+            {
                 new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouseL();   //нажимаем на указанный пункт меню
+                Pause(500);
+            }
         }
 
         /// <summary>
@@ -2999,6 +3121,20 @@ namespace OpenGEWindows
             iPoint pointFourthBox = new Point(31 - 5 + xx, 200 - 5 + yy);
             pointFourthBox.PressMouseL();                // тыкаю в  (четвертая ячейка)
 
+        }
+
+        /// <summary>
+        /// применение коробок с шайниками, лежащими в ячейках U, J, M
+        /// </summary>
+        public void AddShinyCrystal(int n)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                pointCure1.PressMouseL();
+                pointCure2.PressMouseL();
+                pointCure3.PressMouseL();
+            }
+            Pause(500);
         }
 
         /// <summary>
@@ -5065,8 +5201,8 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isCastilia()
         {
-            return new PointColor(924 - 5 + xx, 254 - 5 + yy, 15658991, 0).isColor() &&
-                   new PointColor(924 - 5 + xx, 255 - 5 + yy, 15658991, 0).isColor();        //слово Castilla под миникартой (буква l)
+            return new PointColor(927 - 5 + xx, 254 - 5 + yy, 15000000, 6).isColor() &&
+                   new PointColor(927 - 5 + xx, 255 - 5 + yy, 15000000, 6).isColor();        //слово Castilla под миникартой (первая буква l)
 
         }
 
@@ -5840,17 +5976,20 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открыт ли специнвентарь
+        /// открыт ли специнвентарь (Cash Item)
+        /// буква I в слове Item и буква l в слове Ctrl+F    //19-02-24
         /// </summary>
         /// <returns></returns>
         public bool isOpenSpecInventory()
         {
-            return new PointColor(109 - 5 + xx + 5, 116 - 5 + yy + 5, 8036794, 0).isColor() &&
-                   new PointColor(118 - 5 + xx + 5, 116 - 5 + yy + 5, 8036794, 0).isColor();
+            return new PointColor(107 - 5 + xx, 124 - 5 + yy, 16700000, 5).isColor() &&
+                   new PointColor(107 - 5 + xx, 136 - 5 + yy, 16700000, 5).isColor() &&
+                   new PointColor(170 - 5 + xx, 129 - 5 + yy, 11000000, 6).isColor() &&
+                   new PointColor(170 - 5 + xx, 136 - 5 + yy, 11000000, 6).isColor();
         }
 
         /// <summary>
-        /// открыть специнвентарь на указанной закладке
+        /// открыть специнвентарь на указанной закладке //19-02-24
         /// </summary>
         public void OpenSpecInventory(int bookmark)
         {
@@ -5929,24 +6068,21 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открываем закладку с указанным номером в уже открытом спец инвентаре:
-        /// первая - Equip;
-        /// вторая - Expand;
-        /// третья - Misk;
-        /// четвертая - Costume.
+        /// открываем закладку с указанным номером в уже открытом спец инвентаре (Cash Item):       //19-02-24
+        /// первая - Equip; вторая - Expend; третья - Misk; четвертая - Costume.
         /// </summary>
         /// <param name="n">номер закладки</param>
         public void SpecInventoryBookmark(int n)
         {
-            new Point(48 - 5 + xx + (n - 1) * 60, 181 - 5 + yy).PressMouseL();     //закладка инвентаря с номером n
+            new Point(70 - 5 + xx + (n - 1) * 60, 204 - 5 + yy).PressMouseLL();     
         }
 
         /// <summary>
-        /// применяем журнал в уже открытом специнвентаре 
+        /// применяем журнал в специнвентаре     //19-02-24
         /// </summary>
         public void ApplyingJournal()
         {
-            SpecInventoryBookmark(3);
+            OpenSpecInventory(3);
 
             PuttingItem(Journal);
 
@@ -5954,11 +6090,11 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// открыть специнвентарь (без проверок)
+        /// открыть специнвентарь       //19-02-24
         /// </summary>
         public void OpenSpecInventory()
         {
-            TopMenu(8, 2);
+            TopMenu(16, 2,true);
         }
 
         /// <summary>
@@ -5966,16 +6102,16 @@ namespace OpenGEWindows
         /// </summary>
         protected void PuttingItemOld(Item item)
         {
-            bool result = false;   //объект в кармане пока не найден
-            for (int i = 1; i <= 7; i++)         //строки в инвентаре
+            bool result = false;                    //объект в специнвентаре пока не найден
+            for (int i = 1; i <= 6; i++)            //строки в инвентаре
             {
-                for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
+                for (int j = 1; j <= 5; j++)        // столбцы в инвентаре
                 {
                     if (!result)
                     {
-                        if (new PointColor(item.x - 5 + xx + (j - 1) * 39, item.y - 5 + yy + (i - 1) * 38, item.color, 0).isColor())
+                        if (new PointColor(item.x - 5 + xx + (j - 1) * 54, item.y - 5 + yy + (i - 1) * 54, item.color, 0).isColor())
                         {
-                            new Point(35 - 5 + xx + (j - 1) * 39, 209 - 5 + yy + (i - 1) * 38).DoubleClickL();
+                            new Point(35 - 5 + xx + (j - 1) * 54, 209 - 5 + yy + (i - 1) * 54).DoubleClickL();
                             new Point(1500, 800).Move();   //убираем мышь в сторону
                             Pause(500);
 
@@ -6001,32 +6137,28 @@ namespace OpenGEWindows
                 return true;
             }
             else
-            {
                 return false;
-            }
-
-
         }
 
         /// <summary>
-        /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке
+        /// Находим конкретную вещь (Item) в сдвинутом спец инвентаре в текущей закладке  //19-02-24
         /// </summary>
         /// <param name="item">искомая вещь</param>
-        /// <param name="sdvig">величина сдвига специнвентаря по оси Х. Если инвентарь не сдвинут, то = 0</param>
+        /// <param name="sdvig">величина сдвига специнвентаря по оси Х. Если инвентарь не сдвинут, то сдвиг = 0</param>
         /// <param name="point">если вещь найдена, то возвращаем точку с координатами вещи</param>
         /// <returns>если вещь найдена, то возвращаем true</returns>
         protected bool FindItemFromSpecInventory(Item item, int sdvig, out Point point)
         {
             MoveCursorOfMouse();
-            point = new Point(0, 0);   //возвращаемый объект. не убирать
-            bool result = false;   //объект в кармане пока не найден
+            point = new Point(0, 0);                //возвращаемый объект. не убирать
+            bool result = false;                    //объект в кармане пока не найден
 
-            for (int i = 1; i <= 7; i++)         //строки в инвентаре
+            for (int i = 1; i <= 6; i++)            //строки в инвентаре
             {
-                for (int j = 1; j <= 7; j++)        // столбцы в инвентаре
+                for (int j = 1; j <= 5; j++)        // столбцы в инвентаре
                 {
-                    int xxx = item.x - 5 + xx + (j - 1) * 39 + sdvig;  //координаты исследуемой точки
-                    int yyy = item.y - 5 + yy + (i - 1) * 38;
+                    int xxx = item.x - 5 + xx + (j - 1) * 54 + sdvig;  //координаты исследуемой точки
+                    int yyy = item.y - 5 + yy + (i - 1) * 54;
                     if (!result)
                     {
                         if (new PointColor(xxx, yyy, item.color, 0).isColor())
@@ -6487,9 +6619,6 @@ namespace OpenGEWindows
             new Point(843 - 5 + xx, 618 - 5 + yy).PressMouseL();
         }
 
-
-
-
         /// <summary>
         /// закрываем магазин Exped Merch
         /// </summary>
@@ -6501,7 +6630,6 @@ namespace OpenGEWindows
             Pause(500);
             if (dialog.isDialog()) dialog.PressOkButton(1);
         }
-
 
         /// <summary>
         /// появилось ли напоминание об установке службы Steam
@@ -6561,8 +6689,25 @@ namespace OpenGEWindows
             new Point(607 - 5 + xx, 640 - 5 + yy).PressMouseL();    //кнопка Create Mission Room
             Pause(1000);
             new Point(440 - 5 + xx, 433 - 5 + yy).PressMouseL();    //кнопка Create a Room
-            //Pause(1000);
-            //new Point(707 - 5 + xx, 565 - 5 + yy).PressMouseL();    //кнопка Mission Start
+        }
+
+
+        /// <summary>
+        /// создаем миссию. цель - дойти из Mission Lobby в Mission Room
+        /// </summary>
+        /// <param name="weekday">день недели</param>
+        public void CreatingMission(int weekday)
+        {
+            new Point(547 - 5 + xx, 486 - 5 + yy).PressMouseL();    // тыкаем в окно Mission Lobby, чтобы сделать его поверх остального,
+                                                                    // тогда становится видимой кнопка Create Mission Room
+            Pause(500);
+            new Point(607 - 5 + xx, 640 - 5 + yy).PressMouseL();    //кнопка Create Mission Room
+            Pause(1000);
+            // на этом месте сделать выбор миссии для выходных
+            // if (weekday ==6 || weekday == 7)
+            //
+            //
+            new Point(440 - 5 + xx, 433 - 5 + yy).PressMouseL();    //кнопка Create a Room
         }
 
         /// <summary>
@@ -6859,7 +7004,7 @@ namespace OpenGEWindows
             {
                 //бафаемся один раз в 3 хода
                 botwindow.ActiveAllBuffBH();
-                botwindow.PressEscThreeTimes();
+                botwindow.PressEsc(4);
                 Buff(Hero[1], 1);
                 Buff(Hero[2], 2);
                 Buff(Hero[3], 3);
@@ -6882,6 +7027,7 @@ namespace OpenGEWindows
 
             //AssaultMode();
             //new Point(x, y).PressMouseL();
+            BattleModeOnDem();
             AttackCtrl(x, y);
 
         }
@@ -6979,21 +7125,13 @@ namespace OpenGEWindows
         /// <returns></returns>
         public int WhatsHero(int i)
         {
-            int result = 0;
-
             if (new PointColor(33 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 806655, 0).isColor())    //узнали, что это флинтлок
             {
                 //проверяем Y, чтобы понять мушкетер или Бернелли
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 13951211, 0).isColor())
-                {
-                    result = 1;     //мушкетер с флинтом
-                    return result;
-                }
+                    return 1;     //мушкетер с флинтом
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
-                {
-                    result = 10;   //Бернелли с флинтом
-                    return result;
-                }
+                    return 10;   //Бернелли с флинтом
             }
             //if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
             //if (new PointColor(18 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
@@ -7005,27 +7143,23 @@ namespace OpenGEWindows
             //if (new PointColor(25 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
 
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor())
-            {
-                result = 2;   //Берка(супериор бластер)
-                return result;
-            }
+                return 2;   //Берка(супериор бластер)
             if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor())
-            {
-                result = 3;    //Лорч
-                return result;
-            }
+                return 3;    //Лорч
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor())
-            {
-                result = 4;    //Джайна
-                return result;
-            }
+                return 4;    //Джайна
+            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor())
+                return 11;    //Rosie
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor())
+                return 12;    //Mary
+
             //            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
             //C.Daria
             //            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
             //            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
             //            if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
 
-            return result;
+            return 0;
         }
 
         /// <summary>
@@ -7073,6 +7207,12 @@ namespace OpenGEWindows
                     case 10:
                         BuffBernelliFlint(i);   //*
                         break;
+                    case 11:
+                        BuffRosie(i);   //*
+                        break;
+                    case 12:
+                        BuffMary(i);   //*
+                        break;
                     case 0:
                         break;
                 }
@@ -7118,8 +7258,6 @@ namespace OpenGEWindows
                        ;
 
         }
-
-
 
         /// <summary>
         /// если скилл i-го мушкетёра T готов к использованию
@@ -7399,6 +7537,104 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Soul Weapon" / Rosie /  Q
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindSoulWeapon(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 8; j++)
+                if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 5 + 585 - 5 + yy, 6400000, 5).isColor() &&
+                     new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 7 + 585 - 5 + yy, 6700000, 5).isColor()
+                   )
+                { 
+                    result = true; 
+                    break; 
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Link" / Rosie / Y
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindLink(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 8; j++)
+                if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 4 + 585 - 5 + yy, 4800000, 5).isColor() &&
+                     new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 6 + 585 - 5 + yy, 5800000, 5).isColor()
+                   )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "CleaningTime" / Mary / Y
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool FindCleaningTime(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 8; j++)
+                if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
+                     new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
+                   )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "CleaningTime" / Mary / Y
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool FindOrderLady(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 8; j++)
+                if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
+                     new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
+                   )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// бафаем Rosie на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffRosie(int i)
+        {
+            if (!FindLink(i)) BuffY(i);
+            //            Pause(2000);
+            if (!FindSoulWeapon(i)) BuffQ(i);
+        }
+
+        /// <summary>
+        /// бафаем Mary на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffMary(int i)
+        {
+            if (!FindCleaningTime(i)) BuffY(i);
+            //            Pause(2000);
+            if (!FindOrderLady(i)) BuffE(i);
+        }
+
+        /// <summary>
         /// бафаем мушкетера (с флинтом) на i-м месте 
         /// </summary>
         /// <param name="i"></param>
@@ -7566,7 +7802,7 @@ namespace OpenGEWindows
         public void PressButtonRelic()
         {
             iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
-            for (int i = 1; i <= 200; i++)
+            for (int i = 1; i <= 400; i++)
             {
                 botwindow.ActiveWindowBH();
                 p1.PressMouseL();
@@ -7918,6 +8154,40 @@ namespace OpenGEWindows
         #region ================ Bridge =========================
 
         /// <summary>
+        /// мы в диалоге с Терезией на мосту?
+        /// </summary>
+        /// <returns>true, если диалог именно с Терезией</returns>
+        public bool isTeresia()
+        {
+            return      new PointColor(566 - 5 + xx, 536 - 5 + yy, 7450000, 4).isColor()
+                     && new PointColor(574 - 5 + xx, 536 - 5 + yy, 7450000, 4).isColor()
+                     && new PointColor(570 - 5 + xx, 549 - 5 + yy, 7450000, 4).isColor();
+        }
+
+        /// <summary>
+        /// мы в диалоге со статуей (наследие древних) на мосту?
+        /// </summary>
+        /// <returns>true, если диалог именно со статуей</returns>
+        public bool isAncientBlessing()
+        {
+            return new PointColor(497 - 5 + xx, 536 - 5 + yy, 7450000, 4).isColor()
+                && new PointColor(497 - 5 + xx, 549 - 5 + yy, 7450000, 4).isColor()
+                && new PointColor(509 - 5 + xx, 536 - 5 + yy, 6660000, 4).isColor()
+                && new PointColor(509 - 5 + xx, 549 - 5 + yy, 6790000, 4).isColor();
+        }
+
+        /// <summary>
+        /// вычисляем день недели по Сингапурскому времени
+        /// </summary>
+        /// <returns></returns>
+        public int WeekDayNow()
+        {
+            int wd = (int)DateTime.Now.AddHours(5).DayOfWeek;
+            if (wd == 0) wd = 7;
+            return wd;
+        }
+
+        /// <summary>
         /// открываем карту Моста с гарантией
         /// </summary>
         /// <returns>true, если есть</returns>
@@ -7928,7 +8198,10 @@ namespace OpenGEWindows
             //надёжно открываем карту Alt+Z
             while (!isOpenMapBridge())
                 if (isBridge())
+                {
                     TopMenu(12, 2, true);
+                    Pause(500);
+                }
                 else break;
         }
 
@@ -7974,6 +8247,15 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// в уже открытой карте моста тыкаем в солдата (третья строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoElementMissionEntrance()
+        {
+            GotoPersonOnMapBridge(3);
+            new Point(511 - 5 + xx, 164 - 5 + yy).PressMouseL();    //тыкаем в голову солдата, чтобы войти в диалог
+        }
+
+        /// <summary>
         /// в уже открытой карте моста тыкаем в солдата (четвёртая строчка в списке справа от карты Alt+Z)
         /// </summary>
         public void GotoIndividualRaid()
@@ -7982,19 +8264,47 @@ namespace OpenGEWindows
             new Point(525 - 5 + xx, 185 - 5 + yy).PressMouseL();    //тыкаем в голову солдата, чтобы войти в диалог
         }
 
+        ///// <summary>
+        ///// в диалоге с солдатом на мосту выбираем миссию для выполнения
+        ///// </summary>
+        ///// <param name="rank">ранг миссии</param>
+        ///// <param name="typeOfMission"> 1 - миссия с плюсом. 3 - обычная </param>
+        //public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
+        //{
+        //    dialog.PressStringDialog(8 - rank);             //выбираем ранг
+        //    dialog.PressStringDialog(6 - weekDay);          //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+        //    dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
+        //    dialog.PressStringDialog(1);                    // в миссию (join) 
+        //    //if (dialog.isDialog()) dialog.PressOkButton(1);
+        //}
+
         /// <summary>
-        /// в диалоге с солдатом на мосту выбираем миссию для выполнения
+        /// в диалоге с солдатом на мосту выбираем миссию для выполнения //28-02-2024
         /// </summary>
         /// <param name="rank">ранг миссии</param>
         /// <param name="typeOfMission"> 1 - миссия с плюсом. 3 - обычная </param>
-        public void GotoIndividualMission(int rank, int typeOfMission, int weekDay)
+        public void GotoIndividualMission(int weekDay)
         {
-            dialog.PressStringDialog(8 - rank);             //выбираем ранг
-            //dialog.PressStringDialog(6 - weekDay);          //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
-            dialog.PressStringDialog(typeOfMission);        // выбираем тип миссии (плюсовая или обычная)
-            dialog.PressStringDialog(1);                    // в миссию (join) 
+            int[]          rank = { 0, 1, 1, 3, 1, 1, 1, 1 };
+            int[] typeOfMission = { 0, 1, 1, 3, 3, 3, 3, 3 };
 
+            dialog.PressStringDialog(8 - rank[weekDay]);            //выбираем ранг миссии. Он зависит от дня недели
+            if (weekDay == 6 || weekDay == 7)
+                dialog.PressStringDialog(1);                        //выбираем миссию (последнюю строчку - Undead)  //только в выходные//
+                //dialog.PressStringDialog(6 - weekDay);              //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+            dialog.PressStringDialog(typeOfMission[weekDay]);       // выбираем тип миссии (плюсовая или обычная)
+            dialog.PressStringDialog(1);                            // в миссию (join) 
+            //if (dialog.isDialog()) dialog.PressOkButton(1);
         }
+
+        /// <summary>
+        /// в диалоге с солдатом на мосту переходим к созданию миссии (к Mission Lobby)
+        /// </summary>
+        public void GotoElementMission()
+        {
+            dialog.PressStringDialog(2);                             //                            
+        }
+
 
         /// <summary>
         /// на мосту ли мы?
@@ -8024,10 +8334,36 @@ namespace OpenGEWindows
                                         new Point(553 - 5 + xx, 245 - 5 + yy),          // 3 среда, demon
                                         new Point(422 - 5 + xx, 322 - 5 + yy),          // 1 четверг
                                         new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 пятница (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 суббота (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 воскресенье (undead череп)
                                         //new Point(567 - 5 + xx, 479 - 5 + yy),        // 1+ пятница
                                         //new Point(459 - 5 + xx, 408 - 5 + yy),        // 2 пятница не надёжно
                                         //new Point(461 - 5 + xx, 501 - 5 + yy),        // 2+ пятница
                                         //new Point(335 - 5 + xx, 399 - 5 + yy),        // 3 пятница
+            };
+            //открываем карту Alt+Z
+            TopMenu(12, 2, true);
+            Pause(500);
+
+            PixelOfAttack[weekDay - 1].PressMouseRR();
+
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+        }
+
+        /// <summary>
+        /// по карте миссии тыкаем в точку, где враг
+        /// </summary>
+        /// <param name="weekDay"> день недели по сингапурскому времени </param>
+        public void AttackTheEnemyElement(int weekDay)
+        {
+            iPoint[] PixelOfAttack = {  new Point(413 - 5 + xx, 263 - 5 + yy),          // понедельник, животные
+                                        new Point(390 - 5 + xx, 550 - 5 + yy),          // 1+ вторник, human
+                                        new Point(553 - 5 + xx, 245 - 5 + yy),          // 3 среда, demon
+                                        new Point(422 - 5 + xx, 322 - 5 + yy),          // 1 четверг
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 пятница (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 суббота (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 воскресенье (undead череп)
             };
             //открываем карту Alt+Z
             TopMenu(12, 2, true);
@@ -8047,13 +8383,15 @@ namespace OpenGEWindows
         {
             iPoint[] PixelOfChest = {   new Point(415 - 5 + xx, 303 - 5 + yy),          // 1+ понедельник, животные
                                         //new Point(595 - 5 + xx, 296 - 5 + yy),        // 2+ понедельник, животные
-                                        new Point(423 - 5 + xx, 611 - 5 + yy),          // 1+ вторник, human
+                                        new Point(423 - 5 + xx, 611 - 5 + yy),          // 1+ вторник, human    надо проверить
                                         //new Point(430 - 5 + xx, 340 - 5 + yy),        // 2+ вторник, human
                                         //new Point(636 - 5 + xx, 495 - 5 + yy),        // 1+ среда, demon
                                         //new Point(424 - 5 + xx, 240 - 5 + yy),        // 2+ среда, demon
                                         new Point(553 - 5 + xx, 245 - 5 + yy),          // 3  среда, demon
                                         new Point(422 - 5 + xx, 322 - 5 + yy),          // 1  четверг
-                                        new Point(567 - 5 + xx, 479 - 5 + yy),        // 1 пятница
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 пятница (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 суббота (undead череп)
+                                        new Point(537 - 5 + xx, 402 - 5 + yy),          // 1 воскресенье (undead череп)
                                         //new Point(567 - 5 + xx, 479 - 5 + yy),        // 1+ пятница
                                         //new Point(457 - 5 + xx, 405 - 5 + yy),        // 2  пятница                        
                                         //new Point(461 - 5 + xx, 501 - 5 + yy),          // 2+ пятница
@@ -8112,6 +8450,31 @@ namespace OpenGEWindows
 
             //идём в атаку с Ctrl
             AttackTheEnemy(weekDay);
+            Pause(1000);
+
+            //активируем пета
+            ActivePetDem();
+        }
+
+        /// <summary>
+        /// комплекс действий при начале атаки в миссии на мосту
+        /// </summary>
+        /// <param name="weekDay">день недели по сингапуру</param>
+        public void BeginAttackElement(int weekDay)
+        {
+            //бафаемся
+            MoveCursorOfMouse();
+            int Hero1 = WhatsHero(1);
+            int Hero2 = WhatsHero(2);
+            int Hero3 = WhatsHero(3);
+            Buff(Hero1, 1);
+            Buff(Hero2, 2);
+            Buff(Hero3, 3);
+            botwindow.ActiveAllBuffBH();
+            botwindow.PressEsc(4);
+
+            //идём в атаку с Ctrl
+            AttackTheEnemyElement(weekDay);     // не готово
             Pause(1000);
 
             //активируем пета
@@ -8567,16 +8930,16 @@ namespace OpenGEWindows
                         return 4;   // стоим в правильном месте (около ворот Demonic)
                     else   // в городе, но не в БХ
                     {
-                        if (!isSummonPet() && !isActivePet())
-                            return 41;
-                        if (isAncientBlessing(1))
-                            return 6;
+                        //if (!isSummonPet() && !isActivePet())
+                        //    return 41;
                         if (isUstiar())
                             return 42;
                         if (isCastilia())
                             return 43;
+                        if (isAncientBlessing(1))
+                            return 6;                       //скорее всего в стартовом городе (ребольдо)
                         else
-                            return 9;           //скорее всего в стартовом городе (ребольдо)
+                            return 9;                       //нет наследия древних
                     }
                 }
             }
@@ -8989,8 +9352,10 @@ namespace OpenGEWindows
                     botParam.Stage = 1;
                     break;
 
-                case 6:                                     // Миссия окончена 
-                    //RemoveSandboxieBH();                  //закрываем песочницу //старый вариант
+                case 6:                                         // Миссия окончена 
+                    //RemoveSandboxieBH();                        //закрываем песочницу //старый вариант
+                    //botParam.Stage = 1;
+                    //botParam.HowManyCyclesToSkip = 2;
                     Teleport(4, true);                      //телепорт в Кастилию
                     botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
                     botParam.HowManyCyclesToSkip = 4;
@@ -9148,6 +9513,7 @@ namespace OpenGEWindows
                     case 6:                                         // town --> BH
                         botwindow.PressEscThreeTimes();
                         Pause(500);
+                        SummonPet();
                         Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
                         botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузились ворота Демоник.
                         break;
@@ -9183,28 +9549,22 @@ namespace OpenGEWindows
                         Teleport(4, true);                          //телепорт в Кастилию
                         botParam.Stage = 6;                         //переходим на стадию Кастилия (Stage 1)    
                         botParam.HowManyCyclesToSkip = 4;
+
                         //RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
                         //botParam.Stage = 1;
                         //botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 18:
-                        //новый вариант                             //переход по телепорту в БХ к воротам
-                        botwindow.PressEscThreeTimes();
-                        botwindow.Pause(500);
-                        Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botwindow.PressEscThreeTimes();
-                        PressToGateDemonic();
-                        prevProblem = 6;                    // делаем предыдущее состояние = город        
-                                                            // а иначе программа считает, что мы всё еще застряли в БХ и стоим не там 
-                                                            // и опять попадаем сюда же (бесконечный цикл)
-                        botParam.HowManyCyclesToSkip = 1;
+                        //новейший вариант
+                        GotoBarack();
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 40:
                         botParam.Stage = 7;
                         break;
-                    case 41:
-                        SummonPet();
-                        break;
+                    //case 41:                                  // перенёс в п.9
+                    //    SummonPet();
+                    //    break;
                     case 42:
                         botParam.Stage = 9;     //Юстиар
                         break;
@@ -9250,7 +9610,7 @@ namespace OpenGEWindows
 
                         BattleModeOnDem();
                         break;
-                    //case 6:                                     // Миссия окончена 
+                    //case 6:                                     // Миссия окончена //перенёс в стандартные проблемы
                     //    //RemoveSandboxieBH();                  //закрываем песочницу
                     //    Teleport(4, true);                      //телепорт в Кастилию
                     //    botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
@@ -9310,9 +9670,12 @@ namespace OpenGEWindows
                         if (!dialog.isDialog())
                         {
                             botwindow.Pause(3000);                  //ждём рулетку
+                            //старый вариант
                             //RemoveSandboxieBH();                    //закрываем песочницу и берём следующего бота в работу
                             //botParam.Stage = 1;
-                            //botParam.HowManyCyclesToSkip = 1;
+                            //botParam.HowManyCyclesToSkip = 2;
+
+                            //новый вариант
                             Teleport(4, true);                      //телепорт в Кастилию
                             botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
                             botParam.HowManyCyclesToSkip = 4;
@@ -9328,7 +9691,7 @@ namespace OpenGEWindows
                             BattleModeOnDem();           //новый вариант
                             BattleModeOnDem();           //новый вариант
                             ActivePetDem();
-                            botParam.HowManyCyclesToSkip = 2;
+                            botParam.HowManyCyclesToSkip = 3;
                             botParam.Stage = 4;
                         }
                         break;
@@ -9591,7 +9954,14 @@ namespace OpenGEWindows
                         Pause(2000);
                         if (!isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
                         {
-                            NeedToPickUpRight = true;
+                            //старый вариант (ждём на пробеле, а на следующем ходу начинаем собирать дроп)
+                            //NeedToPickUpRight = true;
+                            //BattleModeOnDem();
+
+                            //новый вариант  (сразу начинаем собирать дроп справа)
+                            NeedToPickUpRight = false;
+                            NeedToPickUpLeft = true;
+                            GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
                             BattleModeOnDem();
                         }
                         break;

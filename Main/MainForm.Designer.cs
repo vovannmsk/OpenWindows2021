@@ -54,6 +54,8 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bridgeElement = new System.Windows.Forms.Button();
+            this.bridge = new System.Windows.Forms.Button();
             this.AllinOne = new System.Windows.Forms.Button();
             this.Farm = new System.Windows.Forms.Button();
             this.ButtonOpenWindow = new System.Windows.Forms.Button();
@@ -66,7 +68,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ChangingAccounts = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.bridge = new System.Windows.Forms.Button();
             this.NewYearDelivery = new System.Windows.Forms.Button();
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -327,6 +328,8 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.SeaShell;
             this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage1.Controls.Add(this.bridgeElement);
+            this.tabPage1.Controls.Add(this.bridge);
             this.tabPage1.Controls.Add(this.AllinOne);
             this.tabPage1.Controls.Add(this.Farm);
             this.tabPage1.Controls.Add(this.ButtonOpenWindow);
@@ -352,10 +355,34 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
             // 
+            // bridgeElement
+            // 
+            this.bridgeElement.BackColor = System.Drawing.Color.Cyan;
+            this.bridgeElement.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bridgeElement.Location = new System.Drawing.Point(198, 91);
+            this.bridgeElement.Name = "bridgeElement";
+            this.bridgeElement.Size = new System.Drawing.Size(170, 35);
+            this.bridgeElement.TabIndex = 78;
+            this.bridgeElement.Text = "Мост (элементаль)";
+            this.bridgeElement.UseVisualStyleBackColor = false;
+            this.bridgeElement.Click += new System.EventHandler(this.bridgeElement_Click);
+            // 
+            // bridge
+            // 
+            this.bridge.BackColor = System.Drawing.Color.Yellow;
+            this.bridge.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bridge.Location = new System.Drawing.Point(198, 50);
+            this.bridge.Name = "bridge";
+            this.bridge.Size = new System.Drawing.Size(170, 35);
+            this.bridge.TabIndex = 77;
+            this.bridge.Text = "Мост (миссии)";
+            this.bridge.UseVisualStyleBackColor = false;
+            this.bridge.Click += new System.EventHandler(this.bridge_Click);
+            // 
             // AllinOne
             // 
             this.AllinOne.BackColor = System.Drawing.Color.GreenYellow;
-            this.AllinOne.Location = new System.Drawing.Point(198, 91);
+            this.AllinOne.Location = new System.Drawing.Point(9, 50);
             this.AllinOne.Name = "AllinOne";
             this.AllinOne.Size = new System.Drawing.Size(170, 35);
             this.AllinOne.TabIndex = 76;
@@ -366,7 +393,7 @@
             // Farm
             // 
             this.Farm.BackColor = System.Drawing.Color.Gold;
-            this.Farm.Location = new System.Drawing.Point(198, 50);
+            this.Farm.Location = new System.Drawing.Point(9, 337);
             this.Farm.Name = "Farm";
             this.Farm.Size = new System.Drawing.Size(170, 35);
             this.Farm.TabIndex = 75;
@@ -387,7 +414,7 @@
             // 
             // PureOtiteNew
             // 
-            this.PureOtiteNew.BackColor = System.Drawing.Color.Tomato;
+            this.PureOtiteNew.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.PureOtiteNew.Location = new System.Drawing.Point(198, 10);
             this.PureOtiteNew.Name = "PureOtiteNew";
             this.PureOtiteNew.Size = new System.Drawing.Size(170, 34);
@@ -399,7 +426,7 @@
             // Castilia
             // 
             this.Castilia.BackColor = System.Drawing.Color.Turquoise;
-            this.Castilia.Location = new System.Drawing.Point(9, 91);
+            this.Castilia.Location = new System.Drawing.Point(9, 378);
             this.Castilia.Name = "Castilia";
             this.Castilia.Size = new System.Drawing.Size(170, 35);
             this.Castilia.TabIndex = 72;
@@ -410,7 +437,7 @@
             // DemonicStage2
             // 
             this.DemonicStage2.BackColor = System.Drawing.Color.GreenYellow;
-            this.DemonicStage2.Location = new System.Drawing.Point(9, 50);
+            this.DemonicStage2.Location = new System.Drawing.Point(198, 337);
             this.DemonicStage2.Name = "DemonicStage2";
             this.DemonicStage2.Size = new System.Drawing.Size(170, 35);
             this.DemonicStage2.TabIndex = 71;
@@ -473,7 +500,6 @@
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Bisque;
             this.tabPage2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabPage2.Controls.Add(this.bridge);
             this.tabPage2.Controls.Add(this.NewYearDelivery);
             this.tabPage2.Controls.Add(this.LoadSteams);
             this.tabPage2.Controls.Add(this.alchemy);
@@ -485,21 +511,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 173);
+            this.tabPage2.Size = new System.Drawing.Size(378, 217);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
-            // 
-            // bridge
-            // 
-            this.bridge.BackColor = System.Drawing.Color.Yellow;
-            this.bridge.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.bridge.Location = new System.Drawing.Point(202, 47);
-            this.bridge.Name = "bridge";
-            this.bridge.Size = new System.Drawing.Size(170, 35);
-            this.bridge.TabIndex = 69;
-            this.bridge.Text = "Мост";
-            this.bridge.UseVisualStyleBackColor = false;
-            this.bridge.Click += new System.EventHandler(this.bridge_Click);
             // 
             // NewYearDelivery
             // 
@@ -539,7 +553,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 173);
+            this.tabPage3.Size = new System.Drawing.Size(378, 217);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -617,7 +631,6 @@
         private System.Windows.Forms.Button PureOtiteMulti;
         private System.Windows.Forms.Button changing_accounts;
         private System.Windows.Forms.Button NewYearDelivery;
-        private System.Windows.Forms.Button bridge;
         private System.Windows.Forms.Button Castilia;
         private System.Windows.Forms.Button DemonicStage2;
         private System.Windows.Forms.Button Demonic;
@@ -625,6 +638,8 @@
         private System.Windows.Forms.Button PureOtiteNew;
         private System.Windows.Forms.Button Farm;
         private System.Windows.Forms.Button AllinOne;
+        private System.Windows.Forms.Button bridge;
+        private System.Windows.Forms.Button bridgeElement;
     }
 }
 

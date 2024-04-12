@@ -188,11 +188,21 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// эмулирует нажатие кнопки "Esc" указанное количество раз
+        /// </summary>
+        /// <param name="n"></param>
+        public void PressEsc(int n)
+        {
+            for (int i = 1; i <= n; i++) 
+                PressEsc();
+        }
+
+        /// <summary>
         /// эмулирует тройное нажатие кнопки "Esc"
         /// </summary>
         public void PressEscThreeTimes()
         {
-            for (int i = 1; i <= 3; i++) PressEsc();
+            PressEsc(3);
         }
 
         /// <summary>

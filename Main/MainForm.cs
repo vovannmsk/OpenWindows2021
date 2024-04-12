@@ -34,7 +34,7 @@ namespace Main
             numberOfAcc = globalParam.TotalNumberOfAccounts;
             startAcc = globalParam.StartingAccount;
             this.Text = "Программа от " + DataVersion + "    " + numberOfAcc + " окон";
-            this.Location = new System.Drawing.Point(1362, 1080 - this.Height - 34);
+            this.Location = new System.Drawing.Point(1185, 1080 - this.Height - 34);
             this.numberOfAccounts.Value = numberOfAcc;
             this.startAccount.Value = startAcc;
             //this.labelNomer.Text = "Текущий № аккаунта " + botParam.NumberOfInfinity;
@@ -56,6 +56,8 @@ namespace Main
 
         }
 
+        #region ============================= функции для формы ==============================
+
         /// <summary>
         /// действия при закрытии формы
         /// </summary>
@@ -65,6 +67,50 @@ namespace Main
         {
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
+
+        /// <summary>
+        /// изменяет значение переменной startAcc при изменении счетчика в главной форме
+        /// (присваиваем переменной класса значение, выбранное пользователем в форме)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void startAccount_Leave(object sender, EventArgs e)
+        {
+            startAcc = (int)this.startAccount.Value;
+        }
+
+        /// <summary>
+        /// изменяет значение переменной startAcc при изменении счетчика в главной форме
+        /// (присваиваем переменной класса значение, выбранное пользователем в форме)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void startAccount_ValueChanged(object sender, EventArgs e)
+        {
+            startAcc = (int)this.startAccount.Value;
+        }
+
+        /// <summary>
+        /// присваиваем переменной класса значение, выбранное пользователем в форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numberOfAccouts_Leave(object sender, EventArgs e)
+        {
+            numberOfAcc = (int)this.numberOfAccounts.Value;
+        }
+
+        /// <summary>
+        /// присваиваем переменной класса значение, выбранное пользователем в форме
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void numberOfAccouts_ValueChanged(object sender, EventArgs e)
+        {
+            numberOfAcc = (int)this.numberOfAccounts.Value;
+        }
+
+        #endregion
 
         #region Light Coral Button "Увеличение казармы"
 
@@ -829,56 +875,6 @@ namespace Main
 
         #endregion
 
-
-
-
-
-
-
-        /// <summary>
-        /// изменяет значение переменной startAcc при изменении счетчика в главной форме
-        /// (присваиваем переменной класса значение, выбранное пользователем в форме)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void startAccount_Leave(object sender, EventArgs e)
-        {
-            startAcc = (int)this.startAccount.Value;
-        }
-
-        /// <summary>
-        /// изменяет значение переменной startAcc при изменении счетчика в главной форме
-        /// (присваиваем переменной класса значение, выбранное пользователем в форме)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void startAccount_ValueChanged(object sender, EventArgs e)
-        {
-            startAcc = (int)this.startAccount.Value;
-        }
-
-
-        /// <summary>
-        /// присваиваем переменной класса значение, выбранное пользователем в форме
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void numberOfAccouts_Leave(object sender, EventArgs e)
-        {
-            numberOfAcc = (int)this.numberOfAccounts.Value;
-        }
-
-        /// <summary>
-        /// присваиваем переменной класса значение, выбранное пользователем в форме
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void numberOfAccouts_ValueChanged(object sender, EventArgs e)
-        {
-            numberOfAcc = (int)this.numberOfAccounts.Value;
-        }
-
-
         #region ====================== Silver Button (Pure Otite Multi) ============================
 
         /// <summary>
@@ -1346,6 +1342,79 @@ namespace Main
 
         #endregion
 
+        #region ============================== Миссии на мосту (Элементаль) =============================
+        private void bridgeElement_Click(object sender, EventArgs e)
+        {
+            bridgeElement.BackColor = Color.OrangeRed;
+            Thread myBridgeElement = new Thread(funcBridgeElement);
+            myBridgeElement.Start();
+        }
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой Bridge (Мост)
+        /// </summary>
+        private void funcBridgeElement()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                    {
+                        switch (botParam[j].Stage)
+                        {
+                            case 1:
+                                check[j].problemResolutionBridgeElementStage1();
+                                break;
+                            //case 2:
+                            //    check[j].problemResolutionBridgeMultiStage2();
+                            //    break;
+                            //case 3:
+                            //    check[j].problemResolutionBridgeMultiStage3();
+                            //    break;
+                            //case 4:
+                            //    check[j].NumberOfProblemBridgeElementStage4();
+                            //    break;
+                            case 5:
+                                check[j].problemResolutionBridgeElementStage5();
+                                break;
+                            case 6:
+                                check[j].problemResolutionBridgeElementStage6();
+                                break;
+
+                        }
+                    }
+                    else
+                    {
+                        check[j].RemoveSandboxie();
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region ============================== Pure Otite New =============================
 
         private void PureOtiteNew_Click(object sender, EventArgs e)
@@ -1495,8 +1564,10 @@ namespace Main
 
         #endregion
 
+        #region ============================== All in One =============================================
+
         /// <summary>
-        /// Все миссии на одной кнопке (пока Demonic+Castilia)
+        /// Все миссии на одной кнопке (Demonic + Castilia + Farm)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1508,7 +1579,7 @@ namespace Main
         }
 
         /// <summary>
-        /// метод задает функционал для потока, организуемого кнопкой AllinOne (Demonic+Castilia)
+        /// метод задает функционал для потока, организуемого кнопкой AllinOne (Demonic + Castilia + Farm)
         /// </summary>
         private void funcAllinOne()
         {
@@ -1547,6 +1618,8 @@ namespace Main
                 }
             }
         }
+
+        #endregion
 
     }// END class MainForm 
 }// END namespace OpenGEWindows
