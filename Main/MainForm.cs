@@ -804,7 +804,7 @@ namespace Main
 
         #endregion
 
-        #region Смена аккаунтов для Инфинити (или потоковая продажа всех аккаунтов)
+        #region ============== Смена аккаунтов  (перебор аккаунтов для передачи песо) ==============
 
         /// <summary>
         /// кнопка "Смена аккаунтов"
@@ -825,12 +825,10 @@ namespace Main
         {
             Check[] check = new Check[numberOfAcc + 1];
             for (int j = startAcc; j <= numberOfAcc; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
-            //for (int j = 1; j <= 1; j++) check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
 
             while (true)
             {
                 for (int j = startAcc; j <= numberOfAcc; j++)
-                //for (int j = 1; j <= 1; j++)
                 {
                     check[j].ChangingAccounts();
                     if (globalParam.Infinity >= 423) globalParam.Infinity = 0;
@@ -1439,6 +1437,9 @@ namespace Main
                 botParam[j].Stage = 1;
                 infinity[j] = botParam[j].NumberOfInfinity;
             }
+            //botParam[1].NumberOfInfinity = 405;
+            //botParam[2].NumberOfInfinity = 406;
+            //botParam[3].NumberOfInfinity = 407;
 
             while (true)
             {
@@ -1617,6 +1618,31 @@ namespace Main
                     }
                 }
             }
+        }
+
+        #endregion
+
+        #region ============================== Переработка реликвий ===================================
+
+        /// <summary>
+        /// кнопка "Переработка реликвий"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RelicProduction_Click(object sender, EventArgs e)
+        {
+            this.RelicProduction.BackColor = Color.OrangeRed;
+            Thread myRP = new Thread(funcRP);
+            myRP.Start();
+        }
+
+        /// <summary> 
+        /// метод задает функционал для потока, организуемого кнопкой цвета 
+        /// </summary>
+        private void funcRP()
+        {
+            Check check = new Check(4);     //номер окна
+            check.RelicProduction();
         }
 
         #endregion

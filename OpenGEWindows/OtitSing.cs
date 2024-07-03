@@ -59,7 +59,7 @@
         // ===============================  Методы ==================================================
 
         /// <summary>
-        /// получаем следующую точку маршрута
+        /// получаем следующую точку маршрута (не используется)
         /// </summary>
         /// <returns></returns>
         public override iPoint RouteNextPoint()
@@ -94,18 +94,12 @@
         public override iPoint RouteNextPointMulti(int counter)
         {
             iPoint[,] routeMulti ={
-                                  { new Point(505 - 5 + xx, 526 - 5 + yy), new Point(465 - 5 + xx, 488 - 5 + yy), new Point(506 - 5 + xx, 487 - 5 + yy) },
-                                  { new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) },
-                                  { new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) },
-                                  { new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) },
+                                  { new Point(505 - 5 + xx, 529 - 5 + yy), new Point(464 - 5 + xx, 487 - 5 + yy), new Point(505 - 5 + xx, 487 - 5 + yy) },      //0
+                                  { new Point(571 - 5 + xx, 425 - 5 + yy), new Point(574 - 5 + xx, 470 - 5 + yy), new Point(516 - 5 + xx, 446 - 5 + yy) },      //1
+                                  { new Point(287 - 5 + xx, 368 - 5 + yy), new Point(340 - 5 + xx, 387 - 5 + yy), new Point(297 - 5 + xx, 421 - 5 + yy) },      //2
+                                  { new Point(340 - 5 + xx, 323 - 5 + yy), new Point(411 - 5 + xx, 305 - 5 + yy), new Point(404 - 5 + xx, 353 - 5 + yy) },      //3
                                   { new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) },
                                   { new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
-                                  //{ new Point(510 - 5 + xx, 510 - 5 + yy), new Point(467 - 5 + xx, 473 - 5 + yy), new Point(510 - 5 + xx, 479 - 5 + yy) },
-                                  //{ new Point(574 - 5 + xx, 419 - 5 + yy), new Point(516 - 5 + xx, 441 - 5 + yy), new Point(568 - 5 + xx, 449 - 5 + yy) },
-                                  //{ new Point(339 - 5 + xx, 380 - 5 + yy), new Point(292 - 5 + xx, 355 - 5 + yy), new Point(291 - 5 + xx, 405 - 5 + yy) },
-                                  //{ new Point(409 - 5 + xx, 344 - 5 + yy), new Point(367 - 5 + xx, 324 - 5 + yy), new Point(415 - 5 + xx, 294 - 5 + yy) },
-                                  //{ new Point(384 - 5 + xx, 357 - 5 + yy), new Point(311 - 5 + xx, 352 - 5 + yy), new Point(355 - 5 + xx, 317 - 5 + yy) },
-                                  //{ new Point(545 - 5 + xx, 484 - 5 + yy), new Point(481 - 5 + xx, 472 - 5 + yy), new Point(526 - 5 + xx, 447 - 5 + yy) }
                               };
 
             iPoint result = routeMulti[numberOfRoute, counter];
@@ -154,12 +148,15 @@
         {
             dialog.PressStringDialog(4);
             botwindow.Pause(1000);
-            dialog.PressStringDialog(2);     // стартовая точка - в середине карты
+            //dialog.PressStringDialog(2);     // стартовая точка - в середине карты
+            SelectingAnExitPoint();             //стартовая точка в зависимости от номера маршрута
             botwindow.Pause(1000);
             dialog.PressStringDialog(1);    //move  (в миссию)
             botwindow.Pause(1000);
             if (dialog.isDialog()) dialog.PressOkButton(1);
         }
+
+        
 
         /// <summary>
         /// получить чистый отит (забрать в диалоге у старого мужика)

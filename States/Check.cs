@@ -3754,13 +3754,16 @@ namespace States
                 if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
             }
             //случайно зашли в магазин Expedition Merchant в городе
-            if (server.isExpedMerch()) return 12;                         //  22-11-23
+            //if (server.isExpedMerch()) return 12;                         //  22-11-23
+
+            //если в магазине на странице с товарами
+            if (server.isExpedMerch2()) return 13;
             //в логауте
             if (server.isLogout()) return 1;
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
             //=========================================================================================================
-            //ворота
+            //диалог
             if (dialog.isDialog())
             {
                 if (server.isExpedMerch() || server.isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
@@ -3862,6 +3865,9 @@ namespace States
                         break;
                     case 12:                                         // закрыть магазин 
                         server.CloseMerchReboldo();
+                        break;
+                    case 13:                                         // закрыть магазин 
+                        server.CloseMerchReboldo2();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -4704,6 +4710,8 @@ namespace States
                     return 14;
                 if (server.isActivityOut())
                     return 15;                      //закончилась Активити. Переходим к другому акку
+                if (server.isGateBridgeMission())
+                    return 25;
                 else
                     return 8;                       //если диалог с солдатом на мосту на получение задания
             }
@@ -4800,6 +4808,9 @@ namespace States
                         server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 25:                                        // в воротах после миссии
+                        dialog.PressOkButton(1);
                         break;
                     //======================================================================================================
                     case 11:                                         // закрыть службу Стим
@@ -4898,11 +4909,11 @@ namespace States
                     return 14;
                 if (server.isActivityOut())
                     return 15;
-
+                if (server.isGateBridgeMission())
+                    return 25;
             //город Ребольдо (не должно)
             if (server.isTown())
                 return 6;
-
             //если в миссии
             if (server.isWork())
             {
@@ -4966,6 +4977,7 @@ namespace States
                     case 24:                                        //если нет стима, значит удалили песочницу
                         botParam.Stage = 1;
                         break;
+                    //=========================================================================================================
                     case 4:
                         botParam.Stage = 5;
                         break;
@@ -5002,12 +5014,16 @@ namespace States
                         dialog.PressOkButton(1);
                         botParam.Stage = 5;
                         break;
-
                     case 15:                                         // на мосту в диалоге с солдатом. Закончилась активность
                         server.RemoveSandboxieBH();                 //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
                         break;
+                    case 25:                                        // в воротах после миссии
+                        dialog.PressOkButton(1);
+                        break;
+                    //=========================================================================================================
+
                     case 19:                                         // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
@@ -5729,6 +5745,7 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
             //=================================================================================================
+
             // диалог
             if (dialog.isDialog())      
             {
@@ -5737,6 +5754,8 @@ namespace States
                 else
                     return 8;           //у мамона            
             }
+
+
 
             //город Ребольдо
             if (server.isTown())
@@ -5767,7 +5786,9 @@ namespace States
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
-
+            //убит первый герой (надо идти в барак)
+            if (server.isKillFirstHero())
+                return 13;
 
             //если проблем не найдено
             return 0;
@@ -5838,6 +5859,10 @@ namespace States
                         break;
                     case 12:                                         // закрыть магазин 
                         server.CloseMerchReboldo();
+                        break;
+                    case 13:
+                        otit.ChangeNumberOfRoute();
+                        server.GotoBarack();
                         break;
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                         server.PressYesBarack();
@@ -6139,7 +6164,7 @@ namespace States
 
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
-
+            //===============================================================================================================
             //ворота
             if (dialog.isDialog())      //диалог со стариком. направляемся в миссию
             {
@@ -6164,7 +6189,7 @@ namespace States
             // в миссии. только что вошли
             if (server.isWork())
                 return 7;
-
+            //===============================================================================================================
 
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
@@ -6313,9 +6338,10 @@ namespace States
 
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
-
+            //=================================================================================================================
             // в миссии.
             if (server.isWork())
+            {
                 if (!otit.isOpenMap())      //карта не открыта
                     if (otit.isTaskDone())
                         return 3;           //если карта закрыта и задание уже выполнено
@@ -6331,8 +6357,8 @@ namespace States
                     else
                         return 6;           //карта открыта, но задание уже выполнено
                 }
-
-
+            }
+            //=================================================================================================================
 
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
@@ -6340,6 +6366,9 @@ namespace States
             if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
 
+            //убит первый герой (надо идти в барак)
+            if (server.isKillFirstHero())       
+                return 7;
 
             //если проблем не найдено
             return 0;
@@ -6388,6 +6417,10 @@ namespace States
                         break;
                     case 6:                                         //карта открыта, но задание уже выполнено
                         driver.FightIsFinished();                   //бежим к следующей точке маршрута без атаки
+                        break;
+                    case 7:
+                        otit.ChangeNumberOfRoute();
+                        server.GotoBarack();
                         break;
                     //============================================================================================
                     case 11:                                        // закрыть службу Стим
@@ -7744,6 +7777,22 @@ namespace States
             //}
         }
 
+        /// <summary>
+        /// боты заходят в город, получают подарок у ГМ и окно выгружается
+        /// </summary>
+        public void RelicProduction()
+        {
+            //botwindow = new botWindow(numberOfWindow);
+            //ServerFactory serverFactory = new ServerFactory(botwindow);
+            //this.server = serverFactory.create();
+            //this.globalParam = new GlobalParam();
+            //this.botParam = new BotParam(numberOfWindow);
+            //this.isActiveServer = server.IsActiveServer;
+
+            driver.StateInputOutput7();
+
+            //}
+        }
 
         /// <summary>
         /// боты заходят в город, 
@@ -7968,8 +8017,8 @@ namespace States
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
-            //MessageBox.Show("Юстиар ??? " + server.isUstiar());
-            //MessageBox.Show("Кастилия ??? " + server.isCastilia());
+            MessageBox.Show("Юстиар ??? " + server.isUstiar());
+            MessageBox.Show("Кастилия ??? " + server.isCastilia());
             //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
@@ -8117,8 +8166,8 @@ namespace States
             //int dy = 2;
 
             //int j = 1;
-            PointColor point1 = new PointColor(0 + 77 - 5 + xx + 4 * 14, 0 + 585 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(1 + 77 - 5 + xx + 4 * 14, 0 + 585 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(81 - 5 + xx, 641 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(82 - 5 + xx, 641 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(570 - 5 + xx, 549 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

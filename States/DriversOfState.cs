@@ -546,8 +546,11 @@ namespace States
         /// </summary>
         public void StateInputOutput6()
         {
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));  // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-            //botwindow.Pause(5000); //12000
+            // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
+            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
+
+            // reOpen + connect + barack
+            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  
 
             //создание новой команды FERMA
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
@@ -585,13 +588,21 @@ namespace States
             //server.GoToRudolph();
             #endregion
 
-            //переделываем Ancient Relic Piece в Ancient Gold Relic
-            //server.PressButtonRelic();
 
             //закрываем проги в песочнице
-
-
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
+        }
+
+        /// <summary>
+        /// переделываем Ancient Relic Piece в Ancient Gold Relic
+        /// </summary>
+        public void StateInputOutput7()
+        {
+            while (true)
+            {
+                server.PressButtonRelic();
+                botwindow.Pause(2000);
+            }
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace States
             //}
 
             server.Connect();
-            //botwindow.Pause(10000);
+            botwindow.Pause(1000);
 
         }
 
@@ -88,8 +88,8 @@ namespace States
         public bool isAllCool()
         {
             //return result;
-            //return server.isBarack();
-            return !server.isLogout();
+            return server.isBarack();
+            //return !server.isLogout();
         }
 
         /// <summary>
@@ -107,7 +107,8 @@ namespace States
         /// <returns> запасное состояние </returns>
         public IState StatePrev()         // возвращает запасное состояние, если переход не осуществился
         {
-            return new StateGT317(botwindow);
+            //return new StateGT317(botwindow);
+            return this;
         }
 
         /// <summary>

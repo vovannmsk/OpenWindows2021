@@ -72,6 +72,7 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
+            this.RelicProduction = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -328,6 +329,7 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.SeaShell;
             this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabPage1.Controls.Add(this.RelicProduction);
             this.tabPage1.Controls.Add(this.bridgeElement);
             this.tabPage1.Controls.Add(this.bridge);
             this.tabPage1.Controls.Add(this.AllinOne);
@@ -568,6 +570,17 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
+            // RelicProduction
+            // 
+            this.RelicProduction.BackColor = System.Drawing.Color.LimeGreen;
+            this.RelicProduction.Location = new System.Drawing.Point(9, 91);
+            this.RelicProduction.Name = "RelicProduction";
+            this.RelicProduction.Size = new System.Drawing.Size(170, 35);
+            this.RelicProduction.TabIndex = 79;
+            this.RelicProduction.Text = "Переработка реликвий";
+            this.RelicProduction.UseVisualStyleBackColor = false;
+            this.RelicProduction.Click += new System.EventHandler(this.RelicProduction_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,6 +653,7 @@
         private System.Windows.Forms.Button AllinOne;
         private System.Windows.Forms.Button bridge;
         private System.Windows.Forms.Button bridgeElement;
+        private System.Windows.Forms.Button RelicProduction;
     }
 }
 

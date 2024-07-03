@@ -111,27 +111,33 @@ namespace OpenGEWindows
         public void ChangeNumberOfRoute() 
         {
             int result = 0;
-            switch (NumberOfRoute())
-            {
-                case 0:
-                    result = 1;
-                    break;
-                case 1:
-                    result = 0;
-                    break;
-                case 2:
-                    result = 3;
-                    break;
-                case 3:
-                    result = 2;
-                    break;
-                case 4:
-                    result = 5;
-                    break;
-                case 5:
-                    result = 4;
-                    break;
-            }
+
+            //старый вариант
+            //switch (NumberOfRoute())
+            //{
+            //    case 0:
+            //        result = 1;
+            //        break;
+            //    case 1:
+            //        result = 0;
+            //        break;
+            //    case 2:
+            //        result = 3;
+            //        break;
+            //    case 3:
+            //        result = 2;
+            //        break;
+            //    case 4:
+            //        result = 5;
+            //        break;
+            //    case 5:
+            //        result = 4;
+            //        break;
+            //}
+
+            //новый вариант
+            result = NumberOfRoute() + 1;
+            if (result > 3) result = 0;
             SaveNumberOfRoute(result);
         }
 
@@ -148,7 +154,13 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>номер маршрута от 0 до 3</returns>
         protected int NumberOfRoute()
-        { return int.Parse(File.ReadAllText(KATALOG_MY_PROGRAM + botwindow.getNumberWindow() + "\\Номер маршрута.txt")); }
+        {
+            string number = File.ReadAllText(KATALOG_MY_PROGRAM + botwindow.getNumberWindow() + "\\Номер маршрута.txt");
+            if (number.Length == 0)
+                return 0;
+            else
+                return int.Parse(number);
+        }
 
         /// <summary>
         /// получить задачу у старого мужика
@@ -382,6 +394,18 @@ namespace OpenGEWindows
             PressBoxInLeftPanel(2);
             PressBoxInLeftPanel(3);
             PressBoxInLeftPanel(4);
+        }
+
+        /// <summary>
+        /// выбор в диалоге точки выхода на карту 
+        /// 1 - верхняя точка, 2 - средняя, 3 - нижняя
+        /// </summary>
+        public void SelectingAnExitPoint()
+        {
+            if (NumberOfRoute()==0 || NumberOfRoute() == 1)
+                dialog.PressStringDialog(3);
+            else
+                dialog.PressStringDialog(1);
         }
 
     }

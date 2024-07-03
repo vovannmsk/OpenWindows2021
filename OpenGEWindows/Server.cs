@@ -1770,9 +1770,11 @@ namespace OpenGEWindows
             if (isLogout())
             {
                 //нажимаем на кнопки, которые могут появиться из-за сбоев входа в игру
-                new Point(520 - 5 + xx, 420 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
+                new Point(520 - 5 + xx, 420 - 5 + yy).PressMouseL();    // кнопка Ok в логауте при ошибке
                 Pause(500);
-                new Point(525 - 5 + xx, 450 - 5 + yy).PressMouseL();    // кнопка Ok в логауте
+                new Point(525 - 5 + xx, 450 - 5 + yy).PressMouseL();    // кнопка Ok в логауте при ошибке
+                Pause(500);
+                new Point(526 - 5 + xx, 436 - 5 + yy).PressMouseL();    // кнопка Ok в логауте при ошибке
                 Pause(500);
 
                 serverSelection();
@@ -2715,8 +2717,19 @@ namespace OpenGEWindows
         /// <returns>true, если убит</returns>
         public bool isKillFirstHero()
         {
+            return !(new PointColor(81 - 5 + xx, 641 - 5 + yy, 4930000, 4).isColor() &&
+                   new PointColor(82 - 5 + xx, 641 - 5 + yy, 4930000, 4).isColor());
+            //pointisKillHero1.isColor();
+        }
+        /// <summary>
+        /// убит ли первый герой?
+        /// </summary>
+        /// <returns>true, если убит</returns>
+        public bool isKillFirstHero2()
+        {
             return pointisKillHero1.isColor();
         }
+
 
         /// <summary>
         /// функция проверяет, убит ли i-й герой из пати (проверка проходит на карте)
@@ -5245,14 +5258,14 @@ namespace OpenGEWindows
                                      //new Point(347 - 5 + xx, 550 - 5 + yy),
                                      new Point(343 - 5 + xx, 524 - 5 + yy), //2+ да 
                                      //new Point(368 - 5 + xx, 495 - 5 + yy),
-                                     new Point(395 - 5 + xx, 489 - 5 + yy), //3+ да
+                                     //new Point(395 - 5 + xx, 489 - 5 + yy), //3+ да           //13-06-24
                                      //new Point(417 - 5 + xx, 508 - 5 + yy),
                                      //new Point(436 - 5 + xx, 516 - 5 + yy),
                                      //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
                                      //new Point(474 - 5 + xx, 511 - 5 + yy),
                                      //new Point(478 - 5 + xx, 498 - 5 + yy),
                                      new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да    473, 481
-                                     new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да
+                                     //new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да           //13-06-24  пауки
                                      //new Point(407 - 5 + xx, 444 - 5 + yy),
                                      new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
                                      //new Point(359 - 5 + xx, 388 - 5 + yy),
@@ -5312,14 +5325,14 @@ namespace OpenGEWindows
                                     //5000, 
                                     6000, //2
                                     //4000, 
-                                    6000, //3
+                                    //6000, //3           //13-06-24
                                     //5000, 
                                     //5000, 
                                     //5000, //4
                                     //5000, 
                                     //5000, 
                                     1000, //5  Кризалис
-                                    1000, //6  Пауки
+                                    //1000, //6  Пауки           //13-06-24
                                     //5000, 
                                     5000, //7
                                     //5000, 
@@ -7289,7 +7302,6 @@ namespace OpenGEWindows
             return new PointColor(84 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 4094905, 0).isColor();
         }
 
-
         /// <summary>
         /// скилуем i-м героем
         /// </summary>
@@ -7802,7 +7814,7 @@ namespace OpenGEWindows
         public void PressButtonRelic()
         {
             iPoint p1 = new Point(470 - 5 + xx, 520 - 5 + yy);
-            for (int i = 1; i <= 400; i++)
+            for (int i = 1; i <= 500; i++)
             {
                 botwindow.ActiveWindowBH();
                 p1.PressMouseL();
@@ -8154,6 +8166,18 @@ namespace OpenGEWindows
         #region ================ Bridge =========================
 
         /// <summary>
+        /// мы в диалоге в воротах после миссии на мосту?
+        /// </summary>
+        /// <returns>true, если диалог именно в воротах</returns>
+        public bool isGateBridgeMission()
+        {
+            return      new PointColor(514 - 5 + xx, 536 - 5 + yy, 7450000, 4).isColor()
+                     && new PointColor(514 - 5 + xx, 549 - 5 + yy, 7450000, 4).isColor()
+                     && new PointColor(569 - 5 + xx, 536 - 5 + yy, 7450000, 4).isColor()
+                     && new PointColor(569 - 5 + xx, 549 - 5 + yy, 7450000, 4).isColor();
+        }
+
+        /// <summary>
         /// мы в диалоге с Терезией на мосту?
         /// </summary>
         /// <returns>true, если диалог именно с Терезией</returns>
@@ -8288,10 +8312,11 @@ namespace OpenGEWindows
             int[]          rank = { 0, 1, 1, 3, 1, 1, 1, 1 };
             int[] typeOfMission = { 0, 1, 1, 3, 3, 3, 3, 3 };
 
-            dialog.PressStringDialog(8 - rank[weekDay]);            //выбираем ранг миссии. Он зависит от дня недели
+            dialog.PressStringDialog(9 - rank[weekDay]);            //выбираем ранг миссии. Он зависит от дня недели
             if (weekDay == 6 || weekDay == 7)
                 dialog.PressStringDialog(1);                        //выбираем миссию (последнюю строчку - Undead)  //только в выходные//
-                //dialog.PressStringDialog(6 - weekDay);              //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+                                                                    //dialog.PressStringDialog(6 - weekDay);              //выбираем миссию (животные, андиды, лайфлесы или проч)  //только в выходные//
+            Pause(1000);
             dialog.PressStringDialog(typeOfMission[weekDay]);       // выбираем тип миссии (плюсовая или обычная)
             dialog.PressStringDialog(1);                            // в миссию (join) 
             //if (dialog.isDialog()) dialog.PressOkButton(1);
@@ -8327,7 +8352,8 @@ namespace OpenGEWindows
             iPoint[] PixelOfAttack = {  //new Point(423 - 5 + xx, 303 - 5 + yy),        //1+ понедельник, тигр
                                         new Point(415 - 5 + xx, 303 - 5 + yy),          // 1+ понедельник, животные
                                         //new Point(595 - 5 + xx, 296 - 5 + yy),        //2+ понедельник, паук
-                                        new Point(390 - 5 + xx, 550 - 5 + yy),          //1+ вторник, human
+                                        //new Point(390 - 5 + xx, 550 - 5 + yy),          //1+ вторник, human
+                                        new Point(423 - 5 + xx, 611 - 5 + yy),          // 1+ вторник, human
                                         //new Point(430 - 5 + xx, 340 - 5 + yy),        // 2+ вторник, human
                                         //new Point(636 - 5 + xx, 495 - 5 + yy),        // 1+ среда, demon
                                         //new Point(424 - 5 + xx, 240 - 5 + yy),        // 2+ среда, demon
@@ -8408,13 +8434,15 @@ namespace OpenGEWindows
 
 
             //открываем карту Alt+Z
-            TopMenu(12, 2, true);
-            Pause(500);
-            PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
-            Pause(500);
-            botwindow.PressEscThreeTimes();
-            Pause(2000);
-
+            if ((weekDay != 1) && (weekDay != 2))               //в понедельник и вторник не идём к сундуку
+            {
+                TopMenu(12, 2, true);
+                Pause(500);
+                PixelOfChest[weekDay - 1].PressMouseLL();   //идём к сундуку
+                Pause(500);
+                botwindow.PressEscThreeTimes();
+                Pause(2000);
+            }
             new Point(356 - 5 + xx, 462 - 5 + yy).PressMouseL();  //нажимаем на сундук      //было 396 482
             //PressChest[weekDay - 1].PressMouseL();      //нажимаем на сундук
             Pause(4000);                               //ждём рулетку
@@ -8474,7 +8502,7 @@ namespace OpenGEWindows
             botwindow.PressEsc(4);
 
             //идём в атаку с Ctrl
-            AttackTheEnemyElement(weekDay);     // не готово
+            AttackTheEnemyElement(weekDay);    
             Pause(1000);
 
             //активируем пета
@@ -8655,9 +8683,9 @@ namespace OpenGEWindows
         /// </summary>
         public bool isUstiar()
         {
-            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B
                     && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                    && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()    //буква C
                     && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
         }
 
@@ -8924,7 +8952,7 @@ namespace OpenGEWindows
             {
                 botwindow.PressEscThreeTimes();             //27-10-2021
                 // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
-                if (!isKillFirstHero())
+                if (!isKillFirstHero2())
                 {
                     if (isBH())     //в БХ     
                         return 4;   // стоим в правильном месте (около ворот Demonic)
@@ -8944,7 +8972,7 @@ namespace OpenGEWindows
                 }
             }
             //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero())
+            if (isWork() || isKillFirstHero2())
                 if (isCastiliaMine())
                     return 40;
                 else
@@ -8965,7 +8993,7 @@ namespace OpenGEWindows
             if (result != 0) return result;
 
             //в миссии
-            if (isWork() || isKillFirstHero()) 
+            if (isWork() || isKillFirstHero2()) 
             {
                 //если розовая надпись в чате "Treasure chest...", значит появился сундук и надо идти в барак и далее стадия 3
                 if (isTreasureChest())
@@ -9108,7 +9136,7 @@ namespace OpenGEWindows
             if (isTown())
             {
                 botwindow.PressEscThreeTimes();                 //27-10-2021
-                if (!isKillFirstHero()) // эта проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!isKillFirstHero2()) // эта проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
                 {
                     if (isCastilia())                           //в Кастилии     
                         if (isAncientBlessing(1))
@@ -9121,7 +9149,7 @@ namespace OpenGEWindows
             }
 
             //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero()) return 7;
+            if (isWork() || isKillFirstHero2()) return 7;
 
             //если проблем не найдено
             return 0;
@@ -9139,7 +9167,7 @@ namespace OpenGEWindows
 
             //в миссии
             if (isWork() ||
-                isKillFirstHero())       //проверить
+                isKillFirstHero2())       //проверить
             {
                 if (isAssaultMode())     //значит ещё бегут к выбранной точке
                     return 4;                   //тыкаем туда же ещё раз
@@ -9150,16 +9178,23 @@ namespace OpenGEWindows
                     if (NeedToPickUpLeft)
                         return 8;
                     else
-                        if (NextPointNumber > 7)    //дошли до конца миссии
-                        return 6;               //летим на ферму
+//                        if (NextPointNumber > 7)    //дошли до конца миссии
+                        if (NextPointNumber > 5)    //дошли до конца миссии         //13-06-24
+                            return 6;               //летим на ферму
                     else
                         return 5;               //значит бежим к очередному боссу без Ctrl
                 }
                 else
-                    return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
-                                                //но проверяем через 1-2 сек, не пропал ли Ctrl.
-                                                //Это бы означало, что добежали до места, перебиты все монстры
-                                                //надо собирать лут
+                {
+                    //if (NextPointNumber > 7)    //дошли до конца миссии
+                        if (NextPointNumber > 5)    //дошли до конца миссии         //13-06-24
+                            return 6;               //летим на ферму
+                    else
+                        return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
+                                                    //но проверяем через 1-2 сек, не пропал ли Ctrl.
+                                                    //Это бы означало, что добежали до места, перебиты все монстры
+                                                    //надо собирать лут
+                }
             }
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
             if (isTown() && isCastilia())
@@ -9995,6 +10030,8 @@ namespace OpenGEWindows
                         GetDropCastiliaLeft(GetWaitingTimeForDropPicking(NextPointNumber));
                         BattleModeOnDem();
                         NextPointNumber++;
+                        //if (NextPointNumber > 7)
+                            
                         break;
                     default:
                         problemResolutionCommonCastiliaForStageFrom2To(numberOfProblem);
