@@ -148,8 +148,8 @@
         {
             dialog.PressStringDialog(4);
             botwindow.Pause(1000);
-            //dialog.PressStringDialog(2);     // стартовая точка - в середине карты
-            SelectingAnExitPoint();             //стартовая точка в зависимости от номера маршрута
+            dialog.PressStringDialog(2);     // стартовая точка - в середине карты
+            //SelectingAnExitPoint();             //стартовая точка в зависимости от номера маршрута
             botwindow.Pause(1000);
             dialog.PressStringDialog(1);    //move  (в миссию)
             botwindow.Pause(1000);

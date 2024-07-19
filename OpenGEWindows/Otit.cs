@@ -268,7 +268,7 @@ namespace OpenGEWindows
             botwindow.PressEscThreeTimes();
         }
 
-
+         
         /// <summary>
         /// тыкаем на старого мужика
         /// </summary>

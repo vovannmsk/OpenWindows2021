@@ -8547,7 +8547,7 @@ namespace OpenGEWindows
         #region Pure Otite New
 
         /// <summary>
-        /// на мосту ли мы?
+        /// на карте, где стоит Мамут (Desert Quay)?
         /// </summary>
         /// <returns></returns>
         public bool isDesertedQuay()

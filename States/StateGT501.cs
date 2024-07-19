@@ -76,7 +76,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isOpenWarpList();    
+            return true;
+            //return server.isOpenWarpList();    
         }
 
         /// <summary>
@@ -85,7 +86,8 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            return new StateGT502(botwindow);
+//            return new StateGT502(botwindow);
+            return new StateGT533(botwindow);   //в конец цикла
         }
 
         /// <summary>

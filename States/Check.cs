@@ -5694,8 +5694,6 @@ namespace States
 
 
 
-
-
         #region  =================================== PureOtiteNew Stage 1 ==============================================
 
         /// <summary>
@@ -5755,9 +5753,7 @@ namespace States
                     return 8;           //у мамона            
             }
 
-
-
-            //город Ребольдо
+            //город 
             if (server.isTown())
             {
                 if (server.isReboldo()) 
@@ -5766,9 +5762,9 @@ namespace States
                 {       //В ЛосТолдосе
                     if (otit.isNearOldMan())
                     {
-                        if (otit.isTaskDone()) return 5;    //в Лос Толдосе и задание выполнено
-                        if (otit.isGetTask()) return 4;     //в Лос Толдосе, задание уже получено, но не выполнено
-                        else return 3;                      //в Лос Толдосе, задание не получено и не выполнено
+                        if (otit.isTaskDone()) return 5;    //около старика. задание выполнено
+                        if (otit.isGetTask()) return 4;     //около старика. задание уже получено, но не выполнено
+                        else return 3;                      //около старика. задание не получено и не выполнено
                     }
                     else return 10;         //в Лос Толдосе, но не около ОлдМэна
                 }
@@ -5777,7 +5773,7 @@ namespace States
 
             if (server.isWork())
                 if (server.isDesertedQuay())
-                    return 7;
+                    return 7;   //около Мамуна
                 else
                     return 9;   //в миссии
             //=================================================================================================
@@ -5824,6 +5820,7 @@ namespace States
                         driver.StateFromBarackToTownBH();           // barack --> town              //сделано
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
+                    //=================================================================================================
                     case 3: //в Лос Толдосе, задание не получено и не выполнено
                         botParam.Stage = 2;
                         break;
@@ -5837,10 +5834,10 @@ namespace States
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
                         server.Teleport(1, true);                   // телепорт к Мамону        
-                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы загрузилась местность
+                        botParam.HowManyCyclesToSkip = 5;           // даём время, чтобы загрузилась местность
                         break;
                     case 7:     //у Мамона
-                        driver.FromMamonsToMamonsDialog();          //Mamons --> MaMons(Dialog)
+                        driver.FromMamonsToMamonsDialog();          //Mamons --> Mamons(Dialog)
                         break;
                     case 8:    //диалог у Мамона
                         dialog.PressStringDialog(1);
@@ -5854,6 +5851,7 @@ namespace States
                         Pause(500);
                         otit.GoToOldManMulti();
                         break;
+                    //=================================================================================================
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -5935,7 +5933,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                Pause(5000);
                 server.WriteToLogFileBH("Пауза 1000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
@@ -6001,13 +5999,12 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
 
-            //ворота
+            //=================================================================================================
+            //диалог
             if (dialog.isDialog())      //диалог со стариком
-            {
                 return 8;
-            }
 
-            //город Ребольдо
+            //город 
             if (server.isTown())
             {
                 if (server.isReboldo())
@@ -6021,6 +6018,7 @@ namespace States
                 }
 
             }
+            //=================================================================================================
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
@@ -6064,7 +6062,7 @@ namespace States
                     case 24:                                        //если нет стима, значит удалили песочницу
                         botParam.Stage = 1;
                         break;
-
+                    //=================================================================================================
                     case 3:                                         //в Лос Толдосе, около старика. задание не получено
                         otit.PressOldMan();                         // OldMan --> OldMan (dialog)
                         break;
@@ -6072,6 +6070,7 @@ namespace States
                         otit.GetTask();
                         botParam.Stage = 3;
                         break;
+                    //=================================================================================================
                     case 11:                                        // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -6102,8 +6101,8 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
-                server.WriteToLogFileBH("Пауза 1000");
+                Pause(5000);
+                server.WriteToLogFileBH("Пауза 5000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
         }
@@ -6171,7 +6170,7 @@ namespace States
                 return 8;
             }
 
-            //город Ребольдо
+            //город 
             if (server.isTown())
             {
                 if (server.isReboldo())
@@ -6186,9 +6185,13 @@ namespace States
 
             }
 
-            // в миссии. только что вошли
+            // на боевой карте
             if (server.isWork())
-                return 7;
+                if (server.isDesertedQuay())
+                    return 9;   //около Мамуна
+                else
+                    return 7;   //в миссии. только что вошли
+
             //===============================================================================================================
 
             //в бараке
@@ -6226,6 +6229,7 @@ namespace States
                     case 2:                                         //если стоят в бараке
                     case 4:                                         //в Лос Толдосе, но не около ОлдМэна
                     case 6:                                         //в ребольдо
+                    case 9:                                         //около Мамуна
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                     case 17:                                        // в бараках на стадии выбора группы
                     case 20:                                        //если стоят на странице создания нового персонажа,
@@ -6276,7 +6280,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                Pause(5000);
                 server.WriteToLogFileBH("Пауза 1000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
@@ -6342,20 +6346,27 @@ namespace States
             // в миссии.
             if (server.isWork())
             {
-                if (!otit.isOpenMap())      //карта не открыта
-                    if (otit.isTaskDone())
-                        return 3;           //если карта закрыта и задание уже выполнено
-                    else
-                        return 4;           //если карта закрыта, но задание еще не выполнено
-                else                        // если карта уже открыта, то смотрим далее
+                if (server.isDesertedQuay())
                 {
-                    if (!otit.isTaskDone())
-                        if (!server.isAssaultMode())
-                            return 5;       //бежим к следующей точке маршрута с атакой
+                    return 9;
+                }
+                else
+                {
+                    if (!otit.isOpenMap())      //карта не открыта
+                        if (otit.isTaskDone())
+                            return 3;           //если карта закрыта и задание уже выполнено
                         else
-                            return 0;       //ничего не делаем, так как уже бежим и атакуем
-                    else
-                        return 6;           //карта открыта, но задание уже выполнено
+                            return 4;           //если карта закрыта, но задание еще не выполнено
+                    else                        // если карта уже открыта, то смотрим далее
+                    {
+                        if (!otit.isTaskDone())
+                            if (!server.isAssaultMode())
+                                return 5;       //бежим к следующей точке маршрута с атакой
+                            else
+                                return 0;       //ничего не делаем, так как уже бежим и атакуем
+                        else
+                            return 6;           //карта открыта, но задание уже выполнено
+                    }
                 }
             }
             //=================================================================================================================
@@ -6369,6 +6380,9 @@ namespace States
             //убит первый герой (надо идти в барак)
             if (server.isKillFirstHero())       
                 return 7;
+            //город 
+            if (server.isTown())
+                return 8;
 
             //если проблем не найдено
             return 0;
@@ -6394,6 +6408,8 @@ namespace States
                 {
                     case 1:                                         //в логауте
                     case 2:                                         //если стоят в бараке
+                    case 8:                                         //в городе
+                    case 9:                                         //около Мамуна
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                     case 17:                                        // в бараках на стадии выбора группы
                     case 20:                                        //если стоят на странице создания нового персонажа,
@@ -6405,7 +6421,7 @@ namespace States
                     //============================================================================================
                     case 3:                                         //если карта закрыта и задание уже выполнено                            
                         driver.TeleportToMamut();
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 3;
                         botParam.Stage = 1;
                         break;
                     case 4:                                         //если карта закрыта, но задание еще не выполнено
@@ -6453,7 +6469,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                Pause(5000);
                 server.WriteToLogFileBH("Пауза 1000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
@@ -6516,7 +6532,9 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
 
-            //ворота
+            //===============================================================================================================
+
+            //диалог
             if (dialog.isDialog())      //диалог со стариком. получаем награду
             {
                 return 8;
@@ -6534,15 +6552,21 @@ namespace States
                     else
                         return 4;                       //в Лос Толдосе, но не около ОлдМэна
                 }
-
             }
+
+            //на работе         //19-07-24
+            if (server.isWork())
+                if (server.isDesertedQuay())
+                    return 7;   //около Мамуна         //19-07-24
+                else
+                    return 9;   //в миссии         //19-07-24
+            //===============================================================================================================
 
             //в бараке
             if (server.isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
             if (server.isBarack()) return 2;                    //если стоят в бараке 
             if (server.isBarackWarningYes()) return 16;
             if (server.isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
-
 
             //если проблем не найдено
             return 0;
@@ -6570,8 +6594,11 @@ namespace States
                 {
                     case 1:                                         //в логауте
                     case 2:                                         //если стоят в бараке
+                    case 3:                                         //в Лос Толдосе, около старика. задание выполнено  19-07-24
                     case 4:                                         //в Лос Толдосе, но не около ОлдМэна
                     case 6:                                         //в ребольдо
+                    case 7:                                         //у Мамуна      19-07-24
+                    case 9:                                         //в миссии      19-07-24
                     case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                     case 17:                                        // в бараках на стадии выбора группы
                     case 20:                                        //если стоят на странице создания нового персонажа,
@@ -6581,17 +6608,17 @@ namespace States
                         botParam.Stage = 1;
                         break;
                     //============================================================================================
-                    case 3:                                         //в Лос Толдосе, около старика. задание выполнено
-                        otit.PressOldMan();                         // OldMan --> OldMan (dialog)
-                        break;
+                    //case 3:                                         //в Лос Толдосе, около старика. задание выполнено
+                    //    otit.PressOldMan();                         // OldMan --> OldMan (dialog)
+                    //    break;
                     case 8:                                         //диалог со стариком. получаем награду
                         otit.TakePureOtite();                       //Oldman(Dialog) --> Get Reward
                         botParam.Stage = 1;
                         break;
+                    //============================================================================================
                     case 11:                                        // закрыть службу Стим
                         server.CloseSteam();
                         break;
-                    //============================================================================================
                     case 19:                                        // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
@@ -6619,7 +6646,7 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                Pause(1000);
+                Pause(5000);
                 server.WriteToLogFileBH("Пауза 1000");
                 server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
