@@ -4726,12 +4726,12 @@ namespace States
                 if (server.isBridge())
                 {
                     if (server.isOpenMapBridge())
-                        return 4;
+                        return 4;   //открыта карта
                     else
-                        return 5;
+                        return 5;   //пока не открыта карта
                 }
                 else
-                    return 7;
+                    return 7;       //не на мосту, значит уже в миссии
             }
             //==================================================================================
 
@@ -4778,7 +4778,7 @@ namespace States
                         botParam.Stage = 1;
                         break;
                     //======================================================================================================
-                    case 4:     //мы на мосту и открыта карта Alt+Z, значит идём к солдату получать задание и выполнять миссию
+                    case 4:                                         //мы на мосту и открыта карта Alt+Z, значит идём к солдату получать задание и выполнять миссию
                         server.GotoIndividualRaid();
                         break;
                     case 5:
@@ -4903,23 +4903,27 @@ namespace States
             // если неправильная стойка
             if (server.isBadFightingStance()) return 19;
             //=====================================================================================================
-            //диалог
-            if (dialog.isDialog())
-                if (server.isTeresia())
-                    return 14;
-                if (server.isActivityOut())
-                    return 15;
-                if (server.isGateBridgeMission())
-                    return 25;
-            //город Ребольдо (не должно)
-            if (server.isTown())
-                return 6;
-            //если в миссии
+            //диалог не должно быть
+            //if (dialog.isDialog())
+            //{
+            //    if (server.isTeresia())
+            //        return 14;
+            //    if (server.isActivityOut())
+            //        return 15;
+            //    if (server.isGateBridgeMission())
+            //        return 25;
+            //}
+
+            //город Ребольдо (не должно быть)
+            //if (server.isTown())
+            //    return 6;
+
+            //если в миссии или на мосту
             if (server.isWork())
             {
                 if (server.isBridge())      // если на мосту, значит мисссия завершилась и нас выкинуло из неё
                     return 4;
-                else  //не на мосту, значит в миссии
+                else                        //не на мосту, значит в миссии
                 {
                     if (server.isAssaultMode())
                         return 9;
@@ -4995,15 +4999,18 @@ namespace States
                         botParam.Stage = 5;
                         break;
                     case 8:
-                        server.SkillAll();
+                        //server.SkillAll();    //21-07-24
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 9:
-                        server.SkillAll();
+                        //server.SkillAll();    //21-07-24
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 10:
                         server.BattleModeOnDem();
-                        botParam.HowManyCyclesToSkip = 4;
+                        botParam.HowManyCyclesToSkip = server.WaitForBattle(WeekDay); //время ожидания после нажатия пробела разное для каждого дня недели
                         break;
+                    //=========================================================================================================
                     case 11:                                         // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -5051,9 +5058,9 @@ namespace States
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                if (globalParam.TotalNumberOfAccounts == 1) Pause(2000);
-                server.WriteToLogFileBH("Пауза 1000");
-                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+                //server.WriteToLogFileBH("Пауза 1000");
+                //server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
         }
 
@@ -5833,7 +5840,8 @@ namespace States
                     case 6:        //в ребольдо
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
-                        server.Teleport(1, true);                   // телепорт к Мамону        
+                        //server.Teleport(1, true);                   // телепорт к Мамону        
+                        server.Teleport(5, true);                   // телепорт к Мамону        //20-07-24
                         botParam.HowManyCyclesToSkip = 5;           // даём время, чтобы загрузилась местность
                         break;
                     case 7:     //у Мамона
@@ -6238,7 +6246,7 @@ namespace States
                     case 24:                                        //если нет стима, значит удалили песочницу
                         botParam.Stage = 1;
                         break;
-
+                    //=================================================================================================
                     case 3:                                         //в Лос Толдосе, около старика. задание получено
                         otit.PressOldMan();                         // OldMan --> OldMan (dialog)
                         break;
@@ -6250,6 +6258,7 @@ namespace States
                     case 8:                                         //диалог со стариком. направляемся в миссию
                         otit.EnterToTierraDeLosMuertus();
                         break;
+                    //=================================================================================================
                     case 11:                                        // закрыть службу Стим
                         server.CloseSteam();
                         break;
@@ -6594,7 +6603,6 @@ namespace States
                 {
                     case 1:                                         //в логауте
                     case 2:                                         //если стоят в бараке
-                    case 3:                                         //в Лос Толдосе, около старика. задание выполнено  19-07-24
                     case 4:                                         //в Лос Толдосе, но не около ОлдМэна
                     case 6:                                         //в ребольдо
                     case 7:                                         //у Мамуна      19-07-24
@@ -6608,9 +6616,9 @@ namespace States
                         botParam.Stage = 1;
                         break;
                     //============================================================================================
-                    //case 3:                                         //в Лос Толдосе, около старика. задание выполнено
-                    //    otit.PressOldMan();                         // OldMan --> OldMan (dialog)
-                    //    break;
+                    case 3:                                         //в Лос Толдосе, около старика. задание выполнено
+                        otit.PressOldMan();                         // OldMan --> OldMan (dialog)
+                        break;
                     case 8:                                         //диалог со стариком. получаем награду
                         otit.TakePureOtite();                       //Oldman(Dialog) --> Get Reward
                         botParam.Stage = 1;

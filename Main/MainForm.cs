@@ -1577,6 +1577,7 @@ namespace Main
             AllinOne.BackColor = Color.OrangeRed;
             Thread myAllinOne = new Thread(funcAllinOne);
             myAllinOne.Start();
+
         }
 
         /// <summary>
@@ -1600,7 +1601,7 @@ namespace Main
                 // j - номер окна с ботом
                 for (int j = startAcc; j <= numberOfAcc; j++)
                 {
-                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся,т.е. перешли к новому аккаунту
                     {
                         infinity[j] = botParam[j].NumberOfInfinity;
                         check[j] = new Check(j);

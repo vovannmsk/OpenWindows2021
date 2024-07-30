@@ -5323,7 +5323,7 @@ namespace OpenGEWindows
                                     //5000, 
                                     5000, //1
                                     //5000, 
-                                    6000, //2
+                                    10000, //2
                                     //4000, 
                                     //6000, //3           //13-06-24
                                     //5000, 
@@ -7013,7 +7013,7 @@ namespace OpenGEWindows
             AttackCtrl(x, y);
 
 
-            if (this.Counter >= 3)
+            if (this.Counter >= 5)
             {
                 //бафаемся один раз в 3 хода
                 botwindow.ActiveAllBuffBH();
@@ -8402,6 +8402,32 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// вычисляем продолжительность паузы после нажатия пробела в миссии на мосту
+        /// </summary>
+        /// <param name="weekDay">день недели по Сингапурскому времени</param>
+        /// <returns>время ожидания в пропущенных циклах</returns>
+        public int WaitForBattle(int weekDay)
+        {
+            int[] TimeOfWait = {   0,          // 1+ понедельник, животные
+                                    //0,        // 2+ понедельник, животные
+                                   1,          // 1+ вторник, human    надо проверить
+                                    //0,        // 2+ вторник, human
+                                    //0,        // 1+ среда, demon
+                                    //0,        // 2+ среда, demon
+                                    0,          // 3  среда, demon
+                                    0,          // 1  четверг
+                                    7,          // 1 пятница (undead череп)
+                                    //0,        // 1+ пятница
+                                    //0,        // 2  пятница                        
+                                    //0,        // 2+ пятница
+                                    //0,        // 3  пятница
+                                    7,          // 1 суббота (undead череп)
+                                    7          // 1 воскресенье (undead череп)
+            };
+            return TimeOfWait[weekDay - 1];
+        }
+
+        /// <summary>
         /// идём к сундуку и открываем его
         /// </summary>
         /// <param name="weekDay"> день недели по сингапурскому времени </param>
@@ -9295,7 +9321,7 @@ namespace OpenGEWindows
                     break;
                 case 2:
                     FromBarackToTown(2);                        // barack --> town
-                    botParam.HowManyCyclesToSkip = 3;  //2
+                    botParam.HowManyCyclesToSkip = 4;  //2
                     break;
                 case 11:                                        // закрыть службу Стим
                     CloseSteam();
@@ -9567,6 +9593,7 @@ namespace OpenGEWindows
                         MaxHeight(12);
 
                         botParam.Stage = 2;
+                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы вылезли мобы
                         break;
                     case 8:                                         //Gate --> Mission Lobby
                         dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
@@ -9612,7 +9639,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         /// <summary>
@@ -9635,6 +9665,7 @@ namespace OpenGEWindows
                         ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
                         MoveCursorOfMouse();
                         botParam.Stage = 3;
+                        botParam.HowManyCyclesToSkip = 3;
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
@@ -9659,6 +9690,7 @@ namespace OpenGEWindows
                         BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
                         GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         botwindow.PressEscThreeTimes();
+                        botParam.HowManyCyclesToSkip = 3;
                         break;
 
                     default:
@@ -9667,7 +9699,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         /// <summary>
@@ -9693,7 +9728,7 @@ namespace OpenGEWindows
                                                     // т.к. при возврате в миссию для открытия сундука сработает
                                                     // условие,  (если барак, то RemoveSandboxie)  // тогда мы не сможем открыть сундук
                         FromBarackToTown(2);        //здесь по идее можно писать, что угодно. лишь бы не удаление песочницы
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 4;    //было 2  //29-07-24
                         break;
                     case 3:                                         //в миссии, но сундук ещё не открыт
                         OpeningTheChest();                          //тыкаем в сундук и запускаем рулетку
@@ -9753,7 +9788,11 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
+
         }
 
         /// <summary>
@@ -9797,7 +9836,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         /// <summary>
@@ -9853,6 +9895,7 @@ namespace OpenGEWindows
             else
             {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
             }
         }
 
@@ -9965,7 +10008,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         /// <summary>
@@ -10006,7 +10052,7 @@ namespace OpenGEWindows
                         break;
                     case 5:                                                 //стоим на пробеле, NeedToPickUpRight=false, NeedToPickUpLeft=false
                         // бафаемся перед перемещением дальше
-                        if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
+                        if ((NextPointNumber == 0) || (NextPointNumber == 2) || (NextPointNumber == 4))
                         {
                             MoveCursorOfMouse();
                             Buff(Hero[1], 1);
@@ -10039,7 +10085,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         /// <summary>
@@ -10092,7 +10141,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         #endregion
@@ -10161,7 +10213,10 @@ namespace OpenGEWindows
                 }
             }
             else
+            {
                 botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
         }
 
         #endregion

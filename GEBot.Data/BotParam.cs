@@ -172,7 +172,15 @@ namespace GEBot.Data
         /// </summary>
         /// <returns></returns>
         private int GetStage()
-        { return int.Parse(File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Stage.txt")); }
+        { 
+            //return int.Parse(File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Stage.txt"));
+            
+            string number = File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Stage.txt");
+            if (number.Length == 0)
+                return 1;
+            else
+                return int.Parse(number);
+        }
 
         /// <summary>
         /// записываем значение в файл
@@ -187,7 +195,15 @@ namespace GEBot.Data
         /// </summary>
         /// <returns></returns>
         private int Get_HowManyCyclesToSkip()
-        { return int.Parse(File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt")); }
+        { 
+            //return int.Parse(File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt"));
+
+            string number = File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt");
+            if (number.Length == 0)
+                return 0;
+            else
+                return int.Parse(number);
+        }
 
         /// <summary>
         /// записываем значение в файл
@@ -238,19 +254,19 @@ namespace GEBot.Data
         //}
 
 
-        /// <summary>
-        /// закончился ли список ботов для данного окна?
-        /// </summary>
-        /// <returns>true, если закончился</returns>
-        public bool EndOfList()
-        {
-            bool result = false;
-            if (NumberOfInfinity >= LengthOfList)    result = true;
-            return result;
-        }
+        ///// <summary>
+        ///// закончился ли список ботов для данного окна?
+        ///// </summary>
+        ///// <returns>true, если закончился</returns>
+        //public bool EndOfList()
+        //{
+        //    bool result = false;
+        //    if (NumberOfInfinity >= LengthOfList)    result = true;
+        //    return result;
+        //}
 
         /// <summary>
-        /// прочитать из файла текущий параметр (америка, европа, синг)
+        /// прочитать из файла текущий параметр (америка, европа, синг) для текущего окна
         /// </summary>
         /// <returns>список параметров</returns>
         private string ParamFromFile()
@@ -265,7 +281,7 @@ namespace GEBot.Data
 
 
         /// <summary>
-        /// прочитать из файла список параметров
+        /// прочитать из файла список параметров (америка, европа, синг) /возвращает весь массив/
         /// </summary>
         /// <returns>список параметров</returns>
         private string[] ParametrsFromFile()
@@ -287,9 +303,12 @@ namespace GEBot.Data
         {
             string result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt");
             if (result.Length == 0)    //получили из файла пустую строку
-            { result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt"); }    //читаем еще раз
-            
-            return int.Parse(result);
+                result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Инфинити.txt");    //читаем еще раз
+
+            if (result.Length == 0)    //получили из файла пустую строку
+                return 0;               // можно возвращать ДемоникОт
+            else
+                return int.Parse(result);
         }
 
         /// <summary>
@@ -373,14 +392,11 @@ namespace GEBot.Data
         private string PasswordFromFile()   // каталог и номер окна
         {
             string[] result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
-            //return result[0];
+
             if (result[numberOfInfinity].Length == 0)    //если искомое значение оказалось пустым, то читаем массив из файла еще раз (надеюсь поможет)
-            {
                 result = File.ReadAllLines(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
-            }
 
             return result[numberOfInfinity];
-            //return File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\Пароли.txt");
         }
 
         /// <summary>
@@ -392,13 +408,19 @@ namespace GEBot.Data
             UIntPtr ff;
             String ss = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt");
             if (ss.Equals(""))
-            { ff = (UIntPtr)2222222; }   //если пусто в файле, то hwnd = 2222222;
+                ff = (UIntPtr)2222222;    //если пусто в файле, то hwnd = 2222222;
             else
             {
                 uint dd = uint.Parse(ss);
                 ff = (UIntPtr)dd;
             }
             return ff;
+
+            //String result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt");
+            //if (result.Length == 0)    //получили из файла пустую строку
+            //    return (UIntPtr)2222222;
+            //else
+            //    return (UIntPtr)uint.Parse(result);
         }
 
         ///// <summary>

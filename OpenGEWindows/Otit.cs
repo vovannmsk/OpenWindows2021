@@ -297,6 +297,7 @@ namespace OpenGEWindows
         public void GotoWorkMulti()
         {
             CounterRouteToNull();
+            this.numberOfRoute = NumberOfRoute();
             RouteNextPointMulti(CounterRouteNode).PressMouseL();
         }
 
@@ -326,7 +327,7 @@ namespace OpenGEWindows
         /// </summary>
         public void  CounterRouteToNull()
         {
-            CounterRouteNode = 0;
+            this.CounterRouteNode = 0;
         }
 
         /// <summary>
@@ -391,9 +392,9 @@ namespace OpenGEWindows
         public void PressMitridat()
         {
             PressBoxInLeftPanel(1);
-            PressBoxInLeftPanel(2);
+            //PressBoxInLeftPanel(2);
             PressBoxInLeftPanel(3);
-            PressBoxInLeftPanel(4);
+            //PressBoxInLeftPanel(4);
         }
 
         /// <summary>

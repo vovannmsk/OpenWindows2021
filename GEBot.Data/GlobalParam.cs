@@ -22,7 +22,7 @@ namespace GEBot.Data
         private int startingAccount;                    // номер стартового аккаунта (для заточки, чиповки и проч)
         private bool samara;                            // если этот комп расположен в Самаре, то true
         private string[] mmProduct;                     // массив товаров для продажи через рынок (MM)
-        private int totalNumberOfAccounts;              // всего аккаунтов ботов
+        private int totalNumberOfAccounts;              // всего аккаунтов ботов (кол-во одновременно загружаемых окон)
         private int statusOfSale;                       // статус продажи (для BH)
         private bool windows10;                         // какая винда на компе. true, если Windows 10
         private int demonicFrom;                        // ходим в демоник ботами с этого номера 
@@ -70,6 +70,9 @@ namespace GEBot.Data
         public int StartingAccount { get => startingAccount; set => startingAccount = value; }
         public bool Samara { get => samara; }
         public string[] MMProduct { get => mmProduct; }
+        /// <summary>
+        /// кол-во одновременно загружаемых окон
+        /// </summary>
         public int TotalNumberOfAccounts { get => totalNumberOfAccounts; }
         //        public int StatusOfSale { get => GetStatusOfSale(); set { statusOfSale = value; SetStatusInFile(); } }
         //        public int StatusOfSale { get => statusOfSale; set { statusOfSale = value; SetStatusInFile(); } }
@@ -100,14 +103,14 @@ namespace GEBot.Data
             //return 1;
         }
 
-        /// <summary>
-        /// увеличение параметра Infinity на 1 с записью результата в текстовый файл
-        /// </summary>
-        public void InfinityPlusOne()
-        {
-            Infinity = infinity + 1;
-            //Infinity++;        //вариант 2
-        }
+        ///// <summary>
+        ///// увеличение параметра Infinity на 1 с записью результата в текстовый файл
+        ///// </summary>
+        //public void InfinityPlusOne()
+        //{
+        //    Infinity = infinity + 1;
+        //    //Infinity++;        //вариант 2
+        //}
 
 
 
@@ -201,7 +204,13 @@ namespace GEBot.Data
         /// <returns></returns>
         private int InfinityInFile()
         {
-            return int.Parse(File.ReadAllText(directoryOfMyProgram + "\\Инфинити.txt"));
+            //return int.Parse(File.ReadAllText(directoryOfMyProgram + "\\Инфинити.txt"));  //старый вариант
+
+            string result = File.ReadAllText(directoryOfMyProgram + "\\Инфинити.txt");
+            if (result.Length == 0)
+                return 1;
+            else
+                return int.Parse(result);
         }
 
 
