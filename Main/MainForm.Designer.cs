@@ -54,6 +54,7 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.RelicProduction = new System.Windows.Forms.Button();
             this.bridgeElement = new System.Windows.Forms.Button();
             this.bridge = new System.Windows.Forms.Button();
             this.AllinOne = new System.Windows.Forms.Button();
@@ -72,13 +73,16 @@
             this.LoadSteams = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.PureOtiteMulti = new System.Windows.Forms.Button();
-            this.RelicProduction = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.RestartClassic = new System.Windows.Forms.Button();
+            this.Memorial = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.startAccount)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonReOpenWindowGE
@@ -318,6 +322,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -356,6 +361,17 @@
             this.tabPage1.Size = new System.Drawing.Size(378, 217);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
+            // 
+            // RelicProduction
+            // 
+            this.RelicProduction.BackColor = System.Drawing.Color.LimeGreen;
+            this.RelicProduction.Location = new System.Drawing.Point(9, 91);
+            this.RelicProduction.Name = "RelicProduction";
+            this.RelicProduction.Size = new System.Drawing.Size(170, 35);
+            this.RelicProduction.TabIndex = 79;
+            this.RelicProduction.Text = "Переработка реликвий";
+            this.RelicProduction.UseVisualStyleBackColor = false;
+            this.RelicProduction.Click += new System.EventHandler(this.RelicProduction_Click);
             // 
             // bridgeElement
             // 
@@ -570,16 +586,39 @@
             this.PureOtiteMulti.UseVisualStyleBackColor = false;
             this.PureOtiteMulti.Click += new System.EventHandler(this.PureOtiteMulti_Click);
             // 
-            // RelicProduction
+            // tabPage4
             // 
-            this.RelicProduction.BackColor = System.Drawing.Color.LimeGreen;
-            this.RelicProduction.Location = new System.Drawing.Point(9, 91);
-            this.RelicProduction.Name = "RelicProduction";
-            this.RelicProduction.Size = new System.Drawing.Size(170, 35);
-            this.RelicProduction.TabIndex = 79;
-            this.RelicProduction.Text = "Переработка реликвий";
-            this.RelicProduction.UseVisualStyleBackColor = false;
-            this.RelicProduction.Click += new System.EventHandler(this.RelicProduction_Click);
+            this.tabPage4.Controls.Add(this.RestartClassic);
+            this.tabPage4.Controls.Add(this.Memorial);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(378, 217);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Classic";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // RestartClassic
+            // 
+            this.RestartClassic.BackColor = System.Drawing.Color.Orange;
+            this.RestartClassic.Location = new System.Drawing.Point(8, 16);
+            this.RestartClassic.Name = "RestartClassic";
+            this.RestartClassic.Size = new System.Drawing.Size(170, 35);
+            this.RestartClassic.TabIndex = 81;
+            this.RestartClassic.Text = "Восстановить Окна";
+            this.RestartClassic.UseVisualStyleBackColor = false;
+            this.RestartClassic.Click += new System.EventHandler(this.RestartClassic_Click);
+            // 
+            // Memorial
+            // 
+            this.Memorial.BackColor = System.Drawing.Color.LimeGreen;
+            this.Memorial.Location = new System.Drawing.Point(8, 57);
+            this.Memorial.Name = "Memorial";
+            this.Memorial.Size = new System.Drawing.Size(170, 35);
+            this.Memorial.TabIndex = 80;
+            this.Memorial.Text = "Добыча карточек на мемориале";
+            this.Memorial.UseVisualStyleBackColor = false;
+            this.Memorial.Click += new System.EventHandler(this.Memorial_Click);
             // 
             // MainForm
             // 
@@ -604,6 +643,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -654,6 +694,9 @@
         private System.Windows.Forms.Button bridge;
         private System.Windows.Forms.Button bridgeElement;
         private System.Windows.Forms.Button RelicProduction;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button RestartClassic;
+        private System.Windows.Forms.Button Memorial;
     }
 }
 

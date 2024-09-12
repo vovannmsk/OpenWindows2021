@@ -931,7 +931,6 @@ namespace OpenGEWindows
         /// <returns>Если окно есть, то result = true, а если вылетело окно, то result = false.</returns>
         private bool SetPosition()
         {
-            //MessageBox.Show("SetPosition HWND=" + botParam.Hwnd);
             if (globalParam.Windows10)
                 return SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y - 1, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
             else
@@ -1429,7 +1428,7 @@ namespace OpenGEWindows
             //Pause(4000);
         }
 
-
+        public abstract void RunClientClassic();
         public abstract void runClientSteamBH();
         public abstract void runClient();
         public abstract void runClientCW();
@@ -2885,7 +2884,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Переход в боевой режим для Демоника
+        /// Переход в боевой режим для Демоника (пробел)
         /// </summary>
         public void BattleModeOnDem()
         {
@@ -2895,6 +2894,179 @@ namespace OpenGEWindows
         #endregion
 
         #region inTown
+
+        public bool isOkButton()
+        {
+            return new PointColor(939 - 5 + xx, 650 - 5 + yy, 11800000, 5).isColor() &&
+                   new PointColor(939 - 5 + xx, 651 - 5 + yy, 11800000, 5).isColor();
+            //pointisKillHero1.isColor();
+        }
+
+        /// <summary>
+        /// нажимаем Ок после вызова мушкетёра
+        /// </summary>
+        public void PressOkButton()
+        {
+            new Point(940 - 5 + xx, 652 - 5 + yy).PressMouseL();
+        }
+
+
+        /// <summary>
+        /// вызов нового мушкетёра
+        /// </summary>
+        public void CallMusk()
+        {
+            new Point(694 - 5 + xx, 381 - 5 + yy).PressMouseL();
+            Pause(1000);
+            PressOkButton();
+        }
+
+        /// <summary>
+        /// запускаем следующий раунд
+        /// </summary>
+        public void NextRound()
+        {
+            new Point(694 - 5 + xx, 436 - 5 + yy).PressMouseL();
+            if (isOkButton()) PressOkButton();
+        }
+
+        /// <summary>
+        /// нажимаем на машинку для вызова капибар
+        /// </summary>
+        public void PressMashina()
+        {
+            new Point(347 - 5 + xx, 419 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// комплекс действий в миссии с капибарами
+        /// </summary>
+        private void MissionCapibara()
+        {
+            Pause(1000);
+            MinHeight(7);
+            Pause(1000);
+            botwindow.ThirdHero();
+            Pause(1000);
+
+            for (int i = 1; i <= 2; i++)
+            {
+                PressMashina();
+                Pause(1000);
+
+                CallMusk();
+                Pause(1000);
+            }
+
+            //перебор раундов
+            for (int i = 1; i <= 10; i++)
+            {
+                if (isReboldo() || isLogout()) break;
+                PressMashina();
+                Pause(1000);
+                NextRound();
+                Pause(20000);
+
+                for (int j = 1; j <= 5; j++)
+                {
+                    if (isReboldo() || isLogout()) break;
+
+                    PressMashina();
+                    Pause(1000);
+
+                    CallMusk();
+                    Pause(6000);
+                }
+            }
+            Pause(20000);
+        }
+
+
+        /// <summary>
+        /// в уже открытой карте Ребольдо идём к персонажу в строке numberString
+        /// </summary>
+        public void GotoPersonOnMapReboldo(int numberString)
+        {
+            new Point(812 - 5 + xx, 94 + (numberString - 1) * 15 - 5 + yy).DoubleClickL();   //тыкаем в нужную строку (в списке справа от карты)
+            Pause(500);
+            new Point(940 - 5 + xx, 734 - 5 + yy).DoubleClickL();   //тыкаем в кнопку Move Now
+            Pause(500);
+            botwindow.PressEscThreeTimes();
+            Pause(10000);
+        }
+
+        /// <summary>
+        /// подходим к Event Game Console
+        /// </summary>
+        private void GoToEventGameConsole()
+        {
+            botwindow.PressEscThreeTimes();
+            Pause(1000);
+            TopMenu(12, 2, true);                       //открываем карту города (LocalMap)
+            Pause(1000);
+            GotoPersonOnMapReboldo(8);
+        }
+
+        /// <summary>
+        /// нажимаем на Event Game Console
+        /// </summary>
+        private void PressEventGameConsole()
+        {
+            //new Point(670 - 5 + xx, 349 - 5 + yy).PressMouseL();
+            new Point(670 - 5 + xx, 384 - 5 + yy).PressMouseL();
+            Pause(1000);
+        }
+
+        /// <summary>
+        /// диалог в Event Game Console, чтобы войти в миссию
+        /// </summary>
+        private void DialogInEventGameConsole()
+        {
+            dialog.PressStringDialog(4);
+            Pause(1000);
+            dialog.PressStringDialog(1);
+            if (dialog.isDialog()) dialog.PressStringDialog(1);
+            Pause(33000);
+        }
+
+        //private void GotoBarackAndReboldo() 
+        //{
+        //    Pause(2000);
+        //    GotoBarack();
+        //    Pause(10000);
+        //    FromBarackToTown(3);                        // barack --> town
+        //    Pause(30000);
+        //}
+    
+
+        public void CapibaraComplex()
+        {
+            Pause(2000);
+            while (true)
+            {
+                if (isLogout())
+                {
+                    QuickConnect();
+                    Pause(10000);
+                }
+
+                if (isBarack())
+                {
+                    FromBarackToTown(3);                        // barack --> town  
+                    Pause(20000);
+                }
+
+                GoToEventGameConsole();
+                PressEventGameConsole();
+                DialogInEventGameConsole();
+                MissionCapibara();
+                Pause(2000);
+
+                GotoBarack();
+                Pause(10000);
+            }
+        }
+
 
         /// <summary>
         /// проверяем, закончились ли награды в окне Achievement
@@ -3011,8 +3183,24 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isPioneerJournal()
         {
-            return new PointColor(361 - 5 + xx, 82 - 5 + yy, 8549475, 0).isColor() && new PointColor(362 - 5 + xx, 82 - 5 + yy, 8549475, 0).isColor();
+            //return new PointColor(361 - 5 + xx, 82 - 5 + yy, 8549475, 0).isColor() && new PointColor(362 - 5 + xx, 82 - 5 + yy, 8549475, 0).isColor();
+            return new PointColor(285 - 5 + xx, 134 - 5 + yy, 13890000, 4).isColor() 
+                && new PointColor(285 - 5 + xx, 135 - 5 + yy, 13890000, 4).isColor();    //буква l в слове Select
         }
+
+        /// <summary>
+        /// получение подарков из журнала
+        /// </summary>
+        public void GetGiftsNew()
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                new Point(735 - 5 + xx, 254 - 5 + yy + i * 97).PressMouseL();
+                Pause(1000);
+            }
+            //botwindow.PressEsc(4);
+        }
+
 
         /// <summary>
         /// получение подарков из журнала
@@ -3325,8 +3513,10 @@ namespace OpenGEWindows
         /// <returns> true, если выскочило </returns>
         public bool isBarackWarningYes()
         {
-            return new PointColor(482 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor() &&
-                    new PointColor(483 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor();
+            return new PointColor(564 - 5 + xx, 435 - 5 + yy, 11900000, 5).isColor() &&
+                    new PointColor(564 - 5 + xx, 436 - 5 + yy, 11900000, 5).isColor();       //буква N в слове No
+            //return new PointColor(482 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor() &&
+            //        new PointColor(483 - 5 + xx, 314 - 5 + yy, 6700000, 5).isColor();
         }
 
         /// <summary>
@@ -4831,6 +5021,12 @@ namespace OpenGEWindows
         public abstract bool FindWindowGEforBHBool();
 
         /// <summary>
+        /// найдено ли окно ГЭ в текущей песочнице? GE Classic
+        /// </summary>
+        /// <returns>true, если найдено</returns>
+        public abstract bool FindWindowGEClassic();
+
+        /// <summary>
         /// подбор дропа в миссии Инфинити
         /// </summary>
         public void GetDrop()
@@ -5264,7 +5460,7 @@ namespace OpenGEWindows
                                      //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
                                      //new Point(474 - 5 + xx, 511 - 5 + yy),
                                      //new Point(478 - 5 + xx, 498 - 5 + yy),
-                                     new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да    473, 481
+                                     new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да    473, 481   Кризалис
                                      //new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да           //13-06-24  пауки
                                      //new Point(407 - 5 + xx, 444 - 5 + yy),
                                      new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
@@ -5312,6 +5508,32 @@ namespace OpenGEWindows
 
 
         /// <summary>
+        /// возвращает количество циклов для ожилдания, пока герои добегут до следующей контрольной точки
+        /// </summary>
+        /// <param name="counter">номер контрольной точки маршрута</param>
+        /// <returns>кол-во циклов</returns>
+        public int GetWaitingTurnForMoveToPoint(int counter)
+        {
+            int[] WaitingTurn = {   
+                                    //0, 
+                                    6,      //1
+                                    5,      //2
+                                    //6,     //3           //13-06-24
+                                    //6,     //4
+                                    4,      //5  Кризалис
+                                    //6,    //6  Пауки           //13-06-24
+                                    6,      //7
+                                    6,      //8
+                                    6,      //9
+                                    6,      //10
+                                    6,      //11
+                                    6
+            };
+
+            return WaitingTurn[counter];
+        }
+
+        /// <summary>
         /// возвращает время ожидания подбора дропа для выбранной точки маршрута
         /// </summary>
         /// <param name="counter">номер точки маршрута</param>
@@ -5320,31 +5542,17 @@ namespace OpenGEWindows
         {
             int[] WaitingTime = {   
                                     //0, 
-                                    //5000, 
-                                    5000, //1
-                                    //5000, 
-                                    10000, //2
-                                    //4000, 
-                                    //6000, //3           //13-06-24
-                                    //5000, 
-                                    //5000, 
-                                    //5000, //4
-                                    //5000, 
-                                    //5000, 
-                                    1000, //5  Кризалис
-                                    //1000, //6  Пауки           //13-06-24
-                                    //5000, 
-                                    5000, //7
-                                    //5000, 
-                                    //5000, 
-                                    //5000, 
-                                    1000, //8
-                                    //5000, 
-                                    //5000, 
-                                    //5000, //9
-                                    6000,//9
-                                    5000, //10
-                                    5000,  //11
+                                    5000,       //1
+                                    10000,      //2
+                                    //6000,     //3           //13-06-24
+                                    //5000,     //4
+                                    1000,       //5  Кризалис
+                                    //1000,     //6  Пауки           //13-06-24
+                                    5000,       //7
+                                    1000,       //8
+                                    6000,       //9
+                                    5000,       //10
+                                    5000,       //11
                                     5000
             };
 
@@ -7013,7 +7221,7 @@ namespace OpenGEWindows
             AttackCtrl(x, y);
 
 
-            if (this.Counter >= 5)
+            if (this.Counter >= 7)
             {
                 //бафаемся один раз в 3 хода
                 botwindow.ActiveAllBuffBH();
@@ -7412,7 +7620,7 @@ namespace OpenGEWindows
         public bool FindMysophoia(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (
                         //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
                         //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
@@ -7430,7 +7638,7 @@ namespace OpenGEWindows
         public bool FindBulletApilicon(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (
                     //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
                     //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
@@ -7449,7 +7657,7 @@ namespace OpenGEWindows
         public bool FindShareFlint(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (
                     //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
                     //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
@@ -7468,7 +7676,7 @@ namespace OpenGEWindows
         public bool FindConcentracion(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
                         //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
@@ -7522,7 +7730,7 @@ namespace OpenGEWindows
         public bool FindMarksmanship(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
                         new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
                    ) result = true;
@@ -7538,7 +7746,7 @@ namespace OpenGEWindows
         public bool FindHound(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (
                     //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
                     //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
@@ -7594,7 +7802,7 @@ namespace OpenGEWindows
         public bool FindCleaningTime(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
                      new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
                    )
@@ -7613,7 +7821,7 @@ namespace OpenGEWindows
         public bool FindOrderLady(int i)
         {
             bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
+            for (int j = 3; j < 11; j++)
                 if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
                      new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
                    )
@@ -8887,6 +9095,34 @@ namespace OpenGEWindows
         #endregion
 
         #region =================================== All in One ==================================================
+        /// <summary>
+        /// выбор дальнейшего пути после выполнения миссии Демоник 
+        /// вариант 1 - след. аккаунт, вариант 2 - Кастилия, вариант 3 - ферма
+        /// </summary>
+        private void WayToGoDemonic(int way)
+        {
+            switch (way)
+            {
+                case 1:
+                    //вариант 1. закрываем аккаунт и переходим к следующему 
+                    RemoveSandboxieBH();
+                    botParam.Stage = 1;
+                    botParam.HowManyCyclesToSkip = 2;
+                    break;
+                case 2:
+                    //вариант 2. идём в Кастилию (стадия 6) 
+                    Teleport(4, true);                          //телепорт в Кастилию
+                    botParam.Stage = 6;                         //переходим на стадию Кастилия
+                    botParam.HowManyCyclesToSkip = 4;
+                    break;
+                case 3:
+                    //вариант 3. идём на ферму (стадия 9)
+                    GotoBarack();
+                    botParam.Stage = 9;                          //ферма
+                    botParam.HowManyCyclesToSkip = 4;
+                    break;
+            }
+        }
 
         #region ======================== Поиск стандартных проблем ===============================
 
@@ -8903,13 +9139,12 @@ namespace OpenGEWindows
             if (isOpenSteamWindow3()) CloseSteamWindow3();
             if (isOpenSteamWindow4()) CloseSteamWindow4();
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            if (isError820()) return 33;
+            //if (isError820()) return 33;
             //если выскочило сообщение о пользовательском соглашении
-            if (isNewSteam()) return 34;
+            //if (isNewSteam()) return 34;
             //если ошибка Sandboxie 
-            if (isErrorSandboxie()) return 35;
+            //if (isErrorSandboxie()) return 35;
             //если ошибка Unexpected
-            if (isUnexpectedError()) return 36;
             //если окно игры открыто на другом компе
             //if (isOpenGEWindow()) return 37;
             //служба Steam
@@ -9414,13 +9649,18 @@ namespace OpenGEWindows
                     break;
 
                 case 6:                                         // Миссия окончена 
+                    //вариант 1
                     //RemoveSandboxieBH();                        //закрываем песочницу //старый вариант
                     //botParam.Stage = 1;
                     //botParam.HowManyCyclesToSkip = 2;
-                    Teleport(4, true);                      //телепорт в Кастилию
-                    botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
-                    botParam.HowManyCyclesToSkip = 4;
+                    //вариант 2
+                    //Teleport(4, true);                      //телепорт в Кастилию
+                    //botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
+                    //botParam.HowManyCyclesToSkip = 4;
+
+                    WayToGoDemonic(3);
                     break;
+
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
                     break;
@@ -9565,6 +9805,8 @@ namespace OpenGEWindows
                         break;
                     case 4:                                         // BH --> Gate
                         Pause(1000);
+                        if (isPioneerJournal()) GetGiftsNew();
+                        botwindow.PressEscThreeTimes();
                         AddBullets();
                         GoToInfinityGateDem();
                         break;
@@ -9572,6 +9814,9 @@ namespace OpenGEWindows
                         CreatingMission();
                         break;
                     case 6:                                         // town --> BH
+                        if (isPioneerJournal())
+                            GetGiftsNew();
+
                         botwindow.PressEscThreeTimes();
                         Pause(500);
                         SummonPet();
@@ -9582,7 +9827,7 @@ namespace OpenGEWindows
                         botwindow.CommandMode();
                         BattleModeOnDem();                          //пробел
 
-                        botwindow.ThirdHero();                      //эксперимент 29-01-2024
+                        botwindow.ThirdHero();                      //эксперимент от 29-01-2024
 
                         ChatFifthBookmark();
                         Hero[1] = WhatsHero(1);
@@ -9592,8 +9837,16 @@ namespace OpenGEWindows
                         ActivePetDem();                             //новая функция  22-11
                         MaxHeight(12);
 
+                        //бафаемся, пока не вылезли мобы
+                        botwindow.ActiveAllBuffBH();
+                        botwindow.PressEsc(4);
+                        Buff(Hero[1], 1);
+                        Buff(Hero[2], 2);
+                        Buff(Hero[3], 3);
+
+
                         botParam.Stage = 2;
-                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы вылезли мобы
+                        //botParam.HowManyCyclesToSkip = 1;           // даём время, чтобы вылезли мобы
                         break;
                     case 8:                                         //Gate --> Mission Lobby
                         dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
@@ -9608,13 +9861,22 @@ namespace OpenGEWindows
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         dialog.PressOkButton(1);                    //выходим из диалога
                         Pause(1000);
-                        Teleport(4, true);                          //телепорт в Кастилию
-                        botParam.Stage = 6;                         //переходим на стадию Кастилия (Stage 1)    
-                        botParam.HowManyCyclesToSkip = 4;
+                        //======================================================================================================================
+                        WayToGoDemonic(3);
+                        //======================================================================================================================
 
-                        //RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
-                        //botParam.Stage = 1;
-                        //botParam.HowManyCyclesToSkip = 2;
+                        ////вариант 3. идём на ферму (стадия 9)
+
+                        ////вариант 2. идём в Кастилию (стадия 6) 
+                        //Teleport(4, true);                          //телепорт в Кастилию
+                        //botParam.Stage = 6;                         //переходим на стадию Кастилия (Stage 1)    
+                        //botParam.HowManyCyclesToSkip = 4;
+
+                        ////вариант 1. закрываем аккаунт и переходим к следующему 
+                        ////RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
+                        ////botParam.Stage = 1;
+                        ////botParam.HowManyCyclesToSkip = 2;
+
                         break;
                     case 18:
                         //новейший вариант
@@ -9665,7 +9927,7 @@ namespace OpenGEWindows
                         ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
                         MoveCursorOfMouse();
                         botParam.Stage = 3;
-                        botParam.HowManyCyclesToSkip = 3;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
@@ -9740,15 +10002,18 @@ namespace OpenGEWindows
                         if (!dialog.isDialog())
                         {
                             botwindow.Pause(3000);                  //ждём рулетку
-                            //старый вариант
-                            //RemoveSandboxieBH();                    //закрываем песочницу и берём следующего бота в работу
-                            //botParam.Stage = 1;
-                            //botParam.HowManyCyclesToSkip = 2;
 
-                            //новый вариант
-                            Teleport(4, true);                      //телепорт в Кастилию
-                            botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
-                            botParam.HowManyCyclesToSkip = 4;
+                            WayToGoDemonic(3);
+
+                            ////старый вариант
+                            ////RemoveSandboxieBH();                    //закрываем песочницу и берём следующего бота в работу
+                            ////botParam.Stage = 1;
+                            ////botParam.HowManyCyclesToSkip = 2;
+
+                            ////новый вариант
+                            //Teleport(4, true);                      //телепорт в Кастилию
+                            //botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
+                            //botParam.HowManyCyclesToSkip = 4;
                         }
                         else
                         {
@@ -9761,7 +10026,7 @@ namespace OpenGEWindows
                             BattleModeOnDem();           //новый вариант
                             BattleModeOnDem();           //новый вариант
                             ActivePetDem();
-                            botParam.HowManyCyclesToSkip = 3;
+                            botParam.HowManyCyclesToSkip = 5;
                             botParam.Stage = 4;
                         }
                         break;
@@ -10062,7 +10327,7 @@ namespace OpenGEWindows
                             botwindow.PressEscThreeTimes();
                         }
                         MoveToNextPoint(NextPointNumber);
-                        botParam.HowManyCyclesToSkip = 6;
+                        botParam.HowManyCyclesToSkip = GetWaitingTurnForMoveToPoint(NextPointNumber);
                         break;
                     case 7:                                                 //на пробеле, NeedToPickUpRight=true, NeedToPickUpLeft = false,
                         NeedToPickUpRight = false;
@@ -10180,6 +10445,7 @@ namespace OpenGEWindows
                         GotoFarmManager();
                         break;
                     case 6:                                         // в Ребольдо
+                        if (isPioneerJournal())  GetGiftsNew();
                         GoToUstiar();
                         botParam.HowManyCyclesToSkip = 3;
                         break;
@@ -10223,6 +10489,756 @@ namespace OpenGEWindows
 
 
         #endregion ================================= All in One (end) =========================================== 
+
+        #region ===========================  CapibaraEvent ===================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в CapibaraEvent (стадия 1) и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemCapibaraStage1()
+        {
+            //в логауте
+            if (isLogout()) return 1;   //*
+
+            //в бараке
+            if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            if (isBarack()) return 2;                    //если стоят в бараке          //*
+            if (isBarackWarningYes()) return 16;        //*
+            if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы     //*
+
+            //диалог
+            if (dialog.isDialog())
+                return 8;                           //если стоим в устройстве по запуску миссий
+
+
+            //в миссии
+            if (isWork())
+                return 10;                      //в миссии      //*
+
+
+            //город или миссия
+            if (isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                if (isReboldo())
+                    return 9;                       //ребольдо      //*
+                else 
+                    return 10;                      //в миссии      //*
+            }
+
+            
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в CapibaraEvent. стадия 1.
+        /// </summary>
+        public void problemResolutionCapibaraStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemCapibaraStage1();
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        QuickConnect();                             // Logout-->Barack  
+                        botParam.HowManyCyclesToSkip = 2;  
+                        break;
+                    case 2:
+                        FromBarackToTown(3);                        // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  
+                        break;
+                    case 8:                                         //диалог
+                        DialogInEventGameConsole();
+                        break;
+                    case 9:                                         //в городе
+                        GoToEventGameConsole();
+                        PressEventGameConsole();
+                        if (!dialog.isDialog())
+                        {
+                            GotoBarack();
+                            botParam.HowManyCyclesToSkip = 3;  
+                        }
+                        break;
+                    case 10:                                        //пришли в миссию
+                        MissionCapibara();
+                        //GotoBarack();
+                        botParam.HowManyCyclesToSkip = 1;  
+                        break;
+                    case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                        PressYesBarack();
+                        break;
+                    case 17:                                        // в бараках на стадии выбора группы
+                        botwindow.PressEsc();                       // нажимаем Esc
+                        break;
+                    case 20:
+                        ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                             //то нажимаем кнопку, чтобы войти обратно в барак
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(5000);
+            }
+        }
+
+
+        #endregion ===============================================================================
+
+
+
+        #region  ======================== методы для GE Classic =======================================
+
+        /// <summary>
+        /// . GE Classic
+        /// </summary>
+        public bool isBarackClassic()
+        {
+            return false;
+            //return new PointColor(101 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor() &&
+            //       new PointColor(102 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor();
+        }
+
+
+        /// <summary>
+        /// вызываем Zone Map. GE Classic
+        /// </summary>
+        public void OpenZoneMapClassic()
+        {
+            new Point(284 - 5 + xx, 49 - 5 + yy).PressMouseL();
+        }
+
+        /// <summary>
+        /// проверяем, открыта ли карта (ZoneMap). GE Classic
+        /// </summary>
+        public bool isOpenZoneMapClassic(int i)
+        {
+            return new PointColor(101 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor() &&
+                   new PointColor(102 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(154 - 5 + xx, 421 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(10000);
+            BattleModeOnDem();
+
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+
+
+
+
+            //if (!isBattleModeClassic())
+            //    new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
+
+
+            //            new Point(208 - 5 + xx, 421 - 5 + yy).PressMouseL();
+            //new Point(258 - 5 + xx, 406 - 5 + yy).PressMouseR();
+            //new Point(249 - 5 + xx, 406 - 5 + yy).PressMouseR();
+            //new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
+
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextTetraClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(154 - 5 + xx, 421 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(10000);
+            BattleModeOnDem();
+
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextPortoBelloClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(419 - 5 + xx, 465 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(500 - 5 + xx, 444 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextPortoBelloCabinClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(190 - 5 + xx, 370 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(5000);
+            BattleModeOnDem();
+
+            //botwindow.PressEsc(2);
+            //OpenZoneMapClassic();
+            //Pause(1000);
+            //new Point(400 - 5 + xx, 390 - 5 + yy).PressMouseR();
+            //botwindow.PressEsc(2);
+            //Pause(7000);
+            //BattleModeOnDem();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextLagoDeTresClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(417 - 5 + xx, 257 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(448 - 5 + xx, 242  - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(7000);
+            BattleModeOnDem();
+
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextGaviClassic()
+        {
+            BattleModeOnDem();
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            //            new Point(274 - 5 + xx, 481 - 5 + yy).PressMouseR();
+            new Point(318 - 5 + xx, 479 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(3000);
+            BattleModeOnDem();
+
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(330 - 5 + xx, 474 - 5 + yy).PressMouseR();
+            botwindow.PressEsc(2);
+            Pause(3000);
+            BattleModeOnDem();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextGavi2Classic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+//            new Point(300 - 5 + xx, 485 - 5 + yy).PressMouseL();
+            new Point(320 - 5 + xx, 465 - 5 + yy).PressMouseL();
+            botwindow.PressEsc(2);
+            Pause(8000);
+            BattleModeOnDem();
+        }
+
+        /// <summary>
+        /// идём к следующей точке кача
+        /// </summary>
+        public void GotoNextTorsheClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(295 - 5 + xx, 295 - 5 + yy).PressMouseL();
+            botwindow.PressEsc(2);
+            Pause(6000);
+            BattleModeOnDem();
+        }
+
+
+        /// <summary>
+        /// идём к мемориалу
+        /// </summary>
+        public void GotoMemorialClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(175 - 5 + xx, 416 - 5 + yy).PressMouseL();
+            botwindow.PressEsc(2);
+            Pause(4000);
+            BattleModeOnDem();
+            botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу
+        /// </summary>
+        public void GotoMemorialTetraClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(175 - 5 + xx, 416 - 5 + yy).PressMouseL();
+            botwindow.PressEsc(2);
+            Pause(4000);
+            BattleModeOnDem();
+            botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу
+        /// </summary>
+        public void GotoMemorialPortoBelloClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(472 - 5 + xx, 420 - 5 + yy).PressMouseL();    //координаты мемориала 
+            botwindow.PressEsc(2);
+            Pause(5000);
+            BattleModeOnDem();
+            botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу Озеро трех сестёр
+        /// </summary>
+        public void GotoMemorialLagoDeTresClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000); 
+            new Point(432 - 5 + xx, 229 - 5 + yy).PressMouseL();    //координаты мемориала 
+            botwindow.PressEsc(2);
+            Pause(5000);
+            BattleModeOnDem();
+            botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу Gavi
+        /// </summary>
+        public void GotoMemorialGaviClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(277 - 5 + xx, 505 - 5 + yy).PressMouseL();    //координаты мемориала 
+            botwindow.PressEsc(2);
+            Pause(5000);
+            BattleModeOnDem();
+            //botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу Torshe
+        /// </summary>
+        public void GotoMemorialTorsheClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(256 - 5 + xx, 344 - 5 + yy).PressMouseL();    //координаты мемориала 
+            botwindow.PressEsc(2);
+            Pause(5000);
+            BattleModeOnDem();
+            //botwindow.FirstHero();
+        }
+
+        /// <summary>
+        /// идём к мемориалу
+        /// </summary>
+        public void GotoMemorialPortoBelloCabinClassic()
+        {
+            botwindow.PressEsc(2);
+            OpenZoneMapClassic();
+            Pause(1000);
+            new Point(161 - 5 + xx, 363 - 5 + yy).PressMouseL();
+            botwindow.PressEsc(2);
+            botwindow.FirstHero();
+            //MinHeight(5);
+            Pause(5000);
+            BattleModeOnDem();
+        }
+
+
+
+        /// <summary>
+        /// идём к мемориалу
+        /// </summary>
+        public void PressMeMorial()
+        {
+            MinHeight(5);
+            //new Point(614 - 5 + xx, 366 - 5 + yy).PressMouseL();
+            new Point(522 - 5 + xx, 322 - 5 + yy).PressMouseL();
+            Pause(1000);
+        }
+
+        /// <summary>
+        /// проверяем, выполнено задание номер i. GE Classic
+        /// </summary>
+        public bool isTaskDoneClassic(int i)
+        {
+            return new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() &&       //TetraCatacomb
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() 
+                   ||
+                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7600000, 5).isColor() &&       //TetraCatacomb
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7600000, 5).isColor()
+                   ||
+                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8300000, 5).isColor() &&       //PortoBello
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8300000, 5).isColor()
+                   ||
+                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() &&       //PortoBelloCabin
+                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor()
+                   ||
+                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor() &&       //PortoBelloCabin
+                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor()
+                   ||
+                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8100000, 5).isColor() &&       //PortoBelloCabin
+                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8100000, 5).isColor()
+                   ||
+                   new PointColor(805 - 5 + xx, 410 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor() &&       //ОзероТрехСестер
+                   new PointColor(805 - 5 + xx, 411 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor()
+                   ;
+        }
+
+        /// <summary>
+        /// проверяем, получено ли задание номер i. GE Classic
+        /// </summary>
+        public bool isTaskReceivedClassic(int i)
+        {
+            return new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 15000000, 6).isColor() &&
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 15000000, 6).isColor()
+                   ||
+                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 16000000, 6).isColor() &&
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 16000000, 6).isColor();
+        }
+
+
+        /// <summary>
+        /// проверяем, находимся ли в городе. GE Classic
+        /// </summary>
+        /// <returns></returns>
+        public bool isTownClassic()
+        {
+            //проверяем одну и ту же точку на экране в миссии
+            //каждой стойке соответствует свой цвет этой точки
+            //проверяем две точки для надежности
+
+            // в массиве arrayOfColorsIsTownClassic1 хранятся все цвета первой контрольной точки, которые есть у проверяемых стоек 
+            // в массиве arrayOfColorsIsTownClassic2 хранятся все цвета второй контрольной точки, которые есть у проверяемых стоек 
+            uint[] arrayOfColorsIsTownClassic1 = new uint[1] { 11908 };
+            uint[] arrayOfColorsIsTownClassic2 = new uint[1] { 11842 };
+            //муха+ружьё,скаут+стойка1
+            uint color1 = new PointColor(29 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            uint color2 = new PointColor(30 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+
+            return arrayOfColorsIsTownClassic1.Contains(color1) && arrayOfColorsIsTownClassic2.Contains(color2);    // проверяем, есть ли цвет контрольной точки в массивах цветов
+        }
+
+
+
+        /// <summary>
+        /// проверяем, находимся ли на работе. GE Classic
+        /// </summary>
+        /// <returns></returns>
+        public bool isWorkClassic()
+        {
+            //проверяем одну и ту же точку на экране в миссии
+            //каждой стойке соответствует свой цвет этой точки
+            //проверяем две точки для надежности
+
+            // в массиве arrayOfColorsIsWork1 хранятся все цвета первой контрольной точки, которые есть у проверяемых стоек 
+            // в массиве arrayOfColorsIsWork2 хранятся все цвета второй контрольной точки, которые есть у проверяемых стоек 
+            uint[] arrayOfColorsIsWorkClassic1 = new uint[1] { 11903 };
+            uint[] arrayOfColorsIsWorkClassic2 = new uint[1] { 11836 };
+            //муха+ружьё,
+            uint color1 = new PointColor(29 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+            uint color2 = new PointColor(30 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
+
+            return arrayOfColorsIsWorkClassic1.Contains(color1) && arrayOfColorsIsWorkClassic2.Contains(color2);                // проверяем, есть ли цвет контрольной точки в массивах цветов
+        }
+
+        /// <summary>
+        /// метод проверяет, находится ли данное окно в режиме логаута, т.е. на стадии ввода логина-пароля. GE Classic
+        /// </summary>
+        /// <returns></returns>
+        public bool isLogoutClassic()
+        {
+            return new PointColor(834 - 5 + xx, 716 - 5 + yy, 7720000, 4).isColor() &&
+                    new PointColor(834 - 5 + xx, 717 - 5 + yy, 7720000, 4).isColor();
+        }
+
+        /// <summary>
+        /// вводим логин и пароль в соответствующие поля. GE Classic
+        /// </summary>
+        protected void EnterLoginAndPaswordClassic()
+        {
+            iPoint pointPassword = new Point(580 - 5 + xx, 355 - 5 + yy);    //  505, 350
+            // окно открылось, надо вставить логин и пароль
+            pointPassword.PressMouseLL();   //Кликаю в строчку с паролем
+            Pause(500);
+            SendKeys.SendWait("{TAB}");
+            Pause(500);
+            SendKeys.SendWait(botParam.Login);
+            Pause(500);
+            SendKeys.SendWait("{TAB}");
+            Pause(500);
+            SendKeys.SendWait(botParam.Password);
+            Pause(500);
+        }
+
+
+
+
+        #endregion =========================================================================================
+
+        #region ===========================  Восстановление окон Classic ===================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в CapibaraEvent (стадия 1) и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemRestartStage1()
+        {
+            //если нет окна
+            if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (FindWindowGEClassic())
+                    return 3;    //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в файле Hwnd.txt при выполнении функции FindWindowGEClassic)
+                else
+                    return 2;                  //если нет окна ГЭ в текущей песочнице
+            }
+            else            //если окно с нужным HWND нашлось
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+
+            //в логауте
+            if (isLogoutClassic()) return 1;
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в CapibaraEvent. стадия 1.
+        /// </summary>
+        public int problemResolutionRestartStage1()
+        {
+            int result = 0;
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemRestartStage1();
+                result = numberOfProblem;
+
+                switch (numberOfProblem)
+                {
+                    case 1:
+                        //QuickConnect();                             // Logout
+                        //botParam.HowManyCyclesToSkip = 2;
+                        EnterLoginAndPaswordClassic();                  // Logout
+                        break;
+                    case 2:
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                        {
+                            RunClientClassic();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            botParam.HowManyCyclesToSkip = 1;   //30.10.2023    //пропускаем следующие 7 циклов
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 3:                                    //только что нашли новое окно с игрой
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        isHwnd();   //поставили окно на место
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(5000);
+            }
+            return result;
+        }
+
+
+        #endregion ===============================================================================
+
+
+
+        #region ===========================  кач на мемориале Classic ===================================
+
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в CapibaraEvent (стадия 1) и возвращаем номер проблемы
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemMemorialStage1()
+        {
+            //в логауте
+            if (isLogoutClassic()) return 1;
+
+            //в бараке
+            //if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
+            //if (isBarackClassic()) return 2;                    //если стоят в бараке          //*
+            //if (isBarackWarningYes()) return 16;        //*
+            //if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы     //*
+
+            //диалог
+            if (dialog.isDialogClassic())
+                return 8;                           //если стоим в устройстве по запуску миссий
+
+
+            //в миссии
+            if (isWorkClassic())
+                if (isTaskDoneClassic(1) || isTaskDoneClassic(2) || isTaskDoneClassic(3))
+                    return 9;   //одно из заданий выполнено
+                else
+                    return 10;  //задания не выполнены
+
+
+            //город или миссия
+            //if (isTown())
+            //{
+            //    //botwindow.PressEscThreeTimes();             //27-10-2021
+            //    //if (isReboldo())
+            //        return 9;                       //ребольдо      //*
+            //    //else
+            //    //    return 10;                      //в миссии      //*
+            //}
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в CapibaraEvent. стадия 1.
+        /// </summary>
+        public void problemResolutionMemorialStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemMemorialStage1();
+
+                 switch (numberOfProblem)
+                {
+                    case 1:
+                        //QuickConnect();                             // Logout-->Barack  
+                        //botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 2:
+                    //    FromBarackToTown(3);                        // barack --> town              //сделано
+                    //    botParam.HowManyCyclesToSkip = 3;
+                        break;
+                    case 8:                                         //диалог
+                        dialog.PressStringDialogClassic(2);
+                        dialog.PressOkButtonClassic(2);
+                        BattleModeOnDem();
+                        new Point(538 - 5 + xx, 715 - 5 + yy).PressMouseL();
+                        Pause(3000);
+                        new Point(634 - 5 + xx, 715 - 5 + yy).PressMouseL();
+                        Pause(3000);
+                        new Point(662 - 5 + xx, 715 - 5 + yy).PressMouseL();
+                        //Pause(2000);
+                        //GotoNextGavi2Classic();
+                        GotoNextTorsheClassic();
+                        break;
+                    case 9:                                         //одно из заданий выполнено
+                        //GotoMemorialPortoBelloClassic();
+                        //GotoMemorialPortoBelloCabinClassic();
+                        //GotoMemorialLagoDeTresClassic();
+                        //GotoMemorialGaviClassic();
+                        GotoMemorialTorsheClassic();
+                        PressMeMorial();
+                        break;
+                    case 10:                                        //задания не выполнены
+                        //GotoNextPortoBelloClassic();
+                        //GotoNextPortoBelloCabinClassic();
+                        //GotoNextLagoDeTresClassic();
+                        //GotoNextGaviClassic();
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                Pause(5000);
+            }
+        }
+
+
+        #endregion ===============================================================================
 
 
 

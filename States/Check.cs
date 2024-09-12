@@ -3838,7 +3838,8 @@ namespace States
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
                     //============================================================================================
-                    case 6:                                         // 
+                    case 6:                                         // Roboldo
+                        if (server.isPioneerJournal()) server.GetGiftsNew();
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
 
@@ -5846,6 +5847,7 @@ namespace States
                         break;
                     case 7:     //у Мамона
                         driver.FromMamonsToMamonsDialog();          //Mamons --> Mamons(Dialog)
+                        botParam.HowManyCyclesToSkip = 3;           // даём время, чтобы загрузился Лос Толдос
                         break;
                     case 8:    //диалог у Мамона
                         dialog.PressStringDialog(1);
@@ -6257,6 +6259,7 @@ namespace States
                         break;
                     case 8:                                         //диалог со стариком. направляемся в миссию
                         otit.EnterToTierraDeLosMuertus();
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     //=================================================================================================
                     case 11:                                        // закрыть службу Стим
@@ -7817,16 +7820,7 @@ namespace States
         /// </summary>
         public void RelicProduction()
         {
-            //botwindow = new botWindow(numberOfWindow);
-            //ServerFactory serverFactory = new ServerFactory(botwindow);
-            //this.server = serverFactory.create();
-            //this.globalParam = new GlobalParam();
-            //this.botParam = new BotParam(numberOfWindow);
-            //this.isActiveServer = server.IsActiveServer;
-
             driver.StateInputOutput7();
-
-            //}
         }
 
         /// <summary>
@@ -7941,6 +7935,69 @@ namespace States
 
         #endregion =================================================================================================
 
+
+        #region  =================================== CapibaraEvent ==============================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в БХ
+        /// </summary>
+        public void problemResolutionCapibara(int NumberOfStage)
+        {
+            switch (NumberOfStage)
+            {
+                case 1:
+                    server.problemResolutionCapibaraStage1();
+                    break;
+                //case 2:
+                //    server.problemResolutionCapibaraStage2();
+                //    break;
+            }
+        }
+
+        #endregion =================================================================================================
+
+
+        #region  =================================== Восстановление окон Classic ==============================================
+
+        /// <summary>
+        /// Восстановление окон Classic
+        /// </summary>
+        public int problemResolutionRestartClassic(int NumberOfStage)
+        {
+            int result = 0;
+            switch (NumberOfStage)
+            {
+                case 1:
+                    result = server.problemResolutionRestartStage1();
+                    break;
+            }
+            return result;
+        }
+
+        #endregion =================================================================================================
+
+
+        #region  =================================== кач на Мемориале Classic ==============================================
+
+        /// <summary>
+        /// кач на Мемориале Classic
+        /// </summary>
+        public void problemResolutionMemorialClassic(int NumberOfStage)
+        {
+            switch (NumberOfStage)
+            {
+                case 1:
+                    server.problemResolutionMemorialStage1();
+                    break;
+            }
+        }
+
+        #endregion =================================================================================================
+
+
+
+
+
         /// <summary>
         /// тестовая кнопка
         /// </summary>
@@ -7972,6 +8029,13 @@ namespace States
 
             #region  доп проверки
 
+            //MessageBox.Show("на работе? " + server.isWorkClassic());
+            //MessageBox.Show("в городе? " + server.isTownClassic());
+            //MessageBox.Show("задание 1 получено? " + server.isTaskReceivedClassic(1));
+            //MessageBox.Show("задание 2 получено? " + server.isTaskReceivedClassic(2));
+            MessageBox.Show("задание 1 выполнено? " + server.isTaskDoneClassic(1));
+            MessageBox.Show("задание 2 выполнено? " + server.isTaskDoneClassic(2));
+            //MessageBox.Show("открыт журнал? " + server.isPioneerJournal());
             //MessageBox.Show("Mission Room? " + server.isWaitingRoom());
             //MessageBox.Show("Mission Lobby? " + server.isMissionLobby());
             //MessageBox.Show("Терезия? " + server.isTeresia());
@@ -7996,6 +8060,7 @@ namespace States
             //если открыто окно Стим в правом нижнем углу
             //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
 
+            //MessageBox.Show("YesNo?" + server.isBarackWarningYes());
             //MessageBox.Show("логаут?" + server.isLogout());
             //MessageBox.Show("есть ошибка?" + server.FindWindowError());
             //MessageBox.Show("есть первые ворота? " + server.isGate());
@@ -8052,8 +8117,8 @@ namespace States
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
-            MessageBox.Show("Юстиар ??? " + server.isUstiar());
-            MessageBox.Show("Кастилия ??? " + server.isCastilia());
+            //MessageBox.Show("Юстиар ??? " + server.isUstiar());
+            //MessageBox.Show("Кастилия ??? " + server.isCastilia());
             //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
             //MessageBox.Show("пользовательское соглашение? " + server.isNewSteam());
@@ -8201,9 +8266,9 @@ namespace States
             //int dy = 2;
 
             //int j = 1;
-            PointColor point1 = new PointColor(81 - 5 + xx, 641 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(82 - 5 + xx, 641 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(570 - 5 + xx, 549 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(805 - 5 + xx, 410 - 5 + yy + 47, 0, 0);
+            PointColor point2 = new PointColor(805 - 5 + xx, 411 - 5 + yy + 47, 0, 0);
+            PointColor point3 = new PointColor(805 - 5 + xx, 412 - 5 + yy + 47, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
@@ -8211,7 +8276,7 @@ namespace States
 
             MessageBox.Show("цвет 1 = " + color1);
             MessageBox.Show("цвет 2 = " + color2);
-            //MessageBox.Show("цвет 3 = " + color3);
+            MessageBox.Show("цвет 3 = " + color3);
             //}
 
             //for (int xxx = 133; xxx < 146; xxx++)

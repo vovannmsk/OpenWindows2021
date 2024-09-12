@@ -5,6 +5,7 @@ using System.Threading;
 using States;
 using GEBot.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Linq;
 
 namespace Main
 {
@@ -1642,11 +1643,119 @@ namespace Main
         /// </summary>
         private void funcRP()
         {
-            Check check = new Check(4);     //номер окна
-            check.RelicProduction();
+            Check check = new Check(1);     //номер окна
+
+            //вариант 1.
+            //check.RelicProduction();
+
+            //вариант 2
+            BotParam botParam = new BotParam(1);
+            botParam.Stage = 1;
+
+            while (true)
+            {
+                check.problemResolutionCapibara(botParam.Stage);
+            }
+
+
+
+        }
+
+
+        #endregion
+
+        #region ============================== восстановление окон Classic ===================================
+
+        /// <summary>
+        /// метод задает функционал для кнопки "восстановление окон Classic"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestartClassic_Click(object sender, EventArgs e)
+        {
+            this.RestartClassic.BackColor = Color.OrangeRed;
+            Thread myRC = new Thread(funcRC);
+            myRC.Start();
+            
+        }
+
+
+        /// <summary> 
+        /// метод задает функционал для кнопки "восстановление окон Classic"
+        /// </summary>
+        private void funcRC()
+        {
+
+            ////вариант 1. только одно первое окно
+            //Check check = new Check(1);     //номер окна
+
+            //BotParam botParam = new BotParam(1);
+            //botParam.Stage = 1;
+
+            //int result = 0;
+            //while (result != 1)
+            //{
+            //    result = check.problemResolutionRestartClassic(botParam.Stage);
+            //}
+
+            //вариант 2. много окон
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+            int[] result = new int[numberOfAcc + 1]; 
+            result[numberOfAcc] = 0;
+            while (result[numberOfAcc] != 1)        //цикл продолжается, пока последнее окно не будет в логауте
+            {
+                // j - номер окна с ботом   / j=1  это значит первое окно /
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                    result[j] = check[j].problemResolutionRestartClassic(botParam[j].Stage);
+            }
+            this.RestartClassic.BackColor = Color.Orange;
         }
 
         #endregion
+
+
+        #region ============================== кач на мемориале Classic ===================================
+
+        private void Memorial_Click(object sender, EventArgs e)
+        {
+            this.Memorial.BackColor = Color.OrangeRed;
+            Thread myMemo = new Thread(funcMemo);
+            myMemo.Start();
+
+        }
+
+        /// <summary> 
+        /// метод задает функционал для кнопки "восстановление окон Classic"
+        /// </summary>
+        private void funcMemo()
+        {
+            Check check = new Check(1);     //номер окна
+
+            //вариант 1.
+            //check.RelicProduction();
+
+            //вариант 2
+            BotParam botParam = new BotParam(1);
+            botParam.Stage = 1;
+
+            while (true)
+            {
+                check.problemResolutionMemorialClassic(botParam.Stage);
+            }
+
+        }
+
+        #endregion
+
 
     }// END class MainForm 
 }// END namespace OpenGEWindows

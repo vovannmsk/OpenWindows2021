@@ -298,7 +298,7 @@ namespace OpenGEWindows
         {
             CounterRouteToNull();
             this.numberOfRoute = NumberOfRoute();
-            RouteNextPointMulti(CounterRouteNode).PressMouseL();
+            RouteNextPointMulti(CounterRouteNode).PressMouseLL();
         }
 
         /// <summary>

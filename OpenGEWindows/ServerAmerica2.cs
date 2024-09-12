@@ -1197,6 +1197,40 @@ namespace OpenGEWindows
             #endregion
         }
 
+        /// <summary>
+        /// запуск клиента игры для GE Classic
+        /// </summary>
+        public override void RunClientClassic()
+        {
+            #region для песочницы
+
+            //запускаем игру в песочнице 
+            Process process = new Process();
+            process.StartInfo.FileName = @"C:\Program Files\Sandboxie\Start.exe";
+            process.StartInfo.Arguments = @"/box:" + botwindow.getNumberWindow() + " C:\\Games\\ge_classique_client\\GE Classique.exe";
+            process.Start();
+
+            #endregion
+        }
+
+
+        /// <summary>
+        /// найдено ли окно ГЭ в текущей песочнице? Если найдено, то в файл hwnd.txt пишем найденный hwnd 
+        /// </summary>
+        /// <returns>true, если найдено</returns>
+        public override bool FindWindowGEClassic()
+        {
+            bool result = false;
+            UIntPtr HWND = FindWindow("Sandbox:" + botwindow.getNumberWindow().ToString() + ":Granado Espada", "[#] Granado Espada Classique [#]");
+
+            if (HWND != (UIntPtr)0)
+            {
+                botParam.Hwnd = HWND;  //если окно найдено, то запись в файл HWND.txt
+                //isLoadedGEBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+                result = true;  //нашли окно
+            }
+            return result;
+        }
     }
 }
 

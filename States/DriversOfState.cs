@@ -588,6 +588,8 @@ namespace States
             //server.GoToRudolph();
             #endregion
 
+            //server.MissionCapibara();
+
 
             //закрываем проги в песочнице
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
@@ -598,11 +600,15 @@ namespace States
         /// </summary>
         public void StateInputOutput7()
         {
-            while (true)
-            {
-                server.PressButtonRelic();
-                botwindow.Pause(2000);
-            }
+            //while (true)
+            //{
+            //    server.PressButtonRelic();
+            //    botwindow.Pause(2000);
+            //}
+
+
+            server.CapibaraComplex();
+
         }
 
         /// <summary>
@@ -615,7 +621,7 @@ namespace States
 
             botwindow.Pause(2000);
             //закрываем чистое окно с игрой
-            StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
+             StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
         }
 
 
