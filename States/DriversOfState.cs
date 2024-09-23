@@ -619,7 +619,7 @@ namespace States
             // reOpen 
             StateDriverRun(new StateGT308(botwindow), new StateGT315(botwindow));
 
-            botwindow.Pause(2000);
+            botwindow.Pause(42000);
             //закрываем чистое окно с игрой
              StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
         }

@@ -86,7 +86,7 @@ namespace States
             }
 
             //botwindow.Pause(5000);              //для Наташи
-            botwindow.PressEscThreeTimes();
+            //botwindow.PressEscThreeTimes();
         }
 
         /// <summary>

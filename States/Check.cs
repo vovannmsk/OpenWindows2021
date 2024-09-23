@@ -8029,12 +8029,13 @@ namespace States
 
             #region  доп проверки
 
+            //MessageBox.Show("пет активный? " + server.isActivePetClassic());
             //MessageBox.Show("на работе? " + server.isWorkClassic());
             //MessageBox.Show("в городе? " + server.isTownClassic());
             //MessageBox.Show("задание 1 получено? " + server.isTaskReceivedClassic(1));
             //MessageBox.Show("задание 2 получено? " + server.isTaskReceivedClassic(2));
-            MessageBox.Show("задание 1 выполнено? " + server.isTaskDoneClassic(1));
-            MessageBox.Show("задание 2 выполнено? " + server.isTaskDoneClassic(2));
+            //MessageBox.Show("задание 1 выполнено? " + server.isTaskDoneClassic(1));
+            //MessageBox.Show("задание 2 выполнено? " + server.isTaskDoneClassic(2));
             //MessageBox.Show("открыт журнал? " + server.isPioneerJournal());
             //MessageBox.Show("Mission Room? " + server.isWaitingRoom());
             //MessageBox.Show("Mission Lobby? " + server.isMissionLobby());
@@ -8266,9 +8267,9 @@ namespace States
             //int dy = 2;
 
             //int j = 1;
-            PointColor point1 = new PointColor(805 - 5 + xx, 410 - 5 + yy + 47, 0, 0);
-            PointColor point2 = new PointColor(805 - 5 + xx, 411 - 5 + yy + 47, 0, 0);
-            PointColor point3 = new PointColor(805 - 5 + xx, 412 - 5 + yy + 47, 0, 0);
+            PointColor point1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(731 - 5 + xx, 243 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

@@ -200,9 +200,9 @@ namespace OpenGEWindows
 
             //this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995};
             //this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};   до 22-11-2023
-            this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995 };
-            this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562, 0, 1522 };
-                                                 // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch 
+            this.arrayOfColorsIsWork1 = new uint[] { 12565, 4094, 4545, 16383, 9371, 8231, 995, 5603 };
+            this.arrayOfColorsIsWork2 = new uint[] { 12169, 2850, 2438, 16777, 3562, 0, 1522,5406 };
+                                                 // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary 
 
 
             this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //22-11
@@ -258,38 +258,9 @@ namespace OpenGEWindows
 
             //this.arrayOfColorsIsTown1 = new uint[7] { 12566, 4079, 4539, 16382, 9342, 8224, 986 };
             //this.arrayOfColorsIsTown2 = new uint[7] { 12171, 2829, 2434, 16777, 3552,    0, 1513 };   //до 22-11-2023 было норм
-            this.arrayOfColorsIsTown1 = new uint[7] { 8092, 5921, 0, 16777, 0, 0, 0 };
-            this.arrayOfColorsIsTown2 = new uint[7] { 7895, 1907, 0, 6118, 0, 0, 0 };
-            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch
-
-
-
-            //this.pointIsTown_RifleFirstDot1 = new PointColor(24 + xx, 692 + yy, 11053000, 3);        //точки для проверки обычной стойки с ружьем
-            //this.pointIsTown_RifleFirstDot2 = new PointColor(25 + xx, 692 + yy, 10921000, 3);
-            //this.pointIsTown_ExpRifleFirstDot1 = new PointColor(24 + xx, 692 + yy, 1710000, 4);       //точки для проверки эксп стойки с ружьем
-            //this.pointIsTown_ExpRifleFirstDot2 = new PointColor(25 + xx, 692 + yy, 2100000, 4);
-            //this.pointIsTown_DrobFirstDot1 = new PointColor(24 + xx, 692 + yy, 7631000, 3);       //точки для проверки обычной стойки с дробашом в городе               
-            //this.pointIsTown_DrobFirstDot2 = new PointColor(25 + xx, 692 + yy, 16711000, 3);
-            //this.pointIsTown_VetDrobFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 2763000, 3);       //точки для проверки вет стойки с дробашом в городе            
-            //this.pointIsTown_VetDrobFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 7237000, 3);
-            //this.pointIsTown_ExpDrobFirstDot1 = new PointColor(24 + xx, 692 + yy, 16777000, 3);       //точки для проверки эксп стойки с дробашом
-            //this.pointIsTown_ExpDrobFirstDot2 = new PointColor(25 + xx, 692 + yy, 3552000, 3);
-            //this.pointIsTown_JainaDrobFirstDot1 = new PointColor(24 + xx, 692 + yy, 4276000, 3);       //точки для проверки эксп стойки с дробашом Джейн
-            //this.pointIsTown_JainaDrobFirstDot2 = new PointColor(25 + xx, 692 + yy, 5395000, 3);
-            //this.pointIsTown_VetSabreFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 5131000, 3);       //точки для проверки вет стойки с саблей (повар)
-            //this.pointIsTown_VetSabreFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 9737000, 3);
-            //this.pointIsTown_ExpSwordFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 3684000, 3);       //точки для проверки эксп стойки с мечом (дарья)
-            //this.pointIsTown_ExpSwordFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 10263000, 3);
-            ////пистолеты
-            //this.pointIsTown_VetPistolFirstDot1   = new PointColor(29 - 5 + xx, 697 - 5 + yy, 65000, 3);       //точки для проверки вет стойки с пистолетом Outrange
-            //this.pointIsTown_VetPistolFirstDot2   = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
-            //this.pointIsTown_SightPistolFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 5066000, 3);       //точки для проверки вет стойки с пистолетом Sight Shot
-            //this.pointIsTown_SightPistolFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 9342000, 3);
-            //this.pointIsTown_UnlimPistolFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 15856000, 3);      //точки для проверки эксп стойки с пистолетами Unlimited Shot
-            //this.pointIsTown_UnlimPistolFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 15790000, 3);
-            ////пушка Миса
-            //this.pointIsTown_ExpCannonFirstDot1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 8750000, 3);         //точки для проверки пушки Миса
-            //this.pointIsTown_ExpCannonFirstDot2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 8158000, 3);
+            this.arrayOfColorsIsTown1 = new uint[] { 8092, 5921, 0, 16777, 0, 0, 0, 6974 };
+            this.arrayOfColorsIsTown2 = new uint[] { 7895, 1907, 0, 6118, 0, 0, 0, 6842 };
+            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary
 
             #endregion
 

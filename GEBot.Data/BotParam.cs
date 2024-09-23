@@ -58,6 +58,15 @@ namespace GEBot.Data
         /// </summary>
         private int stage;
         /// <summary>
+        /// на каком месте стоит скаут (для классик)  (0 - если без скаута)
+        /// </summary>
+        private int scout;
+        /// <summary>
+        /// карта, на которой стоим на боте (для классик)
+        /// TetraCatacomb (0)    PortoBello (1)   LagoDeTres (2)   GaviGivi (3)   Torsche (4)    Rion(5)  Crater (6)   Lava (7)
+        /// </summary>
+        private int map;
+        /// <summary>
         /// текущий логин
         /// </summary>
         public string Login { get => LoginFromFile(); }
@@ -101,6 +110,9 @@ namespace GEBot.Data
         public int HowManyCyclesToSkip { get { howManyCyclesToSkip = Get_HowManyCyclesToSkip(); return howManyCyclesToSkip; }
                                          set { howManyCyclesToSkip = value; Set_HowManyCyclesToSkip(); } }
         public int LengthOfList { get => lengthOfList; }
+        /// <summary>
+        /// статус продажи. Мы на стадии продажи инвентаря или нет (для Инфинити)
+        /// </summary>
         public int StatusOfSale
         {
             get { statusOfSale = GetStatusOfSale(); return statusOfSale; }
@@ -110,7 +122,6 @@ namespace GEBot.Data
         /// номер маршрута (для добычи отита)
         /// </summary>
         public int NumberOfRoute { get => numberOfRoute; set => numberOfRoute = value; }
-
         /// <summary>
         /// стадия выполнения миссии Демоник
         /// </summary>
@@ -118,13 +129,22 @@ namespace GEBot.Data
                                 get { stage = GetStage(); return stage; }
                                 set { stage = value; SetStage(); }
         }
+        /// <summary>
+        /// на каком месте стоит баффер (для ГЕ классик)
+        /// </summary>
+        public int Scout { get => scout; }
+        /// <summary>
+        /// карта, на которой стоим на боте (для классик)
+        /// TetraCatacomb (0)    PortoBello (1)   LagoDeTres (2)   GaviGivi (3)   Torsche (4)    Rion(5)  Crater (6)   Lava (7)
+        /// </summary>
+        public int Map { get => map; }
 
         ///// <summary>
         ///// номер аккаунта в списке аккаунтов п/п (нумерация с нуля) 
         ///// </summary>
         //public static int Infinity { get => infinity; set => infinity = value; }
 
-        
+
 
         //public bool Infinity { get => infinity; set => infinity = value; }
 
@@ -161,11 +181,35 @@ namespace GEBot.Data
             HowManyCyclesToSkip = 0;
             //infinity = numberOfInfinity;
             stage = GetStage();
+            scout = GetScout();
+            map = GetMap();
         }
 
         //===================================== методы ==========================================
         //===================================== методы ==========================================
         //===================================== методы ==========================================
+
+        /// <summary>
+        /// читаем значение из файла
+        /// </summary>
+        /// <returns></returns>
+        private int GetMap()
+        {
+            string number = File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Карта.txt");
+            if (number.Length == 0) return 0;
+            else return int.Parse(number);
+        }
+
+        /// <summary>
+        /// читаем значение из файла
+        /// </summary>
+        /// <returns></returns>
+        private int GetScout()
+        {
+            string number = File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\Скаут.txt");
+            if (number.Length == 0) return 0;
+            else return int.Parse(number);
+        }
 
         /// <summary>
         /// читаем значение из файла

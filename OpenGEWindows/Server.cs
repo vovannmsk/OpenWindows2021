@@ -706,12 +706,12 @@ namespace OpenGEWindows
         Item SteroidOneHour = new Item(36, 216, 15082944);
         Item Steroid10HoursHP = new Item(43, 213, 16732560);
         Item PrincipleOneHour = new Item(43, 214, 16756209);
-        Item Principle10HoursHP = new Item(0, 0, 0);     // не сделано
+        //Item Principle10HoursHP = new Item(0, 0, 0);     // не сделано
         Item Triumph = new Item(35, 209, 47612);
 
         Item Steroid10HoursLeftPanel = new Item(31 + 5, 241 + 5, 11690052);
         Item Principle10HoursLeftPanel = new Item(32 + 5, 272 + 5, 3226091);
-        Item TriumphLeftPanel = new Item(31 + 5, 304 + 5, 47612);          //AR+DR
+        //Item TriumphLeftPanel = new Item(31 + 5, 304 + 5, 47612);          //AR+DR
         Item SteroidOneHourLeftPanel = new Item(38, 249, 13836720);
         Item PrincipleOneHourLeftPanel = new Item(29, 282, 11943268);
         Item Steroid10HoursHPLeftPanel = new Item(37, 249, 16724347);
@@ -1551,17 +1551,16 @@ namespace OpenGEWindows
             iPoint pointButtonOk3 = new Point(525 - 5 + xx, 432 - 5 + yy);    // кнопка Ok. всплывающее сообщение в логауте
 
             uint Tek_Color1;
-            uint Test_Color = 0;
-            bool ColorBOOL = true;
-            uint currentColor = 0;
+            //bool ColorBOOL = true;
+            uint currentColor;
             const int MAX_NUMBER_ITERATION = 4;  //максимальное количество итераций
 
             bool aa = true;
 
-            Test_Color = point5050.GetPixelColor();       //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
+            uint Test_Color = point5050.GetPixelColor();       //запоминаем цвет в координатах 50, 50 для проверки того, сменился ли экран (т.е. принят ли логин-пароль)
             Tek_Color1 = Test_Color;
 
-            ColorBOOL = (Test_Color == Tek_Color1);
+            bool ColorBOOL = (Test_Color == Tek_Color1);
             int counter = 0; //счетчик
 
             pointButtonOk.PressMouseL();  //кликаю в кнопку  "ОК" (сообщение об ошибке 1)
@@ -5826,9 +5825,9 @@ namespace OpenGEWindows
         {
             Thing StanceBook = new Thing(new PointColor(707, 184, 11335674, 0), new PointColor(703, 192, 12904947, 0));
 
-            int ii = 0;
-            int jj = 0;
-            bool result = FindItem(StanceBook, out ii, out jj);
+            //int ii;
+            //int jj;
+            bool result = FindItem(StanceBook, out int ii, out int jj);
 
             botwindow.FirstHero();
             UseThingInCell(ii, jj);
@@ -6063,9 +6062,9 @@ namespace OpenGEWindows
             //    }
             //}
 
-            int i, j;
+            //int i, j;
 
-            if (FindItem(thing, out i, out j))
+            if (FindItem(thing, out int i, out int j))
             {
                 result = true;
                 DragItemToSlot(i, j, 1);
@@ -6136,9 +6135,9 @@ namespace OpenGEWindows
         protected bool DragItemToXY(Thing thing, int x, int y)
         {
             bool result = false;   //объект в кармане пока не найден
-            int i, j;
+            //int i, j;
 
-            if (FindItem(thing, out i, out j))
+            if (FindItem(thing, out int i, out int j))
             {
                 DragItemToXY(i, j, x, y);
                 Pause(500);
@@ -6348,9 +6347,9 @@ namespace OpenGEWindows
         /// </summary>
         protected bool PuttingItem(Item item)
         {
-            Point point;
+            //Point point;
 
-            if (FindItemFromSpecInventory(item, 0, out point))
+            if (FindItemFromSpecInventory(item, 0, out Point point))
             {
                 point.DoubleClickL();
                 new Point(1500, 800).Move();   //убираем мышь в сторону
@@ -6404,8 +6403,8 @@ namespace OpenGEWindows
         {
             bool result;
 
-            Point pointBegin = new Point(0, 0);
-            result = FindItemFromSpecInventory(item, sdvig, out pointBegin);
+            //Point pointBegin;
+            result = FindItemFromSpecInventory(item, sdvig, out Point pointBegin);
             if (result)
             {
                 Point pointEnd = new Point(31 - 5 + xx, 114 - 5 + (CellNumber - 1) * 32 + yy);
@@ -7693,34 +7692,34 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindDrunken(int i)
-        {
-            //MoveCursorOfMouse();
-            bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
-                if (new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 10861754, 0).isColor() &&
-                        new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 11124411, 0).isColor()
-                   ) result = true;
+        //private bool FindDrunken(int i)
+        //{
+        //    //MoveCursorOfMouse();
+        //    bool result = false;    //бафа нет
+        //    for (int j = 0; j < 8; j++)
+        //        if (new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 10861754, 0).isColor() &&
+        //                new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 585 - 5 + yy, 11124411, 0).isColor()
+        //           ) result = true;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Shooting Promoted" / Barrell /
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        private bool FindShootingPromoted(int i)
-        {
-            //MoveCursorOfMouse();
-            bool result = false;    //бафа нет
-            for (int j = 0; j < 8; j++)
-                if (new PointColor(89 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 2503088, 0).isColor() &&
-                        new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 1976470, 0).isColor()
-                   ) result = true;
+        //private bool FindShootingPromoted(int i)
+        //{
+        //    //MoveCursorOfMouse();
+        //    bool result = false;    //бафа нет
+        //    for (int j = 0; j < 8; j++)
+        //        if (new PointColor(89 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 2503088, 0).isColor() &&
+        //                new PointColor(90 - 5 + xx + j * 15 + (i - 1) * 255, 586 - 5 + yy, 1976470, 0).isColor()
+        //           ) result = true;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Marksmanship" / Bernelli /
@@ -7912,11 +7911,11 @@ namespace OpenGEWindows
         /// бафаем молодого Барреля на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffBarell(int i)
-        {
-            if (!FindDrunken(i)) BuffY(i);
-            if (!FindShootingPromoted(i)) BuffW(i);
-        }
+        //private void BuffBarell(int i)
+        //{
+        //    if (!FindDrunken(i)) BuffY(i);
+        //    if (!FindShootingPromoted(i)) BuffW(i);
+        //}
 
         /// <summary>
         /// бафаем коммандера Дарью на i-м месте
@@ -7929,30 +7928,30 @@ namespace OpenGEWindows
         /// бафаем Тома на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffTom(int i)
-        { }
+        //private void BuffTom(int i)
+        //{ }
 
         /// <summary>
         /// бафаем Муна на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMoon(int i)
-        {
-            if (!FindReloadBullet(i)) BuffY(i);
-            if (!FindMarchen(i)) BuffQ(i);
-        }
+        //private void BuffMoon(int i)
+        //{
+        //    if (!FindReloadBullet(i)) BuffY(i);
+        //    if (!FindMarchen(i)) BuffQ(i);
+        //}
 
         /// <summary>
         /// бафаем Мису на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMisa(int i)
-        {
-            //if (!FindWindUp(i)) 
-            //BuffY(i);
-            // не бафаем Мису, бафф снижает меткость
+        //private void BuffMisa(int i)
+        //{
+        //    //if (!FindWindUp(i)) 
+        //    //BuffY(i);
+        //    // не бафаем Мису, бафф снижает меткость
 
-        }
+        //}
 
         /// <summary>
         /// появились ворота вместо сундука?
@@ -9952,7 +9951,8 @@ namespace OpenGEWindows
                         BattleModeOn();                      //нажимаем пробел, чтобы не убежать от дропа
                         GotoBarack();                        // идем в барак, чтобы перейти к стадии 3 (открытие сундука и проч.)
                         botwindow.PressEscThreeTimes();
-                        botParam.HowManyCyclesToSkip = 3;
+                        botParam.HowManyCyclesToSkip = 1;   //21-09-2024
+                        //botParam.HowManyCyclesToSkip = 3;
                         break;
 
                     default:
@@ -10597,20 +10597,225 @@ namespace OpenGEWindows
 
         #endregion ===============================================================================
 
+        #region  =========================== методы для GE Classic =======================================
+
+        /// <summary>
+        /// проверяем, сколько заданий на мемориале
+        /// </summary>
+        /// <returns>true, если одно</returns>
+        private bool isMemorialOne()
+        {
+            return new PointColor(731 - 5 + xx, 241 - 5 + yy, 4600000, 5).isColor() &&
+                   new PointColor(731 - 5 + xx, 242 - 5 + yy, 4600000, 5).isColor();
+        }
+
+        /// <summary>
+        /// взять задание в диалоге на мемориале
+        /// </summary>
+        private void GetTask()
+        {
+            if (isMemorialOne())
+            {
+                dialog.PressStringDialogClassic(2);
+                dialog.PressOkButtonClassic(1);
+                dialog.PressStringDialogClassic(1);
+                dialog.PressOkButtonClassic(1);
+            }
+            else
+            {
+                dialog.PressStringDialogClassic(2);
+                dialog.PressOkButtonClassic(2);
+            }
+        }
+
+        /// <summary>
+        /// используем i-й скил у j-го героя
+        /// </summary>
+        private void BuffSkillClassic(int i, int j)
+        {
+            new Point(26 - 5 + xx + (j - 1) * 255 + (i - 1) * 31, 715 - 5 + yy).PressMouseL();
+            Pause(500);
+        }
+
+        /// <summary>
+        /// бафаемся. баффер на i-м месте
+        /// </summary>
+        private void BuffClassic(int i)
+        {
+            BuffSkillClassic(1, i);
+            Pause(3000);
+            BuffSkillClassic(4, i);
+            Pause(3000);
+            BuffSkillClassic(5, i);
+        }
+
+        /// <summary>
+        /// проверяем, призван ли пет
+        /// </summary>
+        /// <returns>true, если призван</returns>
+        private bool isSummonPetClassic()
+        {
+            return !(new PointColor(216 - 5 + xx, 334 - 5 + yy, 7700000, 5).isColor() &&
+                   new PointColor(216 - 5 + xx, 335 - 5 + yy, 7700000, 5).isColor());
+        }
+
+        /// <summary>
+        /// призываем пета
+        /// </summary>
+        private void SummonPetClassic()
+        {
+            if (!isSummonPetClassic())
+            {
+                new Point(360 - 5 + xx, 354 - 5 + yy).PressMouseL();                     //тыкаем в верхнюю строчку списка с петами
+                Pause(500);
+                new Point(238 - 5 + xx, 335 - 5 + yy).PressMouseL();                     //тыкаем в кнопку Summon
+                Pause(500);
+            }
+        }
 
 
-        #region  ======================== методы для GE Classic =======================================
+
+        /// <summary>
+        /// проверяем, включён ли пет
+        /// </summary>
+        /// <returns>true, если включён</returns>
+        public bool isActivePetClassic()
+        {
+            return new PointColor(269 - 5 + xx, 292 - 5 + yy, 13000000, 6).isColor() &&
+                   new PointColor(269 - 5 + xx, 293 - 5 + yy, 13000000, 6).isColor();
+        }
+
+        /// <summary>
+        /// активируем пета
+        /// </summary>
+        private void ActivationPetClassic()
+        {
+            new Point(382 - 5 + xx, 52 - 5 + yy).PressMouseL();                     //тыкаем в верхнем меню кнопку "Pet Information"
+            Pause(2000);
+            SummonPetClassic();
+            if (!isActivePetClassic())  
+                new Point(238 - 5 + xx, 395 - 5 + yy).PressMouseL();                     //тыкаем в кнопку Activation
+            botwindow.PressEsc(3);
+            Pause(500);
+        }
+
+        /// <summary>
+        /// идём в логаут
+        /// </summary>
+        private void GotoBarackClassic()
+        {
+            new Point(41 - 5 + xx, 49 - 5 + yy).PressMouseL();                     //тыкаем в кнопку Menu
+            Pause(1000);
+            new Point(35 - 5 + xx, 434 - 5 + yy).PressMouseL();                     //тыкаем в кнопку Menu
+            botwindow.PressEsc(2);
+        }
+
+        /// <summary>
+        /// проверяем, включён ли боевой режим (пробел)
+        /// </summary>
+        /// <returns>true, если включён</returns>
+        private bool isBattleModeClassic()
+        {
+            return new PointColor(173 - 5 + xx, 511 - 5 + yy, 9300000, 5).isColor() &&
+                   new PointColor(172 - 5 + xx, 512 - 5 + yy, 9300000, 5).isColor();
+        }
+
 
         /// <summary>
         /// . GE Classic
         /// </summary>
-        public bool isBarackClassic()
+        private bool isBarackClassic()
         {
-            return false;
-            //return new PointColor(101 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor() &&
-            //       new PointColor(102 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor();
+            return new PointColor(105 - 5 + xx, 55 - 5 + yy, 15500000, 5).isColor() &&
+                   new PointColor(105 - 5 + xx, 56 - 5 + yy, 15500000, 5).isColor();
         }
 
+        /// <summary>
+        /// проверяем в бараке, все ли герои убиты. GE Classic
+        /// </summary>
+        private bool isKillHeroesBarackClassic()
+        {
+            return !(new PointColor(506 - 5 + xx, 545 - 5 + yy, 3000000, 5).isColor() &&              //Coimbra
+                   new PointColor(506 - 5 + xx, 546 - 5 + yy, 5100000, 5).isColor()
+                   ||
+                   new PointColor(506 - 5 + xx, 545 - 5 + yy, 6300000, 5).isColor() &&               //Reboldo
+                   new PointColor(506 - 5 + xx, 546 - 5 + yy, 5000000, 5).isColor())
+                   ;
+            //return new PointColor(506 - 5 + xx, 545 - 5 + yy, 700000, 5).isColor() &&
+            //       new PointColor(506 - 5 + xx, 546 - 5 + yy, 700000, 5).isColor()
+            //       ||
+            //       new PointColor(506 - 5 + xx, 545 - 5 + yy, 500000, 5).isColor() &&
+            //       new PointColor(506 - 5 + xx, 546 - 5 + yy, 500000, 5).isColor()
+            //       ;
+        }
+
+        /// <summary>
+        /// на работе проверяем, убит ли i-й герой
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns></returns>
+        private bool isKillHeroClassic(int i)
+        {
+            return new PointColor(77 - 5 + xx + (i - 1) * 255, 637 - 5 + yy, 980000, 4).isColor() &&
+                   new PointColor(78 - 5 + xx + (i - 1) * 255, 637 - 5 + yy, 980000, 4).isColor();
+        }
+
+        /// <summary>
+        /// на работе проверяем, убиты ли все герои
+        /// </summary>
+        /// <returns></returns>
+        private bool isKillHeroesClassic()
+        {
+            return isKillHeroClassic(1) && isKillHeroClassic(2) && isKillHeroClassic(3);
+        }
+
+        /// <summary>
+        /// выбор персонажей 
+        /// </summary>
+        private void TeamSelectionClassic()
+        { 
+            if (isKillHeroesBarackClassic())
+            {
+                new Point(349 - 5 + xx, 384 - 5 + yy).DoubleClickL();
+                new Point(581 - 5 + xx, 405 - 5 + yy).DoubleClickL();
+                new Point(693 - 5 + xx, 378 - 5 + yy).DoubleClickL();
+            }
+        }
+
+        /// <summary>
+        /// летим по i-му телепорту 
+        /// </summary>
+        private void TeleportClassic(int i)
+        {
+            new Point(347 - 5 + xx, 50 - 5 + yy).PressMouseL();                     //тыкаем в телепорт в верхнем меню
+            Pause(1000);
+            new Point(262 - 5 + xx, 257 - 5 + (i - 1) * 15 + yy).DoubleClickL();    //тыкаем в выбранную строку телепорта
+            Pause(500);
+            new Point(277 - 5 + xx, 476 - 5 + yy).PressMouseL();                    //тыкаем в кнопку "Go"
+            botwindow.PressEsc(3);
+        }
+
+        /// <summary>
+        /// начинаем со стартового города
+        /// </summary>
+        private void NewPlaceClassic()
+        {
+            new Point(548 - 5 + xx, 676 - 5 + yy).PressMouseLL();
+        }
+
+        /// <summary>
+        /// переход из казарм в стартовый город
+        /// </summary>
+        public void FromBarackToTownClassic()
+        {
+
+            TeamSelectionClassic();
+            Pause(500);
+
+            NewPlaceClassic();                //начинаем в стартовом городе
+
+            //botwindow.ToMoveMouse();             //убираем мышку в сторону, чтобы она не загораживала нужную точку для isTown
+        }
 
         /// <summary>
         /// вызываем Zone Map. GE Classic
@@ -10623,302 +10828,121 @@ namespace OpenGEWindows
         /// <summary>
         /// проверяем, открыта ли карта (ZoneMap). GE Classic
         /// </summary>
-        public bool isOpenZoneMapClassic(int i)
+        public bool isOpenZoneMapClassic()
         {
             return new PointColor(101 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor() &&
                    new PointColor(102 - 5 + xx, 56 - 5 + yy, 13100000, 5).isColor();
         }
 
         /// <summary>
-        /// идём к следующей точке кача
+        /// бежим до места работы в открытой карте
         /// </summary>
-        public void GotoNextClassic()
+        private void GoToWorkOnMap(int i)
         {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(154 - 5 + xx, 421 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(10000);
-            BattleModeOnDem();
+            int[] X = {
+            175,            //TetraCatacomb (проверить)
+            404,            //PortoBello 
+            436,            //LagoDeTres (2)
+            329,            //GaviGivi (3)
+            274,            //Torsche (4)
+            258,            //Rion  (5)
+            413,            //Crater (6)
+            381,            //Lava (7)
 
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
+            };
+            int[] Y = {
+            416,            //TetraCatacomb (проверить)
+            377,            //PortoBello 
+            279,            //LagoDeTres (2)
+            446,            //GaviGivi (3)
+            312,            //Torsche (4) 
+            205,            //Rion  (5)
+            438,            //Crater (6)
+            195,            //Lava (7)
 
-
-
-
-            //if (!isBattleModeClassic())
-            //    new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
-
-
-            //            new Point(208 - 5 + xx, 421 - 5 + yy).PressMouseL();
-            //new Point(258 - 5 + xx, 406 - 5 + yy).PressMouseR();
-            //new Point(249 - 5 + xx, 406 - 5 + yy).PressMouseR();
-            //new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
-
+            };
+            new Point(X[i] - 5 + xx, Y[i] - 5 + yy).PressMouseL();
         }
 
         /// <summary>
-        /// идём к следующей точке кача
+        /// возвращает время бега до места работы
         /// </summary>
-        public void GotoNextTetraClassic()
+        private int TimeForRun(int i)
         {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(154 - 5 + xx, 421 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(10000);
-            BattleModeOnDem();
+            int[] Time = {
+            3000,            //TetraCatacomb (проверить)
+            3000,            //PortoBello
+            10000,           //LagoDeTres (2)
+            10000,           //GaviGivi (3)
+            12000,           //Torsche (4)
+            5000,            //rion  (5)
+            4000,            //Crater (6)
+            5000,            //Lava (7)
+            };
 
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(293 - 5 + xx, 434 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextPortoBelloClassic()
-        {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(419 - 5 + xx, 465 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
-
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(500 - 5 + xx, 444 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextPortoBelloCabinClassic()
-        {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(190 - 5 + xx, 370 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(5000);
-            BattleModeOnDem();
-
-            //botwindow.PressEsc(2);
-            //OpenZoneMapClassic();
-            //Pause(1000);
-            //new Point(400 - 5 + xx, 390 - 5 + yy).PressMouseR();
-            //botwindow.PressEsc(2);
-            //Pause(7000);
-            //BattleModeOnDem();
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextLagoDeTresClassic()
-        {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(417 - 5 + xx, 257 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
-
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(448 - 5 + xx, 242  - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(7000);
-            BattleModeOnDem();
-
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextGaviClassic()
-        {
-            BattleModeOnDem();
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            //            new Point(274 - 5 + xx, 481 - 5 + yy).PressMouseR();
-            new Point(318 - 5 + xx, 479 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(3000);
-            BattleModeOnDem();
-
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(330 - 5 + xx, 474 - 5 + yy).PressMouseR();
-            botwindow.PressEsc(2);
-            Pause(3000);
-            BattleModeOnDem();
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextGavi2Classic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-//            new Point(300 - 5 + xx, 485 - 5 + yy).PressMouseL();
-            new Point(320 - 5 + xx, 465 - 5 + yy).PressMouseL();
-            botwindow.PressEsc(2);
-            Pause(8000);
-            BattleModeOnDem();
-        }
-
-        /// <summary>
-        /// идём к следующей точке кача
-        /// </summary>
-        public void GotoNextTorsheClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(295 - 5 + xx, 295 - 5 + yy).PressMouseL();
-            botwindow.PressEsc(2);
-            Pause(6000);
-            BattleModeOnDem();
+            return Time[i];
         }
 
 
         /// <summary>
-        /// идём к мемориалу
+        /// идём к следующей точке кача
         /// </summary>
-        public void GotoMemorialClassic()
+        public void GotoNextClassic(int i)
         {
             botwindow.PressEsc(2);
             OpenZoneMapClassic();
             Pause(1000);
-            new Point(175 - 5 + xx, 416 - 5 + yy).PressMouseL();
+            GoToWorkOnMap(i);           //==========        бежим        ================
             botwindow.PressEsc(2);
-            Pause(4000);
+            Pause(TimeForRun(i));       //=========== ждём пока прибежим ================
             BattleModeOnDem();
-            botwindow.FirstHero();
+            ActivationPetClassic();
+        }
+
+
+        /// <summary>
+        /// нажимаем на мемориал в открытой карте
+        /// </summary>
+        private void PressMeMorialOnMap(int i)
+        {
+            int [] X = {
+            175,            //TetraCatacomb (проверить)
+            419,            //PortoBello 
+            432,            //LagoDeTres (2)
+            278,            //GaviGivi (3)
+            256,            //Torsche (4)
+            273,            //Rion  (5)
+            398,            //Crater (6)
+            359,            //Lava (7)
+
+            };
+            int [] Y = {
+            416,            //TetraCatacomb (проверить)
+            357,            //PortoBello 
+            229,            //LagoDeTres (2)
+            507,            //GaviGivi (3)
+            344,            //Torsche (4)
+            183,            //Rion  (5)
+            455,            //Crater (6)
+            148,            //Lava (7)
+
+            };
+            new Point(X[i] - 5 + xx, Y[i]  - 5 + yy).PressMouseL();                    
         }
 
         /// <summary>
         /// идём к мемориалу
         /// </summary>
-        public void GotoMemorialTetraClassic()
+        public void GotoMemorialClassic(int i)
         {
             botwindow.PressEsc(2);
             OpenZoneMapClassic();
             Pause(1000);
-            new Point(175 - 5 + xx, 416 - 5 + yy).PressMouseL();
-            botwindow.PressEsc(2);
-            Pause(4000);
-            BattleModeOnDem();
-            botwindow.FirstHero();
-        }
-
-        /// <summary>
-        /// идём к мемориалу
-        /// </summary>
-        public void GotoMemorialPortoBelloClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(472 - 5 + xx, 420 - 5 + yy).PressMouseL();    //координаты мемориала 
+            PressMeMorialOnMap(i);   //==========        бежим к мемориалу      ================
             botwindow.PressEsc(2);
             Pause(5000);
             BattleModeOnDem();
-            botwindow.FirstHero();
         }
-
-        /// <summary>
-        /// идём к мемориалу Озеро трех сестёр
-        /// </summary>
-        public void GotoMemorialLagoDeTresClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000); 
-            new Point(432 - 5 + xx, 229 - 5 + yy).PressMouseL();    //координаты мемориала 
-            botwindow.PressEsc(2);
-            Pause(5000);
-            BattleModeOnDem();
-            botwindow.FirstHero();
-        }
-
-        /// <summary>
-        /// идём к мемориалу Gavi
-        /// </summary>
-        public void GotoMemorialGaviClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(277 - 5 + xx, 505 - 5 + yy).PressMouseL();    //координаты мемориала 
-            botwindow.PressEsc(2);
-            Pause(5000);
-            BattleModeOnDem();
-            //botwindow.FirstHero();
-        }
-
-        /// <summary>
-        /// идём к мемориалу Torshe
-        /// </summary>
-        public void GotoMemorialTorsheClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(256 - 5 + xx, 344 - 5 + yy).PressMouseL();    //координаты мемориала 
-            botwindow.PressEsc(2);
-            Pause(5000);
-            BattleModeOnDem();
-            //botwindow.FirstHero();
-        }
-
-        /// <summary>
-        /// идём к мемориалу
-        /// </summary>
-        public void GotoMemorialPortoBelloCabinClassic()
-        {
-            botwindow.PressEsc(2);
-            OpenZoneMapClassic();
-            Pause(1000);
-            new Point(161 - 5 + xx, 363 - 5 + yy).PressMouseL();
-            botwindow.PressEsc(2);
-            botwindow.FirstHero();
-            //MinHeight(5);
-            Pause(5000);
-            BattleModeOnDem();
-        }
-
-
 
         /// <summary>
         /// идём к мемориалу
@@ -10926,7 +10950,6 @@ namespace OpenGEWindows
         public void PressMeMorial()
         {
             MinHeight(5);
-            //new Point(614 - 5 + xx, 366 - 5 + yy).PressMouseL();
             new Point(522 - 5 + xx, 322 - 5 + yy).PressMouseL();
             Pause(1000);
         }
@@ -10936,26 +10959,18 @@ namespace OpenGEWindows
         /// </summary>
         public bool isTaskDoneClassic(int i)
         {
-            return new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() &&       //TetraCatacomb
-                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() 
+            return 
+                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor() &&       //PortoBello
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor()
+                   //||
+                   //new PointColor(805 - 5 + xx, 410 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor() &&       //ОзероТрехСестер
+                   //new PointColor(805 - 5 + xx, 411 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor()
                    ||
-                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7600000, 5).isColor() &&       //TetraCatacomb
-                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7600000, 5).isColor()
+                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7000000, 6).isColor() &&       //Торше
+                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7000000, 6).isColor()
                    ||
-                   new PointColor(798 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8300000, 5).isColor() &&       //PortoBello
-                   new PointColor(798 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8300000, 5).isColor()
-                   ||
-                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor() &&       //PortoBelloCabin
-                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 7500000, 5).isColor()
-                   ||
-                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor() &&       //PortoBelloCabin
-                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor()
-                   ||
-                   new PointColor(856 - 5 + xx, 412 - 5 + yy + (i - 1) * 47, 8100000, 5).isColor() &&       //PortoBelloCabin
-                   new PointColor(856 - 5 + xx, 413 - 5 + yy + (i - 1) * 47, 8100000, 5).isColor()
-                   ||
-                   new PointColor(805 - 5 + xx, 410 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor() &&       //ОзероТрехСестер
-                   new PointColor(805 - 5 + xx, 411 - 5 + yy + (i - 1) * 47, 8200000, 5).isColor()
+                   new PointColor(817 - 5 + xx, 410 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor() &&       //Торше
+                   new PointColor(817 - 5 + xx, 411 - 5 + yy + (i - 1) * 47, 8000000, 6).isColor()
                    ;
         }
 
@@ -10984,8 +10999,8 @@ namespace OpenGEWindows
 
             // в массиве arrayOfColorsIsTownClassic1 хранятся все цвета первой контрольной точки, которые есть у проверяемых стоек 
             // в массиве arrayOfColorsIsTownClassic2 хранятся все цвета второй контрольной точки, которые есть у проверяемых стоек 
-            uint[] arrayOfColorsIsTownClassic1 = new uint[1] { 11908 };
-            uint[] arrayOfColorsIsTownClassic2 = new uint[1] { 11842 };
+            uint[] arrayOfColorsIsTownClassic1 = new uint[] { 11908, 7829 };
+            uint[] arrayOfColorsIsTownClassic2 = new uint[] { 11842, 9342 };
             //муха+ружьё,скаут+стойка1
             uint color1 = new PointColor(29 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
             uint color2 = new PointColor(30 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
@@ -11007,9 +11022,9 @@ namespace OpenGEWindows
 
             // в массиве arrayOfColorsIsWork1 хранятся все цвета первой контрольной точки, которые есть у проверяемых стоек 
             // в массиве arrayOfColorsIsWork2 хранятся все цвета второй контрольной точки, которые есть у проверяемых стоек 
-            uint[] arrayOfColorsIsWorkClassic1 = new uint[1] { 11903 };
-            uint[] arrayOfColorsIsWorkClassic2 = new uint[1] { 11836 };
-            //муха+ружьё,
+            uint[] arrayOfColorsIsWorkClassic1 = new uint[] { 11903, 13415, };
+            uint[] arrayOfColorsIsWorkClassic2 = new uint[] { 11836, 14925, };
+            //муха+ружьё, скаут(баффстойка),
             uint color1 = new PointColor(29 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
             uint color2 = new PointColor(30 - 5 + xx, 704 - 5 + yy, 0, 0).GetPixelColor() / 1000;                 // проверяем номер цвета в контрольной точке и округляем
 
@@ -11045,7 +11060,13 @@ namespace OpenGEWindows
             Pause(500);
         }
 
+        private void ConnectClassic()
+        {
+            new Point(408 - 5 + xx, 471 - 5 + yy).PressMouseL();
+            Pause(2000);
+            new Point(520 - 5 + xx, 429 - 5 + yy).PressMouseL();
 
+        }
 
 
         #endregion =========================================================================================
@@ -11127,8 +11148,6 @@ namespace OpenGEWindows
 
         #endregion ===============================================================================
 
-
-
         #region ===========================  кач на мемориале Classic ===================================
 
         /// <summary>
@@ -11137,20 +11156,34 @@ namespace OpenGEWindows
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemMemorialStage1()
         {
+            //если нет окна
+            if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            {
+                if (FindWindowGEClassic())
+                    return 5;    //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в файле Hwnd.txt при выполнении функции FindWindowGEClassic)
+                else
+                    return 4;                  //если нет окна ГЭ в текущей песочнице
+            }
+            else            //если окно с нужным HWND нашлось
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+
+
             //в логауте
             if (isLogoutClassic()) return 1;
 
             //в бараке
-            //if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа
-            //if (isBarackClassic()) return 2;                    //если стоят в бараке          //*
-            //if (isBarackWarningYes()) return 16;        //*
-            //if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы     //*
+            if (isBarackClassic()) return 2;                    //если стоят в бараке          
 
             //диалог
             if (dialog.isDialogClassic())
                 return 8;                           //если стоим в устройстве по запуску миссий
 
 
+            //убили всех
+            if (isKillHeroesClassic())
+            {
+                return 6;
+            }
             //в миссии
             if (isWorkClassic())
                 if (isTaskDoneClassic(1) || isTaskDoneClassic(2) || isTaskDoneClassic(3))
@@ -11160,14 +11193,10 @@ namespace OpenGEWindows
 
 
             //город или миссия
-            //if (isTown())
-            //{
-            //    //botwindow.PressEscThreeTimes();             //27-10-2021
-            //    //if (isReboldo())
-            //        return 9;                       //ребольдо      //*
-            //    //else
-            //    //    return 10;                      //в миссии      //*
-            //}
+            if (isTownClassic())
+            {
+                    return 7;                       
+            }
 
 
             //если проблем не найдено
@@ -11189,44 +11218,62 @@ namespace OpenGEWindows
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemMemorialStage1();
-
+                
                  switch (numberOfProblem)
                 {
                     case 1:
-                        //QuickConnect();                             // Logout-->Barack  
-                        //botParam.HowManyCyclesToSkip = 2;
+                        EnterLoginAndPaswordClassic();                      // Logout-->Barack  
+                        ConnectClassic();
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 2:
-                    //    FromBarackToTown(3);                        // barack --> town              //сделано
-                    //    botParam.HowManyCyclesToSkip = 3;
+                        FromBarackToTownClassic();                        // barack --> town              
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
+                    case 4:                                                 //нет окна
+                        if (IsItAlreadyPossibleToUploadNewWindow == 0)     
+                        {
+                            RunClientClassic();                             // запускаем окно ГЭ
+                            botParam.HowManyCyclesToSkip = 1;               //пропускаем следующий 1 цикл
+                            IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                        }
+                        break;
+                    case 5:                                             //только что нашли новое окно с игрой
+                        IsItAlreadyPossibleToUploadNewWindow = 0;
+                        isHwnd();   //поставили окно на место
+                        break;
+
+                    case 6:
+                        GotoBarackClassic();
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 7:                                                 //town
+                        BattleModeOnDem();                                  //чтобы полечиться
+                        Pause(1000);
+                        TeleportClassic(10);
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+
                     case 8:                                         //диалог
-                        dialog.PressStringDialogClassic(2);
-                        dialog.PressOkButtonClassic(2);
+                        GetTask();
                         BattleModeOnDem();
-                        new Point(538 - 5 + xx, 715 - 5 + yy).PressMouseL();
-                        Pause(3000);
-                        new Point(634 - 5 + xx, 715 - 5 + yy).PressMouseL();
-                        Pause(3000);
-                        new Point(662 - 5 + xx, 715 - 5 + yy).PressMouseL();
-                        //Pause(2000);
-                        //GotoNextGavi2Classic();
-                        GotoNextTorsheClassic();
+                        BuffClassic(botParam.Scout);                    //================================================================
+                        GotoNextClassic(botParam.Map);                 //================================================================
                         break;
                     case 9:                                         //одно из заданий выполнено
-                        //GotoMemorialPortoBelloClassic();
-                        //GotoMemorialPortoBelloCabinClassic();
-                        //GotoMemorialLagoDeTresClassic();
-                        //GotoMemorialGaviClassic();
-                        GotoMemorialTorsheClassic();
+                        botwindow.Hero(botParam.Scout);
+                        GotoMemorialClassic(botParam.Map);             //================================================================
                         PressMeMorial();
+                        if (!dialog.isDialogClassic()) PressMeMorial();
                         break;
                     case 10:                                        //задания не выполнены
-                        //GotoNextPortoBelloClassic();
-                        //GotoNextPortoBelloCabinClassic();
-                        //GotoNextLagoDeTresClassic();
-                        //GotoNextGaviClassic();
-                        botParam.HowManyCyclesToSkip = 1;
+                        if (!isBattleModeClassic())
+                        { 
+                            BattleModeOnDem(); 
+                            ActivationPetClassic();
+                            botwindow.Hero(botParam.Scout);
+                        }
+                        //botParam.HowManyCyclesToSkip = 1;
                         break;
                 }
             }

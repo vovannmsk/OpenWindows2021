@@ -539,6 +539,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// выбрать i-го героя
+        /// </summary>
+        public void Hero(int i)
+        {
+            new Point(212 - 5 + xx + (i - 1) * 255, 691 - 5 + yy).DoubleClickL();
+        }
+
+        /// <summary>
         /// выбрать первого (левого) бойца из тройки
         /// </summary>
         public void FirstHero()
