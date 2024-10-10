@@ -550,7 +550,7 @@ namespace States
             StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
 
             // reOpen + connect + barack
-            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  
+            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
 
             //создание новой команды FERMA
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack

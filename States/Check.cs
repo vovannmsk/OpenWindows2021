@@ -8181,10 +8181,14 @@ namespace States
             //MessageBox.Show("лимит не исчерпан  " + BHdialog.isGateBH1());
             //MessageBox.Show("лимит исчерпан    " + BHdialog.isGateBH3());
             //MessageBox.Show("до 11  " + BHdialog.isGateLevelLessThan11());
-            //MessageBox.Show("Initialize  " + BHdialog.isInitialize());
-            //MessageBox.Show("первый герой=" + server.WhatsHero(1));
+            ////MessageBox.Show("Initialize  " + BHdialog.isInitialize());
+            MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
+            MessageBox.Show("есть бафф?" + server.FindWeaponMaster(1));
+            MessageBox.Show("есть бафф2?" + server.FindResolution(1));
+            //server.Buff(17, 1);
+
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
             //MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
             //MessageBox.Show("системное меню?" + server.isOpenTopMenu(9));
@@ -8266,9 +8270,10 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            //int j = 1;
-            PointColor point1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
+            int j = 7;
+
+            PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(731 - 5 + xx, 243 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();

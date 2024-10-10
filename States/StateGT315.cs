@@ -88,8 +88,10 @@ namespace States
         public bool isAllCool()
         {
             //return result;
-            return server.isBarack();
             //return !server.isLogout();
+
+            return server.isBarack();
+            //return true;
         }
 
         /// <summary>

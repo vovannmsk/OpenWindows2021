@@ -200,9 +200,9 @@ namespace OpenGEWindows
 
             //this.arrayOfColorsIsWork1 = new uint[7] { 12565, 4094, 4545, 16383, 9371, 8231, 995};
             //this.arrayOfColorsIsWork2 = new uint[7] { 12169, 2850, 2438, 16777, 3562,    0, 1522};   до 22-11-2023
-            this.arrayOfColorsIsWork1 = new uint[] { 12565, 4094, 4545, 16383, 9371, 8231, 995, 5603 };
-            this.arrayOfColorsIsWork2 = new uint[] { 12169, 2850, 2438, 16777, 3562, 0, 1522,5406 };
-                                                 // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary 
+            this.arrayOfColorsIsWork1 = new uint[] { 12565, 4094, 4545, 16383, 9371, 8231, 995, 5603, 7500 };
+            this.arrayOfColorsIsWork2 = new uint[] { 12169, 2850, 2438, 16777, 3562, 0, 1522, 5406, 8878 };
+                                                 // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary, Банши
 
 
             this.pointisKillHero1 = new PointColor( 81 - 5 + xx, 642 - 5 + yy, 2800000, 5);   //22-11
@@ -258,9 +258,9 @@ namespace OpenGEWindows
 
             //this.arrayOfColorsIsTown1 = new uint[7] { 12566, 4079, 4539, 16382, 9342, 8224, 986 };
             //this.arrayOfColorsIsTown2 = new uint[7] { 12171, 2829, 2434, 16777, 3552,    0, 1513 };   //до 22-11-2023 было норм
-            this.arrayOfColorsIsTown1 = new uint[] { 8092, 5921, 0, 16777, 0, 0, 0, 6974 };
-            this.arrayOfColorsIsTown2 = new uint[] { 7895, 1907, 0, 6118, 0, 0, 0, 6842 };
-            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary
+            this.arrayOfColorsIsTown1 = new uint[9] { 8092, 5921, 0, 16777, 0, 0, 0, 10132, 592 };
+            this.arrayOfColorsIsTown2 = new uint[9] { 7895, 1907, 0, 6118, 0, 0, 0, 7566, 0 };
+            // ружье, флинт, outrange, эксп дробаш, джайна, Миса, M.Lorch, Mary, Банши
 
             #endregion
 
