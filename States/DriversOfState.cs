@@ -547,10 +547,10 @@ namespace States
         public void StateInputOutput6()
         {
             // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
+            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
 
             // reOpen + connect + barack
-            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
+            StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
 
             //создание новой команды FERMA
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
@@ -621,7 +621,7 @@ namespace States
 
             botwindow.Pause(42000);
             //закрываем чистое окно с игрой
-             StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
+            StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
         }
 
 

@@ -244,11 +244,11 @@ namespace OpenGEWindows
             this.pointisToken2 = new PointColor(478 - 5 + xx, 93 - 5 + yy, 13000000, 5);
             this.pointToken = new Point(755 - 5 + xx, 94 - 5 + yy);                       //крестик в углу окошка с токенами
             this.pointCure1 = new Point(215 - 5 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой U
-            this.pointCure2 = new Point(215 - 5 + 255 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой J
-            this.pointCure3 = new Point(215 - 5 + 255 * 2 + xx, 705 - 5 + yy);                        //бутылка лечения под буквой M
-            this.pointMana1 = new Point(250 - 5 + xx, 705 - 5 + yy);                        //бутылка маны под буквой I   22-11
-            this.pointMana2 = new Point(250 - 5 + 255 + xx, 705 - 5 + yy);                  //бутылка маны под буквой K    22-11
-            this.pointMana3 = new Point(250 - 5 + 510 + xx, 705 - 5 + yy);                  //бутылка маны под буквой ,    22-11
+            this.pointCure2 = new Point(215 - 5 + 255 + xx, 705 - 5 + yy);                  //бутылка лечения под буквой J
+            this.pointCure3 = new Point(215 - 5 + 255 * 2 + xx, 705 - 5 + yy);              //бутылка лечения под буквой M
+            this.pointMana1 = new Point(250 - 5 + xx, 705 - 5 + yy);                        //бутылка маны под буквой I  
+            this.pointMana2 = new Point(250 - 5 + 255 + xx, 705 - 5 + yy);                  //бутылка маны под буквой K  
+            this.pointMana3 = new Point(250 - 5 + 510 + xx, 705 - 5 + yy);                  //бутылка маны под буквой ,  
             this.pointGM = new Point(439 - 5 + xx, 413 - 5 + yy);
 //            this.pointHeadGM = new Point(369 - 5 + xx, 290 - 5 + yy);
             this.pointHeadGM = new Point(394 - 5 + xx, 394 - 5 + yy);

@@ -4,8 +4,6 @@ using System.Drawing;
 using System.Threading;
 using States;
 using GEBot.Data;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Linq;
 
 namespace Main
 {
@@ -1721,7 +1719,6 @@ namespace Main
         }
 
         #endregion
-
 
         #region ============================== кач на мемориале Classic ===================================
 

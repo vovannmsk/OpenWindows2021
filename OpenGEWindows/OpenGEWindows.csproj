@@ -122,6 +122,11 @@
     <Compile Include="EuropaTownKatovia.cs" />
     <Compile Include="GoldenEggAmerica2.cs" />
     <Compile Include="GoldenEggEuropa2.cs" />
+    <Compile Include="Hero.cs" />
+    <Compile Include="HeroMLorch.cs" />
+    <Compile Include="HeroFactory.cs" />
+    <Compile Include="HeroBernelli.cs" />
+    <Compile Include="HeroMusk.cs" />
     <Compile Include="KatoviaMarket.cs" />
     <Compile Include="KatoviaMarketAmerica2.cs" />
     <Compile Include="KatoviaMarketAmerica.cs" />

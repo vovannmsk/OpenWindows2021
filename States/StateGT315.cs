@@ -69,6 +69,7 @@ namespace States
             //}
 
             server.Connect();
+            //server.QuickConnect();
             botwindow.Pause(1000);
 
         }
@@ -90,8 +91,8 @@ namespace States
             //return result;
             //return !server.isLogout();
 
-            return server.isBarack();
-            //return true;
+            //return server.isBarack();
+            return true;
         }
 
         /// <summary>

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
-using System.IO;
+//using System.IO;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Drawing;
+//using System.Drawing;
 using GEBot.Data;
 using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
-using System.Windows.Media;
-using OpenGEWindows;
+//using System.Runtime.InteropServices.ComTypes;
+//using System.Windows.Media;
+//using OpenGEWindows;
 
 namespace OpenGEWindows
 {
@@ -3322,6 +3322,16 @@ namespace OpenGEWindows
             iPoint pointFourthBox = new Point(31 - 5 + xx, 200 - 5 + yy);
             pointFourthBox.PressMouseL();                // тыкаю в  (четвертая ячейка)
 
+        }
+
+        /// <summary>
+        /// выпиваем бутылки с маной, которые лежат в ячейках для лечения (U,J,M)
+        /// </summary>
+        public void ManaForDemonic()
+        {
+            pointCure1.PressMouseL();
+            pointCure2.PressMouseL();
+            pointCure3.PressMouseL();
         }
 
         /// <summary>
@@ -7231,15 +7241,33 @@ namespace OpenGEWindows
             AttackCtrl(x, y);
 
 
-            if (this.Counter >= 7)
+            if (this.Counter >= 5)          //бафаемся один раз в 5 ходов
             {
-                //бафаемся один раз в 3 хода
+                BattleModeOnDem();
                 botwindow.ActiveAllBuffBH();
                 botwindow.PressEsc(4);
-                Buff(Hero[1], 1);
-                Buff(Hero[2], 2);
-                Buff(Hero[3], 3);
+
+                //бафаемся героями первый раз
+                Buff(this.Hero[1], 1);
+                Buff(this.Hero[2], 2);
+                Buff(this.Hero[3], 3);
+                ManaForDemonic();
+                //бафаемся героями второй раз (на случай, если у героя два бафа или первый раз не получилось пробафаться)
+                Buff(this.Hero[1], 1);
+                Buff(this.Hero[2], 2);
+                Buff(this.Hero[3], 3);
+                ManaForDemonic();
                 this.Counter = 0;
+            }
+            else
+            { 
+                if (isBoss())
+                {
+                    SkillBoss(Hero[1], 1);
+                    SkillBoss(Hero[2], 2);
+                    SkillBoss(Hero[3], 3);
+                    ManaForDemonic();
+                }
             }
             this.Counter++;
 
@@ -7364,14 +7392,6 @@ namespace OpenGEWindows
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
                     return 10;   //Бернелли с флинтом
             }
-            //if (new PointColor(24 - 5 + xx + (i - 1) * 255, 690 - 5 + yy, 16777078, 0).isColor()) result = 2;   //Берка(супериор бластер)
-            //if (new PointColor(18 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 5041407, 0).isColor()) result = 3;    //Лорч
-            //if (new PointColor(24 - 5 + xx + (i - 1) * 255, 692 - 5 + yy, 9371642, 0).isColor()) result = 4;    //Джайна
-            //if (new PointColor(23 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
-            //if (new PointColor(23 - 5 + xx + (i - 1) * 255, 693 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
-            //if (new PointColor(26 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
-            //if (new PointColor(25 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
-
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor()) return 2;     //Берка(супериор бластер)
             if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor())  return 3;     //М.Лорч
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor())  return 4;     //Джайна
@@ -7382,7 +7402,7 @@ namespace OpenGEWindows
 //          if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor()) return 11;    //Rosie
             if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Mary
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;     //C.Daria   -------------------------
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;           //C.Daria   -------------------------
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 8716287, 0).isColor()) return 14;     // Aither   ---------++++++++++++++++
             if (new PointColor(22 - 5 + xx + (i - 1) * 255, 712 - 5 + yy, 65535, 0).isColor()) return 15;       //М.Калипсо   --------+++++++++++++++
             if (new PointColor(31 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 15856385, 0).isColor()) return 16;    //Банши   --------++++++++++++++
@@ -7390,7 +7410,10 @@ namespace OpenGEWindows
             if (new PointColor(39 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 8323241, 0).isColor()) return 18;     //Miho   -------+++++++++++++++
             if (new PointColor(27 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 69370, 0).isColor()) return 19;       //R.JD   ----------++++++++++++++++
             if (new PointColor(23 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 11453688, 0).isColor()) return 20;    //Jane  --------++++++++++++++
-            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 8711323, 0).isColor()) return 21;           //Лорч  -------++++++++++++++++++
+            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 8711323, 0).isColor()) return 21;     //Лорч  -------++++++++++++++++++
+            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5925855, 0).isColor()) return 22;     //Rebecca ------+++++++++++
+            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4929704, 0).isColor()) return 23;     //DivineHammerBryan --------++++++++++++++
+            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 2703856, 0).isColor()) return 24;     //LoraConstans -----------------------
 
             return 0;
         }
@@ -7470,7 +7493,16 @@ namespace OpenGEWindows
                         BuffJane(i);  //надо сделать
                         break;
                     case 21:
-                        BuffLorch(i);  //надо сделать
+                        BuffLorch(i);  
+                        break;
+                    case 22:
+                        BuffRebecca(i);  
+                        break;
+                    case 23:
+                        BuffDivine(i);  
+                        break;
+                    case 24:
+                        BuffLoraConstans(i);
                         break;
 
 
@@ -7492,6 +7524,18 @@ namespace OpenGEWindows
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 4000000, 6).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7314875, 0).isColor() ||
                         new PointColor(456 - 5 + xx, 103 - 5 + yy, 7462629, 0).isColor();
+
+        }
+
+        /// <summary>
+        /// в прицеле босс? (Для Демоника)
+        /// </summary>
+        /// <returns>true, если босс в прицеле</returns>
+        public bool isBoss()
+        {
+            //Определяем по наличию плюсика перед названием босса вверху
+            return  new PointColor(415 - 5 + xx, 93 - 5 + yy, 13430000, 4).isColor() &&
+                    new PointColor(416 - 5 + xx, 93 - 5 + yy, 13430000, 4).isColor();
 
         }
 
@@ -7619,6 +7663,119 @@ namespace OpenGEWindows
                     break;
             }
         }
+
+        /// <summary>
+        /// скилуем i-м героем
+        /// </summary>
+        /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
+        /// <param name="i">номер героя</param>
+        public void SkillBoss(int typeOfHero, int i)
+        {
+            switch (typeOfHero)
+            {
+                case 1:
+                    //Муха
+                    BuffT(i);
+                    break;
+                case 2:
+                    //Bernelli Blaster
+                    BuffT(i);
+                    break;
+                case 3:
+                    //MLorch
+                    BuffT(i);
+                    break;
+                case 4:
+                    //Jaina
+                    BuffT(i);
+                    break;
+                case 5:
+                    //Barell
+                    
+                    break;
+                case 6:
+                    //Cecille
+                    BuffR(i);
+                    break;
+                case 7:
+                    //Tom
+                    break;
+                case 8:
+                    //Moon
+                    break;
+                case 9:
+                    //Misa
+                    BuffT(i);  //скилуем самым крутым скиллом
+                    break;
+                case 10:
+                    //BernelliFlint
+                    BuffT(i);
+                    break;
+                case 11:
+                    //Rosie
+                    BuffT(i);
+                    break;
+                case 12:
+                    //Mary
+                    BuffT(i);
+                    break;
+                case 13:
+                    //C.Daria
+                    BuffT(i);
+                    break;
+                case 14:
+                    // Aither 
+                    BuffT(i);
+                    break;
+                case 15:
+                    //М.Калипсо
+                    BuffT(i);
+                    break;
+                case 16:
+                    //Банши
+                    BuffT(i);
+                    break;
+                case 17:
+                    //СуперРомина
+                    BuffT(i);
+                    break;
+                case 18:
+                    //Miho
+                    BuffT(i);
+                    break;
+                case 19:
+                    //R.JD
+                    BuffT(i);
+                    break;
+                case 20:
+                    //Jane
+                    BuffT(i);
+                    break;
+                case 21:
+                    //Лорч
+                    BuffT(i);
+                    break;
+                case 22:
+                    //Rebecca
+                    BuffT(i);
+                    break;
+                case 23:
+                    //DivineHammer
+                    BuffT(i);
+                    break;
+                case 24:
+                    //
+                    BuffT(i);
+                    break;
+                case 25:
+                    //
+                    BuffT(i);
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Marchen" /Moon/
@@ -7917,6 +8074,87 @@ namespace OpenGEWindows
 
 
         /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "ChangerDeMode" /Rebecca/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindChangerDeMode(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 593 - 5 + yy, 15920000, 4).isColor() &&
+                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 594 - 5 + yy, 15730000, 4).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Metallurgy" /DivaneHammerBryan/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindMetallurgy(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13090000, 4).isColor() &&
+                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 13290000, 4).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Justice" /LoraConstans/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindJustice(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 13080000, 4).isColor() &&
+                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 12880000, 4).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Promise" /LoraConstans/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindPromise(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 1068760, 0).isColor() &&
+                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 17110, 0).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Aergia" /Aither/
         /// </summary>
         /// <param name="i">номер героя</param>
@@ -8112,7 +8350,7 @@ namespace OpenGEWindows
         private void BuffBernelliBlaster(int i)
         {
             if (!FindMarksmanship(i)) BuffY(i);
-            if (!FindHound(i)) BuffQ(i);
+            //if (!FindHound(i)) BuffQ(i);
         }
 
         /// <summary>
@@ -8275,14 +8513,33 @@ namespace OpenGEWindows
             if (!FindInfiltration(i)) BuffY(i);
         }
 
+        /// <summary>
+        /// бафаем Rebecca на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffRebecca(int i)
+        {
+            if (!FindChangerDeMode(i)) BuffY(i);
+        }
 
+        /// <summary>
+        /// бафаем DivineHammerBryan на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffDivine(int i)
+        {
+            if (!FindMetallurgy(i)) BuffY(i);
+        }
 
-
-
-
-
-
-
+        /// <summary>
+        /// бафаем LoraConstans на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffLoraConstans(int i)
+        {
+            if (!FindJustice(i)) BuffY(i);
+            if (!FindPromise(i)) BuffW(i);
+        }
 
 
         /// <summary>
@@ -9020,8 +9277,11 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isActivityOut()
         {
-            return new PointColor(704 - 5 + xx, 565 - 5 + yy, 4530000, 4).isColor()
-                 && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4530000, 4).isColor();
+            return  new PointColor(704 - 5 + xx, 565 - 5 + yy, 4530000, 4).isColor()
+                 && new PointColor(704 - 5 + xx, 566 - 5 + yy, 4530000, 4).isColor()
+                 ||
+                    new PointColor(484 - 5 + xx, 561 - 5 + yy, 4730000, 4).isColor()
+                 && new PointColor(485 - 5 + xx, 561 - 5 + yy, 4730000, 4).isColor();
         }
 
         /// <summary>
@@ -9031,15 +9291,23 @@ namespace OpenGEWindows
         public void BeginAttack(int weekDay)
         {
             //бафаемся
-            MoveCursorOfMouse();
-            int Hero1 = WhatsHero(1);
-            int Hero2 = WhatsHero(2);
-            int Hero3 = WhatsHero(3);
-            Buff(Hero1, 1);
-            Buff(Hero2, 2);
-            Buff(Hero3, 3);
+            BattleModeOnDem();
+
             botwindow.ActiveAllBuffBH();
-            botwindow.PressEscThreeTimes();
+            botwindow.PressEsc(4);
+
+            MoveCursorOfMouse();
+            this.Hero[1] = WhatsHero(1);
+            this.Hero[2] = WhatsHero(2);
+            this.Hero[3] = WhatsHero(3);
+
+            Buff(this.Hero[1], 1);
+            Buff(this.Hero[2], 2);
+            Buff(this.Hero[3], 3);
+
+            Buff(this.Hero[1], 1);
+            Buff(this.Hero[2], 2);
+            Buff(this.Hero[3], 3);
 
             //идём в атаку с Ctrl
             AttackTheEnemy(weekDay);
@@ -10161,9 +10429,11 @@ namespace OpenGEWindows
                         botwindow.ThirdHero();                      //эксперимент от 29-01-2024
 
                         ChatFifthBookmark();
-                        Hero[1] = WhatsHero(1);
-                        Hero[2] = WhatsHero(2);
-                        Hero[3] = WhatsHero(3);
+
+                        //MoveCursorOfMouse();
+                        this.Hero[1] = WhatsHero(1);
+                        this.Hero[2] = WhatsHero(2);
+                        this.Hero[3] = WhatsHero(3);
 
                         ActivePetDem();                             //новая функция  22-11
                         MaxHeight(12);
@@ -10171,10 +10441,16 @@ namespace OpenGEWindows
                         //бафаемся, пока не вылезли мобы
                         botwindow.ActiveAllBuffBH();
                         botwindow.PressEsc(4);
-                        Buff(Hero[1], 1);
-                        Buff(Hero[2], 2);
-                        Buff(Hero[3], 3);
-
+                        //бафаемся героями первый раз
+                        Buff(this.Hero[1], 1);
+                        Buff(this.Hero[2], 2);
+                        Buff(this.Hero[3], 3);
+                        //бафаемся героями второй раз
+                        Buff(this.Hero[1], 1);
+                        Buff(this.Hero[2], 2);
+                        Buff(this.Hero[3], 3);
+                        MoveCursorOfMouse();
+                        ManaForDemonic();
 
                         botParam.Stage = 2;
                         //botParam.HowManyCyclesToSkip = 1;           // даём время, чтобы вылезли мобы
@@ -10258,7 +10534,7 @@ namespace OpenGEWindows
                         ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
                         MoveCursorOfMouse();
                         botParam.Stage = 3;
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 3;
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
@@ -10295,7 +10571,7 @@ namespace OpenGEWindows
             else
             {
                 botParam.HowManyCyclesToSkip--;
-                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(3000);
             }
         }
 

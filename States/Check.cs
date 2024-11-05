@@ -5068,7 +5068,6 @@ namespace States
         #endregion
 
 
-
         #region  =================================== bridgeElement Stage 1 (переход к нужному этапу) =============================
 
         /// <summary>
@@ -5701,7 +5700,6 @@ namespace States
         #endregion
 
 
-
         #region  =================================== PureOtiteNew Stage 1 ==============================================
 
         /// <summary>
@@ -5847,10 +5845,11 @@ namespace States
                         break;
                     case 7:     //у Мамона
                         driver.FromMamonsToMamonsDialog();          //Mamons --> Mamons(Dialog)
-                        botParam.HowManyCyclesToSkip = 3;           // даём время, чтобы загрузился Лос Толдос
+                        
                         break;
                     case 8:    //диалог у Мамона
                         dialog.PressStringDialog(1);
+                        botParam.HowManyCyclesToSkip = 3;           // даём время, чтобы загрузился Лос Толдос
                         break;
                     case 9:                                         //в миссии
                         botParam.Stage = 4;
@@ -7994,10 +7993,6 @@ namespace States
 
         #endregion =================================================================================================
 
-
-
-
-
         /// <summary>
         /// тестовая кнопка
         /// </summary>
@@ -8069,7 +8064,8 @@ namespace States
             //MessageBox.Show("меню открыто? " + server.isOpenWarpList());
             //MessageBox.Show("первые ворота? " + server.isGate());
             //MessageBox.Show("баф2? " + server.FindHound(2));
-            //MessageBox.Show("баф1? " + server.FindHound(1));
+            MessageBox.Show("баф? " + server.FindJustice(1));
+            MessageBox.Show("баф? " + server.FindPromise(1));
             //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
             //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
             //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
@@ -8185,8 +8181,8 @@ namespace States
             MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
-            MessageBox.Show("есть бафф?" + server.FindWeaponMaster(1));
-            MessageBox.Show("есть бафф2?" + server.FindResolution(1));
+            //MessageBox.Show("есть бафф?" + server.FindWeaponMaster(1));
+            //MessageBox.Show("есть бафф2?" + server.FindResolution(1));
             //server.Buff(17, 1);
 
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
@@ -8270,11 +8266,11 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            int j = 7;
+            int j = 3;
 
-            PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(731 - 5 + xx, 243 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
