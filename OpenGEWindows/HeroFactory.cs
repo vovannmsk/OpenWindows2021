@@ -6,10 +6,10 @@ namespace OpenGEWindows
         private readonly int xx;
         private readonly int yy;
 
-        public HeroFactory(botWindow botwindow)
+        public HeroFactory(int xx, int yy)
         {
-            this.xx = botwindow.getX();
-            this.yy = botwindow.getY();
+            this.xx = xx;
+            this.yy = yy;
         }
 
         /// <summary>
@@ -24,8 +24,8 @@ namespace OpenGEWindows
                 //проверяем Y, чтобы понять мушкетер или Бернелли
                 if (new PointColor(187 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 13951211, 0).isColor())
                     return 1;     //мушкетер с флинтом
-                if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
-                    return 10;   //Бернелли с флинтом
+                //if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
+                //    return 10;   //Бернелли с флинтом
             }
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor()) return 2;     //Берка(супериор бластер)
             if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor()) return 3;     //М.Лорч
@@ -36,7 +36,7 @@ namespace OpenGEWindows
             //if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) return 8;       //Moon
             //if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) return 9;    //Misa
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor()) return 11;    //Rosie
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Mary
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Marie
             //if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;           //C.Daria   -------------------------
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 8716287, 0).isColor()) return 14;     // Aither   ---------++++++++++++++++
             if (new PointColor(22 - 5 + xx + (i - 1) * 255, 712 - 5 + yy, 65535, 0).isColor()) return 15;       //М.Калипсо   --------+++++++++++++++
@@ -68,6 +68,75 @@ namespace OpenGEWindows
                     hero = new HeroMusk(i, this.xx, this.yy);
                     break;
                 case 2:
+                    hero = new HeroBernelli(i, this.xx, this.yy);
+                    break;
+                case 3:
+                    hero = new HeroMLorch(i, this.xx, this.yy);
+                    break;
+                case 4:
+                    hero = new HeroJaina(i, this.xx, this.yy);
+                    break;
+                //case 5:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                case 6:
+                    hero = new HeroCecille(i, this.xx, this.yy);
+                    break;
+                //case 7:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                //case 8:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                //case 9:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                //case 10:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                case 11:
+                    hero = new HeroRosie(i, this.xx, this.yy);
+                    break;
+                case 12:
+                    hero = new HeroMarie(i, this.xx, this.yy);
+                    break;
+                //case 13:
+                //    hero = new HeroBernelli(i, this.xx, this.yy);
+                //    break;
+                case 14:
+                    hero = new HeroAither(i, this.xx, this.yy);
+                    break;
+                case 15:
+                    hero = new HeroMCalipso(i, this.xx, this.yy);
+                    break;
+                case 16:
+                    hero = new HeroVanshee(i, this.xx, this.yy);
+                    break;
+                case 17:
+                    hero = new HeroSuperRomina(i, this.xx, this.yy);
+                    break;
+                case 18:
+                    hero = new HeroMiho(i, this.xx, this.yy);
+                    break;
+                case 19:
+                    hero = new HeroRJD(i, this.xx, this.yy);
+                    break;
+                case 20:
+                    hero = new HeroJane(i, this.xx, this.yy);
+                    break;
+                case 21:
+                    hero = new HeroLorch(i, this.xx, this.yy);
+                    break;
+                case 22:
+                    hero = new HeroRebecca(i, this.xx, this.yy);
+                    break;
+                case 23:
+                    hero = new HeroDivineHammerBryan(i, this.xx, this.yy);
+                    break;
+                case 24:
+                    hero = new HeroLoraConstans(i, this.xx, this.yy);
+                    break;
+                case 25:
                     hero = new HeroBernelli(i, this.xx, this.yy);
                     break;
                 default:

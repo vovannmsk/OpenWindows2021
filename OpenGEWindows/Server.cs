@@ -746,10 +746,16 @@ namespace OpenGEWindows
         protected int prevPrevProblem;
         /// <summary>
         /// информация о том, какие герои в нашей команде: Hero[1] - первый герой, Hero[2] - второй, Hero[3] - третий
-        /// 0 - герой не определён, 1 - мушкетёр или Берка(Флинт), 2 - Бернелли (Superior Blaster), 3 - М.Лорч, 4 - Джайна
+        /// 0 - герой не определён, 1 - мушкетёр, 2 - Бернелли (Superior Blaster), 3 - М.Лорч, 4 - Джайна
         /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
         /// </summary>
-        protected int[] Hero;
+        //protected int[] Hero;
+        protected HeroFactory heroFactory;
+        /// <summary>
+        /// информация о том, какие герои в нашей команде: Hero[1] - первый герой, Hero[2] - второй, Hero[3] - третий
+        /// 0 - герой не определён, 1 - мушкетёр, 2 - Бернелли (Superior Blaster), 3 - М.Лорч, 4 - Джайна
+        /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
+        /// </summary>
         protected Hero[] hero;
         /// <summary>
         /// направление движения (1 - вправо, -1 - влево)
@@ -9346,9 +9352,13 @@ namespace OpenGEWindows
         /// </summary>
         public void WhatsHeroes()
         {
-            this.Hero[1] = WhatsHero(1);
-            this.Hero[2] = WhatsHero(2);
-            this.Hero[3] = WhatsHero(3);
+            //this.Hero[1] = WhatsHero(1);
+            //this.Hero[2] = WhatsHero(2);
+            //this.Hero[3] = WhatsHero(3);
+            this.hero[1] = heroFactory.Create(1);
+            this.hero[2] = heroFactory.Create(2);
+            this.hero[3] = heroFactory.Create(3);
+
         }
 
         /// <summary>
@@ -9356,9 +9366,13 @@ namespace OpenGEWindows
         /// </summary>
         public void BuffHeroes()
         {
-            Buff(this.Hero[1], 1);
-            Buff(this.Hero[2], 2);
-            Buff(this.Hero[3], 3);
+            //Buff(this.Hero[1], 1);
+            //Buff(this.Hero[2], 2);
+            //Buff(this.Hero[3], 3);
+
+            hero[1].Buff();
+            hero[2].Buff();
+            hero[3].Buff();
         }
 
         /// <summary>
@@ -9366,9 +9380,13 @@ namespace OpenGEWindows
         /// </summary>
         public void SkillHeroes()
         {
-            SkillBoss(this.Hero[1], 1);
-            SkillBoss(this.Hero[2], 2);
-            SkillBoss(this.Hero[3], 3);
+            //SkillBoss(this.Hero[1], 1);
+            //SkillBoss(this.Hero[2], 2);
+            //SkillBoss(this.Hero[3], 3);
+
+            hero[1].SkillBoss();
+            hero[2].SkillBoss();
+            hero[3].SkillBoss();
         }
 
 
@@ -9430,9 +9448,14 @@ namespace OpenGEWindows
         {
             MoveCursorOfMouse();
             WhatsHeroes();
-            Skill(Hero[1], 1, isBoss);
-            Skill(Hero[2], 2, isBoss);
-            Skill(Hero[3], 3, isBoss);
+            //Skill(Hero[1], 1, isBoss);
+            //Skill(Hero[2], 2, isBoss);
+            //Skill(Hero[3], 3, isBoss);
+
+            hero[1].Skill(isBoss);
+            hero[2].Skill(isBoss);
+            hero[3].Skill(isBoss);
+
             MoveCursorOfMouse();
         }
 
@@ -10509,9 +10532,10 @@ namespace OpenGEWindows
                         ChatFifthBookmark();
 
                         //MoveCursorOfMouse();
-                        this.Hero[1] = WhatsHero(1);
-                        this.Hero[2] = WhatsHero(2);
-                        this.Hero[3] = WhatsHero(3);
+                        WhatsHeroes();
+                        //this.Hero[1] = WhatsHero(1);
+                        //this.Hero[2] = WhatsHero(2);
+                        //this.Hero[3] = WhatsHero(3);
 
                         ActivePetDem();                             //новая функция  22-11
                         MaxHeight(12);
@@ -10520,13 +10544,15 @@ namespace OpenGEWindows
                         botwindow.ActiveAllBuffBH();
                         botwindow.PressEsc(4);
                         //бафаемся героями первый раз
-                        Buff(this.Hero[1], 1);
-                        Buff(this.Hero[2], 2);
-                        Buff(this.Hero[3], 3);
+                        BuffHeroes();
+                        //Buff(this.Hero[1], 1);
+                        //Buff(this.Hero[2], 2);
+                        //Buff(this.Hero[3], 3);
                         //бафаемся героями второй раз
-                        Buff(this.Hero[1], 1);
-                        Buff(this.Hero[2], 2);
-                        Buff(this.Hero[3], 3);
+                        BuffHeroes();
+                        //Buff(this.Hero[1], 1);
+                        //Buff(this.Hero[2], 2);
+                        //Buff(this.Hero[3], 3);
                         MoveCursorOfMouse();
                         ManaForDemonic();
 
@@ -10911,9 +10937,10 @@ namespace OpenGEWindows
                         botwindow.CommandMode();
                         BattleModeOnDem();                          //пробел
 
-                        Hero[1] = WhatsHero(1);
-                        Hero[2] = WhatsHero(2);
-                        Hero[3] = WhatsHero(3);
+                        WhatsHeroes();
+                        //Hero[1] = WhatsHero(1);
+                        //Hero[2] = WhatsHero(2);
+                        //Hero[3] = WhatsHero(3);
 
                         ActivePetDem();                             //новая функция  22-11
                         botwindow.ThirdHero();
@@ -11006,9 +11033,10 @@ namespace OpenGEWindows
                         if ((NextPointNumber == 0) || (NextPointNumber == 2) || (NextPointNumber == 4))
                         {
                             MoveCursorOfMouse();
-                            Buff(Hero[1], 1);
-                            Buff(Hero[2], 2);
-                            Buff(Hero[3], 3);
+                            BuffHeroes();
+                            //Buff(Hero[1], 1);
+                            //Buff(Hero[2], 2);
+                            //Buff(Hero[3], 3);
                             botwindow.ActiveAllBuffBH();
                             botwindow.PressEscThreeTimes();
                         }

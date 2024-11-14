@@ -661,15 +661,14 @@ namespace OpenGEWindows
 
             #region All in One
 
-            this.Hero = new int[4] { 0, 0, 0, 0 };
-            this.hero = new Hero[4];
+            //this.Hero = new int[4] { 0, 0, 0, 0 };
             this.DirectionOfMovement = 1;
             this.NeedToPickUpFeso = false;
             this.NeedToPickUpRight = false;
             this.NeedToPickUpLeft = false;
             this.NextPointNumber = 0;
             this.Counter = 3;
-
+            this.heroFactory = new HeroFactory(xx,yy);
             #endregion
 
 

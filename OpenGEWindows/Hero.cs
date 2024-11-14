@@ -35,10 +35,20 @@ namespace OpenGEWindows
         //======= методы =========
 
         public abstract void Buff();
-        public abstract void Skill();
+        public abstract void SkillBoss();
         public abstract bool isBuff1(int j);
         public abstract bool isBuff2(int j);
 
+        /// <summary>
+        /// скиллуем боссов и мобов
+        /// </summary>
+        public void Skill(bool isBoss)
+        {
+            if (isBoss)
+                SkillBoss();
+            else
+                BuffE();
+        }
         /// <summary>
         /// функция проверяет, убит ли i-й герой из пати (проверка проходит на карте)
         /// </summary>

@@ -24,7 +24,7 @@ namespace OpenGEWindows
         {
             //isLoadedGEBH = false;   //?????????????? может не ставить сюда ??????????????????
             isLoadedSteamBH = false;
-            this.Hero = new int[4] { 0, 0, 0, 0 };
+            //this.Hero = new int[4] { 0, 0, 0, 0 };
             #region общие
 
             this.botwindow = botwindow;

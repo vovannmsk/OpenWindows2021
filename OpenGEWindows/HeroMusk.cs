@@ -50,7 +50,7 @@ namespace OpenGEWindows
         /// <summary>
         /// скиллуем лучшим скиллом 
         /// </summary>
-        public override void Skill()
+        public override void SkillBoss()
         {
             BuffT();
         }
