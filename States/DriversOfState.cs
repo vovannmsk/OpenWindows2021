@@ -547,10 +547,10 @@ namespace States
         public void StateInputOutput6()
         {
             // reOpen + connect + barack + команда №2 (ХАЙМАСТЕРА) + город 
-            //StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
+            StateDriverRun(new StateGT314(botwindow), new StateGT317(botwindow));
 
             // reOpen + connect + barack
-            StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
+            //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
 
             //создание новой команды FERMA
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
@@ -592,7 +592,7 @@ namespace States
 
 
             //закрываем проги в песочнице
-            StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
+             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
         /// <summary>

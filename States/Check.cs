@@ -5639,10 +5639,10 @@ namespace States
                         botParam.Stage = 5;
                         break;
                     case 8:
-                        server.SkillAll();
+                        server.SkillHeroes();
                         break;
                     case 9:
-                        server.SkillAll();
+                        server.SkillHeroes();
                         break;
                     case 10:
                         server.BattleModeOnDem();
@@ -8064,8 +8064,8 @@ namespace States
             //MessageBox.Show("меню открыто? " + server.isOpenWarpList());
             //MessageBox.Show("первые ворота? " + server.isGate());
             //MessageBox.Show("баф2? " + server.FindHound(2));
-            MessageBox.Show("баф? " + server.FindJustice(1));
-            MessageBox.Show("баф? " + server.FindPromise(1));
+            //MessageBox.Show("баф? " + server.FindJustice(1));
+            //MessageBox.Show("баф? " + server.FindPromise(1));
             //MessageBox.Show("баф3? " + server.FindMarksmanship(3));
             //MessageBox.Show("баф2? " + server.FindMarksmanship(2));
             //MessageBox.Show("баф1? " + server.FindMarksmanship(1));
@@ -8181,8 +8181,8 @@ namespace States
             MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
-            //MessageBox.Show("есть бафф?" + server.FindWeaponMaster(1));
-            //MessageBox.Show("есть бафф2?" + server.FindResolution(1));
+            MessageBox.Show("есть бафф?" + server.FindCatsEye(1));
+            MessageBox.Show("есть бафф2?" + server.FindEagleEye(1));
             //server.Buff(17, 1);
 
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
@@ -8266,11 +8266,11 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            int j = 3;
+            int j = 5;
 
-            PointColor point1 = new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

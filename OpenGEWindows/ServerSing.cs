@@ -662,6 +662,7 @@ namespace OpenGEWindows
             #region All in One
 
             this.Hero = new int[4] { 0, 0, 0, 0 };
+            this.hero = new Hero[4];
             this.DirectionOfMovement = 1;
             this.NeedToPickUpFeso = false;
             this.NeedToPickUpRight = false;

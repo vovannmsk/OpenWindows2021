@@ -25,7 +25,7 @@ namespace OpenGEWindows
         //    param = botParam.Parametrs[botParam.NumberOfInfinity];
         //    botwindow = new botWindow(numberOfWindow);
         //}
-        public ServerFactory(botWindow botwindow) 
+        public ServerFactory(botWindow botwindow)
         {
             this.botwindow = botwindow;
             this.numberOfWindow = botwindow.getNumberWindow();
@@ -38,8 +38,8 @@ namespace OpenGEWindows
 
 
         public Server create()
-        { 
-            switch (param)    
+        {
+            switch (param)
             {
                 case "C:\\America\\":
                     server = new ServerAmerica(botwindow);

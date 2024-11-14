@@ -750,6 +750,7 @@ namespace OpenGEWindows
         /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
         /// </summary>
         protected int[] Hero;
+        protected Hero[] hero;
         /// <summary>
         /// направление движения (1 - вправо, -1 - влево)
         /// </summary>
@@ -7248,14 +7249,16 @@ namespace OpenGEWindows
                 botwindow.PressEsc(4);
 
                 //бафаемся героями первый раз
-                Buff(this.Hero[1], 1);
-                Buff(this.Hero[2], 2);
-                Buff(this.Hero[3], 3);
+                BuffHeroes();
+                //Buff(this.Hero[1], 1);
+                //Buff(this.Hero[2], 2);
+                //Buff(this.Hero[3], 3);
                 ManaForDemonic();
                 //бафаемся героями второй раз (на случай, если у героя два бафа или первый раз не получилось пробафаться)
-                Buff(this.Hero[1], 1);
-                Buff(this.Hero[2], 2);
-                Buff(this.Hero[3], 3);
+                BuffHeroes();
+                //Buff(this.Hero[1], 1);
+                //Buff(this.Hero[2], 2);
+                //Buff(this.Hero[3], 3);
                 ManaForDemonic();
                 this.Counter = 0;
             }
@@ -7263,9 +7266,10 @@ namespace OpenGEWindows
             { 
                 if (isBoss())
                 {
-                    SkillBoss(Hero[1], 1);
-                    SkillBoss(Hero[2], 2);
-                    SkillBoss(Hero[3], 3);
+                    SkillHeroes();
+                    //SkillBoss(Hero[1], 1);
+                    //SkillBoss(Hero[2], 2);
+                    //SkillBoss(Hero[3], 3);
                     ManaForDemonic();
                 }
             }
@@ -7401,7 +7405,7 @@ namespace OpenGEWindows
 //          if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
 //          if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor()) return 11;    //Rosie
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Mary
+            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Marie
             if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;           //C.Daria   -------------------------
             if (new PointColor(26 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 8716287, 0).isColor()) return 14;     // Aither   ---------++++++++++++++++
             if (new PointColor(22 - 5 + xx + (i - 1) * 255, 712 - 5 + yy, 65535, 0).isColor()) return 15;       //М.Калипсо   --------+++++++++++++++
@@ -7414,6 +7418,7 @@ namespace OpenGEWindows
             if (new PointColor(32 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5925855, 0).isColor()) return 22;     //Rebecca ------+++++++++++
             if (new PointColor(32 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4929704, 0).isColor()) return 23;     //DivineHammerBryan --------++++++++++++++
             if (new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 2703856, 0).isColor()) return 24;     //LoraConstans -----------------------
+            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 16777214, 0).isColor()) return 25;     //Calipso -----------------------
 
             return 0;
         }
@@ -7487,7 +7492,7 @@ namespace OpenGEWindows
                         BuffMiho(i);  //надо сделать
                         break;
                     case 19:
-                        BuffRJD(i);   //надо сделать
+                        BuffRJD(i);   //
                         break;
                     case 20:
                         BuffJane(i);  //надо сделать
@@ -7504,7 +7509,9 @@ namespace OpenGEWindows
                     case 24:
                         BuffLoraConstans(i);
                         break;
-
+                    case 25:
+                        BuffCalipso(i);
+                        break;
 
                     case 0:
                         break;
@@ -7595,7 +7602,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// скилуем i-м героем
+        /// скилуем i-м героем. Скилл в зависимости от того, босс в прицеле или нет /не используется/
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
@@ -8014,7 +8021,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, есть ли на i-м герое бафф "CleaningTime" / Mary / Y
+        /// проверяем, есть ли на i-м герое бафф "OrderLady" / Mary / E
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
@@ -8053,7 +8060,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, есть ли на i-м герое бафф "Reasoning" /Jane/
+        /// проверяем, есть ли на i-м герое бафф "Infiltration" /Lorch/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
@@ -8094,7 +8101,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, есть ли на i-м герое бафф "Metallurgy" /DivaneHammerBryan/
+        /// проверяем, есть ли на i-м герое бафф "Metallurgy" /DivineHammerBryan/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
@@ -8133,6 +8140,47 @@ namespace OpenGEWindows
                 }
             return result;
         }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "CatsEye" /Calipso/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindCatsEye(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor() &&
+                        new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф "Eagle Eye" /Calipso/
+        /// </summary>
+        /// <param name="i">номер героя</param>
+        /// <returns>true, если есть</returns>
+        public bool FindEagleEye(int i)
+        {
+            bool result = false;    //бафа нет
+            for (int j = 3; j < 11; j++)
+                if (
+                        new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16050000, 4).isColor() &&
+                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 16250000, 4).isColor()           //23-11
+                    )
+                {
+                    result = true;
+                    break;
+                }
+            return result;
+        }
+
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Promise" /LoraConstans/
@@ -8541,6 +8589,15 @@ namespace OpenGEWindows
             if (!FindPromise(i)) BuffW(i);
         }
 
+        /// <summary>
+        /// бафаем Calipso на i-м месте
+        /// </summary>
+        /// <param name="i"></param>
+        private void BuffCalipso(int i)
+        {
+            if (!FindCatsEye(i)) BuffY(i);
+            if (!FindEagleEye(i)) BuffQ(i);
+        }
 
         /// <summary>
         /// появились ворота вместо сундука?
@@ -9285,6 +9342,37 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// определяем, что за герои стоят в команде
+        /// </summary>
+        public void WhatsHeroes()
+        {
+            this.Hero[1] = WhatsHero(1);
+            this.Hero[2] = WhatsHero(2);
+            this.Hero[3] = WhatsHero(3);
+        }
+
+        /// <summary>
+        /// бафаем героев всеми бафами, какие есть у героев  (Q,W,E,R,T,Y)
+        /// </summary>
+        public void BuffHeroes()
+        {
+            Buff(this.Hero[1], 1);
+            Buff(this.Hero[2], 2);
+            Buff(this.Hero[3], 3);
+        }
+
+        /// <summary>
+        /// скиллуем лучшими ударами, какие есть у героев  (T)
+        /// </summary>
+        public void SkillHeroes()
+        {
+            SkillBoss(this.Hero[1], 1);
+            SkillBoss(this.Hero[2], 2);
+            SkillBoss(this.Hero[3], 3);
+        }
+
+
+        /// <summary>
         /// комплекс действий при начале атаки в миссии на мосту
         /// </summary>
         /// <param name="weekDay">день недели по сингапуру</param>
@@ -9297,17 +9385,10 @@ namespace OpenGEWindows
             botwindow.PressEsc(4);
 
             MoveCursorOfMouse();
-            this.Hero[1] = WhatsHero(1);
-            this.Hero[2] = WhatsHero(2);
-            this.Hero[3] = WhatsHero(3);
 
-            Buff(this.Hero[1], 1);
-            Buff(this.Hero[2], 2);
-            Buff(this.Hero[3], 3);
-
-            Buff(this.Hero[1], 1);
-            Buff(this.Hero[2], 2);
-            Buff(this.Hero[3], 3);
+            WhatsHeroes();
+            BuffHeroes();
+            BuffHeroes();
 
             //идём в атаку с Ctrl
             AttackTheEnemy(weekDay);
@@ -9325,14 +9406,12 @@ namespace OpenGEWindows
         {
             //бафаемся
             MoveCursorOfMouse();
-            int Hero1 = WhatsHero(1);
-            int Hero2 = WhatsHero(2);
-            int Hero3 = WhatsHero(3);
-            Buff(Hero1, 1);
-            Buff(Hero2, 2);
-            Buff(Hero3, 3);
             botwindow.ActiveAllBuffBH();
             botwindow.PressEsc(4);
+
+            WhatsHeroes();
+            BuffHeroes();
+            BuffHeroes();
 
             //идём в атаку с Ctrl
             AttackTheEnemyElement(weekDay);    
@@ -9344,17 +9423,16 @@ namespace OpenGEWindows
 
 
         /// <summary>
-        /// скиллуем всеми героями лучшим ударом
+        /// скиллуем всеми героями (скиллы зависят от того, босс в прицеле или нет) /не используется/
         /// </summary>
-        public void SkillAll()
+        /// <param name="isBoss">если в прицеле босс, то true</param>
+        public void SkillAll(bool isBoss)
         {
             MoveCursorOfMouse();
-            int Hero1 = WhatsHero(1);
-            int Hero2 = WhatsHero(2);
-            int Hero3 = WhatsHero(3);
-            Skill(Hero1, 1, false);
-            Skill(Hero2, 2, false);
-            Skill(Hero3, 3, false);
+            WhatsHeroes();
+            Skill(Hero[1], 1, isBoss);
+            Skill(Hero[2], 2, isBoss);
+            Skill(Hero[3], 3, isBoss);
             MoveCursorOfMouse();
         }
 
