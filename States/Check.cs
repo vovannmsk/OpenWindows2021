@@ -303,12 +303,12 @@ namespace States
                         if (!botwindow.isCommandMode()) botwindow.CommandMode();
                         server.BattleModeOn();                      //пробел
                         server.ChatFifthBookmark();
-                        Hero[1] = server.WhatsHero(1);
-                        Hero[2] = server.WhatsHero(2);
-                        Hero[3] = server.WhatsHero(3);
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
+                        //Hero[1] = server.WhatsHero(1);
+                        //Hero[2] = server.WhatsHero(2);
+                        //Hero[3] = server.WhatsHero(3);
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
                         driver.StateActivePetDem();                 //сделать свой вариант вызова пета специально для Демоник!!!!!!
                         //MessageBox.Show(Hero[1] + " " + Hero[2] + " " + Hero[3]);
                         server.MaxHeight(7);                      //
@@ -463,16 +463,16 @@ namespace States
                         DirectionOfMovement = -1 * DirectionOfMovement;     //меняем направление движения
                         server.AttackTheMonsters(DirectionOfMovement);      //атакуем
                         Pause(1500);
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
                         server.BattleModeOn();
                         break;
                     case 4:                                                 //пробуем пробафаться
                         
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
                         server.BattleModeOn();
                         //if (Hero[1] == 1) server.BuffE(1);
                         //if (Hero[2] == 1) server.BuffE(2);
@@ -480,9 +480,9 @@ namespace States
                         break;
                     case 5:                                         //если в миссии и в прицеле босс, то скилляем 
                         //обновляем баффы, если надо
-                        server.Buff(Hero[1], 1);
-                        server.Buff(Hero[2], 2);
-                        server.Buff(Hero[3], 3);
+                        //server.Buff(Hero[1], 1);
+                        //server.Buff(Hero[2], 2);
+                        //server.Buff(Hero[3], 3);
 
                         //int number = rand.Next(1, 3);
                         //сделать выбор персонажа через rnd и им скиловать
@@ -840,9 +840,9 @@ namespace States
                         botwindow.ThirdHero();          //эксперимент 29-01-2024
 
                         server.ChatFifthBookmark();
-                        Hero[1] = server.WhatsHero(1);
-                        Hero[2] = server.WhatsHero(2);
-                        Hero[3] = server.WhatsHero(3);
+                        //Hero[1] = server.WhatsHero(1);
+                        //Hero[2] = server.WhatsHero(2);
+                        //Hero[3] = server.WhatsHero(3);
 
                         //server.messageWindowExtension();     //не актуально 22-11-23
 
@@ -1098,9 +1098,9 @@ namespace States
 
                         //бафаемся. Если бафались мушкетеры, то result = true
                         server.MoveCursorOfMouse();
-                        bool result =   server.Buff(Hero[1], 1) || 
-                                        server.Buff(Hero[2], 2) || 
-                                        server.Buff(Hero[3], 3);
+                        //bool result =   server.Buff(Hero[1], 1) || 
+                        //                server.Buff(Hero[2], 2) || 
+                        //                server.Buff(Hero[3], 3);
 
                         server.BattleModeOnDem();
 
@@ -1921,9 +1921,9 @@ namespace States
                         botwindow.CommandMode();
                         server.BattleModeOnDem();                   //пробел
 
-                        Hero[1] = server.WhatsHero(1);
-                        Hero[2] = server.WhatsHero(2);
-                        Hero[3] = server.WhatsHero(3);
+                        //Hero[1] = server.WhatsHero(1);
+                        //Hero[2] = server.WhatsHero(2);
+                        //Hero[3] = server.WhatsHero(3);
 
                         server.ActivePetDem();                     //новая функция  22-11
 
@@ -2173,9 +2173,9 @@ namespace States
                         if ((NextPointNumber == 0) || (NextPointNumber == 3) || (NextPointNumber == 6))
                         {
                             server.MoveCursorOfMouse();
-                            server.Buff(Hero[1], 1);
-                            server.Buff(Hero[2], 2);
-                            server.Buff(Hero[3], 3);
+                            //server.Buff(Hero[1], 1);
+                            //server.Buff(Hero[2], 2);
+                            //server.Buff(Hero[3], 3);
                             botwindow.ActiveAllBuffBH();
                             botwindow.PressEscThreeTimes();
                         }
@@ -7596,9 +7596,9 @@ namespace States
                     botwindow.PressBoxInLeftPanel(5);
                     botwindow.PressBoxInLeftPanel(6);
                     server.MoveCursorOfMouse();
-                    server.Buff(1, 1);
-                    server.Buff(1, 2);
-                    server.Buff(1, 3);
+                    //server.Buff(1, 1);
+                    //server.Buff(1, 2);
+                    //server.Buff(1, 3);
 
                     botwindow.PressEscThreeTimes();
                     break;
@@ -7636,9 +7636,9 @@ namespace States
                 case 15:
                     server.AddBullet10000();              //открываем коробку с патронами 10 000 штук
                     server.MoveCursorOfMouse();
-                    server.Buff(1, 1);
-                    server.Buff(1, 2);
-                    server.Buff(1, 3);
+                    //server.Buff(1, 1);
+                    //server.Buff(1, 2);
+                    //server.Buff(1, 3);
                     break;
                 //case 16:
                 //    server.LeaveGame();                  //если окно три прохода подряд в логауте, значит зависло. поэтому нажимаем кнопку "Leave Game"
@@ -8016,6 +8016,16 @@ namespace States
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
             //Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
+            Hero hero;
+
+            int xx, yy;
+            xx = koordX[i - 1];
+            yy = koordY[i - 1];
+            uint color1;
+            uint color2;
+            uint color3;
+            uint color4;
+            HeroFactory heroFactory = new HeroFactory(xx, yy);
 
             server.ReOpenWindow();
             //server.ActivePetDem();
@@ -8114,7 +8124,7 @@ namespace States
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
-            //MessageBox.Show("Юстиар ??? " + server.isUstiar());
+            MessageBox.Show("Юстиар ??? " + server.isUstiar());
             //MessageBox.Show("Кастилия ??? " + server.isCastilia());
             //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
@@ -8178,11 +8188,11 @@ namespace States
             //MessageBox.Show("лимит исчерпан    " + BHdialog.isGateBH3());
             //MessageBox.Show("до 11  " + BHdialog.isGateLevelLessThan11());
             ////MessageBox.Show("Initialize  " + BHdialog.isInitialize());
-            MessageBox.Show("первый герой=" + server.WhatsHero(1));
+            //MessageBox.Show("первый герой=" + server.WhatsHero(1));
             //MessageBox.Show("второй герой=" + server.WhatsHero(2));
             //MessageBox.Show("третий герой=" + server.WhatsHero(3));
-            MessageBox.Show("есть бафф?" + server.FindCatsEye(1));
-            MessageBox.Show("есть бафф2?" + server.FindEagleEye(1));
+            //MessageBox.Show("есть бафф?" + server.FindCatsEye(1));
+            //MessageBox.Show("есть бафф2?" + server.FindEagleEye(1));
             //server.Buff(17, 1);
 
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
@@ -8222,14 +8232,27 @@ namespace States
 
             //server.Buff(Hero[1], 1);
 
+
+
             #endregion
 
-            int xx, yy;
-            xx = koordX[i - 1];
-            yy = koordY[i - 1];
-            uint color1;
-            uint color2;
-            uint color3;
+            //Hero hero1 = heroFactory.Create(1);
+            //Hero hero2 = heroFactory.Create(2);
+            //Hero hero3 = heroFactory.Create(3);
+
+            //MessageBox.Show("герой 1?" + hero1.Name());
+            //MessageBox.Show("герой 2?" + hero2.Name());
+            //MessageBox.Show("герой 3?" + hero3.Name());
+
+            //MessageBox.Show("есть основной бафф 1? " + hero1.FindBuff1());
+            //MessageBox.Show("есть доп. бафф 1? " + hero1.FindBuff2());
+            //MessageBox.Show("есть основной бафф 2? " + hero2.FindBuff1());
+            //MessageBox.Show("есть доп. бафф 2? " + hero2.FindBuff2());
+            //MessageBox.Show("есть основной бафф 3? " + hero3.FindBuff1());
+            //MessageBox.Show("есть доп. бафф 3? " + hero3.FindBuff2());
+            //MessageBox.Show("в городе?" + hero.isTown());
+            //MessageBox.Show("в битве?" + hero.isWork());
+
             //int x = 483;
             //int y = 292;
             //int i = 4;
@@ -8266,19 +8289,23 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            int j = 5;
+            //int j = 4;
+            //i = 1;
 
-            PointColor point1 = new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(930 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(930 - 5 + xx, 259 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(963 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point4 = new PointColor(963 - 5 + xx, 259 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
             color3 = point3.GetPixelColor();
+            color4 = point4.GetPixelColor();
 
             MessageBox.Show("цвет 1 = " + color1);
             MessageBox.Show("цвет 2 = " + color2);
             MessageBox.Show("цвет 3 = " + color3);
+            MessageBox.Show("цвет 4 = " + color4);
             //}
 
             //for (int xxx = 133; xxx < 146; xxx++)

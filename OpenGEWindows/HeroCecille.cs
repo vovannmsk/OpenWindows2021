@@ -16,27 +16,33 @@ namespace OpenGEWindows
             colorTown2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 3);    //доделать
             colorWork1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
             colorWork2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
+            pointBuff11 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
+            pointBuff12 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
+            pointBuff21 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
+            pointBuff22 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
+            heroName = "Cecille";
+
         }
 
-        /// <summary>
-        /// проверяем, есть ли на герое 
-        /// </summary>
-        /// <param name="j">проверяем бафф на j-м месте</param>
-        /// <returns>true, если есть</returns>
-        public override bool isBuff1(int j)
-        {
-            return true;
-        }
+        ///// <summary>
+        ///// проверяем, есть ли на герое 
+        ///// </summary>
+        ///// <param name="j">проверяем бафф на j-м месте</param>
+        ///// <returns>true, если есть</returns>
+        //public override bool isBuff1(int j)
+        //{
+        //    return true;
+        //}
 
-        /// <summary>
-        /// проверяем, есть ли на герое доп. бафф (Share Flint)
-        /// </summary>
-        /// <param name="j">проверяем бафф на j-м месте</param>
-        /// <returns>true, если есть</returns>
-        public override bool isBuff2(int j)
-        {
-            return  true;
-        }
+        ///// <summary>
+        ///// проверяем, есть ли на герое доп. бафф (Share Flint)
+        ///// </summary>
+        ///// <param name="j">проверяем бафф на j-м месте</param>
+        ///// <returns>true, если есть</returns>
+        //public override bool isBuff2(int j)
+        //{
+        //    return  true;
+        //}
 
         /// <summary>
         /// бафаем героя

@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace OpenGEWindows
 {
     public abstract class Hero
@@ -31,13 +33,53 @@ namespace OpenGEWindows
         /// точка 2 для проверки нахождения в городе
         /// </summary>
         protected PointColor colorWork2;
+        /// <summary>
+        /// точка #1 для проверки наличия бафа 1
+        /// </summary>
+        protected PointColor pointBuff11;
+        /// <summary>
+        /// точка #2 для проверки наличия бафа 1
+        /// </summary>
+        protected PointColor pointBuff12;
+        /// <summary>
+        /// точка #1 для проверки наличия бафа 2
+        /// </summary>
+        protected PointColor pointBuff21;
+        /// <summary>
+        /// точка #2 для проверки наличия бафа 2
+        /// </summary>
+        protected PointColor pointBuff22;
+        protected String heroName;
 
         //======= методы =========
 
         public abstract void Buff();
         public abstract void SkillBoss();
-        public abstract bool isBuff1(int j);
-        public abstract bool isBuff2(int j);
+        //public abstract bool isBuff1(int j);
+        //public abstract bool isBuff2(int j);
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое бафф #1 (Y)
+        /// </summary>
+        /// <param name="j">проверяем бафф на j-м месте</param>
+        /// <returns>true, если есть</returns>
+        public bool isBuff1(int j)
+        {
+            return  pointBuff11.isColor((j - 1) * 14 + (i - 1) * 255, 0) &&
+                    pointBuff12.isColor((j - 1) * 14 + (i - 1) * 255, 0);
+        }
+
+        /// <summary>
+        /// проверяем, есть ли на i-м герое доп. бафф #2
+        /// </summary>
+        /// <param name="j">проверяем бафф на j-м месте</param>
+        /// <returns>true, если есть</returns>
+        public bool isBuff2(int j)
+        {
+            return  pointBuff21.isColor((j - 1) * 14 + (i - 1) * 255, 0) &&
+                    pointBuff22.isColor((j - 1) * 14 + (i - 1) * 255, 0);
+        }
+
 
         /// <summary>
         /// скиллуем боссов и мобов
@@ -50,14 +92,12 @@ namespace OpenGEWindows
                 BuffE();
         }
         /// <summary>
-        /// функция проверяет, убит ли i-й герой из пати (проверка проходит на карте)
+        /// функция проверяет, убит ли герой (проверка проходит на боевой карте)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true, если герой убит</returns>
         protected bool isKillHero()
         {
-            bool result = false;
-            result = new PointColor(81 - 5 + xx + (i - 1) * 255, 642 - 5 + yy, 2800000, 5).isColor();
-            return result;
+            return new PointColor(81 - 5 + xx + (i - 1) * 255, 642 - 5 + yy, 2800000, 5).isColor();
         }
 
         /// <summary>
@@ -81,7 +121,7 @@ namespace OpenGEWindows
         /// </summary>
         protected void BuffE()
         {
-            new Point(96 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).DoubleClickL();
+            new Point(96 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -97,7 +137,7 @@ namespace OpenGEWindows
         /// </summary>
         protected void BuffT()
         {
-            new Point(158 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).DoubleClickL();
+            new Point(158 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();
         }
 
         /// <summary>
@@ -105,7 +145,7 @@ namespace OpenGEWindows
         /// </summary>
         protected void BuffY()
         {
-            new Point(189 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();              //проверено 23-11
+            new Point(189 - 5 + xx + (i - 1) * 255, 706 - 5 + yy).PressMouseL();              
             MoveCursorOfMouse();
         }
 
@@ -121,7 +161,7 @@ namespace OpenGEWindows
         /// проверяем, есть ли на герое бафф 1 (Y)
         /// </summary>
         /// <returns>true, если есть</returns>
-        protected bool FindBuff1()
+        public bool FindBuff1()
         {
             bool result = false;    //бафа нет
             for (int j = 3; j < 11; j++)
@@ -139,7 +179,7 @@ namespace OpenGEWindows
         /// проверяем, есть ли на герое бафф 2 (дополнительный)
         /// </summary>
         /// <returns>true, если есть</returns>
-        protected bool FindBuff2()
+        public bool FindBuff2()
         {
             bool result = false;    //бафа нет
             for (int j = 3; j < 11; j++)
@@ -160,7 +200,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isTown()
         {
-            return this.colorTown1.isColor() && this.colorTown2.isColor(); 
+            return this.colorTown1.isColor((i - 1) * 255, 0) && this.colorTown2.isColor((i - 1) * 255, 0); 
         }
 
         /// <summary>
@@ -169,7 +209,16 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isWork()
         {
-            return this.colorWork1.isColor() && this.colorWork2.isColor();
+            return this.colorWork1.isColor((i - 1) * 255, 0) && this.colorWork2.isColor((i - 1) * 255, 0);
+        }
+
+        /// <summary>
+        /// имя героя
+        /// </summary>
+        /// <returns></returns>
+        public String Name() 
+        {
+            return heroName;
         }
     }
 }

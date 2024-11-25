@@ -36,6 +36,7 @@ namespace OpenGEWindows
             this.yy = botParam.Y;
             this.xxx = 5;
             this.yyy = 5;
+            this.heroFactory = new HeroFactory(xx, yy);
 
             #endregion
 
@@ -668,7 +669,6 @@ namespace OpenGEWindows
             this.NeedToPickUpLeft = false;
             this.NextPointNumber = 0;
             this.Counter = 3;
-            this.heroFactory = new HeroFactory(xx,yy);
             #endregion
 
 

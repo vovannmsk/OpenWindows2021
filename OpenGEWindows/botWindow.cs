@@ -792,8 +792,8 @@ namespace OpenGEWindows
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
                 if (
-                        new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 15577230, 0).isColor() &&
-                        new PointColor(86 - 5 + xx + j * 14 + (i - 1) * 255, 593 - 5 + yy, 16028031, 0).isColor()          
+                        new PointColor(78 - 5 + xx, 588 - 5 + yy, 15577230, 0).isColor(j * 14 + (i - 1) * 255, 0) &&
+                        new PointColor(86 - 5 + xx, 593 - 5 + yy, 16028031, 0).isColor(j * 14 + (i - 1) * 255, 0)          
                    ) result = true;
             if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
 
@@ -821,8 +821,8 @@ namespace OpenGEWindows
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
                 if (
-                        new PointColor(84 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 16645886, 0).isColor() &&
-                        new PointColor(85 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 5268894, 0).isColor()          //23-11
+                        new PointColor(84 - 5 + xx, 592 - 5 + yy, 16645886, 0).isColor(j * 14 + (i - 1) * 255,0) &&
+                        new PointColor(85 - 5 + xx, 592 - 5 + yy, 5268894, 0).isColor(j * 14 + (i - 1) * 255,0)          //23-11
                    ) result = true;
             if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
 
@@ -839,8 +839,8 @@ namespace OpenGEWindows
             bool result = false;    //бафа нет
             for (int j = 0; j < 15; j++)
                 if (
-                        new PointColor(84 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 12956141, 0).isColor() &&
-                        new PointColor(85 - 5 + xx + j * 14 + (i - 1) * 255, 592 - 5 + yy, 16777215, 0).isColor()          //23-11
+                        new PointColor(84 - 5 + xx, 592 - 5 + yy, 12956141, 0).isColor(j * 14 + (i - 1) * 255,0) &&
+                        new PointColor(85 - 5 + xx, 592 - 5 + yy, 16777215, 0).isColor(j * 14 + (i - 1) * 255,0)          //23-11
                    ) result = true;
             if (server.isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф 
 

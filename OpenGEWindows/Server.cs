@@ -757,6 +757,10 @@ namespace OpenGEWindows
         /// 5 - молодой Барель, 6 - C.Daria, 7 - Том, 8 - Moon
         /// </summary>
         protected Hero[] hero;
+        protected Hero hero1;
+        protected Hero hero2;
+        protected Hero hero3;
+
         /// <summary>
         /// направление движения (1 - вправо, -1 - влево)
         /// </summary>
@@ -6749,6 +6753,15 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
+        /// проверяем, находимся ли на работе
+        /// </summary>
+        /// <returns></returns>
+        public bool isWorkInDemonic()
+        {
+            return hero1.isWork() || hero2.isWork() || hero3.isWork();
+        }
+
+        /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Насление древних" /даётся на мосту/
         /// </summary>
         /// <param name="i">номер героя</param>
@@ -7256,16 +7269,12 @@ namespace OpenGEWindows
 
                 //бафаемся героями первый раз
                 BuffHeroes();
-                //Buff(this.Hero[1], 1);
-                //Buff(this.Hero[2], 2);
-                //Buff(this.Hero[3], 3);
                 ManaForDemonic();
+                MoveCursorOfMouse();
                 //бафаемся героями второй раз (на случай, если у героя два бафа или первый раз не получилось пробафаться)
                 BuffHeroes();
-                //Buff(this.Hero[1], 1);
-                //Buff(this.Hero[2], 2);
-                //Buff(this.Hero[3], 3);
                 ManaForDemonic();
+                MoveCursorOfMouse();
                 this.Counter = 0;
             }
             else
@@ -7273,10 +7282,8 @@ namespace OpenGEWindows
                 if (isBoss())
                 {
                     SkillHeroes();
-                    //SkillBoss(Hero[1], 1);
-                    //SkillBoss(Hero[2], 2);
-                    //SkillBoss(Hero[3], 3);
                     ManaForDemonic();
+                    MoveCursorOfMouse();
                 }
             }
             this.Counter++;
@@ -7392,139 +7399,139 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер места в команде</param>
         /// <returns></returns>
-        public int WhatsHero(int i)
-        {
-            if (new PointColor(33 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 806655, 0).isColor())    //узнали, что это флинтлок
-            {
-                //проверяем Y, чтобы понять мушкетер или Бернелли
-                if (new PointColor(187 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 13951211, 0).isColor())
-                    return 1;     //мушкетер с флинтом
-                if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
-                    return 10;   //Бернелли с флинтом
-            }
-            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor()) return 2;     //Берка(супериор бластер)
-            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor())  return 3;     //М.Лорч
-            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor())  return 4;     //Джайна
-//          if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
-            if (new PointColor(22 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 16121838, 0).isColor()) return 6;      //Сесиль  --------++++++++++++
-//          if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
-//          if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
-//          if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
-            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor()) return 11;    //Rosie
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Marie
-            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;           //C.Daria   -------------------------
-            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 8716287, 0).isColor()) return 14;     // Aither   ---------++++++++++++++++
-            if (new PointColor(22 - 5 + xx + (i - 1) * 255, 712 - 5 + yy, 65535, 0).isColor()) return 15;       //М.Калипсо   --------+++++++++++++++
-            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 15856385, 0).isColor()) return 16;    //Банши   --------++++++++++++++
-            if (new PointColor(34 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 16251007, 0).isColor()) return 17;    //СуперРомина   ------+++++++++++++++
-            if (new PointColor(39 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 8323241, 0).isColor()) return 18;     //Miho   -------+++++++++++++++
-            if (new PointColor(27 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 69370, 0).isColor()) return 19;       //R.JD   ----------++++++++++++++++
-            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 11453688, 0).isColor()) return 20;    //Jane  --------++++++++++++++
-            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 8711323, 0).isColor()) return 21;     //Лорч  -------++++++++++++++++++
-            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5925855, 0).isColor()) return 22;     //Rebecca ------+++++++++++
-            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4929704, 0).isColor()) return 23;     //DivineHammerBryan --------++++++++++++++
-            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 2703856, 0).isColor()) return 24;     //LoraConstans -----------------------
-            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 16777214, 0).isColor()) return 25;     //Calipso -----------------------
+//        public int WhatsHero(int i)
+//        {
+//            if (new PointColor(33 - 5 + xx + (i - 1) * 255, 696 - 5 + yy, 806655, 0).isColor())    //узнали, что это флинтлок
+//            {
+//                //проверяем Y, чтобы понять мушкетер или Бернелли
+//                if (new PointColor(187 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 13951211, 0).isColor())
+//                    return 1;     //мушкетер с флинтом
+//                if (new PointColor(187 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 11251395, 0).isColor())
+//                    return 10;   //Бернелли с флинтом
+//            }
+//            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 695 - 5 + yy, 16777078, 0).isColor()) return 2;     //Берка(супериор бластер)
+//            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 5041407, 0).isColor())  return 3;     //М.Лорч
+//            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 9371642, 0).isColor())  return 4;     //Джайна
+////          if (new PointColor(28 - 5 + xx + (i - 1) * 255, 707 - 5 + yy, 5046271, 0).isColor()) result = 5;    //Баррель
+//            if (new PointColor(22 - 5 + xx + (i - 1) * 255, 704 - 5 + yy, 16121838, 0).isColor()) return 6;      //Сесиль  --------++++++++++++
+////          if (new PointColor(28 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 5636130, 0).isColor()) result = 7;    //Tom
+////          if (new PointColor(31 - 5 + xx + (i - 1) * 255, 701 - 5 + yy, 5081, 0).isColor()) result = 8;       //Moon
+////          if (new PointColor(30 - 5 + xx + (i - 1) * 255, 706 - 5 + yy, 6116670, 0).isColor()) result = 9;    //Misa
+//            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 699 - 5 + yy, 14438144, 0).isColor()) return 11;    //Rosie
+//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4944448, 0).isColor()) return 12;     //Marie
+//            if (new PointColor(28 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 0, 0).isColor()) return 13;           //C.Daria   -------------------------
+//            if (new PointColor(26 - 5 + xx + (i - 1) * 255, 705 - 5 + yy, 8716287, 0).isColor()) return 14;     // Aither   ---------++++++++++++++++
+//            if (new PointColor(22 - 5 + xx + (i - 1) * 255, 712 - 5 + yy, 65535, 0).isColor()) return 15;       //М.Калипсо   --------+++++++++++++++
+//            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 15856385, 0).isColor()) return 16;    //Банши   --------++++++++++++++
+//            if (new PointColor(34 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 16251007, 0).isColor()) return 17;    //СуперРомина   ------+++++++++++++++
+//            if (new PointColor(39 - 5 + xx + (i - 1) * 255, 697 - 5 + yy, 8323241, 0).isColor()) return 18;     //Miho   -------+++++++++++++++
+//            if (new PointColor(27 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 69370, 0).isColor()) return 19;       //R.JD   ----------++++++++++++++++
+//            if (new PointColor(23 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 11453688, 0).isColor()) return 20;    //Jane  --------++++++++++++++
+//            if (new PointColor(31 - 5 + xx + (i - 1) * 255, 698 - 5 + yy, 8711323, 0).isColor()) return 21;     //Лорч  -------++++++++++++++++++
+//            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 702 - 5 + yy, 5925855, 0).isColor()) return 22;     //Rebecca ------+++++++++++
+//            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 4929704, 0).isColor()) return 23;     //DivineHammerBryan --------++++++++++++++
+//            if (new PointColor(29 - 5 + xx + (i - 1) * 255, 700 - 5 + yy, 2703856, 0).isColor()) return 24;     //LoraConstans -----------------------
+//            if (new PointColor(32 - 5 + xx + (i - 1) * 255, 703 - 5 + yy, 16777214, 0).isColor()) return 25;     //Calipso -----------------------
 
-            return 0;
-        }
+//            return 0;
+//        }
 
-        /// <summary>
-        /// бафаем i-го героя (если бафали муху, то возвращаем true)
-        /// </summary>
-        /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
-        /// <param name="i">номер героя. на каком месте стоит</param>
-        public bool Buff(int typeOfHero, int i)
-        {
-            bool result = false;
-            if (!isTreasureChest())      //бафаемся, только в том случае, если не появился сундук
-                                         //чтобы лишние записи не появились в чате
-            {
-                MoveCursorOfMouse();
-                switch (typeOfHero)
-                {
-                    case 1:
-                        result = BuffMusk(i);  //*
-                        break;
-                    case 2:
-                        BuffBernelliBlaster(i);   //*
-                        break;
-                    case 3:
-                        BuffMLorch(i); //*
-                        break;
-                    case 4:
-                        BuffJaina(i);  //*
-                        break;
-                    //case 5:
-                    //    BuffBarell(i);  //*
-                    //    break;
-                    case 6:
-                        BuffCecile(i);        //без бафа
-                        break;
-                    //case 7:
-                    //    BuffTom(i);
-                    //    break;
-                    //case 8:
-                    //    BuffMoon(i);  //*
-                    //    break;
-                    //case 9:
-                    //    BuffMisa(i);
-                    //    break;
-                    case 10:
-                        BuffBernelliFlint(i);   //*
-                        break;
-                    case 11:
-                        BuffRosie(i);   //*
-                        break;
-                    case 12:
-                        BuffMary(i);   //*
-                        break;
-                    case 13:
-                        BuffCDaria(i);   //надо сделать
-                        break;
-                    case 14:
-                        BuffAither(i); //*
-                        break;
-                    case 15:
-                        BuffMCalipso(i);  //надо сделать
-                        break;
-                    case 16:
-                        BuffVanshee(i);   //надо сделать
-                        break;
-                    case 17:
-                        BuffSuperRomina(i);   //надо сделать
-                        break;
-                    case 18:
-                        BuffMiho(i);  //надо сделать
-                        break;
-                    case 19:
-                        BuffRJD(i);   //
-                        break;
-                    case 20:
-                        BuffJane(i);  //надо сделать
-                        break;
-                    case 21:
-                        BuffLorch(i);  
-                        break;
-                    case 22:
-                        BuffRebecca(i);  
-                        break;
-                    case 23:
-                        BuffDivine(i);  
-                        break;
-                    case 24:
-                        BuffLoraConstans(i);
-                        break;
-                    case 25:
-                        BuffCalipso(i);
-                        break;
+        ///// <summary>
+        ///// бафаем i-го героя (если бафали муху, то возвращаем true)
+        ///// </summary>
+        ///// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
+        ///// <param name="i">номер героя. на каком месте стоит</param>
+        //public bool Buff(int typeOfHero, int i)
+        //{
+        //    bool result = false;
+        //    if (!isTreasureChest())      //бафаемся, только в том случае, если не появился сундук
+        //                                 //чтобы лишние записи не появились в чате
+        //    {
+        //        MoveCursorOfMouse();
+        //        switch (typeOfHero)
+        //        {
+        //            case 1:
+        //                result = BuffMusk(i);  //*
+        //                break;
+        //            case 2:
+        //                BuffBernelliBlaster(i);   //*
+        //                break;
+        //            case 3:
+        //                BuffMLorch(i); //*
+        //                break;
+        //            case 4:
+        //                BuffJaina(i);  //*
+        //                break;
+        //            //case 5:
+        //            //    BuffBarell(i);  //*
+        //            //    break;
+        //            case 6:
+        //                BuffCecile(i);        //без бафа
+        //                break;
+        //            //case 7:
+        //            //    BuffTom(i);
+        //            //    break;
+        //            //case 8:
+        //            //    BuffMoon(i);  //*
+        //            //    break;
+        //            //case 9:
+        //            //    BuffMisa(i);
+        //            //    break;
+        //            case 10:
+        //                BuffBernelliFlint(i);   //*
+        //                break;
+        //            case 11:
+        //                BuffRosie(i);   //*
+        //                break;
+        //            case 12:
+        //                BuffMary(i);   //*
+        //                break;
+        //            case 13:
+        //                BuffCDaria(i);   //надо сделать
+        //                break;
+        //            case 14:
+        //                BuffAither(i); //*
+        //                break;
+        //            case 15:
+        //                BuffMCalipso(i);  //надо сделать
+        //                break;
+        //            case 16:
+        //                BuffVanshee(i);   //надо сделать
+        //                break;
+        //            case 17:
+        //                BuffSuperRomina(i);   //надо сделать
+        //                break;
+        //            case 18:
+        //                BuffMiho(i);  //надо сделать
+        //                break;
+        //            case 19:
+        //                BuffRJD(i);   //
+        //                break;
+        //            case 20:
+        //                BuffJane(i);  //надо сделать
+        //                break;
+        //            case 21:
+        //                BuffLorch(i);  
+        //                break;
+        //            case 22:
+        //                BuffRebecca(i);  
+        //                break;
+        //            case 23:
+        //                BuffDivine(i);  
+        //                break;
+        //            case 24:
+        //                BuffLoraConstans(i);
+        //                break;
+        //            case 25:
+        //                BuffCalipso(i);
+        //                break;
 
-                    case 0:
-                        break;
-                }
-            }
-            return result;
-        }
+        //            case 0:
+        //                break;
+        //        }
+        //    }
+        //    return result;
+        //}
 
         /// <summary>
         /// есть ли кто в прицеле?
@@ -7613,181 +7620,181 @@ namespace OpenGEWindows
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
         /// <param name="isMobs"true, если в прицеле мобы</param>
-        public void Skill(int typeOfHero, int i, bool isMobs)
-        {
-            switch (typeOfHero)
-            {
-                case 1:
-                    //Муха
-                    if (isMobs)
-                        BuffE(i);
-                    else
-                        BuffT(i);
+        //public void Skill(int typeOfHero, int i, bool isMobs)
+        //{
+        //    switch (typeOfHero)
+        //    {
+        //        case 1:
+        //            //Муха
+        //            if (isMobs)
+        //                BuffE(i);
+        //            else
+        //                BuffT(i);
 
-                    //if (isSkillMuskE(i))   //если готов скилл
-                    //BuffE(i);
-                    //if (isSkillMuskT(i))   //если готов скилл
-                    //    BuffT(i);
+        //            //if (isSkillMuskE(i))   //если готов скилл
+        //            //BuffE(i);
+        //            //if (isSkillMuskT(i))   //если готов скилл
+        //            //    BuffT(i);
 
-                    //if (isSkillMuskW(i))   //если готов скилл
-                    //    BuffW(i);
-                    break;
-                case 2:
-                    //BuffBernelliBlaster(i);   //*
-                    if (!isMobs)
-                        BuffT(i);
-                    break;
-                case 3:
-                    //BuffLorch(i); //*
-                    if (!isMobs)
-                        BuffT(i);
-                    break;
-                case 4:
-                    //BuffJaina(i);  //*
-                    break;
-                case 5:
-                    //BuffBarell(i);  //*
-                    BuffT(i);
-                    break;
-                case 6:
-                    //BuffCDaria(i);   //47
-                    BuffT(i);
-                    break;
-                case 7:
-                    //BuffTom(i);
-                    break;
-                case 8:
-                    //BuffMoon(i);  //*
-                    break;
-                case 9:
-                    //BuffMisa(i);
-                    BuffT(i);  //скилуем самым крутым скиллом
-                    break;
-                case 10:
-                    //BuffBernelliFlint(i);   //*
-                    if (isMobs)
-                        BuffE(i);
-                    else
-                        BuffT(i);
-                    break;
-                case 0:
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            //if (isSkillMuskW(i))   //если готов скилл
+        //            //    BuffW(i);
+        //            break;
+        //        case 2:
+        //            //BuffBernelliBlaster(i);   //*
+        //            if (!isMobs)
+        //                BuffT(i);
+        //            break;
+        //        case 3:
+        //            //BuffLorch(i); //*
+        //            if (!isMobs)
+        //                BuffT(i);
+        //            break;
+        //        case 4:
+        //            //BuffJaina(i);  //*
+        //            break;
+        //        case 5:
+        //            //BuffBarell(i);  //*
+        //            BuffT(i);
+        //            break;
+        //        case 6:
+        //            //BuffCDaria(i);   //47
+        //            BuffT(i);
+        //            break;
+        //        case 7:
+        //            //BuffTom(i);
+        //            break;
+        //        case 8:
+        //            //BuffMoon(i);  //*
+        //            break;
+        //        case 9:
+        //            //BuffMisa(i);
+        //            BuffT(i);  //скилуем самым крутым скиллом
+        //            break;
+        //        case 10:
+        //            //BuffBernelliFlint(i);   //*
+        //            if (isMobs)
+        //                BuffE(i);
+        //            else
+        //                BuffT(i);
+        //            break;
+        //        case 0:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// скилуем i-м героем
         /// </summary>
         /// <param name="typeOfHero">тип героя (1-муха, 2-Берка, 3-Лорч и т.д.)</param>
         /// <param name="i">номер героя</param>
-        public void SkillBoss(int typeOfHero, int i)
-        {
-            switch (typeOfHero)
-            {
-                case 1:
-                    //Муха
-                    BuffT(i);
-                    break;
-                case 2:
-                    //Bernelli Blaster
-                    BuffT(i);
-                    break;
-                case 3:
-                    //MLorch
-                    BuffT(i);
-                    break;
-                case 4:
-                    //Jaina
-                    BuffT(i);
-                    break;
-                case 5:
-                    //Barell
+        //public void SkillBoss(int typeOfHero, int i)
+        //{
+        //    switch (typeOfHero)
+        //    {
+        //        case 1:
+        //            //Муха
+        //            BuffT(i);
+        //            break;
+        //        case 2:
+        //            //Bernelli Blaster
+        //            BuffT(i);
+        //            break;
+        //        case 3:
+        //            //MLorch
+        //            BuffT(i);
+        //            break;
+        //        case 4:
+        //            //Jaina
+        //            BuffT(i);
+        //            break;
+        //        case 5:
+        //            //Barell
                     
-                    break;
-                case 6:
-                    //Cecille
-                    BuffR(i);
-                    break;
-                case 7:
-                    //Tom
-                    break;
-                case 8:
-                    //Moon
-                    break;
-                case 9:
-                    //Misa
-                    BuffT(i);  //скилуем самым крутым скиллом
-                    break;
-                case 10:
-                    //BernelliFlint
-                    BuffT(i);
-                    break;
-                case 11:
-                    //Rosie
-                    BuffT(i);
-                    break;
-                case 12:
-                    //Mary
-                    BuffT(i);
-                    break;
-                case 13:
-                    //C.Daria
-                    BuffT(i);
-                    break;
-                case 14:
-                    // Aither 
-                    BuffT(i);
-                    break;
-                case 15:
-                    //М.Калипсо
-                    BuffT(i);
-                    break;
-                case 16:
-                    //Банши
-                    BuffT(i);
-                    break;
-                case 17:
-                    //СуперРомина
-                    BuffT(i);
-                    break;
-                case 18:
-                    //Miho
-                    BuffT(i);
-                    break;
-                case 19:
-                    //R.JD
-                    BuffT(i);
-                    break;
-                case 20:
-                    //Jane
-                    BuffT(i);
-                    break;
-                case 21:
-                    //Лорч
-                    BuffT(i);
-                    break;
-                case 22:
-                    //Rebecca
-                    BuffT(i);
-                    break;
-                case 23:
-                    //DivineHammer
-                    BuffT(i);
-                    break;
-                case 24:
-                    //
-                    BuffT(i);
-                    break;
-                case 25:
-                    //
-                    BuffT(i);
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            break;
+        //        case 6:
+        //            //Cecille
+        //            BuffR(i);
+        //            break;
+        //        case 7:
+        //            //Tom
+        //            break;
+        //        case 8:
+        //            //Moon
+        //            break;
+        //        case 9:
+        //            //Misa
+        //            BuffT(i);  //скилуем самым крутым скиллом
+        //            break;
+        //        case 10:
+        //            //BernelliFlint
+        //            BuffT(i);
+        //            break;
+        //        case 11:
+        //            //Rosie
+        //            BuffT(i);
+        //            break;
+        //        case 12:
+        //            //Mary
+        //            BuffT(i);
+        //            break;
+        //        case 13:
+        //            //C.Daria
+        //            BuffT(i);
+        //            break;
+        //        case 14:
+        //            // Aither 
+        //            BuffT(i);
+        //            break;
+        //        case 15:
+        //            //М.Калипсо
+        //            BuffT(i);
+        //            break;
+        //        case 16:
+        //            //Банши
+        //            BuffT(i);
+        //            break;
+        //        case 17:
+        //            //СуперРомина
+        //            BuffT(i);
+        //            break;
+        //        case 18:
+        //            //Miho
+        //            BuffT(i);
+        //            break;
+        //        case 19:
+        //            //R.JD
+        //            BuffT(i);
+        //            break;
+        //        case 20:
+        //            //Jane
+        //            BuffT(i);
+        //            break;
+        //        case 21:
+        //            //Лорч
+        //            BuffT(i);
+        //            break;
+        //        case 22:
+        //            //Rebecca
+        //            BuffT(i);
+        //            break;
+        //        case 23:
+        //            //DivineHammer
+        //            BuffT(i);
+        //            break;
+        //        case 24:
+        //            //
+        //            BuffT(i);
+        //            break;
+        //        case 25:
+        //            //
+        //            BuffT(i);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
 
         /// <summary>
@@ -7795,108 +7802,108 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindMarchen(int i)
-        {
-            //MoveCursorOfMouse();
-            bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
-                if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 787682, 0).isColor() &&
-                        new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 1906639, 0).isColor()
-                   ) result = true;
-            return result;
-        }
+        //public bool FindMarchen(int i)
+        //{
+        //    //MoveCursorOfMouse();
+        //    bool result = false;    //бафа нет
+        //    for (int j = 0; j < 15; j++)
+        //        if (new PointColor(85 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 787682, 0).isColor() &&
+        //                new PointColor(86 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 1906639, 0).isColor()
+        //           ) result = true;
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Reload Bullet" /Moon/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindReloadBullet(int i)
-        {
-            //MoveCursorOfMouse();
-            bool result = false;    //бафа нет
-            for (int j = 0; j < 15; j++)
-                if (new PointColor(91 - 5 + xx + j * 15 + (i - 1) * 255, 592 - 5 + yy, 464572, 0).isColor() &&
-                        new PointColor(91 - 5 + xx + j * 15 + (i - 1) * 255, 593 - 5 + yy, 397755, 0).isColor()
-                    ) result = true;
-            return result;
-        }
+        //public bool FindReloadBullet(int i)
+        //{
+        //    //MoveCursorOfMouse();
+        //    bool result = false;    //бафа нет
+        //    for (int j = 0; j < 15; j++)
+        //        if (new PointColor(91 - 5 + xx + j * 15 + (i - 1) * 255, 592 - 5 + yy, 464572, 0).isColor() &&
+        //                new PointColor(91 - 5 + xx + j * 15 + (i - 1) * 255, 593 - 5 + yy, 397755, 0).isColor()
+        //            ) result = true;
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Mysophoia" /Jaina/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindMysophoia(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
-                        //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
-                        new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
-                        new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()           //23-11
-                    ) result = true;
-            return result;
-        }
+        //public bool FindMysophoia(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                //new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
+        //                //    new PointColor(78 - 5 + xx + j * 15 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()
+        //                new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 595 - 5 + yy, 16767324, 0).isColor() &&
+        //                new PointColor(77 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 16767324, 0).isColor()           //23-11
+        //            ) result = true;
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Bullet Apilicion" /М Лорч/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindBulletApilicon(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                    //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
-                    //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
-                    new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
-                        new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()   //23-11
-                    ) result = true;
+        //public bool FindBulletApilicon(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //            //new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
+        //            //    new PointColor(79 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()
+        //            new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 7967538, 0).isColor() &&
+        //                new PointColor(78 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 7572528, 0).isColor()   //23-11
+        //            ) result = true;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Share Flint" /М Лорч/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindShareFlint(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                    //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
-                    //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
-                    new PointColor(79 - 5 + xx + j * 14 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
-                        new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()  //23-11
-                    ) result = true;
+        //public bool FindShareFlint(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //            //new PointColor(80 - 5 + xx + j * 15 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
+        //            //    new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()
+        //            new PointColor(79 - 5 + xx + j * 14 + (i - 1) * 255, 591 - 5 + yy, 8257280, 0).isColor() &&
+        //                new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 590 - 5 + yy, 7995136, 0).isColor()  //23-11
+        //            ) result = true;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Concentration"
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindConcentracion(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
-                        //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
-                        new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
-                        new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()          //23-11
-                   ) result = true;
-            if (isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф концентрации 
+        //public bool FindConcentracion(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
+        //                //new PointColor(84 - 5 + xx + j * 15 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()
+        //                new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 587 - 5 + yy, 5390673, 0).isColor() &&
+        //                new PointColor(83 - 5 + xx + j * 14 + (i - 1) * 255, 588 - 5 + yy, 5521228, 0).isColor()          //23-11
+        //           ) result = true;
+        //    if (isKillHero(i)) result = true;   //если убит i-й герой, то считаем, что у него есть бафф концентрации 
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Drunken" / Barrell /
@@ -7937,153 +7944,153 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindMarksmanship(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
-                        new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
-                   ) result = true;
+        //public bool FindMarksmanship(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 596 - 5 + yy, 13133369, 0).isColor() &&
+        //                new PointColor(89 - 5 + xx + j * 14 + (i - 1) * 255, 597 - 5 + yy, 13067318, 0).isColor()   //23-11
+        //           ) result = true;
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Hound" / Bernelli Blaster /
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindHound(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                    //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
-                    //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
-                    new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
-                        new PointColor(81 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()   //23-11
-                   ) result = true;
-            return result;
-        }
+        //public bool FindHound(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //            //new PointColor(81 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
+        //            //    new PointColor(82 - 5 + xx + j * 15 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()
+        //            new PointColor(80 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 6319302, 0).isColor() &&
+        //                new PointColor(81 - 5 + xx + j * 14 + (i - 1) * 255, 589 - 5 + yy, 5858504, 0).isColor()   //23-11
+        //           ) result = true;
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Soul Weapon" / Rosie /  Q
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindSoulWeapon(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
-                if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 5 + 585 - 5 + yy, 6400000, 5).isColor() &&
-                     new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 7 + 585 - 5 + yy, 6700000, 5).isColor()
-                   )
-                { 
-                    result = true; 
-                    break; 
-                }
-            return result;
-        }
+        //public bool FindSoulWeapon(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 8; j++)
+        //        if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 5 + 585 - 5 + yy, 6400000, 5).isColor() &&
+        //             new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 7 + 585 - 5 + yy, 6700000, 5).isColor()
+        //           )
+        //        { 
+        //            result = true; 
+        //            break; 
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Link" / Rosie / Y
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindLink(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 8; j++)
-                if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 4 + 585 - 5 + yy, 4800000, 5).isColor() &&
-                     new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 6 + 585 - 5 + yy, 5800000, 5).isColor()
-                   )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindLink(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 8; j++)
+        //        if (new PointColor(4 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 4 + 585 - 5 + yy, 4800000, 5).isColor() &&
+        //             new PointColor(6 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 6 + 585 - 5 + yy, 5800000, 5).isColor()
+        //           )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "CleaningTime" / Mary / Y
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public bool FindCleaningTime(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                    //new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
-                    // new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
-                     new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 587 - 5 + yy, 12409326, 0).isColor() &&
-                     new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 588 - 5 + yy, 12409326, 0).isColor()
-                   )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindCleaningTime(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //            //new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
+        //            // new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
+        //             new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 587 - 5 + yy, 12409326, 0).isColor() &&
+        //             new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 588 - 5 + yy, 12409326, 0).isColor()
+        //           )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "OrderLady" / Mary / E
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public bool FindOrderLady(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
-                     new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
-                   )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindOrderLady(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (new PointColor(0 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 4800000, 5).isColor() &&
+        //             new PointColor(1 + 77 - 5 + xx + j * 14 + (i - 1) * 255, 0 + 585 - 5 + yy, 5800000, 5).isColor()
+        //           )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Reasoning" /Jane/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindReasoning(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(8 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 16777215, 0).isColor() &&
-                        new PointColor(8 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 16777215, 0).isColor()           //23-11
-                    )
-                { 
-                    result = true; 
-                    break; 
-                }
-            return result;
-        }
+        //public bool FindReasoning(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(8 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 16777215, 0).isColor() &&
+        //                new PointColor(8 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 16777215, 0).isColor()           //23-11
+        //            )
+        //        { 
+        //            result = true; 
+        //            break; 
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Infiltration" /Lorch/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindInfiltration(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 587 - 5 + yy, 1400619, 0).isColor() &&
-                        new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 587 - 5 + yy, 1400619, 0).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindInfiltration(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 587 - 5 + yy, 1400619, 0).isColor() &&
+        //                new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 587 - 5 + yy, 1400619, 0).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
         /// <summary>
@@ -8091,40 +8098,40 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindChangerDeMode(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 593 - 5 + yy, 15920000, 4).isColor() &&
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 594 - 5 + yy, 15730000, 4).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindChangerDeMode(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 593 - 5 + yy, 15920000, 4).isColor() &&
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 594 - 5 + yy, 15730000, 4).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Metallurgy" /DivineHammerBryan/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindMetallurgy(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13090000, 4).isColor() &&
-                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 13290000, 4).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindMetallurgy(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13090000, 4).isColor() &&
+        //                new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 13290000, 4).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
         /// <summary>
@@ -8132,60 +8139,60 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindJustice(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 13080000, 4).isColor() &&
-                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 12880000, 4).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindJustice(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 13080000, 4).isColor() &&
+        //                new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 12880000, 4).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "CatsEye" /Calipso/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindCatsEye(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor() &&
-                        new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindCatsEye(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor() &&
+        //                new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 16380000, 4).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Eagle Eye" /Calipso/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindEagleEye(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16050000, 4).isColor() &&
-                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 16250000, 4).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindEagleEye(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(1 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16050000, 4).isColor() &&
+        //                new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 590 - 5 + yy, 16250000, 4).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
         /// <summary>
@@ -8193,60 +8200,60 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindPromise(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 1068760, 0).isColor() &&
-                        new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 17110, 0).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindPromise(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 1068760, 0).isColor() &&
+        //                new PointColor(4 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 17110, 0).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Aergia" /Aither/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindAergia(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 16252671, 0).isColor() &&
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 16777215, 0).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindAergia(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 16252671, 0).isColor() &&
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 16777215, 0).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Redacendo" /M.Calipso/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindRedacendo(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16252927, 0).isColor() &&
-                        new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 15073279, 0).isColor()           //23-11
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindRedacendo(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16252927, 0).isColor() &&
+        //                new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 592 - 5 + yy, 15073279, 0).isColor()           //23-11
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
         /// <summary>
@@ -8254,20 +8261,20 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindShadowTrigger(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 2; j < 11; j++)
-                if (
-                        new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 5788827, 0).isColor() &&
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 5788827, 0).isColor()
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindShadowTrigger(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 2; j < 11; j++)
+        //        if (
+        //                new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 5788827, 0).isColor() &&
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 588 - 5 + yy, 5788827, 0).isColor()
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
 
@@ -8277,20 +8284,20 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindSupportOrder(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 2; j < 11; j++)
-                if (
-                        new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13672448, 0).isColor() &&
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13672448, 0).isColor()           
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindSupportOrder(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 2; j < 11; j++)
+        //        if (
+        //                new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13672448, 0).isColor() &&
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 13672448, 0).isColor()           
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
         
@@ -8300,20 +8307,20 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindFoxSpirit(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 6749695, 0).isColor() &&
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 6749695, 0).isColor()
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindFoxSpirit(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(5 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 6749695, 0).isColor() &&
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 6749695, 0).isColor()
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
 
@@ -8323,40 +8330,40 @@ namespace OpenGEWindows
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindWeaponMaster(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 1574057, 0).isColor() &&
-                        new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 5505222, 0).isColor()
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindWeaponMaster(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(6 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 1574057, 0).isColor() &&
+        //                new PointColor(7 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 589 - 5 + yy, 5505222, 0).isColor()
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Resolution" /R.JD/
         /// </summary>
         /// <param name="i">номер героя</param>
         /// <returns>true, если есть</returns>
-        public bool FindResolution(int i)
-        {
-            bool result = false;    //бафа нет
-            for (int j = 3; j < 11; j++)
-                if (
-                        new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16663289, 0).isColor() &&
-                        new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16666360, 0).isColor()
-                    )
-                {
-                    result = true;
-                    break;
-                }
-            return result;
-        }
+        //public bool FindResolution(int i)
+        //{
+        //    bool result = false;    //бафа нет
+        //    for (int j = 3; j < 11; j++)
+        //        if (
+        //                new PointColor(2 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16663289, 0).isColor() &&
+        //                new PointColor(3 + 77 - 5 + xx + (j - 1) * 14 + (i - 1) * 255, 591 - 5 + yy, 16666360, 0).isColor()
+        //            )
+        //        {
+        //            result = true;
+        //            break;
+        //        }
+        //    return result;
+        //}
 
 
 
@@ -8364,77 +8371,77 @@ namespace OpenGEWindows
         /// бафаем Rosie на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffRosie(int i)
-        {
-            if (!FindLink(i)) BuffY(i);
-            //            Pause(2000);
-            if (!FindSoulWeapon(i)) BuffQ(i);
-        }
+        //private void BuffRosie(int i)
+        //{
+        //    if (!FindLink(i)) BuffY(i);
+        //    //            Pause(2000);
+        //    if (!FindSoulWeapon(i)) BuffQ(i);
+        //}
 
         /// <summary>
         /// бафаем Mary на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMary(int i)
-        {
-            if (!FindCleaningTime(i)) BuffY(i);
-            //            Pause(2000);
-            if (!FindOrderLady(i)) BuffE(i);
-        }
+        //private void BuffMary(int i)
+        //{
+        //    if (!FindCleaningTime(i)) BuffY(i);
+        //    //            Pause(2000);
+        //    if (!FindOrderLady(i)) BuffE(i);
+        //}
 
         /// <summary>
         /// бафаем мушкетера (с флинтом) на i-м месте 
         /// </summary>
         /// <param name="i"></param>
-        private bool BuffMusk(int i)
-        {
-            bool result = false;
-            if (!FindConcentracion(i))
-            {
-                BuffY(i);
-                result = true;
-            }
-            return result;
-        }
+        //private bool BuffMusk(int i)
+        //{
+        //    bool result = false;
+        //    if (!FindConcentracion(i))
+        //    {
+        //        BuffY(i);
+        //        result = true;
+        //    }
+        //    return result;
+        //}
 
         /// <summary>
         /// бафаем Бернелли с супериор бластер на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffBernelliBlaster(int i)
-        {
-            if (!FindMarksmanship(i)) BuffY(i);
-            //if (!FindHound(i)) BuffQ(i);
-        }
+        //private void BuffBernelliBlaster(int i)
+        //{
+        //    if (!FindMarksmanship(i)) BuffY(i);
+        //    //if (!FindHound(i)) BuffQ(i);
+        //}
 
         /// <summary>
         /// бафаем Бернелли с Flintlock на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffBernelliFlint(int i)
-        {
-            if (!FindMarksmanship(i)) BuffY(i);
-        }
+        //private void BuffBernelliFlint(int i)
+        //{
+        //    if (!FindMarksmanship(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем М Лорча на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMLorch(int i)
-        {
-            if (!FindBulletApilicon(i)) BuffY(i);
-            //            Pause(2000);
-            if (!FindShareFlint(i)) BuffW(i);
-        }
+        //private void BuffMLorch(int i)
+        //{
+        //    if (!FindBulletApilicon(i)) BuffY(i);
+        //    //            Pause(2000);
+        //    if (!FindShareFlint(i)) BuffW(i);
+        //}
 
         /// <summary>
         /// бафаем Джайну на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffJaina(int i)
-        {
-            if (!FindMysophoia(i)) BuffY(i);
-        }
+        //private void BuffJaina(int i)
+        //{
+        //    if (!FindMysophoia(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем молодого Барреля на i-м месте
@@ -8451,16 +8458,16 @@ namespace OpenGEWindows
         /// бафаем Сесиль на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffCecile(int i)
-        { 
-        }
+        //private void BuffCecile(int i)
+        //{ 
+        //}
 
         /// <summary>
         /// бафаем коммандера Дарью на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffCDaria(int i)
-        { }
+        //private void BuffCDaria(int i)
+        //{ }
 
         /// <summary>
         /// бафаем Тома на i-м месте
@@ -8495,115 +8502,113 @@ namespace OpenGEWindows
         /// бафаем Aither на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffAither(int i)
-        {
-            if (!FindAergia(i)) BuffY(i);
-        }
+        //private void BuffAither(int i)
+        //{
+        //    if (!FindAergia(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем МКалипсо на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMCalipso(int i)
-        {
-            if (!FindRedacendo(i)) BuffY(i);
-        }
+        //private void BuffMCalipso(int i)
+        //{
+        //    if (!FindRedacendo(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем Банши на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffVanshee(int i)
-        {
-            if (!FindShadowTrigger(i)) BuffY(i);
-        }
+        //private void BuffVanshee(int i)
+        //{
+        //    if (!FindShadowTrigger(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем СуперРомина на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffSuperRomina(int i)
-        {
-            if (!FindSupportOrder(i)) BuffYY(i);
-        }
+        //private void BuffSuperRomina(int i)
+        //{
+        //    if (!FindSupportOrder(i)) BuffYY(i);
+        //}
 
         /// <summary>
         /// бафаем Михо на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffMiho(int i)
-        {
-            if (!FindFoxSpirit(i)) BuffY(i);
-        }
+        //private void BuffMiho(int i)
+        //{
+        //    if (!FindFoxSpirit(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем R.JD на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffRJD(int i)
-        {
-            if (!FindWeaponMaster(i)) BuffY(i);
+        //private void BuffRJD(int i)
+        //{
+        //    if (!FindWeaponMaster(i)) BuffY(i);
             
-            if (!FindResolution(i)) BuffR(i);
-
-
-        }
+        //    if (!FindResolution(i)) BuffR(i);
+        //}
 
         /// <summary>
         /// бафаем Jane на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffJane(int i)
-        {
-            if (!FindReasoning(i)) BuffY(i);
-        }
+        //private void BuffJane(int i)
+        //{
+        //    if (!FindReasoning(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем Lorcha на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffLorch (int i)
-        {
-            if (!FindInfiltration(i)) BuffY(i);
-        }
+        //private void BuffLorch (int i)
+        //{
+        //    if (!FindInfiltration(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем Rebecca на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffRebecca(int i)
-        {
-            if (!FindChangerDeMode(i)) BuffY(i);
-        }
+        //private void BuffRebecca(int i)
+        //{
+        //    if (!FindChangerDeMode(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем DivineHammerBryan на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffDivine(int i)
-        {
-            if (!FindMetallurgy(i)) BuffY(i);
-        }
+        //private void BuffDivine(int i)
+        //{
+        //    if (!FindMetallurgy(i)) BuffY(i);
+        //}
 
         /// <summary>
         /// бафаем LoraConstans на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffLoraConstans(int i)
-        {
-            if (!FindJustice(i)) BuffY(i);
-            if (!FindPromise(i)) BuffW(i);
-        }
+        //private void BuffLoraConstans(int i)
+        //{
+        //    if (!FindJustice(i)) BuffY(i);
+        //    if (!FindPromise(i)) BuffW(i);
+        //}
 
         /// <summary>
         /// бафаем Calipso на i-м месте
         /// </summary>
         /// <param name="i"></param>
-        private void BuffCalipso(int i)
-        {
-            if (!FindCatsEye(i)) BuffY(i);
-            if (!FindEagleEye(i)) BuffQ(i);
-        }
+        //private void BuffCalipso(int i)
+        //{
+        //    if (!FindCatsEye(i)) BuffY(i);
+        //    if (!FindEagleEye(i)) BuffQ(i);
+        //}
 
         /// <summary>
         /// появились ворота вместо сундука?
@@ -9355,9 +9360,9 @@ namespace OpenGEWindows
             //this.Hero[1] = WhatsHero(1);
             //this.Hero[2] = WhatsHero(2);
             //this.Hero[3] = WhatsHero(3);
-            this.hero[1] = heroFactory.Create(1);
-            this.hero[2] = heroFactory.Create(2);
-            this.hero[3] = heroFactory.Create(3);
+            this.hero1 = heroFactory.Create(1);
+            this.hero2 = heroFactory.Create(2);
+            this.hero3 = heroFactory.Create(3);
 
         }
 
@@ -9370,9 +9375,9 @@ namespace OpenGEWindows
             //Buff(this.Hero[2], 2);
             //Buff(this.Hero[3], 3);
 
-            hero[1].Buff();
-            hero[2].Buff();
-            hero[3].Buff();
+            this.hero1.Buff();
+            this.hero2.Buff();
+            this.hero3.Buff();
         }
 
         /// <summary>
@@ -9384,9 +9389,9 @@ namespace OpenGEWindows
             //SkillBoss(this.Hero[2], 2);
             //SkillBoss(this.Hero[3], 3);
 
-            hero[1].SkillBoss();
-            hero[2].SkillBoss();
-            hero[3].SkillBoss();
+            this.hero1.SkillBoss();
+            this.hero2.SkillBoss();
+            this.hero3.SkillBoss();
         }
 
 
@@ -9617,10 +9622,15 @@ namespace OpenGEWindows
         /// </summary>
         public bool isUstiar()
         {
-            return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B
-                    && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()    //буква C
-                    && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
+            //return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 20% налоге
+            //        && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+            //        && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()    //буква C при 20% налоге
+            //        && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
+            return     new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 5% налоге
+                    && new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(963 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква C при 5% налоге
+                    && new PointColor(963 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();
+
         }
 
         /// <summary>
@@ -9954,7 +9964,8 @@ namespace OpenGEWindows
             if (result != 0) return result;
 
             //в миссии
-            if (isWork() || isKillFirstHero2()) 
+            //if (isWork() || isKillFirstHero2())
+            if (isWorkInDemonic())
             {
                 //если розовая надпись в чате "Treasure chest...", значит появился сундук и надо идти в барак и далее стадия 3
                 if (isTreasureChest())
@@ -9967,8 +9978,8 @@ namespace OpenGEWindows
             }
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
-            if (isTown() && isBH() && !isKillHero())
-                return 6;
+            //if (isTown() && isBH() && !isKillHero())
+            //    return 6;                                                 // пока убрал. вроде не должно потребоваться
 
             //если проблем не найдено
             return 0;
@@ -10347,20 +10358,9 @@ namespace OpenGEWindows
                 case 24:                                        //если нет стима, значит удалили песочницу
                     botParam.Stage = 1;
                     break;
-
                 case 6:                                         // Миссия окончена 
-                    //вариант 1
-                    //RemoveSandboxieBH();                        //закрываем песочницу //старый вариант
-                    //botParam.Stage = 1;
-                    //botParam.HowManyCyclesToSkip = 2;
-                    //вариант 2
-                    //Teleport(4, true);                      //телепорт в Кастилию
-                    //botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
-                    //botParam.HowManyCyclesToSkip = 4;
-
                     WayToGoDemonic(3);
                     break;
-
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
                     break;
@@ -10505,7 +10505,7 @@ namespace OpenGEWindows
                         break;
                     case 4:                                         // BH --> Gate
                         Pause(1000);
-                        if (isPioneerJournal()) GetGiftsNew();
+                        //if (isPioneerJournal()) GetGiftsNew();
                         botwindow.PressEscThreeTimes();
                         AddBullets();
                         GoToInfinityGateDem();
@@ -10514,14 +10514,14 @@ namespace OpenGEWindows
                         CreatingMission();
                         break;
                     case 6:                                         // town --> BH
-                        if (isPioneerJournal())
-                            GetGiftsNew();
+                        //if (isPioneerJournal())
+                        //    GetGiftsNew();
 
                         botwindow.PressEscThreeTimes();
                         Pause(500);
                         SummonPet();
                         Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузились ворота Демоник.
+                        botParam.HowManyCyclesToSkip = 3;           // даём время, чтобы подгрузились ворота Демоник.
                         break;
                     case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         botwindow.CommandMode();
@@ -10545,16 +10545,18 @@ namespace OpenGEWindows
                         botwindow.PressEsc(4);
                         //бафаемся героями первый раз
                         BuffHeroes();
+                        MoveCursorOfMouse();
                         //Buff(this.Hero[1], 1);
                         //Buff(this.Hero[2], 2);
                         //Buff(this.Hero[3], 3);
                         //бафаемся героями второй раз
                         BuffHeroes();
+                        MoveCursorOfMouse();
                         //Buff(this.Hero[1], 1);
                         //Buff(this.Hero[2], 2);
                         //Buff(this.Hero[3], 3);
-                        MoveCursorOfMouse();
                         ManaForDemonic();
+                        MoveCursorOfMouse();
 
                         botParam.Stage = 2;
                         //botParam.HowManyCyclesToSkip = 1;           // даём время, чтобы вылезли мобы
@@ -10638,15 +10640,13 @@ namespace OpenGEWindows
                         ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
                         MoveCursorOfMouse();
                         botParam.Stage = 3;
-                        botParam.HowManyCyclesToSkip = 3;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
                         AttackTheMonsters(DirectionOfMovement);             // атакуем с CTRL
 
                         MoveCursorOfMouse();
-
-
                         BattleModeOnDem();
                         break;
                     //case 6:                                     // Миссия окончена //перенёс в стандартные проблемы
