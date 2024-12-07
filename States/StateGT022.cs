@@ -63,7 +63,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            if (!pet.isActivePet()) pet.ActivePet();
+            if (!pet.isActivePet()) pet.ActivatePet();
             //botwindow.PressMouse(408, 405);  //Click Active Pet
             //botwindow.Pause(2500);
         }

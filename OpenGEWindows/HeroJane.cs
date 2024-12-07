@@ -12,12 +12,12 @@ namespace OpenGEWindows
             this.i = i;
             this.xx = xx;
             this.yy = yy;
-            colorTown1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 0, 3);    //доделать
-            colorTown2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 3);    //доделать
-            colorWork1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
-            colorWork2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
-            pointBuff11 = new PointColor(8 + 77 - 5 + xx, 588 - 5 + yy, 16777215, 0);
-            pointBuff12 = new PointColor(8 + 77 - 5 + xx, 589 - 5 + yy, 16777215, 0);
+            colorTown1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 7829000, 3);
+            colorTown2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 2039000, 3);
+            colorWork1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 11046000, 3);
+            colorWork2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 5986000, 3);
+            pointBuff11 = new PointColor(2 + 77 - 5 + xx, 3 + 588 - 5 + yy, 12100000, 5);
+            pointBuff12 = new PointColor(3 + 77 - 5 + xx, 3 + 588 - 5 + yy, 12200000, 5);
             pointBuff21 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
             pointBuff22 = new PointColor(-5 + xx, -5 + yy, 0, 0);    //пустышка
             heroName = "Jane";
@@ -58,6 +58,7 @@ namespace OpenGEWindows
         public override void SkillBoss()
         {
             BuffT();
+            BuffR();
         }
 
     }

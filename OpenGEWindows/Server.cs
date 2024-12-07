@@ -1966,7 +1966,7 @@ namespace OpenGEWindows
         /// <summary>
         /// активируем уже призванного пета нажатием на пиктограмму пета          10/02/24
         /// </summary>
-        public void ActivePet()
+        public void ActivatePet()
         {
             new Point(385 - 5 + xx, 88 - 5 + yy).PressMouseL();  //тыкаем в пиктограмму пета вверху слева экрана
         }
@@ -2003,14 +2003,14 @@ namespace OpenGEWindows
         /// активируем пета через пиктограмму 
         /// считается, что изначально пет не активирован
         /// </summary>
-        public void ActivePetDem()
+        public void ActivatePetDem()
         {
             //новый вариант
             if (!isActivePet())
             {
                 if (!isSummonPet()) SummonPet();
                 Pause(500);
-                ActivePet();
+                ActivatePet();
             }
         }
 
@@ -6762,6 +6762,14 @@ namespace OpenGEWindows
         }
 
         /// <summary>
+        /// проверяем, находимся ли в городе (все герои из команды уже определены)
+        /// </summary>
+        /// <returns></returns>
+        public bool isTownDemonic()
+        {
+            return hero1.isTown() && hero2.isTown() && hero3.isTown();
+        }
+        /// <summary>
         /// проверяем, есть ли на i-м герое бафф "Насление древних" /даётся на мосту/
         /// </summary>
         /// <param name="i">номер героя</param>
@@ -9418,7 +9426,7 @@ namespace OpenGEWindows
             Pause(1000);
 
             //активируем пета
-            ActivePetDem();
+            ActivatePetDem();
         }
 
         /// <summary>
@@ -9441,7 +9449,7 @@ namespace OpenGEWindows
             Pause(1000);
 
             //активируем пета
-            ActivePetDem();
+            ActivatePetDem();
         }
 
 
@@ -9622,14 +9630,15 @@ namespace OpenGEWindows
         /// </summary>
         public bool isUstiar()
         {
-            //return     new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 20% налоге
-            //        && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
-            //        && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()    //буква C при 20% налоге
-            //        && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
-            return     new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 5% налоге
+            return  (new PointColor(926 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 20% налоге
+                    && new PointColor(926 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+                    && new PointColor(961 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()    //буква C при 20% налоге
+                    && new PointColor(961 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()) 
+                    ||
+                    (new PointColor(930 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква B при 5% налоге
                     && new PointColor(930 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
                     && new PointColor(963 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()    //буква C при 5% налоге
-                    && new PointColor(963 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();
+                    && new PointColor(963 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor());
 
         }
 
@@ -9806,9 +9815,10 @@ namespace OpenGEWindows
 
         #region =================================== All in One ==================================================
         /// <summary>
-        /// выбор дальнейшего пути после выполнения миссии Демоник 
-        /// вариант 1 - след. аккаунт, вариант 2 - Кастилия, вариант 3 - ферма
+        /// выбор дальнейшего пути после выполнения миссии Демоник
+        /// [ 1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма ]
         /// </summary>
+        /// <param name="way">1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма</param>
         private void WayToGoDemonic(int way)
         {
             switch (way)
@@ -9978,8 +9988,8 @@ namespace OpenGEWindows
             }
 
             //в БХ вылетели, значит миссия закончена (находимся в БХ, но никто не убит)
-            //if (isTown() && isBH() && !isKillHero())
-            //    return 6;                                                 // пока убрал. вроде не должно потребоваться
+            //if (isTownDemonic() && isBH() && !isKillHero())
+                //return 6;                                                 
 
             //если проблем не найдено
             return 0;
@@ -10537,7 +10547,7 @@ namespace OpenGEWindows
                         //this.Hero[2] = WhatsHero(2);
                         //this.Hero[3] = WhatsHero(3);
 
-                        ActivePetDem();                             //новая функция  22-11
+                        ActivatePetDem();                             //новая функция  22-11
                         MaxHeight(12);
 
                         //бафаемся, пока не вылезли мобы
@@ -10640,7 +10650,7 @@ namespace OpenGEWindows
                         ReturnToMissionFromBarack();                        // идем из барака обратно в миссию     
                         MoveCursorOfMouse();
                         botParam.Stage = 3;
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
                     case 3:                                                 // собираемся атаковать
                         DirectionOfMovement = -1 * DirectionOfMovement;     // меняем направление движения
@@ -10656,7 +10666,7 @@ namespace OpenGEWindows
                     //    botParam.HowManyCyclesToSkip = 4;
                     //    break;
                     case 4:
-                        ActivePet();
+                        ActivatePet();
                         break;
                     case 10:
                         //если появился сундук
@@ -10705,27 +10715,15 @@ namespace OpenGEWindows
                         botParam.HowManyCyclesToSkip = 4;    //было 2  //29-07-24
                         break;
                     case 3:                                         //в миссии, но сундук ещё не открыт
+                        ActivatePetDem();                           //активируем пета (может он успеет собрать не подобранные вещи)
                         OpeningTheChest();                          //тыкаем в сундук и запускаем рулетку
-                        ActivePetDem();                             //активируем пета (может он успеет собрать не подобранные вещи)
-                        //driver.StateActivePetDem();               //активируем пета (старый вариант)
                         MaxHeight(10);                              //чтобы точно было видно вторые ворота
                         PressOnFesoGate();
                         botwindow.Pause(2000);
                         if (!dialog.isDialog())
                         {
                             botwindow.Pause(3000);                  //ждём рулетку
-
                             WayToGoDemonic(3);
-
-                            ////старый вариант
-                            ////RemoveSandboxieBH();                    //закрываем песочницу и берём следующего бота в работу
-                            ////botParam.Stage = 1;
-                            ////botParam.HowManyCyclesToSkip = 2;
-
-                            ////новый вариант
-                            //Teleport(4, true);                      //телепорт в Кастилию
-                            //botParam.Stage = 6;                     //переходим на стадию Кастилия (Stage 1)    
-                            //botParam.HowManyCyclesToSkip = 4;
                         }
                         else
                         {
@@ -10737,7 +10735,7 @@ namespace OpenGEWindows
                             //AttackCtrlToLeft();        //старый вариант
                             BattleModeOnDem();           //новый вариант
                             BattleModeOnDem();           //новый вариант
-                            ActivePetDem();
+                            ActivatePetDem();
                             botParam.HowManyCyclesToSkip = 5;
                             botParam.Stage = 4;
                         }
@@ -10754,7 +10752,7 @@ namespace OpenGEWindows
                         if (dialog.isDialog()) dialog.PressOkButton(1);
                         botwindow.Pause(3000);
                         AttackCtrlToLeft();
-                        ActivePetDem();
+                        ActivatePetDem();
                         botParam.Stage = 4;
                         break;
 
@@ -10942,7 +10940,7 @@ namespace OpenGEWindows
                         //Hero[2] = WhatsHero(2);
                         //Hero[3] = WhatsHero(3);
 
-                        ActivePetDem();                             //новая функция  22-11
+                        ActivatePetDem();                             //новая функция  22-11
                         botwindow.ThirdHero();
                         botParam.Stage = 7;
                         break;

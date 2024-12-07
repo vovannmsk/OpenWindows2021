@@ -63,7 +63,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            if (!pet.isActivePet() && !pet.isNoFoodPet()) pet.ActivePet();
+            if (!pet.isActivePet() && !pet.isNoFoodPet()) pet.ActivatePet();
         }
 
         /// <summary>

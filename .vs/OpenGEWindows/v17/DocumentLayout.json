@@ -3,136 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|solutionrelative:gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|c:\\users\\vlad\\source\\repos\\vovannmsk\\openwindows2021\\opengewindows\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\check.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\check.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromarie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromarie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herobernelli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herobernelli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herocalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herocalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herofactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herofactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\pointcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\pointcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromusk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromusk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heroloraconstans.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heroloraconstans.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herodivinehammerbryan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herodivinehammerbryan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorebecca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorebecca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herolorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herolorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herojane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herojane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorjd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorjd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromiho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromiho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herosuperromina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herosuperromina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herovanshee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herovanshee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromcalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromcalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heroaither.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heroaither.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorosie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorosie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herocecille.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herocecille.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herojaina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herojaina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromlorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromlorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\servereuropa2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\servereuropa2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\servereuropa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\servereuropa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\serveramerica2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\serveramerica2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\serveramerica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\serveramerica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\otitsing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\otitsing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\check.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\check.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -141,6 +25,102 @@
     {
       "AbsoluteMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|solutionrelative:main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromusk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromusk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herobernelli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herobernelli.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromlorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromlorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herojaina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herojaina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herocecille.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herocecille.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorosie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorosie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromarie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromarie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heroaither.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heroaither.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herovanshee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herovanshee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herosuperromina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herosuperromina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heromiho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heromiho.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorjd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorjd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herojane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herojane.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herolorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herolorch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herorebecca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herorebecca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herodivinehammerbryan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herodivinehammerbryan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\heroloraconstans.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\heroloraconstans.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herocalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herocalipso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\hero.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|solutionrelative:gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\herofactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\herofactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\otitsing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\otitsing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\gebot.data\\globalparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -158,17 +138,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 4,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeDocumentMoniker": "Main\\MainForm.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeToolTip": "Main\\MainForm.cs",
-              "ViewState": "AgIAAAAEAAAAAAAAAAAAAN8GAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAD4DAAAAAAAAAAAQwGIDAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T21:40:32.771Z",
               "IsPinned": true
@@ -181,28 +161,27 @@
               "RelativeDocumentMoniker": "States\\Check.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\Check.cs",
               "RelativeToolTip": "States\\Check.cs",
-              "ViewState": "AgIAAGIgAAAAAAAAAAAiwGQgAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAK8eAAAAAAAAAAAQwNAeAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:32:03.851Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DriversOfState.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\DriversOfState.cs",
               "RelativeDocumentMoniker": "States\\DriversOfState.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\DriversOfState.cs",
               "RelativeToolTip": "States\\DriversOfState.cs",
-              "ViewState": "AgIAAFECAAAAAAAAAAASwFICAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAGwCAAAAAAAAAAAswG0CAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:32:05.452Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 27,
               "Title": "botWindow.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\botWindow.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\botWindow.cs",
@@ -215,13 +194,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Server.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Server.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\Server.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Server.cs",
               "RelativeToolTip": "OpenGEWindows\\Server.cs",
-              "ViewState": "AgIAAKolAAAAAAAAAAAiwKwlAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFwmAAAAAAAAAAAgwLcmAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:31:48.558Z",
               "IsPinned": true,
@@ -229,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "ServerSing.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerSing.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\ServerSing.cs",
@@ -242,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 31,
               "Title": "Otit.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Otit.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\Otit.cs",
@@ -255,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 29,
               "Title": "OtitSing.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\OtitSing.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\OtitSing.cs",
@@ -268,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 30,
               "Title": "GlobalParam.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\GEBot.Data\\GlobalParam.cs",
               "RelativeDocumentMoniker": "GEBot.Data\\GlobalParam.cs",
@@ -281,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 25,
               "Title": "BotParam.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\GEBot.Data\\BotParam.cs",
               "RelativeDocumentMoniker": "GEBot.Data\\BotParam.cs",
@@ -290,12 +269,11 @@
               "ViewState": "AgIAAP8AAAAAAAAAAAASwAABAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-29T20:19:38.196Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 5,
               "Title": "MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeDocumentMoniker": "Main\\MainForm.cs",
@@ -307,20 +285,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 24,
               "Title": "Hero.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Hero.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\Hero.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Hero.cs",
               "RelativeToolTip": "OpenGEWindows\\Hero.cs",
-              "ViewState": "AgIAAK0AAAAAAAAAAAAlwNQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAuwEIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-03T19:05:02.046Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 26,
               "Title": "HeroFactory.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroFactory.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroFactory.cs",
@@ -333,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 6,
               "Title": "HeroMusk.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMusk.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroMusk.cs",
@@ -346,20 +324,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "HeroBernelli.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroBernelli.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroBernelli.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroBernelli.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroBernelli.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAA4AAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T21:21:47.287Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 8,
               "Title": "HeroMLorch.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMLorch.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroMLorch.cs",
@@ -372,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 9,
               "Title": "HeroJaina.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroJaina.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroJaina.cs",
@@ -385,33 +363,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 10,
               "Title": "HeroCecille.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroCecille.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroCecille.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroCecille.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroCecille.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T11:13:40.857Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 11,
               "Title": "HeroRosie.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroRosie.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroRosie.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroRosie.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroRosie.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAiwBEAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T11:15:55.88Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
               "Title": "HeroMarie.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMarie.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroMarie.cs",
@@ -424,33 +402,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 13,
               "Title": "HeroAither.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroAither.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroAither.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroAither.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroAither.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABaAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAD0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:17:12.52Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 1,
               "Title": "HeroMCalipso.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMCalipso.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroMCalipso.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMCalipso.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroMCalipso.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABSAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:21:10.649Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 14,
               "Title": "HeroVanshee.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroVanshee.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroVanshee.cs",
@@ -463,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 15,
               "Title": "HeroSuperRomina.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroSuperRomina.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroSuperRomina.cs",
@@ -476,46 +454,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "HeroMiho.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMiho.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroMiho.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroMiho.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroMiho.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABXAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAiwBIAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:31:06.989Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "HeroRJD.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroRJD.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroRJD.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroRJD.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroRJD.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABXAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAiwBEAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:33:31.372Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "HeroJane.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroJane.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroJane.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroJane.cs",
               "RelativeToolTip": "OpenGEWindows\\HeroJane.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABXAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwDUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-14T13:38:42.113Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "HeroLorch.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroLorch.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroLorch.cs",
@@ -528,7 +506,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 20,
               "Title": "HeroRebecca.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroRebecca.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroRebecca.cs",
@@ -541,7 +519,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 21,
               "Title": "HeroDivineHammerBryan.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroDivineHammerBryan.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroDivineHammerBryan.cs",
@@ -554,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 22,
               "Title": "HeroLoraConstans.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroLoraConstans.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroLoraConstans.cs",
@@ -567,7 +545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 23,
               "Title": "HeroCalipso.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\HeroCalipso.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\HeroCalipso.cs",
@@ -581,66 +559,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PointColor.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\PointColor.cs",
-              "RelativeDocumentMoniker": "OpenGEWindows\\PointColor.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\PointColor.cs",
-              "RelativeToolTip": "OpenGEWindows\\PointColor.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAlwGAAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T14:21:11.322Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "ServerEuropa2.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerEuropa2.cs",
-              "RelativeDocumentMoniker": "OpenGEWindows\\ServerEuropa2.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerEuropa2.cs",
-              "RelativeToolTip": "OpenGEWindows\\ServerEuropa2.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T18:54:56.058Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "ServerEuropa.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerEuropa.cs",
-              "RelativeDocumentMoniker": "OpenGEWindows\\ServerEuropa.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerEuropa.cs",
-              "RelativeToolTip": "OpenGEWindows\\ServerEuropa.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAewBUAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T18:54:51.348Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "ServerAmerica2.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerAmerica2.cs",
-              "RelativeDocumentMoniker": "OpenGEWindows\\ServerAmerica2.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerAmerica2.cs",
-              "RelativeToolTip": "OpenGEWindows\\ServerAmerica2.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAewBoAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T18:54:47.074Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "ServerAmerica.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerAmerica.cs",
-              "RelativeDocumentMoniker": "OpenGEWindows\\ServerAmerica.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerAmerica.cs",
-              "RelativeToolTip": "OpenGEWindows\\ServerAmerica.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAewBgAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T18:54:38.774Z"
             }
           ]
         }

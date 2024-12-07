@@ -67,7 +67,7 @@ namespace OpenGEWindows
         /// <returns> true, если открыто </returns>
         public bool isOpenMenuPet()
         {
-            return (pointisOpenMenuPet1.isColor() && pointisOpenMenuPet2.isColor());
+            return pointisOpenMenuPet1.isColor() && pointisOpenMenuPet2.isColor();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace OpenGEWindows
         /// <summary>
         /// активируем уже призванного пета
         /// </summary>
-        public void ActivePet()
+        public void ActivatePet()
         {
             pointActivePet.PressMouse(); //Click Button Active Pet
             Pause(2500);
@@ -102,7 +102,7 @@ namespace OpenGEWindows
         /// активируем пета через пиктограмму (быстрый способ). Не используется пока
         /// считается, что изначально пет не активирован
         /// </summary>
-        public void ActivePetDem()
+        public void ActivatePetDem()
         {
             uint colorBegin  = new PointColor(385 - 5 + xx, 88 - 5 + yy, 0, 0).GetPixelColor();   //сохраняем изначальный цвет пета на пиктограмме
             uint colorCurrent = colorBegin;

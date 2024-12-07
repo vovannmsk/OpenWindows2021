@@ -12,10 +12,10 @@ namespace OpenGEWindows
             this.i = i;
             this.xx = xx;
             this.yy = yy;
-            colorTown1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 0, 3);    //доделать
-            colorTown2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 3);    //доделать
-            colorWork1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
-            colorWork2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 3);    //доделать
+            colorTown1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 12698000, 3);
+            colorTown2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 5987000, 3);
+            colorWork1 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 250, 0);
+            colorWork2 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 501, 0);
             pointBuff11 = new PointColor(6 + 77 - 5 + xx, 589 - 5 + yy, 1574057, 0);
             pointBuff12 = new PointColor(7 + 77 - 5 + xx, 589 - 5 + yy, 5505222, 0);
             pointBuff21 = new PointColor(2 + 77 - 5 + xx, 591 - 5 + yy, 16663289, 0);

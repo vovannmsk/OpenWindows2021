@@ -847,7 +847,7 @@ namespace States
                         //server.messageWindowExtension();     //не актуально 22-11-23
 
                         //driver.StateActivePetDem();
-                        server.ActivePetDem();                     //ноая функция  22-11
+                        server.ActivatePetDem();                     //ноая функция  22-11
                         server.MaxHeight(12);                      
                         botParam.Stage = 2;
                         break;
@@ -1349,7 +1349,7 @@ namespace States
                             botwindow.Pause(3000);
                             //server.AttackCtrlToLeft();        //старый вариант
                             server.BattleModeOnDem();           //новый вариант
-                            server.ActivePetDem();
+                            server.ActivatePetDem();
                             botParam.Stage = 4;
                         }
 
@@ -1397,7 +1397,7 @@ namespace States
                         if (dialog.isDialog()) dialog.PressOkButton(1);
                         botwindow.Pause(3000);
                         server.AttackCtrlToLeft();
-                        server.ActivePetDem();
+                        server.ActivatePetDem();
                         botParam.Stage = 4;
                         break;
                     case 11:                                         // закрыть службу Стим
@@ -1925,7 +1925,7 @@ namespace States
                         //Hero[2] = server.WhatsHero(2);
                         //Hero[3] = server.WhatsHero(3);
 
-                        server.ActivePetDem();                     //новая функция  22-11
+                        server.ActivatePetDem();                     //новая функция  22-11
 
                         botParam.Stage = 2;
                         break;
@@ -8124,7 +8124,7 @@ namespace States
             //MessageBox.Show("ош? " + server.isAuch());
             //MessageBox.Show("Коимбра? " + server.isCoimbra());
             //MessageBox.Show("Ребольдо? " + server.isReboldo());
-            MessageBox.Show("Юстиар ??? " + server.isUstiar());
+            //MessageBox.Show("Юстиар ??? " + server.isUstiar());
             //MessageBox.Show("Кастилия ??? " + server.isCastilia());
             //MessageBox.Show("Мост? " + server.isBridge());
             //MessageBox.Show("неправильная стойка? " + server.isBadFightingStance());  //22-11
@@ -8236,22 +8236,22 @@ namespace States
 
             #endregion
 
-            //Hero hero1 = heroFactory.Create(1);
-            //Hero hero2 = heroFactory.Create(2);
-            //Hero hero3 = heroFactory.Create(3);
+            Hero hero1 = heroFactory.Create(1);
+            Hero hero2 = heroFactory.Create(2);
+            Hero hero3 = heroFactory.Create(3);
 
-            //MessageBox.Show("герой 1?" + hero1.Name());
-            //MessageBox.Show("герой 2?" + hero2.Name());
-            //MessageBox.Show("герой 3?" + hero3.Name());
+            MessageBox.Show("герой 1?" + hero1.Name());
+            MessageBox.Show("герой 2?" + hero2.Name());
+            MessageBox.Show("герой 3?" + hero3.Name());
 
-            //MessageBox.Show("есть основной бафф 1? " + hero1.FindBuff1());
-            //MessageBox.Show("есть доп. бафф 1? " + hero1.FindBuff2());
+            MessageBox.Show("есть основной бафф 1? " + hero1.FindBuff1());
+            MessageBox.Show("есть доп. бафф 1? " + hero1.FindBuff2());
             //MessageBox.Show("есть основной бафф 2? " + hero2.FindBuff1());
             //MessageBox.Show("есть доп. бафф 2? " + hero2.FindBuff2());
             //MessageBox.Show("есть основной бафф 3? " + hero3.FindBuff1());
             //MessageBox.Show("есть доп. бафф 3? " + hero3.FindBuff2());
-            //MessageBox.Show("в городе?" + hero.isTown());
-            //MessageBox.Show("в битве?" + hero.isWork());
+            MessageBox.Show("в городе?" + hero1.isTown());
+            MessageBox.Show("в битве?" + hero1.isWork());
 
             //int x = 483;
             //int y = 292;
@@ -8289,13 +8289,16 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            //int j = 4;
-            //i = 1;
+            int j = 4;
+            
 
-            PointColor point1 = new PointColor(930 - 5 + xx, 252 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(930 - 5 + xx, 259 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(963 - 5 + xx, 252 - 5 + yy, 0, 0);
-            PointColor point4 = new PointColor(963 - 5 + xx, 259 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
+
+            //PointColor point1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point4 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();
