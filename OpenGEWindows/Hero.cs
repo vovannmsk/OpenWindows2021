@@ -54,9 +54,25 @@ namespace OpenGEWindows
         //======= методы =========
 
         public abstract void Buff();
-        public abstract void SkillBoss();
-        //public abstract bool isBuff1(int j);
-        //public abstract bool isBuff2(int j);
+
+        /// <summary>
+        /// скиллуем
+        /// </summary>
+        public void SkillBoss()
+        {
+            SkillBoss1();
+            SkillBoss2();
+        }
+
+        /// <summary>
+        /// скиллуем лучшим скиллом
+        /// </summary>
+        public abstract void SkillBoss1();
+
+        /// <summary>
+        /// скиллуем вторым скиллом 
+        /// </summary>
+        public abstract void SkillBoss2();
 
         /// <summary>
         /// проверяем, есть ли на i-м герое бафф #1 (Y)
@@ -80,7 +96,6 @@ namespace OpenGEWindows
                     pointBuff22.isColor((j - 1) * 14 + (i - 1) * 255, 0);
         }
 
-
         /// <summary>
         /// скиллуем боссов и мобов
         /// </summary>
@@ -91,6 +106,7 @@ namespace OpenGEWindows
             else
                 BuffE();
         }
+
         /// <summary>
         /// функция проверяет, убит ли герой (проверка проходит на боевой карте)
         /// </summary>
@@ -192,7 +208,6 @@ namespace OpenGEWindows
 
             return result;
         }
-
 
         /// <summary>
         /// проверяем, находимся ли в городе

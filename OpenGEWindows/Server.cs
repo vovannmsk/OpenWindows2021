@@ -9371,7 +9371,6 @@ namespace OpenGEWindows
             this.hero1 = heroFactory.Create(1);
             this.hero2 = heroFactory.Create(2);
             this.hero3 = heroFactory.Create(3);
-
         }
 
         /// <summary>
@@ -9397,9 +9396,20 @@ namespace OpenGEWindows
             //SkillBoss(this.Hero[2], 2);
             //SkillBoss(this.Hero[3], 3);
 
-            this.hero1.SkillBoss();
-            this.hero2.SkillBoss();
-            this.hero3.SkillBoss();
+            //this.hero1.SkillBoss();
+            //this.hero2.SkillBoss();
+            //this.hero3.SkillBoss();
+
+            //бьём первым скиллом
+            this.hero1.SkillBoss1();
+            this.hero2.SkillBoss1();
+            this.hero3.SkillBoss1();
+
+            //бьём вторым скиллом
+            this.hero1.SkillBoss2();
+            this.hero2.SkillBoss2();
+            this.hero3.SkillBoss2();
+
         }
 
 

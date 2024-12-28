@@ -55,14 +55,29 @@ namespace OpenGEWindows
             if (!FindBuff2()) BuffW();
         }
 
+        ///// <summary>
+        ///// скиллуем лучшим скиллом
+        ///// </summary>
+        //public override void SkillBoss()
+        //{
+        //    BuffT();
+        //    BuffR();
+        //}
+
         /// <summary>
         /// скиллуем лучшим скиллом
         /// </summary>
-        public override void SkillBoss()
+        public override void SkillBoss1()
         {
             BuffT();
-            BuffR();
         }
 
+        /// <summary>
+        /// скиллуем вторым скиллом 
+        /// </summary>
+        public override void SkillBoss2()
+        {
+            BuffR();
+        }
     }
 }

@@ -8016,7 +8016,7 @@ namespace States
             //KatoviaMarket kMarket = new KatoviaMarketSing (botwindow);
             //Market market = new MarketSing(botwindow);
             //Pet pet = new PetSing(botwindow);
-            Hero hero;
+            //Hero hero;
 
             int xx, yy;
             xx = koordX[i - 1];
