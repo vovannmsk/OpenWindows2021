@@ -5839,9 +5839,8 @@ namespace States
                     case 6:        //в ребольдо
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
-                        //server.Teleport(1, true);                   // телепорт к Мамону        
                         server.Teleport(5, true);                   // телепорт к Мамону        //20-07-24
-                        botParam.HowManyCyclesToSkip = 5;           // даём время, чтобы загрузилась местность
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы загрузилась местность
                         break;
                     case 7:     //у Мамона
                         driver.FromMamonsToMamonsDialog();          //Mamons --> Mamons(Dialog)
@@ -7806,11 +7805,7 @@ namespace States
             this.isActiveServer = server.IsActiveServer;
 
             if (isActiveServer) driver.StateInputOutput6();
-            else
-            {
-                server.RemoveSandboxie();
-
-            }
+            else server.RemoveSandboxie();
             //}
         }
 
@@ -7879,12 +7874,12 @@ namespace States
         /// </summary>
         public void ChangingAccountsCW()
         {
-            //botwindow = new botWindow(numberOfWindow);
-            //ServerFactory serverFactory = new ServerFactory(botwindow);
-            //this.server = serverFactory.create();
-            //this.globalParam = new GlobalParam();
-            //this.botParam = new BotParam(numberOfWindow);
-            //this.isActiveServer = server.IsActiveServer;
+            botwindow = new botWindow(numberOfWindow);
+            ServerFactory serverFactory = new ServerFactory(botwindow);
+            this.server = serverFactory.create();
+            this.globalParam = new GlobalParam();
+            this.botParam = new BotParam(numberOfWindow);
+            this.isActiveServer = server.IsActiveServer;
 
             if (isActiveServer) driver.StateInputOutputCW();
             else server.RemoveSandboxieCW();
@@ -8194,6 +8189,7 @@ namespace States
             //MessageBox.Show("есть бафф?" + server.FindCatsEye(1));
             //MessageBox.Show("есть бафф2?" + server.FindEagleEye(1));
             //server.Buff(17, 1);
+            MessageBox.Show("около Мамона2?" + server.isDesertedQuay()); 
 
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
             //MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
@@ -8236,22 +8232,22 @@ namespace States
 
             #endregion
 
-            Hero hero1 = heroFactory.Create(1);
-            Hero hero2 = heroFactory.Create(2);
-            Hero hero3 = heroFactory.Create(3);
+            //Hero hero1 = heroFactory.Create(1);
+            //Hero hero2 = heroFactory.Create(2);
+            //Hero hero3 = heroFactory.Create(3);
 
-            MessageBox.Show("герой 1?" + hero1.Name());
-            MessageBox.Show("герой 2?" + hero2.Name());
-            MessageBox.Show("герой 3?" + hero3.Name());
+            //MessageBox.Show("герой 1?" + hero1.Name());
+            //MessageBox.Show("герой 2?" + hero2.Name());
+            //MessageBox.Show("герой 3?" + hero3.Name());
 
-            MessageBox.Show("есть основной бафф 1? " + hero1.FindBuff1());
-            MessageBox.Show("есть доп. бафф 1? " + hero1.FindBuff2());
-            //MessageBox.Show("есть основной бафф 2? " + hero2.FindBuff1());
-            //MessageBox.Show("есть доп. бафф 2? " + hero2.FindBuff2());
-            //MessageBox.Show("есть основной бафф 3? " + hero3.FindBuff1());
-            //MessageBox.Show("есть доп. бафф 3? " + hero3.FindBuff2());
-            MessageBox.Show("в городе?" + hero1.isTown());
-            MessageBox.Show("в битве?" + hero1.isWork());
+            //MessageBox.Show("есть основной бафф 1? " + hero1.FindBuff1());
+            //MessageBox.Show("есть доп. бафф 1? " + hero1.FindBuff2());
+            ////MessageBox.Show("есть основной бафф 2? " + hero2.FindBuff1());
+            ////MessageBox.Show("есть доп. бафф 2? " + hero2.FindBuff2());
+            ////MessageBox.Show("есть основной бафф 3? " + hero3.FindBuff1());
+            ////MessageBox.Show("есть доп. бафф 3? " + hero3.FindBuff2());
+            //MessageBox.Show("в городе?" + hero1.isTown());
+            //MessageBox.Show("в битве?" + hero1.isWork());
 
             //int x = 483;
             //int y = 292;
@@ -8289,16 +8285,14 @@ namespace States
             //int dx = 3;
             //int dy = 2;
 
-            int j = 4;
-            
+            //int j = 4;
+            //PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
+            //PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
 
-            PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
-
-            //PointColor point1 = new PointColor(34 - 5 + xx, 702 - 5 + yy, 0, 0);
-            //PointColor point2 = new PointColor(35 - 5 + xx, 702 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(29 - 5 + xx, 697 - 5 + yy, 0, 0);
-            PointColor point4 = new PointColor(30 - 5 + xx, 697 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(408 - 5 + xx, 308 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(408 - 5 + xx, 309 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(938 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point4 = new PointColor(938 - 5 + xx, 259 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
             color2 = point2.GetPixelColor();

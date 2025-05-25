@@ -552,6 +552,11 @@ namespace States
             // reOpen + connect + barack
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));
 
+            //reOpen  (для проверки бана)
+            //StateDriverRun(new StateGT314(botwindow), new StateGT315(botwindow));
+            //server.QuickConnect();
+            //botwindow.Pause(5000);
+
             //создание новой команды FERMA
             //StateDriverRun(new StateGT314(botwindow), new StateGT316(botwindow));  // reOpen + connect + barack
             //server.NewTeamCreating();
@@ -591,8 +596,8 @@ namespace States
             //server.MissionCapibara();
 
 
-            //закрываем проги в песочнице
-              StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
+            //закрываем проги в песочнице 25.03.25	C:\America2\
+             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 
         /// <summary>
@@ -619,7 +624,7 @@ namespace States
             // reOpen 
             StateDriverRun(new StateGT308(botwindow), new StateGT315(botwindow));
 
-            botwindow.Pause(20000);
+            botwindow.Pause(10000);
             //закрываем чистое окно с игрой
             StateDriverRun(new StateGT171(botwindow), new StateGT172(botwindow));  
         }

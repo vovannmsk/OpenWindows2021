@@ -77,7 +77,7 @@ namespace OpenGEWindows
         /// </summary>
         public override void SkillBoss2()
         {
-            BuffR();
+            BuffT();
         }
     }
 }

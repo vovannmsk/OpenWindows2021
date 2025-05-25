@@ -237,12 +237,10 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// подходим к старому человеку после перехода из казарм
+        /// подходим к старому человеку после перехода из казарм  !!!!!!!!!!!!!!!!!!!!!!!!
         /// </summary>
         public void GoToOldManMulti()
         {
-            //server.OpenMapForState();
-            //            server.TopMenu(12, 2, true);       //23-11
             server.TopMenu(12, 3, true);       //12-12-23
             Pause(1000);
 
@@ -270,11 +268,14 @@ namespace OpenGEWindows
 
          
         /// <summary>
-        /// тыкаем на старого мужика
+        /// тыкаем на старого мужика  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         /// </summary>
         public void PressOldMan()
         {
-            botwindow.FirstHero();
+            PressBoxInLeftPanel(3); //применили Гермес
+            botwindow.PressEsc();
+            server.AddBullets();            //применили коробки с патронами
+            botwindow.FirstHero();          //выбираем первого героя и автоматически применяем то, что лежит в ячейке "u" (в данном случае шайники)
             Pause(1000);
             pointOldMan.PressMouseLL();
             Pause(2000);
@@ -387,7 +388,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Нажать на ячейки в левой панели
+        /// Нажать на ячейки в левой панели 1 И 3 (МИТРИДАТ и Гермес)
         /// </summary>
         public void PressMitridat()
         {

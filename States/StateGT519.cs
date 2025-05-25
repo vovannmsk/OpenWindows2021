@@ -34,7 +34,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            otit.GoToMamonOnMap();  
+            //otit.GoToMamonOnMap();  
             otit.MinHeight();
             otit.PressMamons();
             botwindow.Pause(1000);

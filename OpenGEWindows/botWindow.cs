@@ -857,8 +857,10 @@ namespace OpenGEWindows
             //pointPanel.PressMouseR();                   // Кликаю правой кнопкой в панель с бытылками, чтобы сделать ее активной и поверх всех окон (группа может мешать)
 
             PressBoxInLeftPanel(4);                        //Soul Crystall
-            if (!FindSteroid(1)) PressBoxInLeftPanel(5);   //проверяем бафф на первом герое
-            if (!FindPrincipal(1)) PressBoxInLeftPanel(6);   //проверяем бафф на первом герое
+            //if (!FindSteroid(1)) 
+                PressBoxInLeftPanel(5);   //проверяем бафф на первом герое
+            //if (!FindPrincipal(1)) 
+                PressBoxInLeftPanel(6);   //проверяем бафф на первом герое
             PressBoxInLeftPanel(7);
             PressBoxInLeftPanel(8);
 

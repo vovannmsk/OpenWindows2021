@@ -135,8 +135,8 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 6713463, 0);     
             this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);
             this.pointisOpenTopMenu82 = new PointColor(562 - 5 + xx + xxx, 90 - 5 + yy + yyy, 13421721, 0);
-            this.pointisOpenTopMenu91 = new PointColor(408 - 5 + xx, 285 - 5 + yy, 16316664, 0);      //N в слове Name  22-11
-            this.pointisOpenTopMenu92 = new PointColor(408 - 5 + xx, 286 - 5 + yy, 16316664, 0);
+            this.pointisOpenTopMenu91 = new PointColor(408 - 5 + xx, 308 - 5 + yy, 16316664, 0);      //N в слове Name  23-04-25
+            this.pointisOpenTopMenu92 = new PointColor(408 - 5 + xx, 309 - 5 + yy, 16316664, 0);
             this.pointisOpenTopMenu121 = new PointColor(242 - 5 + xx, 166 - 5 + yy, 16700000, 5);       //WorldMap and Zone Map
             this.pointisOpenTopMenu122 = new PointColor(242 - 5 + xx, 167 - 5 + yy, 16700000, 5);        //буква М в слове Zone Map
             this.pointisOpenTopMenu121work = new PointColor(242 - 5 + xx, 145 - 5 + yy, 16700000, 5);       //WorldMap and Zone Map
@@ -285,8 +285,10 @@ namespace OpenGEWindows
             this.pointMoveNow = new Point(651 - 5 + xx, 591 - 5 + yy);                              //выбор канала 
             this.pointisBarack1 = new PointColor(53 - 5 + xx, 154 - 5 + yy, 2400000, 5);            //зеленый цвет в слове Barracks  
             this.pointisBarack2 = new PointColor(53 - 5 + xx, 155 - 5 + yy, 2400000, 5);            //проверено
-            this.pointisBarack3 = new PointColor(67 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
-            this.pointisBarack4 = new PointColor(67 - 5 + xx, 63 - 5 + yy, 15500000, 5);            //проверено
+            //this.pointisBarack3 = new PointColor(67 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
+            //this.pointisBarack4 = new PointColor(67 - 5 + xx, 63 - 5 + yy, 15500000, 5);            //проверено
+            this.pointisBarack3 = new PointColor(41 - 5 + xx, 62 - 5 + yy, 15500000, 5);            //проверено   Barrack Mode буква "B"
+            this.pointisBarack4 = new PointColor(41 - 5 + xx, 63 - 5 + yy, 15500000, 5);            //проверено
             this.pointisBarack5 = new PointColor(907 - 5 + xx, 670 - 5 + yy, 11723248, 0);            //страница создания нового персонажа  22-11
             this.pointisBarack6 = new PointColor(907 - 5 + xx, 671 - 5 + yy, 11723248, 0);            //буква Т в слове "To Barack"
             this.pointToBarack = new Point(945 - 5 + xx, 675 - 5 + yy);                       // кнопка "To Barack" на странице создания перса 22-11
@@ -294,9 +296,9 @@ namespace OpenGEWindows
             this.pointisBarackTeamSelection1 = new PointColor(23 - 5 + xx, 68 - 5 + yy, 11000000, 6);            //Team Member буква T
             this.pointisBarackTeamSelection2 = new PointColor(23 - 5 + xx, 69 - 5 + yy, 11000000, 6);            // 22-11
             // кнопка вызова списка групп в бараке "View Character List"
-            this.pointTeamSelection1 = new Point(140 - 5 + xx, 583 - 5 + yy);                   //22-11-2023
+            this.pointTeamSelection1 = new Point(140 - 5 + xx, 608 - 5 + yy);                   //23.04.2025
             this.pointTeamSelection2 = new Point(70 - 5 + xx, 355 - 5 + yy);                   //проверено
-            this.pointTeamSelection3 = new Point(48 - 5 + xx, 624 - 5 + yy);                   //проверено
+            this.pointTeamSelection3 = new Point(48 - 5 + xx, 623 - 5 + yy);                   //проверено
             this.pointButtonLogoutFromBarack = new Point(790 - 5 + xx + xxx, 705 - 5 + yy + yyy);               //кнопка логаут в казарме
             //this.pointChooseChannel = new Point(820 - 5 + xx, 382 - 5 + yy);                       // нажатие кнопки Choose a channel
             this.pointEnterChannel = new Point(646 - 5 + xx, 409 - 5 + yy + (botwindow.getKanal() - 2) * 15);    //выбор канала 

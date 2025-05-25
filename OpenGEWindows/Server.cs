@@ -873,7 +873,7 @@ namespace OpenGEWindows
             ActiveWindow();
             Pause(1000);
             //MessageBox.Show("начинаем выгружать окно");
-            pointLeaveGame.PressMouseLL();                //нажимаем на кнопку "Leave Game"  в логауте
+            //pointLeaveGame.PressMouseLL();                //нажимаем на кнопку "Leave Game"  в логауте
 
             Process process = new Process();
             process.StartInfo.FileName = this.pathClient;
@@ -1844,8 +1844,9 @@ namespace OpenGEWindows
             int NumberString = -1;
             for (int i = 0; i <= 4; i++)
             {
-                if (new PointColor(305 - 5 + xx, 278 - 5 + yy + i * 50, 13300000, 5).isColor() &&
-                    new PointColor(305 - 5 + xx, 285 - 5 + yy + i * 50, 13300000, 5).isColor())
+                //if (new PointColor(305 - 5 + xx, 278 - 5 + yy + i * 50, 13300000, 5).isColor() &&
+                //    new PointColor(305 - 5 + xx, 285 - 5 + yy + i * 50, 13300000, 5).isColor())
+                if (new PointColor(264 - 5 + xx, 271 - 5 + yy + i * 50, 1200000, 5).isColor()) 
                 {
                     NumberString = i;
                     break;
@@ -1859,6 +1860,7 @@ namespace OpenGEWindows
         /// </summary>
         private void PressCancelButton()
         {
+            Pause(500);
             new Point(180 - 5 + xx, 555 - 5 + yy).PressMouseLL();       
             Pause(500);
         }
@@ -1880,7 +1882,7 @@ namespace OpenGEWindows
         {
             if (NumberString <= 0 || NumberString >= 5) NumberString = 1;   //если номер строки не в пределах от 1 до 5,
                                                                             //то берём первую строку (там поросёнок)
-            new Point(244 - 5 + xx, 281 - 5 + yy + (NumberString - 1) * 50).PressMouseLL();     
+            new Point(270 - 5 + xx, 281 - 5 + yy + (NumberString - 1) * 50).PressMouseLL();     
             Pause(500);
         }
 
@@ -3499,9 +3501,9 @@ namespace OpenGEWindows
         /// </summary>
         public void TeamSelection(int numberTeam)
         {
-            pointTeamSelection1.DoubleClickL();   // Нажимаем кнопку вызова списка групп
+            pointTeamSelection1.PressMouseL();   // Нажимаем кнопку вызова списка групп
             Pause(500);
-            new Point(110 - 5 + xx, 362 - 5 + (numberTeam - 1) * 20 + yy).DoubleClickL();  // выбираем нужную группу персов 
+            new Point(110 - 5 + xx, 360 - 5 + (numberTeam - 1) * 20 + yy).DoubleClickL();  // выбираем нужную группу персов 
             Pause(500);
             pointTeamSelection3.PressMouseLL();  // Нажимаем кнопку выбора группы (Select) 
         }
@@ -9509,10 +9511,10 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isDesertedQuay()
         {
-            return new PointColor(924 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
-                    && new PointColor(924 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor()
-                    && new PointColor(975 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
-                    && new PointColor(975 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor();
+            return new PointColor(891 - 5 + xx, 252 - 5 + yy, 16000000, 6).isColor()
+                && new PointColor(891 - 5 + xx, 259 - 5 + yy, 16000000, 6).isColor()
+                && new PointColor(938 - 5 + xx, 252 - 5 + yy, 15000000, 6).isColor()
+                && new PointColor(938 - 5 + xx, 259 - 5 + yy, 15000000, 6).isColor();
         }
 
         #endregion
@@ -10379,7 +10381,8 @@ namespace OpenGEWindows
                     botParam.Stage = 1;
                     break;
                 case 6:                                         // Миссия окончена 
-                    WayToGoDemonic(3);
+                    Pause(5000);
+                    WayToGoDemonic(1);
                     break;
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
@@ -10541,7 +10544,7 @@ namespace OpenGEWindows
                         Pause(500);
                         SummonPet();
                         Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 3;           // даём время, чтобы подгрузились ворота Демоник.
+                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Демоник.
                         break;
                     case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         botwindow.CommandMode();
@@ -10595,7 +10598,7 @@ namespace OpenGEWindows
                         dialog.PressOkButton(1);                    //выходим из диалога
                         Pause(1000);
                         //======================================================================================================================
-                        WayToGoDemonic(3);
+                        WayToGoDemonic(1);
                         //======================================================================================================================
 
                         ////вариант 3. идём на ферму (стадия 9)
@@ -10732,8 +10735,8 @@ namespace OpenGEWindows
                         botwindow.Pause(2000);
                         if (!dialog.isDialog())
                         {
-                            botwindow.Pause(3000);                  //ждём рулетку
-                            WayToGoDemonic(3);
+                            botwindow.Pause(6000);                  //ждём рулетку и собираем лут
+                            WayToGoDemonic(1);
                         }
                         else
                         {

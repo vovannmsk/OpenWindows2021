@@ -34,8 +34,8 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //botwindow.PressMitridat();
-            otit.PressMitridat();           //баффнулись
-            server.AddBullets();            //применили коробки с патронами
+            //otit.PressMitridat();           //баффнулись
+            //server.AddBullets();            //применили коробки с патронами
             botwindow.PressEscThreeTimes(); //убрали лишнее с экрана
             //server.OpenMapForState();     //13-02-2021
             //server.TopMenu(12, 2, true);     //вызвали карту
