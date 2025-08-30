@@ -830,13 +830,14 @@ namespace OpenGEWindows
         public abstract void runClientSteamCW();
         public abstract void runClientCW();
         public abstract UIntPtr FindWindowGE_CW();
+        public abstract bool FindWindowSteamBoolCW();
+        public abstract bool FindWindowCWBool();
 
-
-        /// <summary>
-        /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)  
-        /// чистое окно (без песочницы)
-        /// </summary>
-        public void ReOpenWindowCW()
+       /// <summary>
+       /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)  
+       /// чистое окно (без песочницы)
+       /// </summary>
+       public void ReOpenWindowCW()
         {
             bool result = isHwnd();   //Перемещает в заданные координаты. Если окно есть, то result=true, а если вылетело окно, то result=false.
             if (!result)  //нет окна с нужным HWND
@@ -855,23 +856,30 @@ namespace OpenGEWindows
         /// </summary>
         public void RemoveSandboxieCW()
         {
-            int result = botParam.NumberOfInfinity + 1;         //прибавили индекс, когда удаляем песочницу 
-            if (result >= botParam.LengthOfList) result = 0;    //если номер аккаунта больше длины списка логинов, то присваиваем нулевой номер
+            int result = globalParam.Infinity;
+            if (result >= globalParam.DemonicTo + 1) result = globalParam.DemonicFrom;  //если дошли до последнего подготовленного аккаунта,
+                                                                                        //то идём в начало отведённого списка
+            // общий кусок кода
             botParam.NumberOfInfinity = result;
-            Pause(400);
+            globalParam.Infinity = result + 1;
 
-            ActiveWindow();
-            Pause(1000);
-            //MessageBox.Show("начинаем выгружать окно");
-            //pointLeaveGame.PressMouseLL();                //нажимаем на кнопку "Leave Game"  в логауте
+            CloseSandboxieCW();
+            MoveMouseDown();
 
+        }
+
+        /// <summary>
+        /// закрываем чистое окно без перехода к следующему аккаунту (для БХ)
+        /// </summary>
+        protected void CloseSandboxieCW()
+        {
             Process process = new Process();
             process.StartInfo.FileName = this.pathClient;
             process.StartInfo.Arguments = " -shutdown";
             process.Start();
-
-            Pause(12000);
         }
+
+
 
         /// <summary>
         /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
@@ -2222,11 +2230,19 @@ namespace OpenGEWindows
                 Pause(500);
             }
             if (isOpenTopMenu(9))
-            {
-                new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouseL();   //нажимаем на указанный пункт меню
-                Pause(500);
-            }
+                systemMenuPressCurrentLine(number);
         }
+
+        /// <summary>
+        /// нажать на выбранную строку системного меню
+        /// </summary>
+        /// <param name="number"> номер пункта меню </param>
+        public void systemMenuPressCurrentLine(int number)
+        {
+            new Point(685 - 5 + xx, 291 - 5 + (number - 1) * 30 + yy).PressMouseL();   //нажимаем на указанный пункт меню
+            Pause(500);
+        }
+
 
         /// <summary>
         /// телепортируемся в город продажи по Alt+W (улетаем из БХ или другого города)     /21-12-23/
@@ -9883,7 +9899,9 @@ namespace OpenGEWindows
             {
                 case 1:
                     //вариант 1. закрываем аккаунт и переходим к следующему 
-                    RemoveSandboxieBH();
+                    GoToEnd();
+                    //RemoveSandboxieBH();
+                    RemoveSandboxieCW();
                     botParam.Stage = 1;
                     botParam.HowManyCyclesToSkip = 2;
                     break;
@@ -9930,11 +9948,12 @@ namespace OpenGEWindows
             //если нет окна
             if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
-                if (!FindWindowSteamBool())  //если Стима тоже нет
-                    return 24;
+                //if (!FindWindowSteamBool())  //если Стима тоже нет
+                if (!FindWindowSteamBoolCW()) //если Стима тоже нет          -------------------------------------------------
+                        return 24;
                 else    //если Стим уже загружен
-                    if (FindWindowGEforBHBool())
-                    return 23;    //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
+                    //if (FindWindowGEforBHBool())  return 23;      //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool) --------------
+                    if (FindWindowCWBool()) return 23;              //нашли чистое окно ГЭ (и перезаписали Hwnd в функции FindWindowCWBool)
                 else
                     return 22;                  //если нет окна ГЭ в текущей песочнице
             }
@@ -10364,7 +10383,8 @@ namespace OpenGEWindows
                     if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                     if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                     {
-                        RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                        //RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                        runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
                         botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
                         IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
                     }
@@ -10378,29 +10398,30 @@ namespace OpenGEWindows
                     if (IsItAlreadyPossibleToUploadNewSteam == 0)
                     {
                         //************************ запускаем стим ************************************************************
-                        runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        //runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                        runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
                         botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
                         IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
                     }
                     break;
-                case 33:
-                    CloseError820();
-                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                // а значит смело можно грузить окно еще раз
-                    break;
-                case 34:
-                    AcceptUserAgreement();
-                    break;
-                case 35:
-                    CloseErrorSandboxie();
-                    break;
-                case 36:
-                    CloseUnexpectedError();
-                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                // а значит смело можно грузить окно еще раз
-                    break;
+                //case 33:
+                //    CloseError820();
+                //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                //                                                // а значит смело можно грузить окно еще раз
+                //    break;
+                //case 34:
+                //    AcceptUserAgreement();
+                //    break;
+                //case 35:
+                //    CloseErrorSandboxie();
+                    //break;
+                //case 36:
+                //    CloseUnexpectedError();
+                //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                //                                                // а значит смело можно грузить окно еще раз
+                //    break;
                 //case 37:
                 //    CloseSteamMessage();
                 //    IsItAlreadyPossibleToUploadNewWindow = 0;
@@ -11223,7 +11244,10 @@ namespace OpenGEWindows
                     case 7:                                         // на ферме. доступна награда
                         GetReward();
                         Pause(1000);
-                        RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        GoToEnd();
+                        Pause(5000);
+                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        RemoveSandboxieCW();                        //закрываем чистый Стим и берём следующего бота в работу
                         botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
                         break;
@@ -11240,7 +11264,10 @@ namespace OpenGEWindows
                         Pause(2000);
                         GetReward();
                         Pause(1000);
-                        RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        GoToEnd();
+                        Pause(5000);
+                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        RemoveSandboxieCW();                        //закрываем чистый Стим и берём следующего бота в работу
                         botParam.Stage = 1;
                         botParam.HowManyCyclesToSkip = 1;
                         break;

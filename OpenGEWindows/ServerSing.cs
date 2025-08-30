@@ -705,6 +705,106 @@ namespace OpenGEWindows
 
         #endregion
 
+        #region No window  (работа с чистым окном)
+
+        /// <summary>
+        /// поиск нового окна с игрой.         /работает/
+        /// чистое окно без песочницы
+        /// </summary>
+        /// <returns>HWND найденного окна</returns>
+        public override UIntPtr FindWindowGE_CW()
+        {
+            UIntPtr HWND = (UIntPtr)0;
+
+            int count = 0;
+            while (HWND == (UIntPtr)0)
+            {
+                Pause(500);
+
+                HWND = FindWindow("Granado Espada", "Granado Espada");
+
+                count++; if (count > 5) return (UIntPtr)0;
+            }
+
+            botParam.Hwnd = HWND;
+
+            return HWND;
+        }
+
+        /// <summary>
+        /// загружен ли Steam для чистого окна   /работает/
+        /// </summary>
+        /// <returns>true, если найден стим для чистого окна</returns>
+        public override bool FindWindowSteamBoolCW()
+        {
+            bool result = false;
+            UIntPtr HWND = FindWindow("SDL_app", "Steam");            //30.08.25
+
+            if (HWND != (UIntPtr)0)
+            {
+                result = true;
+                isLoadedSteamBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// запуск клиента игры в чистом окне без песочницы /работает/
+        /// </summary>
+        public override void runClientCW()
+        {
+            //AccountBusy = false;
+
+            Process process = new Process();
+            process.StartInfo.FileName = this.pathClient;
+            process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
+            process.Start();
+            Pause(35000);
+        }
+
+        /// <summary>
+        /// запускает окно Steam без клиента игры (чистое окно)
+        /// </summary>
+        public override void runClientSteamCW()
+        {
+            //if (!FindWindowSteamBool())
+            //{
+            if (isActiveServer)    //если надо грузить, то грузим 
+            {
+                isLoadedSteamBH = true;
+
+                //запускаем steam 
+                Process process = new Process();
+                process.StartInfo.FileName = this.pathClient;
+                process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
+                process.Start();
+            }
+            else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
+                RemoveSandboxieCW();
+
+        }
+
+
+        /// <summary>
+        /// найдено ли чистое окно ГЭ. Если найдено, то в файл hwnd.txt пишем найденный hwnd 
+        /// </summary>
+        /// <returns>true, если найдено</returns>
+        public override bool FindWindowCWBool()
+        {
+            bool result = false;
+            UIntPtr HWND = FindWindow("Granado Espada", "Granado Espada");
+
+            if (HWND != (UIntPtr)0)
+            {
+                botParam.Hwnd = HWND;  //окно найдено, значит делаем запись в файл HWND.txt
+                result = true;  //нашли окно
+            }
+            return result;
+        }
+
+
+        #endregion
+
         #region No window
 
         /// <summary>
@@ -737,31 +837,6 @@ namespace OpenGEWindows
         //    if (SingActive() == 1) result = true;
         //    return result;
         //}
-
-        /// <summary>
-        /// поиск нового окна с игрой.         /работает/
-        /// чистое окно без песочницы
-        /// </summary>
-        /// <returns>HWND найденного окна</returns>
-        public override UIntPtr FindWindowGE_CW()
-        {
-            UIntPtr HWND = (UIntPtr)0;
-
-            int count = 0;
-            while (HWND == (UIntPtr)0)
-            {
-                Pause(500);
-
-                HWND = FindWindow("Granado Espada", "Granado Espada");
-                //HWND = FindWindow("Granado Espada", "[#] Granado Espada [#]");
-                
-                count++; if (count > 5) return (UIntPtr)0;
-            }
-
-            botParam.Hwnd = HWND;
-
-            return HWND;
-        }
 
 
         /// <summary>
@@ -814,42 +889,6 @@ namespace OpenGEWindows
         {
             return pointisContinueRunning1.isColor() && pointisContinueRunning2.isColor();
         }
-
-        /// <summary>
-        /// запуск клиента игры в чистом окне без песочницы /работает/
-        /// </summary>
-        public override void runClientCW()
-        {
-            //AccountBusy = false;
-
-            Process process = new Process();
-            process.StartInfo.FileName = this.pathClient;
-            process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
-            process.Start();
-            Pause(35000);
-        }
-
-        public override void runClientSteamCW()
-        {
-            //if (!FindWindowSteamBool())
-            //{
-            if (isActiveServer)    //если надо грузить, то грузим 
-            {
-                isLoadedSteamBH = true;
-
-                //запускаем steam 
-                Process process = new Process();
-                process.StartInfo.FileName = this.pathClient;
-                process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
-                process.Start();
-            }
-            else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
-                RemoveSandboxieCW();
-            
-        }
-
-
-
 
         /// <summary>
         /// запуск клиента игры

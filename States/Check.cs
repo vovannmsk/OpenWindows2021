@@ -8031,9 +8031,9 @@ namespace States
             //server.ActiveWindow(botParam.Hwnd);
             //server.ReOpenWindowCW();
             //SetWindowPos((UIntPtr)2361040, 0, 5, 4, 1040, 739, 1);
-            ////MessageBox.Show("ошибка = " + GetLastError());
-
-
+            
+            //MessageBox.Show("есть стим?" + server.FindWindowSteamBoolCW());
+            //MessageBox.Show("ошибка = " + GetLastError());
 
             server.ReOpenWindow();
             //server.ActivePetDem();

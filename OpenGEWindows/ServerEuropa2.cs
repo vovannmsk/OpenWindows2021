@@ -1312,6 +1312,40 @@ namespace OpenGEWindows
                 RemoveSandboxieCW();
 
         }
+
+        /// <summary>
+        /// загружен ли Steam для чистого окна
+        /// </summary>
+        /// <returns>true, если найден стим для чистого окна</returns>
+        public override bool FindWindowSteamBoolCW()
+        {
+            bool result = false;
+            UIntPtr HWND = FindWindow("Intermediate D3D Window", "");            //30.08.25
+
+            if (HWND != (UIntPtr)0)
+            {
+                result = true;
+                isLoadedSteamBH = false;     //если нашли загружаемое окно, значит уже можно грузить другие окна
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// найдено ли чистое окно ГЭ. Если найдено, то в файл hwnd.txt пишем найденный hwnd 
+        /// </summary>
+        /// <returns>true, если найдено</returns>
+        public override bool FindWindowCWBool()
+        {
+            bool result = false;
+            UIntPtr HWND = FindWindow("Granado Espada", "Granado Espada");
+
+            if (HWND != (UIntPtr)0)
+            {
+                botParam.Hwnd = HWND;  //окно найдено, значит делаем запись в файл HWND.txt
+                result = true;  //нашли окно
+            }
+            return result;
+        }
     }
 }
 
