@@ -76,8 +76,8 @@ namespace States
         /// <returns> true, если получилось перейти к следующему состоянию </returns>
         public bool isAllCool()
         {
-            return server.isLogout() || Server.AccountBusy;
-            //return true;
+            //return server.isLogout() || Server.AccountBusy;
+            return true;
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace States
         /// <returns> следующее состояние </returns>
         public IState StateNext()         // возвращает следующее состояние, если переход осуществился
         {
-            if (Server.AccountBusy)
-                return new StateGT317(botwindow);
-            else
+            //if (Server.AccountBusy)
+            //    return new StateGT317(botwindow);
+            //else
                 return new StateGT315(botwindow);  
         }
 

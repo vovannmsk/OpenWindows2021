@@ -91,8 +91,8 @@ namespace States
             //return result;
             //return !server.isLogout();
 
-            //return server.isBarack();
-            return true;
+            return server.isBarack();
+            //return true;
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using System.Threading;
 //using System.Drawing;
 using GEBot.Data;
 using System.Diagnostics;
+using System.Data.Entity.Core.Metadata.Edm;
 //using System.Runtime.InteropServices.ComTypes;
 //using System.Windows.Media;
 //using OpenGEWindows;
@@ -22,8 +23,8 @@ namespace OpenGEWindows
         [DllImport("user32.dll")]
         static extern bool PostMessage(UIntPtr hWnd, uint Msg, UIntPtr wParam, UIntPtr lParam);
 
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern UIntPtr FindWindowEx(UIntPtr hwndParent, UIntPtr hwndChildAfter, string className, string windowName);
+        //[DllImport("User32.dll", CharSet = CharSet.Auto)]
+        //public static extern UIntPtr FindWindowEx(UIntPtr hwndParent, UIntPtr hwndChildAfter, string className, string windowName);
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(UIntPtr hWnd, int nCmdShow);  //раскрывает окно, если оно было скрыто в трей
@@ -826,6 +827,10 @@ namespace OpenGEWindows
 
         #region No window  (работа с чистым окном)
 
+        public abstract void runClientSteamCW();
+        public abstract void runClientCW();
+        public abstract UIntPtr FindWindowGE_CW();
+
 
         /// <summary>
         /// восстановливает окно (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)  
@@ -837,27 +842,12 @@ namespace OpenGEWindows
             if (!result)  //нет окна с нужным HWND
             {
                 if (FindWindowGE_CW() == (UIntPtr)0)   //если поиск окна тоже не дал результатов
-                {
                     OpenWindowCW();                 //то загружаем новое окно
-
-                    //MessageBox.Show("Реопен перед проверкой логаута HWND=" + botParam.Hwnd);
-                    //while (!isLogout())
-                    //{
-                    //    Pause(1000);    //ожидание логаута        бесконечный цикл
-                    //    SetPosition();
-                    //    ActiveWindow();
-                    //}
-                    //MessageBox.Show("Реопен после проверки логаута");
-                }
                 else
-                {
-                    ActiveWindow();                      //сдвигаем окно на своё место и активируем его
-                }
+                    ActiveWindow(botParam.Hwnd);                      //сдвигаем окно на своё место и активируем его
             }
             else
-            {
-                ActiveWindow();                      //сдвигаем окно на своё место и активируем его
-            }
+                ActiveWindow(botParam.Hwnd);                      //сдвигаем окно на своё место и активируем его
         }
 
         /// <summary>
@@ -891,21 +881,45 @@ namespace OpenGEWindows
         public void OpenWindowCW()
         {
             runClientCW();    ///запускаем чистый клиент игры (не в песочнице)
-            //Pause(5000);
+            //Pause(15000);
 
-            //убрал временно, для получения согласия с лицензией
-            //while (true)
-            //{
-            //    Pause(3000);
-            //    UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
-            //    if (hwnd != (UIntPtr)0)
-            //    {
-            //        ActiveWindow();
-            //        //MessageBox.Show("номер нового окна = " + hwnd + " HWND=" + botParam.Hwnd);
-            //        break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
-            //    }
-            //}
-            //Pause(5000);
+            while (true)
+            {
+                UIntPtr hwnd = FindWindowGE_CW();      //ищем окно ГЭ с нужными параметрами(сразу запись в файл HWND.txt)
+                if (hwnd != (UIntPtr)0)
+                {
+                    ActiveWindow(hwnd);
+                    //MessageBox.Show("номер нового окна = " + hwnd + " HWND=" + botParam.Hwnd);
+                    break;             //если найденное hwnd не равно нулю (то есть открыли ГЭ), то выходим из бесконечного цикла
+                }
+                Pause(3000);
+            }
+        }
+
+        /// <summary>
+        /// активируем окно с заданным hwnd
+        /// </summary>
+        public void ActiveWindow(UIntPtr Hwnd)
+        {   
+            ShowWindow(Hwnd, 9);                                          // Разворачивает окно если свернуто  было 9
+            SetForegroundWindow(Hwnd);                                   // Перемещает окно в верхний список Z порядка
+            bool sss = SetPosition(Hwnd);                                   // перемещаем окно в заданные для него координаты
+        }
+
+        /// <summary>
+        /// Перемещает окно с ботом в заданные координаты.  не учитываются ширина и высота окна
+        /// </summary>
+        /// <returns>Если окно есть, то result = true, а если вылетело окно, то result = false.</returns>
+        private bool SetPosition(UIntPtr Hwnd)
+        {
+            if (globalParam.Windows10)
+            {
+                //return SetWindowPos(Hwnd, 0, botParam.X, botParam.Y - 1, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
+
+                return SetWindowPos(Hwnd, -1, botParam.X, botParam.Y - 1, 1040, 739, 1);
+            }
+            else
+                return SetWindowPos(Hwnd, 0, botParam.X, botParam.Y, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001 | 0x0040); ;
         }
 
 
@@ -948,8 +962,13 @@ namespace OpenGEWindows
                 return SetWindowPos(botParam.Hwnd, 0, botParam.X, botParam.Y, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001); ;
         }
 
+
+
+
+
         /// <summary>
-        /// существует ли окно с указанным Hwnd? (Попутно перемещает окно с ботом в заданные координаты)
+        /// Существует ли окно с указанным Hwnd? (Попутно перемещает окно с ботом в заданные координаты).
+        /// Изначально HWND читаем из текстового файла в модуле BotParam
         /// </summary>
         /// <returns>true, если окно с заданным Hwnd существует</returns>
         public bool isHwnd()
@@ -967,17 +986,10 @@ namespace OpenGEWindows
             SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
             //BringWindowToTop(botParam.Hwnd);                                  // Делает окно активным и Перемещает окно в верхний список Z порядка     
 
-            SetPosition();                                                      //перемещаем окно в заданные для него координаты
+            bool sss = SetPosition();                                   // перемещаем окно в заданные для него координаты
         }
 
-        /// <summary>
-        /// активируем окно с заданным hwnd
-        /// </summary>
-        public void ActiveWindow(UIntPtr Hwnd)
-        {
-            ShowWindow(Hwnd, 9);                                       // Разворачивает окно если свернуто  было 9
-            SetForegroundWindow(Hwnd);                                 // Перемещает окно в верхний список Z порядка     
-        }
+
 
         /// <summary>
         /// открывает новое окно бота (т.е. переводит из состояния "нет окна" в состояние "логаут")
@@ -1003,7 +1015,7 @@ namespace OpenGEWindows
         /// </summary>
         public void ReOpenWindow()
         {
-            bool result = isHwnd();   //Перемещает в заданные координаты. Если окно есть, то result=true, а если вылетело окно, то result=false.
+            bool result = isHwnd();   //Перемещает в заданные координаты. Если окно с нужным HWND есть, то result=true, а если вылетело окно, то result=false.
             if (!result)  //нет окна с нужным HWND
             {
                 if (FindWindowGE() == (UIntPtr)0)   //если поиск окна тоже не дал результатов
@@ -1029,6 +1041,40 @@ namespace OpenGEWindows
                 ActiveWindow();                      //сдвигаем окно на своё место и активируем его
             }
         }
+
+        ///// <summary>
+        ///// восстановливает "чистое" окно без Sandboxie   /пока не работает/
+        ///// (т.е. переводит из состояния "нет окна" в состояние "логаут", плюс из состояния свернутого окна в состояние развернутого и на нужном месте)
+        ///// </summary>
+        //public void ReOpenClearWindow()
+        //{
+        //    bool result = isHwnd();   //Перемещает в заданные координаты. Если окно с нужным HWND есть, то result=true, а если вылетело окно, то result=false.
+        //    if (!result)  //нет окна с нужным HWND
+        //    {
+        //        if (FindWindowGE_CW() == (UIntPtr)0)   //если поиск окна тоже не дал результатов
+        //        {
+        //            OpenWindow();                 //то загружаем новое окно
+
+        //            if (!Server.AccountBusy)
+        //            {
+        //                ActiveWindow();
+
+        //                while (!isLogout()) Pause(1000);    //ожидание логаута        бесконечный цикл
+
+        //                ActiveWindow();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ActiveWindow();                      //сдвигаем окно на своё место и активируем его
+        //    }
+        //}
+
 
         /// <summary>
         /// проверяем, выскочило ли сообщение о несовместимости версии SafeIPs.dll
@@ -1440,11 +1486,11 @@ namespace OpenGEWindows
         }
 
         public abstract void RunClientClassic();
+
         public abstract void runClientSteamBH();
         public abstract void runClient();
-        public abstract void runClientCW();
         public abstract UIntPtr FindWindowGE();
-        public abstract UIntPtr FindWindowGE_CW();
+
         //public abstract UIntPtr FindWindowSteam();
 
         /// <summary>
@@ -9866,10 +9912,10 @@ namespace OpenGEWindows
         public int NumberOfProblemCommonForAll()
         {
             //если открыто окно Стим
-            if (isOpenSteamWindow()) CloseSteamWindow();
-            if (isOpenSteamWindow2()) CloseSteamWindow2();
-            if (isOpenSteamWindow3()) CloseSteamWindow3();
-            if (isOpenSteamWindow4()) CloseSteamWindow4();
+            //if (isOpenSteamWindow()) CloseSteamWindow();
+            //if (isOpenSteamWindow2()) CloseSteamWindow2();
+            //if (isOpenSteamWindow3()) CloseSteamWindow3();
+            //if (isOpenSteamWindow4()) CloseSteamWindow4();
             //если ошибка 820 (зависло окно ГЭ при загрузке)
             //if (isError820()) return 33;
             //если выскочило сообщение о пользовательском соглашении
@@ -9880,7 +9926,7 @@ namespace OpenGEWindows
             //если окно игры открыто на другом компе
             //if (isOpenGEWindow()) return 37;
             //служба Steam
-            if (isSteamService()) return 11;
+            //if (isSteamService()) return 11;
             //если нет окна
             if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
@@ -10382,7 +10428,7 @@ namespace OpenGEWindows
                     break;
                 case 6:                                         // Миссия окончена 
                     Pause(5000);
-                    WayToGoDemonic(1);
+                    WayToGoDemonic(3);
                     break;
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
@@ -10598,7 +10644,7 @@ namespace OpenGEWindows
                         dialog.PressOkButton(1);                    //выходим из диалога
                         Pause(1000);
                         //======================================================================================================================
-                        WayToGoDemonic(1);
+                        WayToGoDemonic(3);
                         //======================================================================================================================
 
                         ////вариант 3. идём на ферму (стадия 9)
@@ -10736,7 +10782,7 @@ namespace OpenGEWindows
                         if (!dialog.isDialog())
                         {
                             botwindow.Pause(6000);                  //ждём рулетку и собираем лут
-                            WayToGoDemonic(1);
+                            WayToGoDemonic(3);
                         }
                         else
                         {

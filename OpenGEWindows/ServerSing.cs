@@ -739,7 +739,7 @@ namespace OpenGEWindows
         //}
 
         /// <summary>
-        /// поиск нового окна с игрой 
+        /// поиск нового окна с игрой.         /работает/
         /// чистое окно без песочницы
         /// </summary>
         /// <returns>HWND найденного окна</returns>
@@ -759,11 +759,6 @@ namespace OpenGEWindows
             }
 
             botParam.Hwnd = HWND;
-            //botwindow.setHwnd(HWND);
-
-            //SetWindowPos(HWND, 0, 5, 5, WIDHT_WINDOW, HIGHT_WINDOW, 0x0001);
-            
-            //Pause(500);
 
             return HWND;
         }
@@ -821,37 +816,39 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// запуск клиента игры в чистом окне без песочницы
+        /// запуск клиента игры в чистом окне без песочницы /работает/
         /// </summary>
         public override void runClientCW()
         {
-            AccountBusy = false;
+            //AccountBusy = false;
 
             Process process = new Process();
             process.StartInfo.FileName = this.pathClient;
             process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             process.Start();
-            Pause(10000);
-
-            for (int i = 1; i <= 10; i++)
-            {
-                Pause(1000);
-
-                if (isNewSteam())           //если первый раз входим в игру, то соглашаемся с лиц. соглашением
-                {
-                    //pointNewSteamOk.PressMouseL();
-                    AcceptUserAgreement();
-                    break;
-                }
-
-                //if (isContinueRunning())    //если аккаунт запущен на другом компе
-                //{
-                //    NextAccount();
-                //    AccountBusy = true;
-                //    break;
-                //}
-            }
+            Pause(35000);
         }
+
+        public override void runClientSteamCW()
+        {
+            //if (!FindWindowSteamBool())
+            //{
+            if (isActiveServer)    //если надо грузить, то грузим 
+            {
+                isLoadedSteamBH = true;
+
+                //запускаем steam 
+                Process process = new Process();
+                process.StartInfo.FileName = this.pathClient;
+                process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
+                process.Start();
+            }
+            else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
+                RemoveSandboxieCW();
+            
+        }
+
+
 
 
         /// <summary>

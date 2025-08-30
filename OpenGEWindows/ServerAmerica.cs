@@ -931,6 +931,25 @@ namespace OpenGEWindows
             }
             return result;
         }
+
+        public override void runClientSteamCW()
+        {
+            //if (!FindWindowSteamBool())
+            //{
+            if (isActiveServer)    //если надо грузить, то грузим 
+            {
+                isLoadedSteamBH = true;
+
+                //запускаем steam 
+                Process process = new Process();
+                process.StartInfo.FileName = this.pathClient;
+                process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -silent";
+                process.Start();
+            }
+            else             //если надо пропустить этот аккаунт из-за "Параметр.txt"
+                RemoveSandboxieCW();
+
+        }
     }
 }
 

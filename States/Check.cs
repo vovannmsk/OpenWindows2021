@@ -1,13 +1,19 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GEBot.Data;
 using OpenGEWindows;
+using System;
+using System.Runtime.InteropServices;
 using System.Threading;
-using GEBot.Data;
+using System.Windows.Forms;
 
 namespace States
 {
     public class Check
     {
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowPos(UIntPtr myhWnd, int myhwndoptional, int xx, int yy, int cxx, int cyy, uint flagus); // Перемещает окно в заданные координаты с заданным размером
+        [DllImport("kernel32.dll")]
+        public static extern uint GetLastError();
+
         /// <summary>
         /// Если никакой Steam не грузится, то переменная = 0. Значит можно грузить новый Стим.
         /// Если Стим грузится, то переменная равна номеру окна (numberOfWindow)
@@ -8022,6 +8028,13 @@ namespace States
             uint color4;
             HeroFactory heroFactory = new HeroFactory(xx, yy);
 
+            //server.ActiveWindow(botParam.Hwnd);
+            //server.ReOpenWindowCW();
+            //SetWindowPos((UIntPtr)2361040, 0, 5, 4, 1040, 739, 1);
+            ////MessageBox.Show("ошибка = " + GetLastError());
+
+
+
             server.ReOpenWindow();
             //server.ActivePetDem();
             //server.SummonPetKoko();
@@ -8189,7 +8202,7 @@ namespace States
             //MessageBox.Show("есть бафф?" + server.FindCatsEye(1));
             //MessageBox.Show("есть бафф2?" + server.FindEagleEye(1));
             //server.Buff(17, 1);
-            MessageBox.Show("около Мамона2?" + server.isDesertedQuay()); 
+            //MessageBox.Show("около Мамона2?" + server.isDesertedQuay()); 
 
             //MessageBox.Show("закончилась активность?" + server.isActivityOut());
             //MessageBox.Show("магазин?" + (server.isExpedMerch2() || server.isFactionMerch()));
@@ -8228,7 +8241,7 @@ namespace States
 
             //server.Buff(Hero[1], 1);
 
-
+            //MessageBox.Show("hwnd = ?" + server.FindWindowGE_CW());
 
             #endregion
 
