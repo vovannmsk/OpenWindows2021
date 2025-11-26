@@ -90,7 +90,7 @@ namespace GEBot.Data
         public string Param { get => ParamFromFile(); }
         public string[] Parametrs { get => parametrs; }
 //        public UIntPtr Hwnd { get => hwnd; set { hwnd = value; SetHwnd(); } }
-        public UIntPtr Hwnd { get { hwnd = Hwnd_in_file(); return hwnd; }        set { hwnd = value; SetHwnd(); } }
+        public UIntPtr Hwnd { get { hwnd = GetHwnd(); return hwnd; }        set { hwnd = value; SetHwnd(); } }
         public int Kanal { get => kanal; }
         public int NomerTeleport { get => nomerTeleport; }
         public string NameOfFamily { get => nameOfFamily; }
@@ -167,7 +167,7 @@ namespace GEBot.Data
             logins = LoginsFromFile();
             password = PasswordFromFile();
             passwords = PasswordsFromFile();
-            hwnd = Hwnd_in_file();
+            hwnd = GetHwnd();
             param = ParamFromFile();
             parametrs = ParametrsFromFile();
             kanal = Channal();
@@ -244,7 +244,10 @@ namespace GEBot.Data
 
             string number = File.ReadAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt");
             if (number.Length == 0)
+            {
+                Set_HowManyCyclesToSkip("0");     
                 return 0;
+            }
             else
                 return int.Parse(number);
         }
@@ -256,6 +259,15 @@ namespace GEBot.Data
         {
             File.WriteAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt", this.howManyCyclesToSkip.ToString());
         }
+
+        /// <summary>
+        /// записываем значение в файл
+        /// </summary>
+        private void Set_HowManyCyclesToSkip(string HowManyCycles)
+        {
+            File.WriteAllText(directoryOfMyProgram + numberOfWindow + "\\HowManyCyclesToSkip.txt", HowManyCycles);
+        }
+
 
         /// <summary>
         /// метод считывает значение статуса из файла, 1 - мы направляемся на продажу товара в магазин, 0 - нет (обычный режим работы)
@@ -381,6 +393,14 @@ namespace GEBot.Data
         { File.WriteAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt", this.hwnd.ToString()); }
 
         /// <summary>
+        /// записываем в файл Hwnd
+        /// </summary>
+        
+        public void SetHwnd(String HwndStr)
+        { File.WriteAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt", HwndStr); }
+
+
+        /// <summary>
         /// метод записывает значение статуса в файл, 1 - мы уже приступили у убиванию босса, 0 - нет 
         /// </summary>
         /// <returns> 1 - мы уже приступили у убиванию босса, 0 - нет </returns>
@@ -447,24 +467,19 @@ namespace GEBot.Data
         /// функция возвращает hwnd бота
         /// </summary>
         /// <returns></returns>
-        private UIntPtr Hwnd_in_file()
+        private UIntPtr GetHwnd()
         {
-            UIntPtr ff;
-            String ss = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt");
-            if (ss.Equals(""))
-                ff = (UIntPtr)2222222;    //если пусто в файле, то hwnd = 2222222;
+            String HwndFromFile = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt");
+            if (HwndFromFile.Equals(""))
+            {
+                SetHwnd("222222");
+                return (UIntPtr)2222222;   //если пусто в файле, то hwnd = 2222222;
+            }
             else
             {
-                uint dd = uint.Parse(ss);
-                ff = (UIntPtr)dd;
+                uint uintHwnd = uint.Parse(HwndFromFile);   //преобразование из текста в целое положительное
+                return (UIntPtr)uintHwnd;                   //преобразование из целого в формат UIntPtr (родной Hwnd)
             }
-            return ff;
-
-            //String result = File.ReadAllText(directoryOfMyProgram + this.numberOfWindow + "\\HWND.txt");
-            //if (result.Length == 0)    //получили из файла пустую строку
-            //    return (UIntPtr)2222222;
-            //else
-            //    return (UIntPtr)uint.Parse(result);
         }
 
         ///// <summary>

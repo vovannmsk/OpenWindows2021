@@ -1422,7 +1422,7 @@ namespace Main
         }
 
         /// <summary>
-        /// метод задает функционал для потока, организуемого кнопкой Bridge (Мост)
+        /// метод задает функционал для потока, организуемого кнопкой Pure Otite
         /// </summary>
         private void funcPureOtiteNew()
         {
@@ -1436,9 +1436,6 @@ namespace Main
                 botParam[j].Stage = 1;
                 infinity[j] = botParam[j].NumberOfInfinity;
             }
-            //botParam[1].NumberOfInfinity = 405;
-            //botParam[2].NumberOfInfinity = 406;
-            //botParam[3].NumberOfInfinity = 407;
 
             while (true)
             {
@@ -1452,8 +1449,8 @@ namespace Main
                         botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
                         botParam[j].Stage = 1;
                     }
-                    if (check[j].IsActiveServer)
-                    {
+                    //if (check[j].IsActiveServer)
+                    //{
                         switch (botParam[j].Stage)
                         {
                             case 1:
@@ -1472,14 +1469,14 @@ namespace Main
                                 check[j].problemResolutionPureOtiteNewStage5();
                                 break;
                         }
-                    }
-                    else
-                    {
-                        check[j].RemoveSandboxie();
-                        check[j] = new Check(j);
-                        botParam[j] = new BotParam(j);
-                        botParam[j].Stage = 1;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    check[j].RemoveSandboxie();
+                    //    check[j] = new Check(j);
+                    //    botParam[j] = new BotParam(j);
+                    //    botParam[j].Stage = 1;
+                    //}
                 }
             }
         }

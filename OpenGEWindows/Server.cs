@@ -864,14 +864,14 @@ namespace OpenGEWindows
             globalParam.Infinity = result + 1;
 
             CloseSandboxieCW();
-            MoveMouseDown();
+            //MoveMouseDown();
 
         }
 
         /// <summary>
         /// закрываем чистое окно без перехода к следующему аккаунту (для БХ)
         /// </summary>
-        protected void CloseSandboxieCW()
+        public void CloseSandboxieCW()
         {
             Process process = new Process();
             process.StartInfo.FileName = this.pathClient;
@@ -2923,7 +2923,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, включён ли штурмовой режим (Ctrl+Click)
+        /// проверяем, включён ли режим подбора лута
         /// </summary>
         /// <returns>true, если включён</returns>
         public bool isHarvestMode()
@@ -5644,55 +5644,104 @@ namespace OpenGEWindows
             return WaitingTime[counter];
         }
 
+
         /// <summary>
-        /// собираем дроп слева от героев. время сбора = Period милисекунд
+        /// начинаем собирать лут справа от героев
         /// </summary>
-        /// <param name="Period">время сбора</param>
-        public void GetDropCastiliaLeft(int Period)
+        /// <param name="NumberOfPoint">номер точки сбора лута</param>
+        private void HarvestToRight(int NumberOfPoint)
         {
-            for (int i = 1; i <= 2; i++)
-            {
-                if (!isHarvestMode())
-                {
-                    HarvestMode();
-                    new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку слева, чтобы начать подбор
-                    Pause(500);
-                }
-            }
-            Pause(Period);
+            Point[] PointsToRight = {
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5)
+                                    }; 
+            HarvestMode();
+            //точка, куда тыкаем, может различаться в зависимости от номера комнаты, где остановилсь для сбора лута
+            PointsToRight[NumberOfPoint].PressMouseL();    //нажимаем в точку справа от героев, чтобы начать подбор
+            Pause(500);
         }
 
         /// <summary>
-        /// собираем дроп справа от героев. время сбора = Period милисекунд
+        /// начинаем собирать лут слева от героев
+        /// </summary>
+        /// <param name="NumberOfPoint">номер точки сбора лута</param>
+        private void HarvestToLeft(int NumberOfPoint)
+        {
+            Point[] PointsToLeft = {
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5)
+                                    };
+            HarvestMode();
+            //точка, куда тыкаем, может различаться в зависимости от номера комнаты, где остановилсь для сбора лута
+            PointsToLeft[NumberOfPoint].PressMouseL();    //нажимаем в точку справа от героев, чтобы начать подбор
+            Pause(500);
+        }
+
+
+        /// <summary>
+        /// собираем дроп справа от героев
         /// </summary>
         /// <param name="Period">время сбора</param>
-        public void GetDropCastiliaRight(int Period)
+        public void GetDropCastiliaRight(int NumberOfPoint)
         {
             for (int i = 1; i <= 2; i++)
-            {
-                if (!isHarvestMode())
-                {
-                    HarvestMode();
-                    new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5).PressMouseL();    //нажимаем в точку справа, чтобы начать подбор
-                    Pause(500);
-                }
-            }
-            Pause(Period);
+                if (!isHarvestMode()) HarvestToRight(NumberOfPoint);
+
+            //новый вариант. ожидаем до тех пор, пока идёт сбор лута (пока горит соответствующая кнопка)
+            while (isHarvestMode())
+                Pause(500);
+            
+            // старый вариант. ожидаем конца сбора лута конкретное количество секунд
+            //Pause(Period);
+
         }
+
+        /// <summary>
+        /// собираем дроп слева от героев
+        /// </summary>
+        /// <param name="Period">время сбора</param>
+        public void GetDropCastiliaLeft(int NumberOfPoint)
+        {
+            for (int i = 1; i <= 2; i++)                //два раза пытаемся начать собирать лут. С первого раза может не получиться, если тыкнуть точно в дроп на земле
+                if (!isHarvestMode()) HarvestToLeft(NumberOfPoint);
+
+            //новый вариант. ожидаем до тех пор, пока идёт сбор лута (пока горит соответствующая кнопка)
+            while (isHarvestMode())
+                Pause(500);
+
+            // старый вариант. ожидаем конца сбора лута конкретное количество секунд
+            //Pause(Period);
+        }
+
+
+
 
         /// <summary>
         /// подбор дропа в миссии Кастилия 
         /// </summary>
         /// <param name="Period">кол-во милисекунд ожидания подбора</param>
-        public void GetDropCastilia(int Period)
-        {
-            GetDropCastiliaRight(Period);
+        //public void GetDropCastilia(int Period)
+        //{
+        //    GetDropCastiliaRight(Period);
 
-            BattleModeOnDem();
-            Pause(1500);
+        //    BattleModeOnDem();
+        //    Pause(1500);
 
-            GetDropCastiliaLeft(Period);
-        }
+        //    GetDropCastiliaLeft(Period);
+        //}
 
         /// <summary>
         /// нажимаем кнопку Сундук (Harvest Mode) для начала подбора дропа
@@ -9820,7 +9869,7 @@ namespace OpenGEWindows
             Pause(500);
 
             //============ выбор канала ===========
-            botwindow.SelectChannel(3);                 //12.03.2023
+            botwindow.SelectChannel(1);                 //12.03.2023
 
             //============ выход в город  ===========
             NewPlace();                //начинаем в ребольдо  
@@ -9857,7 +9906,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GetReward()
         {
-            new Point(827 - 5 + xx, 460 - 5 + yy).DoubleClickL();
+            new Point(827 - 5 + xx, 485 - 5 + yy).DoubleClickL();
         }
 
         /// <summary>
@@ -9897,10 +9946,17 @@ namespace OpenGEWindows
         {
             switch (way)
             {
+                case 0:
+                    //вариант 0.  Идём в Демоник
+                    Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                    botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Демоник.
+                    break;
                 case 1:
                     //вариант 1. закрываем аккаунт и переходим к следующему 
-                    GoToEnd();
+
                     //RemoveSandboxieBH();
+                    GoToEnd();
+                    Pause(7000);
                     RemoveSandboxieCW();
                     botParam.Stage = 1;
                     botParam.HowManyCyclesToSkip = 2;
@@ -9946,11 +10002,11 @@ namespace OpenGEWindows
             //служба Steam
             //if (isSteamService()) return 11;
             //если нет окна
-            if (!isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
+            if (!isHwnd())        //если нет окна ГЭ с hwnd таким как в файле HWND.txt
             {
                 //if (!FindWindowSteamBool())  //если Стима тоже нет
                 if (!FindWindowSteamBoolCW()) //если Стима тоже нет          -------------------------------------------------
-                        return 24;
+                    return 24;
                 else    //если Стим уже загружен
                     //if (FindWindowGEforBHBool())  return 23;      //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool) --------------
                     if (FindWindowCWBool()) return 23;              //нашли чистое окно ГЭ (и перезаписали Hwnd в функции FindWindowCWBool)
@@ -10228,7 +10284,7 @@ namespace OpenGEWindows
             if (isWork() ||
                 isKillFirstHero2())       //проверить
             {
-                if (isAssaultMode())     //значит ещё бегут к выбранной точке
+                if (isAssaultMode())     //значит ещё бегут с атакой к выбранной точке
                     return 4;                   //тыкаем туда же ещё раз
                 if (isBattleMode())
                 {
@@ -10237,11 +10293,10 @@ namespace OpenGEWindows
                     if (NeedToPickUpLeft)
                         return 8;
                     else
-//                        if (NextPointNumber > 7)    //дошли до конца миссии
                         if (NextPointNumber > 5)    //дошли до конца миссии         //13-06-24
                             return 6;               //летим на ферму
-                    else
-                        return 5;               //значит бежим к очередному боссу без Ctrl
+                        else
+                            return 5;               //значит бежим к очередному боссу без Ctrl
                 }
                 else
                 {
@@ -10380,29 +10435,31 @@ namespace OpenGEWindows
                                                             //то нажимаем кнопку, чтобы войти обратно в барак
                     break;
                 case 22:
-                    if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
-                    if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
-                    {
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                    //{
                         //RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
                         runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
                         botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
                         IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
-                    }
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //}
                     break;
                 case 23:                                    //стим есть. только что нашли новое окно с игрой
                                                             //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
                     IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewSteam = 0;
                     break;
                 case 24:                //если нет стима, значит удалили песочницу
                                         //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
-                    if (IsItAlreadyPossibleToUploadNewSteam == 0)
-                    {
+                    //if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                    //{
                         //************************ запускаем стим ************************************************************
                         //runClientSteamBH();              // если Steam еще не загружен, то грузим его
                         runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
                         botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
-                        IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
-                    }
+                        //IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                    //}
                     break;
                 //case 33:
                 //    CloseError820();
@@ -10449,7 +10506,7 @@ namespace OpenGEWindows
                     break;
                 case 6:                                         // Миссия окончена 
                     Pause(5000);
-                    WayToGoDemonic(3);
+                    WayToGoDemonic(1);
                     break;
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
@@ -10513,10 +10570,12 @@ namespace OpenGEWindows
                     botParam.Stage = 6;
                     break;
                 case 6:                                         // Миссия окончена. Летим на ферму
-                    GotoBarack();                               // идём в барак, так как для фермы надо выбрать другую команду героев
-                    //TeleportAltW(4);
-                    botParam.Stage = 9;                         //ферма
-                    botParam.HowManyCyclesToSkip = 4;
+
+                    WayToGoDemonic(1);
+
+                    //GotoBarack();                               // идём в барак, так как для фермы надо выбрать другую команду героев
+                    //botParam.Stage = 9;                         //ферма
+                    //botParam.HowManyCyclesToSkip = 4;
                     break;
                 case 11:                                         // закрыть службу Стим
                     CloseSteam();
@@ -10610,8 +10669,12 @@ namespace OpenGEWindows
                         botwindow.PressEscThreeTimes();
                         Pause(500);
                         SummonPet();
-                        Teleport(3, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Демоник.
+
+                        //вариант 1. не идём в Демоник, а сразу идём в Кастилию
+                        WayToGoDemonic(2);
+
+                        //вариант 2. Идём в Демоник
+                        //WayToGoDemonic(0);
                         break;
                     case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
                         botwindow.CommandMode();
@@ -10665,21 +10728,8 @@ namespace OpenGEWindows
                         dialog.PressOkButton(1);                    //выходим из диалога
                         Pause(1000);
                         //======================================================================================================================
-                        WayToGoDemonic(3);
+                        WayToGoDemonic(1);
                         //======================================================================================================================
-
-                        ////вариант 3. идём на ферму (стадия 9)
-
-                        ////вариант 2. идём в Кастилию (стадия 6) 
-                        //Teleport(4, true);                          //телепорт в Кастилию
-                        //botParam.Stage = 6;                         //переходим на стадию Кастилия (Stage 1)    
-                        //botParam.HowManyCyclesToSkip = 4;
-
-                        ////вариант 1. закрываем аккаунт и переходим к следующему 
-                        ////RemoveSandboxieBH();                 //закрываем песочницу и берём следующий бот для работы
-                        ////botParam.Stage = 1;
-                        ////botParam.HowManyCyclesToSkip = 2;
-
                         break;
                     case 18:
                         //новейший вариант
@@ -10803,7 +10853,7 @@ namespace OpenGEWindows
                         if (!dialog.isDialog())
                         {
                             botwindow.Pause(6000);                  //ждём рулетку и собираем лут
-                            WayToGoDemonic(3);
+                            WayToGoDemonic(1);
                         }
                         else
                         {
@@ -11026,7 +11076,7 @@ namespace OpenGEWindows
                         break;
                     case 8:                                         //Green Arrow --> Mission Lobby
                         dialog.PressStringDialog(1);                //I want to play
-                        dialog.PressStringDialog(2);                //Normal Mode
+                        dialog.PressStringDialog(4);                //Normal Mode
                         break;
                     case 9:                                         //town --> bridge
                         botwindow.PressEscThreeTimes();
@@ -11038,9 +11088,13 @@ namespace OpenGEWindows
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         dialog.PressOkButton(1);
                         //TeleportAltW(4);
-                        GotoBarack();
-                        botParam.Stage = 9;                          //ферма
-                        botParam.HowManyCyclesToSkip = 4;
+
+                        WayToGoDemonic(1);
+
+                        //GotoBarack();
+                        //botParam.Stage = 9;                          //ферма
+                        //botParam.HowManyCyclesToSkip = 4;
+                        
                         //старый вариант
                         //RemoveSandboxieBH();                        //закрываем песочницу и берём следующий бот для работы
                         //botParam.Stage = 1;
@@ -11091,14 +11145,11 @@ namespace OpenGEWindows
                         Pause(2000);
                         if (!isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
                         {
-                            //старый вариант (ждём на пробеле, а на следующем ходу начинаем собирать дроп)
-                            //NeedToPickUpRight = true;
-                            //BattleModeOnDem();
-
-                            //новый вариант  (сразу начинаем собирать дроп справа)
+                            //новый вариант. сразу начинаем собирать дроп справа
                             NeedToPickUpRight = false;
                             NeedToPickUpLeft = true;
-                            GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
+                            //GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
+                            GetDropCastiliaRight(NextPointNumber);
                             BattleModeOnDem();
                         }
                         break;
@@ -11124,13 +11175,15 @@ namespace OpenGEWindows
                     case 7:                                                 //на пробеле, NeedToPickUpRight=true, NeedToPickUpLeft = false,
                         NeedToPickUpRight = false;
                         NeedToPickUpLeft = true;
-                        GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
+                        //GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
+                        GetDropCastiliaRight(NextPointNumber);
                         BattleModeOnDem();
                         break;
                     case 8:                                                 //на пробеле, NeedToPickUpLeft=true
                         NeedToPickUpLeft = false;
                         NeedToPickUpRight = false;
-                        GetDropCastiliaLeft(GetWaitingTimeForDropPicking(NextPointNumber));
+                        //GetDropCastiliaLeft(GetWaitingTimeForDropPicking(NextPointNumber));
+                        GetDropCastiliaLeft(NextPointNumber);
                         BattleModeOnDem();
                         NextPointNumber++;
                         //if (NextPointNumber > 7)
@@ -11245,11 +11298,11 @@ namespace OpenGEWindows
                         GetReward();
                         Pause(1000);
                         GoToEnd();
-                        Pause(5000);
-                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        Pause(7000);
                         RemoveSandboxieCW();                        //закрываем чистый Стим и берём следующего бота в работу
+                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 8:                                         //диалог (Farm Manager --> Farm)
                         dialog.PressStringDialog(1);
@@ -11265,11 +11318,11 @@ namespace OpenGEWindows
                         GetReward();
                         Pause(1000);
                         GoToEnd();
-                        Pause(5000);
-                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
+                        Pause(7000);
                         RemoveSandboxieCW();                        //закрываем чистый Стим и берём следующего бота в работу
+                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующего бота в работу
                         botParam.Stage = 1;
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     default:
                         problemResolutionCommonForStage1(numberOfProblem);

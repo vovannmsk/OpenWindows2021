@@ -596,7 +596,7 @@ namespace States
             //server.MissionCapibara();
 
 
-            //закрываем проги в песочнице 25.03.25	C:\America2\
+            //закрываем проги в песочнице 25.03.25	
             StateDriverRun(new StateGT169(botwindow), new StateGT170(botwindow));  // закрываем проги в песочнице
         }
 

@@ -2201,13 +2201,13 @@ namespace States
                     case 7:                                                 //на пробеле, NeedToPickUpRight=true, NeedToPickUpLeft = false,
                         NeedToPickUpRight = false;  
                         NeedToPickUpLeft = true;
-                        server.GetDropCastiliaRight(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                        server.GetDropCastiliaRight(NextPointNumber);
                         server.BattleModeOnDem();
                         break;
                     case 8:                                                 //на пробеле, NeedToPickUpLeft=true
                         NeedToPickUpLeft = false;
                         NeedToPickUpRight = false;
-                        server.GetDropCastiliaLeft(server.GetWaitingTimeForDropPicking(NextPointNumber));
+                        server.GetDropCastiliaLeft(NextPointNumber);
                         server.BattleModeOnDem();
                         NextPointNumber++;
                         break;
@@ -5715,32 +5715,32 @@ namespace States
         public int NumberOfProblemPureOtiteNewStage1()
         {
             //если открыто окно Стим
-            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
-            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
-            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
-            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
-            //если ошибка 820 (зависло окно ГЭ при загрузке)
-            if (server.isError820()) return 33;
-            //если выскочило сообщение о пользовательском соглашении
-            if (server.isNewSteam()) return 34;
-            //если ошибка Sandboxie 
-            if (server.isErrorSandboxie()) return 35;
-            //если ошибка Unexpected
-            if (server.isUnexpectedError()) return 36;
-            //служба Steam
-            if (server.isSteamService()) return 11;
+            //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            //if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            //if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            //if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+            ////если ошибка 820 (зависло окно ГЭ при загрузке)
+            //if (server.isError820()) return 33;
+            ////если выскочило сообщение о пользовательском соглашении
+            //if (server.isNewSteam()) return 34;
+            ////если ошибка Sandboxie 
+            //if (server.isErrorSandboxie()) return 35;
+            ////если ошибка Unexpected
+            //if (server.isUnexpectedError()) return 36;
+            ////служба Steam
+            //if (server.isSteamService()) return 11;
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
             {
                 //return 21;
 
-                if (!server.FindWindowSteamBool())  //если Стима тоже нет
-                {
+                //if (!server.FindWindowSteamBool())  //если Стима тоже нет
+                if (!server.FindWindowSteamBoolCW())  //если Стима тоже нет
                     return 24;
-                }
                 else    //если Стим уже загружен
                 {
-                    if (server.FindWindowGEforBHBool())
+                    //if (server.FindWindowGEforBHBool())
+                    if (server.FindWindowCWBool())
                         return 23;          //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool)
                     else
                         return 22;          //если нет окна ГЭ в текущей песочнице
@@ -5866,9 +5866,9 @@ namespace States
                         otit.GoToOldManMulti();
                         break;
                     //=================================================================================================
-                    case 11:                                         // закрыть службу Стим
-                        server.CloseSteam();
-                        break;
+                    //case 11:                                         // закрыть службу Стим
+                    //    server.CloseSteam();
+                    //    break;
                     case 12:                                         // закрыть магазин 
                         server.CloseMerchReboldo();
                         break;
@@ -5894,62 +5894,66 @@ namespace States
                         if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
                         if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
                         {
-                            server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            //server.RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                            server.runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
                             botParam.HowManyCyclesToSkip = rand.Next(6, 8);   //30.10.2023    //пропускаем следующие 6-8 циклов
                             IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                            IsItAlreadyPossibleToUploadNewSteam = 0;
                         }
                         break;
                     case 23:                                    //есть окно стим
                                                                 //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
                         IsItAlreadyPossibleToUploadNewWindow = 0;           //если только что нашли новое окно с игрой, значит можно грузить другое окно
+                        IsItAlreadyPossibleToUploadNewSteam = 0;
                         break;
                     case 24:                //если нет стима, значит удалили песочницу
                                             //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
                         if (IsItAlreadyPossibleToUploadNewSteam == 0)
                         {
-                            botwindow = new botWindow(numberOfWindow);
-                            ServerFactory serverFactory = new ServerFactory(botwindow);
-                            this.server = serverFactory.create();
-                            this.globalParam = new GlobalParam();
-                            this.botParam = new BotParam(numberOfWindow);
+                            //botwindow = new botWindow(numberOfWindow);
+                            //ServerFactory serverFactory = new ServerFactory(botwindow);
+                            //this.server = serverFactory.create();
+                            //this.globalParam = new GlobalParam();
+                            //this.botParam = new BotParam(numberOfWindow);
                             //************************ запускаем стим ************************************************************
-                            server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
-                            server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
-                            botParam.HowManyCyclesToSkip = rand.Next(2, 4);        //пропускаем следующие циклы (от 2 до 4)
-                            IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                            //server.runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                            server.runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
+                            //server.WriteToLogFileBH("Запустили клиент стим в окне " + numberOfWindow);
+                            botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
+                            //IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
                         }
                         break;
-                    case 31:
-                        server.CloseSandboxieBH();              //закрываем все проги в песочнице
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
-                        if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        break;
-                    case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
-                        server.CloseError820();
-                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                  // а значит смело можно грузить окно еще раз
-                        break;
-                    case 34:
-                        server.AcceptUserAgreement();
-                        break;
-                    case 35:
-                        server.CloseErrorSandboxie();
-                        break;
-                    case 36:
-                        server.CloseUnexpectedError();
-                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                  // а значит смело можно грузить окно еще раз
-                        break;
+                    //case 31:
+                    //    server.CloseSandboxieBH();              //закрываем все проги в песочнице
+                    //    if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //    if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //    break;
+                    //case 33:                            //ошибка 820. нажимаем два раза на кнопку Ок
+                    //    server.CloseError820();
+                    //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                    //                                              // а значит смело можно грузить окно еще раз
+                    //    break;
+                    //case 34:
+                    //    server.AcceptUserAgreement();
+                    //    break;
+                    //case 35:
+                    //    server.CloseErrorSandboxie();
+                    //    break;
+                    //case 36:
+                    //    server.CloseUnexpectedError();
+                    //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                    //                                              // а значит смело можно грузить окно еще раз
+                    //    break;
                 }
             }
             else
             {
                 botParam.HowManyCyclesToSkip--;
                 Pause(5000);
-                server.WriteToLogFileBH("Пауза 1000");
-                server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
+                //server.WriteToLogFileBH("Пауза 1000");
+                //server.WriteToLogFileBH("пропускаем " + botParam.HowManyCyclesToSkip + " ходов");
             }
         }
 
@@ -6313,25 +6317,25 @@ namespace States
         public int NumberOfProblemPureOtiteNewStage4()
         {
             //если открыто окно Стим
-            if (server.isOpenSteamWindow()) server.CloseSteamWindow();
-            if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
-            if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
-            if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
+            //if (server.isOpenSteamWindow()) server.CloseSteamWindow();
+            //if (server.isOpenSteamWindow2()) server.CloseSteamWindow2();
+            //if (server.isOpenSteamWindow3()) server.CloseSteamWindow3();
+            //if (server.isOpenSteamWindow4()) server.CloseSteamWindow4();
 
             //если ошибка 820 (зависло окно ГЭ при загрузке)
-            if (server.isError820()) return 33;
+            //if (server.isError820()) return 33;
 
             //если выскочило сообщение о пользовательском соглашении
-            if (server.isNewSteam()) return 34;
+            //if (server.isNewSteam()) return 34;
 
             //если ошибка Sandboxie 
-            if (server.isErrorSandboxie()) return 35;
+            //if (server.isErrorSandboxie()) return 35;
 
             //если ошибка Unexpected
-            if (server.isUnexpectedError()) return 36;
+            //if (server.isUnexpectedError()) return 36;
 
             //служба Steam
-            if (server.isSteamService()) return 11;
+            //if (server.isSteamService()) return 11;
 
             //если нет окна
             if (!server.isHwnd())        //если нет окна с hwnd таким как в файле HWND.txt
@@ -6436,7 +6440,8 @@ namespace States
                         break;
                     //============================================================================================
                     case 3:                                         //если карта закрыта и задание уже выполнено                            
-                        driver.TeleportToMamut();
+                        //driver.TeleportToMamut();                 
+                        server.systemMenu(3, true);                 //идём в Ребольдо. может так не будет выскакивать капча
                         botParam.HowManyCyclesToSkip = 3;
                         botParam.Stage = 1;
                         break;
@@ -6455,31 +6460,31 @@ namespace States
                         server.GotoBarack();
                         break;
                     //============================================================================================
-                    case 11:                                        // закрыть службу Стим
-                        server.CloseSteam();
-                        break;
+                    //case 11:                                        // закрыть службу Стим
+                    //    server.CloseSteam();
+                    //    break;
                     case 19:                                        // включить правильную стойку
                         server.ProperFightingStanceOn();
                         server.MoveCursorOfMouse();
                         break;
-                    case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
-                        server.CloseError820();
-                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                  // а значит смело можно грузить окно еще раз
-                        break;
-                    case 34:
-                        server.AcceptUserAgreement();
-                        break;
-                    case 35:
-                        server.CloseErrorSandboxie();
-                        break;
-                    case 36:
-                        server.CloseUnexpectedError();
-                        //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                        IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                                  // а значит смело можно грузить окно еще раз
-                        break;
+                    //case 33:                                        //ошибка 820. нажимаем два раза на кнопку Ок
+                    //    server.CloseError820();
+                    //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                    //                                              // а значит смело можно грузить окно еще раз
+                    //    break;
+                    //case 34:
+                    //    server.AcceptUserAgreement();
+                    //    break;
+                    //case 35:
+                    //    server.CloseErrorSandboxie();
+                    //    break;
+                    //case 36:
+                    //    server.CloseUnexpectedError();
+                    //    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                    //                                              // а значит смело можно грузить окно еще раз
+                    //    break;
                 }
             }
             else
@@ -7811,7 +7816,8 @@ namespace States
             this.isActiveServer = server.IsActiveServer;
 
             if (isActiveServer) driver.StateInputOutput6();
-            else server.RemoveSandboxie();
+            //else server.RemoveSandboxie();
+            else server.RemoveSandboxieCW();
             //}
         }
 

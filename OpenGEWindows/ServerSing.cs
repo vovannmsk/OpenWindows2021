@@ -759,7 +759,7 @@ namespace OpenGEWindows
             process.StartInfo.FileName = this.pathClient;
             process.StartInfo.Arguments = " -noreactlogin -login " + GetLogin() + " " + GetPassword() + " -applaunch 663090 -silent";
             process.Start();
-            Pause(35000);
+            //Pause(35000);
         }
 
         /// <summary>
@@ -767,8 +767,6 @@ namespace OpenGEWindows
         /// </summary>
         public override void runClientSteamCW()
         {
-            //if (!FindWindowSteamBool())
-            //{
             if (isActiveServer)    //если надо грузить, то грузим 
             {
                 isLoadedSteamBH = true;
@@ -1046,9 +1044,8 @@ namespace OpenGEWindows
         /// </summary>
         public override void OrangeButton()
         {
-            //runClientSteam();
-            ReOpenWindow();
-            //Pause(100);
+            //ReOpenWindow();
+            ReOpenWindowCW();
         }
 
 

@@ -510,7 +510,7 @@
             this.ChangingAccounts.Name = "ChangingAccounts";
             this.ChangingAccounts.Size = new System.Drawing.Size(170, 35);
             this.ChangingAccounts.TabIndex = 66;
-            this.ChangingAccounts.Text = "Перебор аккаунтов (песочница)";
+            this.ChangingAccounts.Text = "Перебор аккаунтов (чистое_окно_по_новому)";
             this.ChangingAccounts.UseVisualStyleBackColor = false;
             this.ChangingAccounts.Click += new System.EventHandler(this.ChangingAccounts_Click_1);
             // 

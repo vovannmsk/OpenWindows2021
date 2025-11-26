@@ -57,7 +57,10 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            server.RemoveSandboxie();
+            //server.RemoveSandboxie();
+            server.GoToEnd();
+            botwindow.Pause(5000);
+            server.RemoveSandboxieCW();
             botwindow.Pause(5000);
         }
 
