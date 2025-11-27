@@ -5535,34 +5535,60 @@ namespace OpenGEWindows
         {
             iPoint[] routeMulti = {  
                                      //new Point(372 - 5 + xx, 585 - 5 + yy),
-                                     new Point(353 - 5 + xx, 572 - 5 + yy), //1+ да
+                                     new Point(353 - 5 + xx, 572 - 5 + yy), //1+ да         // железный робот   тут есть песо
                                      //new Point(347 - 5 + xx, 550 - 5 + yy),
-                                     new Point(343 - 5 + xx, 524 - 5 + yy), //2+ да 
+                                     new Point(343 - 5 + xx, 524 - 5 + yy), //2+ да         // Фобитанец
                                      //new Point(368 - 5 + xx, 495 - 5 + yy),
-                                     //new Point(395 - 5 + xx, 489 - 5 + yy), //3+ да           //13-06-24
+                                     new Point(395 - 5 + xx, 489 - 5 + yy), //3+ да          // мантикора
                                      //new Point(417 - 5 + xx, 508 - 5 + yy),
                                      //new Point(436 - 5 + xx, 516 - 5 + yy),
                                      //new Point(448 - 5 + xx, 519 - 5 + yy), //4+
                                      //new Point(474 - 5 + xx, 511 - 5 + yy),
                                      //new Point(478 - 5 + xx, 498 - 5 + yy),
-                                     new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да    473, 481   Кризалис
-                                     //new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да           //13-06-24  пауки
+                                     new Point(474 - 5 + xx, 483 - 5 + yy), //5+ да         // Кризалис   //как вариант 473, 481
+                                     //new Point(443 - 5 + xx, 432 - 5 + yy), //6+ да       // пауки
                                      //new Point(407 - 5 + xx, 444 - 5 + yy),
-                                     new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да
+                                     new Point(384 - 5 + xx, 416 - 5 + yy), //7+ да         // Химера   тут есть песо!
                                      //new Point(359 - 5 + xx, 388 - 5 + yy),
                                      //new Point(355 - 5 + xx, 359 - 5 + yy),
                                      //new Point(391 - 5 + xx, 352 - 5 + yy),
-                                     new Point(398 - 5 + xx, 335 - 5 + yy), //8+ да
+                                     new Point(398 - 5 + xx, 335 - 5 + yy), //8+ да         // Аргус
                                      //new Point(398 - 5 + xx, 334 - 5 + yy),  //да
                                      //new Point(438 - 5 + xx, 297 - 5 + yy),
                                      //new Point(437 - 5 + xx, 285 - 5 + yy), //9
-                                     new Point(437 - 5 + xx, 280 - 5 + yy),     //9 да
+                                     new Point(437 - 5 + xx, 280 - 5 + yy), //9 да          // Череп   тут есть песо?
                                      new Point(437 - 5 + xx, 225 - 5 + yy), //10 нет
                                      new Point(439 - 5 + xx, 212 - 5 + yy), //11 нет
                                   };
             iPoint result = routeMulti[counter];
 
             return result;
+        }
+
+        /// <summary>
+        /// возвращает количество циклов для ожилдания, пока герои добегут до следующей контрольной точки
+        /// </summary>
+        /// <param name="counter">номер контрольной точки маршрута</param>
+        /// <returns>кол-во циклов</returns>
+        public int GetWaitingTurnForMoveToPoint(int counter)
+        {
+            int[] WaitingTurn = {   
+                                    //0, 
+                                    5,      //1         // железный робот ок
+                                    5,      //2         // Фобитанец ок
+                                    3,      //3         // мантикора  ок    
+                                    //6,     //4
+                                    9,      //5         // Кризалис 
+                                    //6,    //6         // Пауки 
+                                    13,      //7        // Химера ок
+                                    12,      //8        // Аргус
+                                    7,      //9         // Череп ок
+                                    6,      //10
+                                    6,      //11
+                                    6
+            };
+
+            return WaitingTurn[counter];
         }
 
         /// <summary>
@@ -5592,57 +5618,33 @@ namespace OpenGEWindows
         }
 
 
-        /// <summary>
-        /// возвращает количество циклов для ожилдания, пока герои добегут до следующей контрольной точки
-        /// </summary>
-        /// <param name="counter">номер контрольной точки маршрута</param>
-        /// <returns>кол-во циклов</returns>
-        public int GetWaitingTurnForMoveToPoint(int counter)
-        {
-            int[] WaitingTurn = {   
-                                    //0, 
-                                    6,      //1
-                                    5,      //2
-                                    //6,     //3           //13-06-24
-                                    //6,     //4
-                                    4,      //5  Кризалис
-                                    //6,    //6  Пауки           //13-06-24
-                                    6,      //7
-                                    6,      //8
-                                    6,      //9
-                                    6,      //10
-                                    6,      //11
-                                    6
-            };
 
-            return WaitingTurn[counter];
-        }
 
         /// <summary>
         /// возвращает время ожидания подбора дропа для выбранной точки маршрута
         /// </summary>
         /// <param name="counter">номер точки маршрута</param>
         /// <returns>время в милисекундах</returns>
-        public int GetWaitingTimeForDropPicking(int counter)
-        {
-            int[] WaitingTime = {   
-                                    //0, 
-                                    5000,       //1
-                                    10000,      //2
-                                    //6000,     //3           //13-06-24
-                                    //5000,     //4
-                                    1000,       //5  Кризалис
-                                    //1000,     //6  Пауки           //13-06-24
-                                    5000,       //7
-                                    1000,       //8
-                                    6000,       //9
-                                    5000,       //10
-                                    5000,       //11
-                                    5000
-            };
+        //public int GetWaitingTimeForDropPicking(int counter)
+        //{
+        //    int[] WaitingTime = {   
+        //                            //0, 
+        //                            5000,       //1
+        //                            10000,      //2
+        //                            //6000,     //3           //13-06-24
+        //                            //5000,     //4
+        //                            1000,       //5  Кризалис
+        //                            //1000,     //6  Пауки           //13-06-24
+        //                            5000,       //7
+        //                            1000,       //8
+        //                            6000,       //9
+        //                            5000,       //10
+        //                            5000,       //11
+        //                            5000
+        //    };
 
-            return WaitingTime[counter];
-        }
+        //    return WaitingTime[counter];
+        //}
 
 
         /// <summary>
@@ -5652,11 +5654,13 @@ namespace OpenGEWindows
         private void HarvestToRight(int NumberOfPoint)
         {
             Point[] PointsToRight = {
-                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
+                                        new Point(765 - 5 + xx + 5, 308 - 5 + yy + 5),      // Кризалис
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Аргус
+                                        new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Череп
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5)
@@ -5674,11 +5678,13 @@ namespace OpenGEWindows
         private void HarvestToLeft(int NumberOfPoint)
         {
             Point[] PointsToLeft = {
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Кризалис
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Аргус
+                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Череп
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),
@@ -10293,15 +10299,14 @@ namespace OpenGEWindows
                     if (NeedToPickUpLeft)
                         return 8;
                     else
-                        if (NextPointNumber > 5)    //дошли до конца миссии         //13-06-24
+                        if (NextPointNumber > 6)    //дошли до конца миссии         //13-06-24
                             return 6;               //летим на ферму
                         else
                             return 5;               //значит бежим к очередному боссу без Ctrl
                 }
                 else
                 {
-                    //if (NextPointNumber > 7)    //дошли до конца миссии
-                        if (NextPointNumber > 5)    //дошли до конца миссии         //13-06-24
+                    if (NextPointNumber > 6)    //дошли до конца миссии         //13-06-24
                             return 6;               //летим на ферму
                     else
                         return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
@@ -11145,12 +11150,15 @@ namespace OpenGEWindows
                         Pause(2000);
                         if (!isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
                         {
+                            //здесь можно попробовать впихнуть открытие сундука
+                            //OpenTheChest(NextPointNumber);        //не сделано 
                             //новый вариант. сразу начинаем собирать дроп справа
                             NeedToPickUpRight = false;
                             NeedToPickUpLeft = true;
                             //GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
                             GetDropCastiliaRight(NextPointNumber);
                             BattleModeOnDem();
+                            botParam.HowManyCyclesToSkip = 1; //ожидаем, может кого прихлопнем 
                         }
                         break;
                     case 4:                                                 // бежим с Ctrl. на всякий случай даём указание бить в ту же точку,
@@ -11159,8 +11167,8 @@ namespace OpenGEWindows
                         break;
                     case 5:                                                 //стоим на пробеле, NeedToPickUpRight=false, NeedToPickUpLeft=false
                         // бафаемся перед перемещением дальше
-                        if ((NextPointNumber == 0) || (NextPointNumber == 2) || (NextPointNumber == 4))
-                        {
+                        //if ((NextPointNumber == 0) || (NextPointNumber == 2) || (NextPointNumber == 4))
+                        //{
                             MoveCursorOfMouse();
                             BuffHeroes();
                             //Buff(Hero[1], 1);
@@ -11168,7 +11176,7 @@ namespace OpenGEWindows
                             //Buff(Hero[3], 3);
                             botwindow.ActiveAllBuffBH();
                             botwindow.PressEscThreeTimes();
-                        }
+                        //}
                         MoveToNextPoint(NextPointNumber);
                         botParam.HowManyCyclesToSkip = GetWaitingTurnForMoveToPoint(NextPointNumber);
                         break;
