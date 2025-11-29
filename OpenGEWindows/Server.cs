@@ -11351,6 +11351,52 @@ namespace OpenGEWindows
         #endregion ================================= All in One (end) =========================================== 
 
 
+        #region =================================   I N F I N I T Y   N E W  (начало)   =======================================
+
+        #region ======================== Поиск стандартных проблем Infinity New ===============================
+
+        /// <summary>
+        /// проверяем, если ли проблемы и возвращаем номер проблемы.  
+        /// Проблемы общие для всех миссий 1,2,12,13,16,17,20,22,23,24,38
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int InfinityNumberOfProblemCommonForAll()
+        {
+            //если нет окна
+            if (!isHwnd())        //если нет окна ГЭ с hwnd таким как в файле HWND.txt
+            {
+                //if (!FindWindowSteamBool())  //если Стима тоже нет
+                if (!FindWindowSteamBoolCW()) //если Стима тоже нет          -------------------------------------------------
+                    return 24;
+                else    //если Стим уже загружен
+                        //if (FindWindowGEforBHBool())  return 23;      //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool) --------------
+                    if (FindWindowCWBool()) return 23;              //нашли чистое окно ГЭ (и перезаписали Hwnd в функции FindWindowCWBool)
+                else
+                    return 22;                  //если нет окна ГЭ в текущей песочнице
+            }
+            else            //если окно с нужным HWND нашлось
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            //в логауте
+            if (isLogout()) return 1;
+            //если в магазине на странице с товарами
+            if (isExpedMerch2()) return 13;
+            //диалог
+            if (dialog.isDialog())
+                if (isExpedMerch() || isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+            //в бараке
+            if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа    //ПРОВЕРИТЬ РАБОТУ!
+            if (isBarack()) return 2;                    //если стоят в бараке 
+            if (isBarackWarningYes()) return 16;
+            if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //if (isBadFightingStance()) return 19;       // если неправильная стойка
+            if (isOpenWorldTeleport()) return 38;
+            //если стандартных проблем не найдено
+            return 0;
+        }
+
+        #endregion ===============================================================================
 
         #region ======================== Поиск проблем в Infinity ================================
         /// <summary>
@@ -11360,8 +11406,8 @@ namespace OpenGEWindows
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemInfinityStage1()
         {
-            int result = NumberOfProblemCommonForAll();
-            if (result != 0) return result;
+            int result = InfinityNumberOfProblemCommonForAll();
+            if (result != 0) return result;             // если нашлись стандартные проблемы
 
             //диалог
             if (dialog.isDialog())
@@ -11414,9 +11460,146 @@ namespace OpenGEWindows
         #endregion
 
 
+        #region ======================== Решение стандартных проблем ================================
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы (для стадии 1)
+        /// 1,2,12,13,16,17,20,22,23,24,38
+        /// </summary>
+        public void InfinityProblemResolutionCommonForStage1(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:
+                    QuickConnect();                             // Logout-->Barack  
+                    botParam.HowManyCyclesToSkip = 2;  //1
+                    break;
+                case 2:
+                    FromBarackToTown(2);                        // barack --> town
+                    botParam.HowManyCyclesToSkip = 4;  //2
+                    break;
+                case 11:                                        // закрыть службу Стим
+                    CloseSteam();
+                    break;
+                case 12:                                        // закрыть магазин 
+                    CloseMerchReboldo();
+                    break;
+                case 13:                                        // закрыть магазин 
+                    CloseMerchReboldo2();
+                    break;
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    PressYesBarack();
+                    break;
+                case 17:                                        // в бараках на стадии выбора группы
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                case 19:                                        // включить правильную стойку
+                    ProperFightingStanceOn();
+                    MoveCursorOfMouse();
+                    break;
+                case 20:
+                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                    break;
+                case 22:
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
+                    //{
+                    //RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
+                    runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
+                    botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
+                    IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                    IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //}
+                    break;
+                case 23:                                    //стим есть. только что нашли новое окно с игрой
+                                                            //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewSteam = 0;
+                    break;
+                case 24:                //если нет стима, значит удалили песочницу
+                                        //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                                        //if (IsItAlreadyPossibleToUploadNewSteam == 0)
+                                        //{
+                                        //************************ запускаем стим ************************************************************
+                                        //runClientSteamBH();              // если Steam еще не загружен, то грузим его
+                    runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
+                    botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
+                                                             //IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
+                                                             //}
+                    break;
+                case 38:
+                    botwindow.PressEsc();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы для Демоник (для стадий 2+)
+        /// 1,12,22,23,24 - на стадию 1.         6,11,16,17,19,20,33,34,35,36,37
+        /// </summary>
+        public void InfinityproblemResolutionCommonDemonicForStageFrom2To(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:                                         //логаут
+                case 12:                                        //закрыть магазин 
+                case 22:                                        //если нет окна ГЭ в текущей песочнице
+                case 23:                                        //есть окно стим
+                case 24:                                        //если нет стима, значит удалили песочницу
+                    botParam.Stage = 1;
+                    break;
+                case 6:                                         // Миссия окончена 
+                    Pause(5000);
+                    WayToGoDemonic(1);
+                    break;
+                case 11:                                         // закрыть службу Стим
+                    CloseSteam();
+                    break;
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    PressYesBarack();
+                    break;
+                case 17:                                        // в бараках на стадии выбора группы
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                case 19:                                         // включить правильную стойку
+                    ProperFightingStanceOn();
+                    MoveCursorOfMouse();
+                    break;
+                case 20:
+                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                    break;
+                case 33:
+                    CloseError820();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 34:
+                    AcceptUserAgreement();
+                    break;
+                case 35:
+                    CloseErrorSandboxie();
+                    break;
+                case 36:
+                    CloseUnexpectedError();
+                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
+                                                              // а значит смело можно грузить окно еще раз
+                    break;
+                case 37:
+                    CloseSteamMessage();
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    break;
+            }
+        }
+
+
+        #endregion
+
+
         #region ======================== Решение проблем Infinity New ====================================
-
-
 
         /// <summary>
         /// разрешение выявленных проблем в Infinity. стадия 1. Вход в миссию
@@ -11488,11 +11671,7 @@ namespace OpenGEWindows
 
                         ChatFifthBookmark();
 
-                        //MoveCursorOfMouse();
                         WhatsHeroes();
-                        //this.Hero[1] = WhatsHero(1);
-                        //this.Hero[2] = WhatsHero(2);
-                        //this.Hero[3] = WhatsHero(3);
 
                         ActivatePetDem();                             //новая функция  22-11
                         MaxHeight(12);
@@ -11503,15 +11682,11 @@ namespace OpenGEWindows
                         //бафаемся героями первый раз
                         BuffHeroes();
                         MoveCursorOfMouse();
-                        //Buff(this.Hero[1], 1);
-                        //Buff(this.Hero[2], 2);
-                        //Buff(this.Hero[3], 3);
+
                         //бафаемся героями второй раз
                         BuffHeroes();
                         MoveCursorOfMouse();
-                        //Buff(this.Hero[1], 1);
-                        //Buff(this.Hero[2], 2);
-                        //Buff(this.Hero[3], 3);
+
                         ManaForDemonic();
                         MoveCursorOfMouse();
 
@@ -11543,17 +11718,8 @@ namespace OpenGEWindows
                     case 40:
                         botParam.Stage = 7;
                         break;
-                    //case 41:                                  // перенёс в п.9
-                    //    SummonPet();
-                    //    break;
-                    case 42:
-                        botParam.Stage = 9;     //Юстиар
-                        break;
-                    case 43:
-                        botParam.Stage = 6;     //Кастилия (около шахты)
-                        break;
                     default:
-                        problemResolutionCommonForStage1(numberOfProblem);
+                        InfinityProblemResolutionCommonForStage1(numberOfProblem);
                         break;
                 }
             }
@@ -11567,7 +11733,7 @@ namespace OpenGEWindows
         #endregion
 
 
-
+        #endregion =================================   I N F I N I T Y   N E W  (конец)   =======================================
 
 
 
