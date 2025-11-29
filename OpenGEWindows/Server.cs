@@ -994,7 +994,8 @@ namespace OpenGEWindows
             SetForegroundWindow(botParam.Hwnd);                                 // Перемещает окно в верхний список Z порядка     
             //BringWindowToTop(botParam.Hwnd);                                  // Делает окно активным и Перемещает окно в верхний список Z порядка     
 
-            bool sss = SetPosition();                                   // перемещаем окно в заданные для него координаты
+            ///bool sss = 
+            SetPosition();                                                      // перемещаем окно в заданные для него координаты
         }
 
 
@@ -5681,7 +5682,7 @@ namespace OpenGEWindows
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Кризалис
+                                        new Point(217 - 5 + xx + 5, 358 - 5 + yy + 5),      // Кризалис
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Аргус
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Череп
@@ -11348,6 +11349,227 @@ namespace OpenGEWindows
 
 
         #endregion ================================= All in One (end) =========================================== 
+
+
+
+        #region ======================== Поиск проблем в Infinity ================================
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Infinity (стадия 1) и возвращаем номер проблемы
+        /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41, 42, 43
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemInfinityStage1()
+        {
+            int result = NumberOfProblemCommonForAll();
+            if (result != 0) return result;
+
+            //диалог
+            if (dialog.isDialog())
+                if (isMissionNotAvailable())
+                    return 10;                          //если стоим в воротах Demonic и миссия не доступна
+                else
+                    return 8;                           //если стоим в воротах Demonic и миссия доступна
+
+            //Mission Lobby
+            if (isMissionLobby()) return 5;      //22-11
+
+            //Waiting Room //Mission Room 22-11
+            if (isWaitingRoom()) return 3;      //22-11
+
+            //город или БХ
+            if (isTown())
+            {
+                botwindow.PressEscThreeTimes();             //27-10-2021
+                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!isKillFirstHero2())
+                {
+                    if (isBH())     //в БХ     
+                        return 4;   // стоим в правильном месте (около ворот Demonic)
+                    else   // в городе, но не в БХ
+                    {
+                        //if (!isSummonPet() && !isActivePet())
+                        //    return 41;
+                        //if (isUstiar())
+                        //    return 42;
+                        //if (isCastilia())
+                        //    return 43;
+                        if (isAncientBlessing(1))
+                            return 6;                       //скорее всего в стартовом городе (ребольдо)
+                        else
+                            return 9;                       //нет наследия древних
+                    }
+                }
+            }
+            //в миссии (если убит первый персонаж, то это точно миссия
+            if (isWork() || isKillFirstHero2())
+                if (isCastiliaMine())
+                    return 40;
+                else
+                    return 7;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        #endregion
+
+
+        #region ======================== Решение проблем Infinity New ====================================
+
+
+
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity. стадия 1. Вход в миссию
+        /// </summary>
+        public void problemResolutionInfinityStage1()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemInfinityStage1();
+
+                //если зависли в каком-либо состоянии, то особые действия
+                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                {
+                    switch (numberOfProblem)
+                    {
+                        case 4:     //зависли в БХ
+                            numberOfProblem = 18;
+                            break;
+                    }
+                }
+                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+
+                switch (numberOfProblem)
+                {
+                    case 2:
+                        FromBarackToTown(2);                        // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    case 3:                                         // старт миссии      //ок
+                        MissionStart();
+                        botParam.HowManyCyclesToSkip = 1;
+                        break;
+                    case 4:                                         // BH --> Gate
+                        Pause(1000);
+                        //if (isPioneerJournal()) GetGiftsNew();
+                        botwindow.PressEscThreeTimes();
+                        AddBullets();
+                        GoToInfinityGateDem();
+                        break;
+                    case 5:
+                        CreatingMission();
+                        break;
+                    case 6:                                         // town --> BH
+                        //if (isPioneerJournal())
+                        //    GetGiftsNew();
+
+                        botwindow.PressEscThreeTimes();
+                        Pause(500);
+                        SummonPet();
+
+                        //вариант 1. не идём в Демоник, а сразу идём в Кастилию
+                        WayToGoDemonic(2);
+
+                        //вариант 2. Идём в Демоник
+                        //WayToGoDemonic(0);
+                        break;
+                    case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                        botwindow.CommandMode();
+                        BattleModeOnDem();                          //пробел
+
+                        botwindow.ThirdHero();                      //эксперимент от 29-01-2024
+
+                        ChatFifthBookmark();
+
+                        //MoveCursorOfMouse();
+                        WhatsHeroes();
+                        //this.Hero[1] = WhatsHero(1);
+                        //this.Hero[2] = WhatsHero(2);
+                        //this.Hero[3] = WhatsHero(3);
+
+                        ActivatePetDem();                             //новая функция  22-11
+                        MaxHeight(12);
+
+                        //бафаемся, пока не вылезли мобы
+                        botwindow.ActiveAllBuffBH();
+                        botwindow.PressEsc(4);
+                        //бафаемся героями первый раз
+                        BuffHeroes();
+                        MoveCursorOfMouse();
+                        //Buff(this.Hero[1], 1);
+                        //Buff(this.Hero[2], 2);
+                        //Buff(this.Hero[3], 3);
+                        //бафаемся героями второй раз
+                        BuffHeroes();
+                        MoveCursorOfMouse();
+                        //Buff(this.Hero[1], 1);
+                        //Buff(this.Hero[2], 2);
+                        //Buff(this.Hero[3], 3);
+                        ManaForDemonic();
+                        MoveCursorOfMouse();
+
+                        botParam.Stage = 2;
+                        //botParam.HowManyCyclesToSkip = 1;           // даём время, чтобы вылезли мобы
+                        break;
+                    case 8:                                         //Gate --> Mission Lobby
+                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
+                        break;
+                    case 9:                                         //нет наследия. летим на мост
+                        botwindow.PressEscThreeTimes();
+                        botwindow.Pause(500);
+                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
+                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
+                        botParam.Stage = 5;
+                        break;
+                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);                    //выходим из диалога
+                        Pause(1000);
+                        //======================================================================================================================
+                        WayToGoDemonic(1);
+                        //======================================================================================================================
+                        break;
+                    case 18:
+                        //новейший вариант
+                        GotoBarack();
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 40:
+                        botParam.Stage = 7;
+                        break;
+                    //case 41:                                  // перенёс в п.9
+                    //    SummonPet();
+                    //    break;
+                    case 42:
+                        botParam.Stage = 9;     //Юстиар
+                        break;
+                    case 43:
+                        botParam.Stage = 6;     //Кастилия (около шахты)
+                        break;
+                    default:
+                        problemResolutionCommonForStage1(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
+        }
+
+        #endregion
+
+
+
+
+
 
         #region ===========================  CapibaraEvent ===================================
 

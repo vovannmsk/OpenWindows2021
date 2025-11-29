@@ -1619,6 +1619,58 @@ namespace Main
 
         #endregion
 
+
+        #region ============================== Infinity New =============================================
+        private void InfinityMission_Click(object sender, EventArgs e)
+        {
+            InfinityMission.BackColor = Color.OrangeRed;
+            Thread myInfinity = new Thread(funcInfinity);
+            myInfinity.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой AllinOne (Demonic + Castilia + Farm)
+        /// </summary>
+        private void funcInfinity()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся,т.е. перешли к новому аккаунту
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                        check[j].problemResolutionInfinityStage(botParam[j].Stage);
+                    else
+                    {
+                        //check[j].RemoveSandboxie();         //скорее всего это не нужно. достаточно сделать вычисление нового бота
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
+        #endregion
+
+
         #region ============================== Переработка реликвий ===================================
 
         /// <summary>
@@ -1747,6 +1799,7 @@ namespace Main
             }
 
         }
+
 
         #endregion
 

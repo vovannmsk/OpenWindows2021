@@ -7941,6 +7941,48 @@ namespace States
 
         #endregion =================================================================================================
 
+        #region  =================================== Infinity New ==============================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity
+        /// </summary>
+        public void problemResolutionInfinityStage(int NumberOfStage)
+        {
+            switch (NumberOfStage)
+            {
+                case 1:
+                    server.problemResolutionInfinityStage1();
+                    break;
+                //case 2:
+                //    server.problemResolutionInfinityStage2();
+                //    break;
+                //case 3:
+                //    server.problemResolutionInfinityStage3();
+                //    break;
+                //case 4:
+                //    server.problemResolutionInfinityStage4();
+                //    break;
+                //case 5:
+                //    server.problemResolutionInfinityStage5();
+                //    break;
+                //case 6:
+                //    server.problemResolutionInfinityStage6();
+                //    break;
+                //case 7:
+                //    server.problemResolutionInfinityStage7();
+                //    break;
+                //case 8:
+                //    server.problemResolutionInfinityStage8();
+                //    break;
+                //case 9:
+                //    server.problemResolutionInfinityStage9();
+                //    break;
+            }
+        }
+
+        #endregion =================================================================================================
+
+
 
         #region  =================================== CapibaraEvent ==============================================
 
