@@ -35,7 +35,7 @@ namespace States
             otit.RouteNextPoint().PressMouseL();    // отбегаем в сторону, чтобы сделать логаут
             botwindow.Pause(1000);
 
-            server.Logout();
+            server.GoToLogout();
 
             int i = 0;
             while (!server.isLogout())

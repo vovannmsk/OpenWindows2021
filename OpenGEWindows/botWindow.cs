@@ -643,7 +643,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// перевод в командный режим из любого положения 
+        /// переход в командный режим (чтобы действовать втроём) из любого положения 
         /// </summary>
         public void CommandMode()
         {
@@ -683,11 +683,11 @@ namespace OpenGEWindows
             {
                 //server.GoToEnd();
                 //Pause(10000);  
-                server.Logout();
+                server.GoToLogout();
             }
             else
             {
-                server.Logout();
+                server.GoToLogout();
             }
         }
 
@@ -715,11 +715,11 @@ namespace OpenGEWindows
             {
                 //server.GoToEnd();
                 //Pause(10000);
-                server.Logout();
+                server.GoToLogout();
             }
             else
             {
-                server.Logout();
+                server.GoToLogout();
             }
         }
 

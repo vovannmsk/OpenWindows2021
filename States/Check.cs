@@ -277,7 +277,7 @@ namespace States
                 }
                 else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -449,7 +449,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemStage2();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -587,7 +587,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDemStage3();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -1699,7 +1699,7 @@ namespace States
                         //botwindow.Pause(500);
                         //server.MinHeight(3);
                         //server.Teleport(3, true);                   // телепорт в Гильдию Охотников (третий телепорт в списке)
-                        server.Logout();
+                        server.GoToLogout();
                         botParam.HowManyCyclesToSkip = 2;           
                         botParam.Stage = 1;
                         break;
@@ -2146,7 +2146,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemCastiliaMultiStage2();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -2771,7 +2771,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage2();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -2936,7 +2936,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage3();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -3103,7 +3103,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage4();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -3268,7 +3268,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage5();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -3444,7 +3444,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage6();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -3614,7 +3614,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemDeliveryMultiStage7();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -6064,7 +6064,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemPureOtiteNewStage2();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -6239,7 +6239,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemPureOtiteNewStage3();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -6609,7 +6609,7 @@ namespace States
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemPureOtiteNewStage5();
 
-                Random rand = new Random();
+                //Random rand = new Random();
 
                 switch (numberOfProblem)
                 {
@@ -7936,6 +7936,12 @@ namespace States
                 case 9:
                     server.problemResolutionAllinOneStage9();
                     break;
+                case 10:
+                    server.problemResolutionAllinOneStage10();
+                    break;
+                case 11:
+                    server.problemResolutionAllinOneStage11();
+                    break;
             }
         }
 
@@ -7953,30 +7959,9 @@ namespace States
                 case 1:
                     server.problemResolutionInfinityStage1();
                     break;
-                //case 2:
-                //    server.problemResolutionInfinityStage2();
-                //    break;
-                //case 3:
-                //    server.problemResolutionInfinityStage3();
-                //    break;
-                //case 4:
-                //    server.problemResolutionInfinityStage4();
-                //    break;
-                //case 5:
-                //    server.problemResolutionInfinityStage5();
-                //    break;
-                //case 6:
-                //    server.problemResolutionInfinityStage6();
-                //    break;
-                //case 7:
-                //    server.problemResolutionInfinityStage7();
-                //    break;
-                //case 8:
-                //    server.problemResolutionInfinityStage8();
-                //    break;
-                //case 9:
-                //    server.problemResolutionInfinityStage9();
-                //    break;
+                case 2:
+                    server.problemResolutionInfinityStage2();
+                    break;
             }
         }
 
@@ -8079,17 +8064,19 @@ namespace States
             //server.ActiveWindow(botParam.Hwnd);
             //server.ReOpenWindowCW();
             //SetWindowPos((UIntPtr)2361040, 0, 5, 4, 1040, 739, 1);
-            
+
             //MessageBox.Show("есть стим?" + server.FindWindowSteamBoolCW());
             //MessageBox.Show("ошибка = " + GetLastError());
 
-            server.ReOpenWindow();
+            //server.ReOpenWindow();
             //server.ActivePetDem();
             //server.SummonPetKoko();
             //MessageBox.Show("строка Коко? " + server.FindKoko());
 
             #region  доп проверки
 
+            //MessageBox.Show("босс??" + server.isBoss());
+            MessageBox.Show("БХ??" + server.isBH());
             //MessageBox.Show("пет активный? " + server.isActivePetClassic());
             //MessageBox.Show("на работе? " + server.isWorkClassic());
             //MessageBox.Show("в городе? " + server.isTownClassic());
@@ -8350,9 +8337,9 @@ namespace States
             //PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
             //PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
 
-            PointColor point1 = new PointColor(408 - 5 + xx, 308 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(408 - 5 + xx, 309 - 5 + yy, 0, 0);
-            PointColor point3 = new PointColor(938 - 5 + xx, 252 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0);
+            PointColor point2 = new PointColor(235 - 5 + xx, 106 - 5 + yy, 0, 0);
+            PointColor point3 = new PointColor(235 - 5 + xx, 107 - 5 + yy, 0, 0);
             PointColor point4 = new PointColor(938 - 5 + xx, 259 - 5 + yy, 0, 0);
 
             color1 = point1.GetPixelColor();
@@ -8361,9 +8348,9 @@ namespace States
             color4 = point4.GetPixelColor();
 
             MessageBox.Show("цвет 1 = " + color1);
-            MessageBox.Show("цвет 2 = " + color2);
-            MessageBox.Show("цвет 3 = " + color3);
-            MessageBox.Show("цвет 4 = " + color4);
+            //MessageBox.Show("цвет 2 = " + color2);
+            //MessageBox.Show("цвет 3 = " + color3);
+            //MessageBox.Show("цвет 4 = " + color4);
             //}
 
             //for (int xxx = 133; xxx < 146; xxx++)

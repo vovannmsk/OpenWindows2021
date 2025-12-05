@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|c:\\users\\vlad\\source\\repos\\vovannmsk\\openwindows2021\\opengewindows\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|c:\\users\\vlad\\source\\repos\\vovannmsk\\openwindows2021\\main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|solutionrelative:main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\check.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,28 +15,28 @@
       "RelativeMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|solutionrelative:main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2336D8F1-1F81-4A93-8EDE-87C39CBCCADE}|Main\\Main.csproj|solutionrelative:main\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\serversing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\stategt216.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\stategt216.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\stategt109.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\stategt109.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\driversofstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3E94057C-F406-4C7A-B12C-FC8EA064B141}|GEBot.Data\\GEBot.Data.csproj|solutionrelative:gebot.data\\botparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\states\\stategt316.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BD4BC46C-838B-4520-A470-A08A3EBD6F89}|States\\States.csproj|solutionrelative:states\\stategt316.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|solutionrelative:opengewindows\\botwindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{60AA44D6-E4B0-48A8-A5F0-2B9FD3D00171}|OpenGEWindows\\OpenGEWindows.csproj|C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\opengewindows\\otit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,53 +62,53 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeDocumentMoniker": "Main\\MainForm.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeToolTip": "Main\\MainForm.cs",
-              "ViewState": "AgIAAD4GAAAAAAAAAAAuwEcGAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAACkGAAAAAAAAAAAnwEcGAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-05T21:40:32.771Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Check.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\Check.cs",
               "RelativeDocumentMoniker": "States\\Check.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\Check.cs",
               "RelativeToolTip": "States\\Check.cs",
-              "ViewState": "AgIAAMUeAAAAAAAAAAAuwBcfAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAN8eAAAAAAAAAAAnwOgeAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:32:03.851Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "DriversOfState.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\DriversOfState.cs",
               "RelativeDocumentMoniker": "States\\DriversOfState.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\DriversOfState.cs",
               "RelativeToolTip": "States\\DriversOfState.cs",
-              "ViewState": "AgIAAFMCAAAAAAAAAAAUwFcCAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAFMCAAAAAAAAAAAkwFcCAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:32:05.452Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "botWindow.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\botWindow.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\botWindow.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\botWindow.cs",
               "RelativeToolTip": "OpenGEWindows\\botWindow.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAAwLoAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAADsDAAAAAAAAAAAwwFUDAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:31:27.955Z",
               "IsPinned": true
@@ -125,7 +121,7 @@
               "RelativeDocumentMoniker": "OpenGEWindows\\Server.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Server.cs",
               "RelativeToolTip": "OpenGEWindows\\Server.cs",
-              "ViewState": "AgIAAAstAAAAAAAAAAAuwJktAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHcVAAAAAAAAAAAnwJsVAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-10T23:31:48.558Z",
               "IsPinned": true,
@@ -133,20 +129,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "ServerSing.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerSing.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\ServerSing.cs",
               "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\ServerSing.cs",
               "RelativeToolTip": "OpenGEWindows\\ServerSing.cs",
-              "ViewState": "AgIAABMEAAAAAAAAAAAUwBcEAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAADsEAAAAAAAAAAAQwEwEAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-30T13:40:57.81Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "Otit.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\Otit.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\Otit.cs",
@@ -155,11 +151,12 @@
               "ViewState": "AgIAAJYBAAAAAAAAAAAAAJcBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T23:34:02.906Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "OtitSing.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\OpenGEWindows\\OtitSing.cs",
               "RelativeDocumentMoniker": "OpenGEWindows\\OtitSing.cs",
@@ -172,7 +169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "GlobalParam.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\GEBot.Data\\GlobalParam.cs",
               "RelativeDocumentMoniker": "GEBot.Data\\GlobalParam.cs",
@@ -185,7 +182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "BotParam.cs",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\GEBot.Data\\BotParam.cs",
               "RelativeDocumentMoniker": "GEBot.Data\\BotParam.cs",
@@ -198,37 +195,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "StateGT316.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT316.cs",
-              "RelativeDocumentMoniker": "States\\StateGT316.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT316.cs",
-              "RelativeToolTip": "States\\StateGT316.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAAUwEUAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T15:35:15.978Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "StateGT216.cs",
-              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT216.cs",
-              "RelativeDocumentMoniker": "States\\StateGT216.cs",
-              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT216.cs",
-              "RelativeToolTip": "States\\StateGT216.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAEEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T12:51:47.953Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\Main\\MainForm.cs",
               "RelativeDocumentMoniker": "Main\\MainForm.cs",
@@ -236,7 +203,24 @@
               "RelativeToolTip": "Main\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-31T11:12:47.675Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StateGT109.cs",
+              "DocumentMoniker": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT109.cs",
+              "RelativeDocumentMoniker": "States\\StateGT109.cs",
+              "ToolTip": "C:\\Users\\Vlad\\source\\repos\\vovannmsk\\OpenWindows2021\\States\\StateGT109.cs",
+              "RelativeToolTip": "States\\StateGT109.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-30T17:06:07.491Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             }
           ]
         }

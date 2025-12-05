@@ -60,7 +60,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             server.WriteToLogFileBH("213");
-            server.Logout();
+            server.GoToLogout();
 //            botwindow.Pause(8000);
         }
 

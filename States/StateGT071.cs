@@ -39,7 +39,7 @@ namespace States
             // покупаем 125 еды в фесо шопе
             server.Buy125PetFood();
 
-            server.Logout();  
+            server.GoToLogout();  
         }
 
         /// <summary>

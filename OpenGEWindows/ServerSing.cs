@@ -129,8 +129,10 @@ namespace OpenGEWindows
             this.pointisOpenTopMenu22 = new PointColor(337 - 5 + xx + xxx, 77 - 5 + yy + yyy, 13421721, 0);
             //this.pointisOpenTopMenu51 = new PointColor(442 - 5 + xx, 83 - 5 + yy, 6713000, 3);      //верхняя коричневая полоса
             //this.pointisOpenTopMenu52 = new PointColor(443 - 5 + xx, 83 - 5 + yy, 6713000, 3);     //22-11
-            this.pointisOpenTopMenu51 = new PointColor(175 - 5 + xx, 175 - 5 + yy, 12118521, 0);      //буква L в слове Warp List
-            this.pointisOpenTopMenu52 = new PointColor(175 - 5 + xx, 176 - 5 + yy, 12118521, 0);     //23-11
+            //this.pointisOpenTopMenu51 = new PointColor(175 - 5 + xx, 175 - 5 + yy, 12118521, 0);      //буква L в слове Warp List    //она может загораживаться надписями
+            //this.pointisOpenTopMenu52 = new PointColor(175 - 5 + xx, 176 - 5 + yy, 12118521, 0);     //23-11
+            this.pointisOpenTopMenu51 = new PointColor(235 - 5 + xx, 106 - 5 + yy, 11328233, 0);      // желтая буква l в слове Ctrl+R 
+            this.pointisOpenTopMenu52 = new PointColor(235 - 5 + xx, 107 - 5 + yy, 11328233, 0);      //23-11
             this.pointisOpenTopMenu61 = new PointColor(512 - 5 + xx, 125 - 5 + yy, 6713463, 0);      
             this.pointisOpenTopMenu62 = new PointColor(512 - 5 + xx, 126 - 5 + yy, 6713463, 0);     
             this.pointisOpenTopMenu81 = new PointColor(562 - 5 + xx + xxx, 89 - 5 + yy + yyy, 13421721, 0);
@@ -639,8 +641,9 @@ namespace OpenGEWindows
             this.pointisBH2 = new PointColor(1020 - 5 + xx + xxx, 216 - 5 + yy + yyy, 5744852, 0);              //
 
             // this.arrayOfColors = new uint[19] { 0, 1644051, 725272, 6123117, 3088711, 1715508, 1452347, 6608314, 14190184, 1319739, 2302497, 5275256, 2830124, 1577743, 525832, 2635325, 1842730, 3955550, 1250584 };
-            this.arrayOfColors = new uint[38] { 0, 1644, 725, 6123, 3088, 1715, 1452, 6608, 14190, 1319, 2302, 5275, 2830, 1577, 525, 2635, 1842, 3955, 1250, 5144, 460, 1584,7370, 7304, 2105, 6806, 1711, 15043, 1971, 15306, 2899, 1118, 1713, 5275, 921, 1447, 5074, 5663};
-            //                                  0   1*    2*     3    4     5*   6*   7*      8     9     10*   11    12    13   14*   15    16*   17    18    19   20    21   22    23    24    25    26   27     28    29     30    31    32    33    34   35    36    37
+              this.arrayOfColors = new uint[38] { 0, 1644, 725, 6123, 3088, 1715, 1452, 6608, 14190, 1319, 2302, 5275, 2830, 1577, 525, 2635, 1842, 3955, 1250, 5144, 460, 1584,7370, 7304, 2105, 6806, 1711, 15043, 1971, 15306, 2899, 1118, 1713, 5275, 921, 1447, 5074, 5663};
+            //this.arrayOfColors = new uint[38] { 0, 1775, 725, 7505, 0000, 1715, 1977, 6477, 14978, 0400, 0000, 5275, 2830, 1380, 525, 2767, 2433, 3429, 1184, 5144, 460, 1584, 7370, 7304, 2105, 6806, 1711, 15043, 1971, 15306, 2899, 1118, 1713, 5275, 921, 1447, 5074, 5663 };
+            //                                    0   1*    2*    3     4     5*   6*    7*     8      9    10    11    12    13   14*   15    16*   17    18    19   20    21   22    23    24    25    26   27     28    29     30    31    32    33    34   35    36    37
             this.pointIsAtak1 = new PointColor(101 - 30 + xx + xxx, 541 - 30 + yy + yyy, 6000000, 6);                // проверяем, атакует ли бот босса (есть ли зеленый ободок вокруг сабли)
             this.pointIsAtak2 = new PointColor(101 - 30 + xx + xxx, 542 - 30 + yy + yyy, 6000000, 6);
             this.pointIsRoulette1 = new PointColor(507 - 5 + xx + xxx, 83 - 5 + yy + yyy, 15000000, 6);                
@@ -811,7 +814,7 @@ namespace OpenGEWindows
         /// <returns>HWND найденного окна</returns>
         public override UIntPtr FindWindowError()
         {
-            UIntPtr HWND = (UIntPtr)0;
+            UIntPtr HWND;           // = (UIntPtr)0;
 
             //HWND = FindWindow("Granado Espada", "Granado Espada");
             HWND = FindWindow("Sandbox:1:Ошибка", "#32770 (Диалоговое окно)");
@@ -1094,7 +1097,7 @@ namespace OpenGEWindows
         /// <returns></returns>
         public override bool is248Items()
         {
-            bool result = false;
+            bool result;        // = false;
             iPointColor pointis248_1 = new PointColor(684 - 5 + xx, 561 - 5 + yy, 12000000, 6);
             iPointColor pointis248_2 = new PointColor(694 - 5 + xx, 561 - 5 + yy, 12000000, 6);
             iPointColor pointis248_3 = new PointColor(703 - 5 + xx, 559 - 5 + yy, 12000000, 6);

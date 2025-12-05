@@ -35,11 +35,11 @@ namespace OpenGEWindows
 
         #region статические переменные
 
-        /// <summary>
-        /// Если никакой Steam не грузится, то переменная = 0. Значит можно грузить новый Стим.
-        /// Если Стим грузится, то переменная равна номеру окна (numberOfWindow)
-        /// </summary>
-        private static int IsItAlreadyPossibleToUploadNewSteam = 0;
+        ///// <summary>
+        ///// Если никакой Steam не грузится, то переменная = 0. Значит можно грузить новый Стим.
+        ///// Если Стим грузится, то переменная равна номеру окна (numberOfWindow)
+        ///// </summary>
+        ////  private static int IsItAlreadyPossibleToUploadNewSteam = 0;
 
         /// <summary>
         /// Если никакое окно с игрой не грузится, то переменная = 0. 
@@ -911,7 +911,7 @@ namespace OpenGEWindows
         {   
             ShowWindow(Hwnd, 9);                                          // Разворачивает окно если свернуто  было 9
             SetForegroundWindow(Hwnd);                                   // Перемещает окно в верхний список Z порядка
-            bool sss = SetPosition(Hwnd);                                   // перемещаем окно в заданные для него координаты
+            SetPosition(Hwnd);                                          // перемещаем окно в заданные для него координаты
         }
 
         /// <summary>
@@ -2198,7 +2198,7 @@ namespace OpenGEWindows
         /// <summary>
         /// Выгружаем окно через верхнее меню 
         /// </summary>
-        public void Logout()
+        public void GoToLogout()
         {
             systemMenu(6, true);
         }
@@ -2800,7 +2800,7 @@ namespace OpenGEWindows
         /// убит ли первый герой?
         /// </summary>
         /// <returns>true, если убит</returns>
-        public bool isKillFirstHero2()
+        public bool isKillFirstHeroNew()
         {
             return pointisKillHero1.isColor();
         }
@@ -5095,7 +5095,7 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region Гильдия Охотников BH
+        #region Гильдия Охотников BH 
 
         public abstract void runClientBH();
         //public abstract UIntPtr FindWindowGEforBH();
@@ -5111,6 +5111,22 @@ namespace OpenGEWindows
         /// </summary>
         /// <returns>true, если найдено</returns>
         public abstract bool FindWindowGEClassic();
+
+        /// <summary>
+        /// проверяем, доступна ли миссия Infinity (может быть не доступна, потому что уже ходили сегодня)
+        /// /// </summary>
+        /// <returns>true, если не доступна</returns>
+        public bool isMissionInfinityNotAvailable()
+        {
+            //проверяем красную букву Y в слове "You have used up..."           02-12-2025
+            return  new PointColor(386 - 5 + xx, 569 - 5 + yy, 4737278, 0).isColor() &&
+                    new PointColor(386 - 5 + xx, 570 - 5 + yy, 4737278, 0).isColor();
+            //проверяем букву Т в слове Today  22-11-23
+            //return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
+            //        new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
+        }
+
+
 
         /// <summary>
         /// подбор дропа в миссии Инфинити
@@ -5175,19 +5191,6 @@ namespace OpenGEWindows
             //    Pause(500);
             //}
         }
-
-        ///// <summary>
-        ///// опускаем камеру (опускаем максимально вниз)                           
-        ///// </summary>
-        //public void MinHeight()
-        //{
-        //    Point pointMinHeight = new Point(514 - 30 + xx, 352 - 30 + yy);
-        //    for (int j = 1; j <= 5; j++)
-        //    {
-        //        pointMinHeight.PressMouseWheelDown();
-        //        Pause(300);
-        //    }
-        //}
 
         /// <summary>
         /// записываем в лог-файл инфу по прохождению программы
@@ -5309,7 +5312,7 @@ namespace OpenGEWindows
             uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                // проверяем номер цвета в контрольной точке
             color = color / 1000;
             int result = Array.IndexOf(this.arrayOfColors, color); // номер миссии соответствует порядковому номеру цвета в массиве arrayOfColors
-            //if (result == 0) WriteToLogFileBH("неизвестная миссия, цвет " + color);
+            //if (result == -1) WriteToLogFileBH("неизвестная миссия, цвет " + color);
             return result;
         }
 
@@ -5682,7 +5685,7 @@ namespace OpenGEWindows
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
-                                        new Point(217 - 5 + xx + 5, 358 - 5 + yy + 5),      // Кризалис
+                                        new Point(217 - 5 + xx + 5, 308 - 5 + yy + 5),      // Кризалис
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Аргус
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Череп
@@ -6873,7 +6876,7 @@ namespace OpenGEWindows
         #region  Demonic
 
         /// <summary>
-        /// проверяем, находимся ли на работе
+        /// проверяем, находимся ли на работе. Проверка по трём героям. новый метод 2025
         /// </summary>
         /// <returns></returns>
         public bool isWorkInDemonic()
@@ -9946,9 +9949,9 @@ namespace OpenGEWindows
         #region =================================== All in One ==================================================
         /// <summary>
         /// выбор дальнейшего пути после выполнения миссии Демоник
-        /// [ 1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма ]
+        /// [ 1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма; 5 = Инфинити ]
         /// </summary>
-        /// <param name="way">1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма</param>
+        /// <param name="way"> 0 = Демоник; 1 = переход к след. аккаунту; 2 = Кастилия; 3 = ферма; 5 = Инфинити </param>
         private void WayToGoDemonic(int way)
         {
             switch (way)
@@ -9979,6 +9982,18 @@ namespace OpenGEWindows
                     GotoBarack();
                     botParam.Stage = 9;                          //ферма
                     botParam.HowManyCyclesToSkip = 4;
+                    break;
+                //case 4:
+                //    //вариант 4.  Идём в Инфинити 
+                //    Teleport(2, true);                          // телепорт в Гильдию Охотников (второй телепорт в списке)        
+                //    botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Инфинити.
+                //    break;
+                case 5:
+                    //вариант 5.  Идём в Инфинити 
+                    //GoToLogout();
+                    GotoBarack();
+                    botParam.Stage = 10;                        //Инфинити
+                    botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Инфинити.
                     break;
             }
         }
@@ -10073,7 +10088,7 @@ namespace OpenGEWindows
             {
                 botwindow.PressEscThreeTimes();             //27-10-2021
                 // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
-                if (!isKillFirstHero2())
+                if (!isKillFirstHeroNew())
                 {
                     if (isBH())     //в БХ     
                         return 4;   // стоим в правильном месте (около ворот Demonic)
@@ -10093,7 +10108,7 @@ namespace OpenGEWindows
                 }
             }
             //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero2())
+            if (isWork() || isKillFirstHeroNew())
                 if (isCastiliaMine())
                     return 40;
                 else
@@ -10258,20 +10273,20 @@ namespace OpenGEWindows
             if (isTown())
             {
                 botwindow.PressEscThreeTimes();                 //27-10-2021
-                if (!isKillFirstHero2()) // эта проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
+                if (!isKillFirstHeroNew()) // эта проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
                 {
                     if (isCastilia())                           //в Кастилии     
+                        return 4;                               // стоим около зеленой стрелки (идём в миссию)
+                    else                                        // в городе, но не в Кастилии (значит в Ребольдо)
                         if (isAncientBlessing(1))
-                            return 4;                           // стоим в правильном месте (около зеленой стрелки в миссию)
+                            return 6;                           // из Ребольдо в Кастилию
                         else
                             return 9;                           //нет наследия. идём на мост
-                    else                                        // в городе, но не в Кастилии (значит в Ребольдо)
-                        return 6;                               // из Ребольдо в Кастилию
                 }
             }
 
-            //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero2()) return 7;
+            //в миссии (или если убит первый персонаж, то это точно миссия)
+            if (isWork() || isKillFirstHeroNew()) return 7;
 
             //если проблем не найдено
             return 0;
@@ -10289,7 +10304,7 @@ namespace OpenGEWindows
 
             //в миссии
             if (isWork() ||
-                isKillFirstHero2())       //проверить
+                isKillFirstHeroNew())       //проверить
             {
                 if (isAssaultMode())     //значит ещё бегут с атакой к выбранной точке
                     return 4;                   //тыкаем туда же ещё раз
@@ -10448,13 +10463,13 @@ namespace OpenGEWindows
                         runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
                         botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
                         IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
-                        IsItAlreadyPossibleToUploadNewSteam = 0;
+                        //IsItAlreadyPossibleToUploadNewSteam = 0;
                     //}
                     break;
                 case 23:                                    //стим есть. только что нашли новое окно с игрой
                                                             //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
                     IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //IsItAlreadyPossibleToUploadNewSteam = 0;
                     break;
                 case 24:                //если нет стима, значит удалили песочницу
                                         //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
@@ -10575,17 +10590,12 @@ namespace OpenGEWindows
                 case 20:                                        // если стоят на странице создания нового персонажа
                     botParam.Stage = 6;
                     break;
-                case 6:                                         // Миссия окончена. Летим на ферму
-
-                    WayToGoDemonic(1);
-
-                    //GotoBarack();                               // идём в барак, так как для фермы надо выбрать другую команду героев
-                    //botParam.Stage = 9;                         //ферма
-                    //botParam.HowManyCyclesToSkip = 4;
+                case 6:                                         // Миссия окончена
+                    WayToGoDemonic(5);
                     break;
-                case 11:                                         // закрыть службу Стим
-                    CloseSteam();
-                    break;
+                //case 11:                                         // закрыть службу Стим
+                //    CloseSteam();
+                //    break;
                 case 19:                                         // включить правильную стойку
                     ProperFightingStanceOn();
                     MoveCursorOfMouse();
@@ -10979,7 +10989,7 @@ namespace OpenGEWindows
                         break;
                     case 4:                                         //на мосту и получили бафф наследие
                         //GotoBarack();
-                        Logout();
+                        GoToLogout();
                         botParam.HowManyCyclesToSkip = 2;
                         botParam.Stage = 1;
                         break;
@@ -11093,24 +11103,13 @@ namespace OpenGEWindows
                         break;
                     case 10:                                        //миссия не доступна на сегодня (уже прошли)
                         dialog.PressOkButton(1);
-                        //TeleportAltW(4);
-
-                        WayToGoDemonic(1);
-
-                        //GotoBarack();
-                        //botParam.Stage = 9;                          //ферма
-                        //botParam.HowManyCyclesToSkip = 4;
-                        
-                        //старый вариант
-                        //RemoveSandboxieBH();                        //закрываем песочницу и берём следующий бот для работы
-                        //botParam.Stage = 1;
-                        //botParam.HowManyCyclesToSkip = 2;
+                        WayToGoDemonic(5);
                         break;
                     case 18:
                         //новый вариант                             //переход по телепорту в Кастилии к воротам
                         botwindow.PressEscThreeTimes();
                         botwindow.Pause(500);
-                        Teleport(4, true);                          // телепорт в Гильдию Охотников (третий телепорт в списке)        
+                        Teleport(4, true);                          // телепорт в Кастилию (четвёртый телепорт в списке)        
                         botwindow.PressEscThreeTimes();
                         //PressToGateDemonic();
                         prevProblem = 6;                            // делаем предыдущее состояние = город        
@@ -11170,13 +11169,14 @@ namespace OpenGEWindows
                         // бафаемся перед перемещением дальше
                         //if ((NextPointNumber == 0) || (NextPointNumber == 2) || (NextPointNumber == 4))
                         //{
-                            MoveCursorOfMouse();
-                            BuffHeroes();
-                            //Buff(Hero[1], 1);
-                            //Buff(Hero[2], 2);
-                            //Buff(Hero[3], 3);
-                            botwindow.ActiveAllBuffBH();
-                            botwindow.PressEscThreeTimes();
+                        MoveCursorOfMouse();
+                        BuffHeroes();
+                        Pause(500);
+                        BuffHeroes();
+                        Pause(500);
+
+                        botwindow.ActiveAllBuffBH();
+                        botwindow.PressEscThreeTimes();
                         //}
                         MoveToNextPoint(NextPointNumber);
                         botParam.HowManyCyclesToSkip = GetWaitingTurnForMoveToPoint(NextPointNumber);
@@ -11347,9 +11347,161 @@ namespace OpenGEWindows
 
         #endregion
 
+        #region ======================== Решение проблем Infinity New ====================================
+
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity. стадия 1. Вход в миссию
+        /// </summary>
+        public void problemResolutionAllinOneStage10()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();                     // поправляем окно, если оно сдвинулось
+                    Pause(1000);                        // пауза перед оценкой проблем. Окно должно устаканиться
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemInfinityStage1();
+
+                switch (numberOfProblem)
+                {
+                    case 2:           //норм
+                        FromBarackToTown(2);                                                        // barack --> town              //сделано
+                        botParam.HowManyCyclesToSkip = 3;  //2
+                        break;
+                    case 4:                                                                        // BH --> Gate
+                        botwindow.PressEscThreeTimes();
+                        AddBullets();
+                        GoToInfinityGateBH();
+                        break;
+                    case 6:      //норм                                                             // town --> BH
+                        botwindow.PressEscThreeTimes();
+                        Pause(500);
+                        SummonPet();
+
+                        Teleport(2, true);                          // телепорт в Гильдию Охотников (второй телепорт в списке)        переход к воротам Инфинити
+                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Инфинити.
+                        break;
+                    case 7:                                                                         // в миссии. начало
+                        int NumberMission = NumberOfMissionBH();
+
+                        botwindow.CommandMode();
+                        //BattleModeOnDem();                          //пробел
+
+                        //botwindow.ThirdHero();                      
+
+                        //ChatFifthBookmark();
+
+                        WhatsHeroes();
+
+                        ActivatePetDem();                             //новая функция  22-11
+
+                        //бафаемся
+                        //botwindow.ActiveAllBuffBH();
+                        //botwindow.PressEsc(4);
+                        ////бафаемся героями первый раз
+                        //BuffHeroes();
+                        //MoveCursorOfMouse();
+
+                        ////бафаемся героями второй раз
+                        //BuffHeroes();
+                        //MoveCursorOfMouse();
+
+                        //ManaForDemonic();
+                        //MoveCursorOfMouse();
+
+
+                        RunToBoss(NumberMission);
+
+
+                        botParam.Stage = 11;
+
+                        break;
+                    case 8:                                             //Gate --> Mission
+                        dialog.PressOkButton(1);
+                        dialog.PressStringDialog(3);                    //нажимаем строчку "Challenge 30 Rounde"  Эта строчка, если мы не хотим увеличивать уровень миссии 
+                        //dialog.PressStringDialog(4);                  //нажимаем строчку "Challenge 31 Rounde"  Эта строчка, если мы хотим увеличить уровень миссии 
+
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 10:                                            //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);                        //выходим из диалога
+                        Pause(1000);
+                        //======================================================================================================================
+                        WayToGoDemonic(1);
+                        //======================================================================================================================
+                        break;
+                    default:
+                        InfinityProblemResolutionCommonForStage1(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
+        }
+
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity. стадия 2. Миссия
+        /// 2, 3, 4, 10
+        /// </summary>
+        public void problemResolutionAllinOneStage11()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemInfinityStage2();
+
+                switch (numberOfProblem)
+                {
+                    case 0:
+                        break;
+                    case 3:                                                 // добежали до босса
+                        Pause(2000);                                        // ожидаем, пока добегут остальные герои
+                        BattleModeOnDem();                                  // пробел
+                        break;
+                    case 4:                                                 // босс в прицеле. скиллуем
+                        SkillHeroes();
+                        ManaForDemonic();
+                        MoveCursorOfMouse();
+                        break;
+                    case 5:                                                 // Миссия окончена 
+                        botParam.HowManyCyclesToSkip = 2;                   // ждём рулетку
+                        Teleport(2, true);                                  // телепорт в БХ
+                        botParam.Stage = 10;                                // переходим на стадию 10 (Stage 10)    
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 6:                                                 // бежим до босса. ничего не делаем
+                        break;
+                    case 7:                                                 // Миссия окончена. не ждём рулетку 
+                        Teleport(2, true);                                  // телепорт в БХ
+                        botParam.Stage = 10;                                // переходим на стадию 10 (Stage 10)    
+                        botParam.HowManyCyclesToSkip = 2; 
+                        break;
+                    default:
+                        InfinityproblemResolutionCommonForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(3000);
+            }
+        }
+
+
+        #endregion
+
 
         #endregion ================================= All in One (end) =========================================== 
-
 
         #region =================================   I N F I N I T Y   N E W  (начало)   =======================================
 
@@ -11401,7 +11553,7 @@ namespace OpenGEWindows
         #region ======================== Поиск проблем в Infinity ================================
         /// <summary>
         /// проверяем, если ли проблемы при работе в Infinity (стадия 1) и возвращаем номер проблемы
-        /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41, 42, 43
+        /// 3, 4, 5, 6, 7, 8, 9, 10
         /// </summary>
         /// <returns>порядковый номер проблемы</returns>
         public int NumberOfProblemInfinityStage1()
@@ -11411,54 +11563,73 @@ namespace OpenGEWindows
 
             //диалог
             if (dialog.isDialog())
-                if (isMissionNotAvailable())
-                    return 10;                          //если стоим в воротах Demonic и миссия не доступна
+                if (isMissionInfinityNotAvailable())
+                    return 10;                          //если стоим в воротах Infinity и миссия не доступна
                 else
-                    return 8;                           //если стоим в воротах Demonic и миссия доступна
-
-            //Mission Lobby
-            if (isMissionLobby()) return 5;      //22-11
-
-            //Waiting Room //Mission Room 22-11
-            if (isWaitingRoom()) return 3;      //22-11
+                    return 8;                           //если стоим в воротах Infinity и миссия доступна
 
             //город или БХ
             if (isTown())
             {
-                botwindow.PressEscThreeTimes();             //27-10-2021
-                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем".  23-11
-                if (!isKillFirstHero2())
+                botwindow.PressEscThreeTimes();             
+                // здесь проверка нужна, чтобы разделить "город" и "работу с убитым первым персонажем"
+                if (!isKillFirstHeroNew())
                 {
-                    if (isBH())     //в БХ     
-                        return 4;   // стоим в правильном месте (около ворот Demonic)
-                    else   // в городе, но не в БХ
-                    {
-                        //if (!isSummonPet() && !isActivePet())
-                        //    return 41;
-                        //if (isUstiar())
-                        //    return 42;
-                        //if (isCastilia())
-                        //    return 43;
-                        if (isAncientBlessing(1))
-                            return 6;                       //скорее всего в стартовом городе (ребольдо)
-                        else
-                            return 9;                       //нет наследия древних
-                    }
+                    if (isBH())                         //в БХ (около ворот Infinity)    
+                        return 4;
+                    else                                // в городе, но не в БХ, скорее всего в стартовом городе (ребольдо)
+                        return 6;                       
                 }
             }
             //в миссии (если убит первый персонаж, то это точно миссия
-            if (isWork() || isKillFirstHero2())
-                if (isCastiliaMine())
-                    return 40;
-                else
-                    return 7;
+            if (isWork() || isKillFirstHeroNew())
+                return 7;
 
             //если проблем не найдено
             return 0;
         }
 
-        #endregion
+        /// <summary>
+        /// проверяем, если ли проблемы при работе в Demonic (стадия 2) и возвращаем номер проблемы
+        /// 3, 4, 6, 10 
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemInfinityStage2()
+        {
+            int result = InfinityNumberOfProblemCommonForAll();
+            if (result != 0) return result;
 
+            //в миссии
+            if (isWorkInDemonic())
+            {
+                // если ассаульт режим, значит бежим к боссу
+                if (isAssaultMode())
+                    if (isBoss()) 
+                        return 3;         // если босс в прицеле, то добежали до босса
+                    else
+                        return 6;           //если ещё не добежали до босса, то ничего не делаем
+
+                if (isBattleMode())
+                        if (isBoss())
+                            return 4;
+                        else
+                            return 5;                   // босса в прицеле нет, значит он убит. летим в БХ на следующий круг
+
+                if (isBoss() && !isAssaultMode())
+                    return 3;         // если босс в прицеле, но не ассаульт режим, то добежали до босса
+
+                if (!isAssaultMode() && !isBattleMode())
+                    return 7;                           // если не в боевом режиме и не в ассаульт режиме, то значит, что пробежали мимо босса. летим в БХ на следующий круг
+
+            }
+
+
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        #endregion   ========================================================================
 
         #region ======================== Решение стандартных проблем ================================
 
@@ -11478,9 +11649,6 @@ namespace OpenGEWindows
                     FromBarackToTown(2);                        // barack --> town
                     botParam.HowManyCyclesToSkip = 4;  //2
                     break;
-                case 11:                                        // закрыть службу Стим
-                    CloseSteam();
-                    break;
                 case 12:                                        // закрыть магазин 
                     CloseMerchReboldo();
                     break;
@@ -11493,40 +11661,29 @@ namespace OpenGEWindows
                 case 17:                                        // в бараках на стадии выбора группы
                     botwindow.PressEsc();                       // нажимаем Esc
                     break;
-                case 19:                                        // включить правильную стойку
-                    ProperFightingStanceOn();
-                    MoveCursorOfMouse();
-                    break;
+                //case 19:                                        // включить правильную стойку
+                //    ProperFightingStanceOn();
+                //    MoveCursorOfMouse();
+                //    break;
                 case 20:
                     ButtonToBarack();                    //если стоят на странице создания нового персонажа,
                                                          //то нажимаем кнопку, чтобы войти обратно в барак
                     break;
                 case 22:
-                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewSteam) IsItAlreadyPossibleToUploadNewSteam = 0;
-                    //if (IsItAlreadyPossibleToUploadNewWindow == 0)     //30.10.2023
-                    //{
-                    //RunClientDem();                      // если нет окна ГЭ, но загружен Steam, то запускаем окно ГЭ
-                    runClientCW();                       // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
-                    botParam.HowManyCyclesToSkip = 7;   //30.10.2023    //пропускаем следующие 6-8 циклов
+                    runClientCW();                              // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
+                    botParam.HowManyCyclesToSkip = 7;           //пропускаем следующие 6-8 циклов
                     IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
-                    IsItAlreadyPossibleToUploadNewSteam = 0;
-                    //}
+                    //IsItAlreadyPossibleToUploadNewSteam = 0;
                     break;
                 case 23:                                    //стим есть. только что нашли новое окно с игрой
                                                             //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
                     IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewSteam = 0;
+                    //IsItAlreadyPossibleToUploadNewSteam = 0;
                     break;
                 case 24:                //если нет стима, значит удалили песочницу
                                         //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
-                                        //if (IsItAlreadyPossibleToUploadNewSteam == 0)
-                                        //{
-                                        //************************ запускаем стим ************************************************************
-                                        //runClientSteamBH();              // если Steam еще не загружен, то грузим его
                     runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
                     botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
-                                                             //IsItAlreadyPossibleToUploadNewSteam = this.numberOfWindow;
-                                                             //}
                     break;
                 case 38:
                     botwindow.PressEsc();
@@ -11538,7 +11695,7 @@ namespace OpenGEWindows
         /// разрешение выявленных проблем. Стандартные проблемы для Демоник (для стадий 2+)
         /// 1,12,22,23,24 - на стадию 1.         6,11,16,17,19,20,33,34,35,36,37
         /// </summary>
-        public void InfinityproblemResolutionCommonDemonicForStageFrom2To(int numberOfProblem)
+        public void InfinityproblemResolutionCommonForStageFrom2To(int numberOfProblem)
         {
             switch (numberOfProblem)
             {
@@ -11553,51 +11710,20 @@ namespace OpenGEWindows
                     Pause(5000);
                     WayToGoDemonic(1);
                     break;
-                case 11:                                         // закрыть службу Стим
-                    CloseSteam();
-                    break;
                 case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
                     PressYesBarack();
                     break;
                 case 17:                                        // в бараках на стадии выбора группы
                     botwindow.PressEsc();                       // нажимаем Esc
                     break;
-                case 19:                                         // включить правильную стойку
-                    ProperFightingStanceOn();
-                    MoveCursorOfMouse();
-                    break;
                 case 20:
-                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
-                                                         //то нажимаем кнопку, чтобы войти обратно в барак
-                    break;
-                case 33:
-                    CloseError820();
-                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                              // а значит смело можно грузить окно еще раз
-                    break;
-                case 34:
-                    AcceptUserAgreement();
-                    break;
-                case 35:
-                    CloseErrorSandboxie();
-                    break;
-                case 36:
-                    CloseUnexpectedError();
-                    //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
-                    IsItAlreadyPossibleToUploadNewWindow = 0; //если окна грузятся строго по одному, то ошибка будет именно в загружаемом окне
-                                                              // а значит смело можно грузить окно еще раз
-                    break;
-                case 37:
-                    CloseSteamMessage();
-                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    ButtonToBarack();                           //если стоят на странице создания нового персонажа,
+                                                                //то нажимаем кнопку, чтобы войти обратно в барак
                     break;
             }
         }
 
-
         #endregion
-
 
         #region ======================== Решение проблем Infinity New ====================================
 
@@ -11610,113 +11736,95 @@ namespace OpenGEWindows
             {
                 if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
                 {
-                    ActiveWindow();
-                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                    ActiveWindow();                     // поправляем окно, если оно сдвинулось
+                    Pause(1000);                        // пауза перед оценкой проблем. Окно должно устаканиться
                 }
 
                 //проверили, какие есть проблемы (на какой стадии находится бот)
                 int numberOfProblem = NumberOfProblemInfinityStage1();
 
-                //если зависли в каком-либо состоянии, то особые действия
-                if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
-                {
-                    switch (numberOfProblem)
-                    {
-                        case 4:     //зависли в БХ
-                            numberOfProblem = 18;
-                            break;
-                    }
-                }
-                else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
+                ////если зависли в каком-либо состоянии, то особые действия
+                //if (numberOfProblem == prevProblem && numberOfProblem == prevPrevProblem)
+                //{
+                //    switch (numberOfProblem)
+                //    {
+                //        case 4:     //зависли в БХ
+                //            numberOfProblem = 18;
+                //            break;
+                //    }
+                //}
+                //else { prevPrevProblem = prevProblem; prevProblem = numberOfProblem; }
 
                 switch (numberOfProblem)
                 {
-                    case 2:
-                        FromBarackToTown(2);                        // barack --> town              //сделано
+                    case 2:           //норм
+                        FromBarackToTown(2);                                                        // barack --> town              //сделано
                         botParam.HowManyCyclesToSkip = 3;  //2
                         break;
-                    case 3:                                         // старт миссии      //ок
-                        MissionStart();
-                        botParam.HowManyCyclesToSkip = 1;
-                        break;
-                    case 4:                                         // BH --> Gate
-                        Pause(1000);
+                    case 4:                                                                        // BH --> Gate
                         //if (isPioneerJournal()) GetGiftsNew();
                         botwindow.PressEscThreeTimes();
                         AddBullets();
-                        GoToInfinityGateDem();
+                        GoToInfinityGateBH();
                         break;
-                    case 5:
-                        CreatingMission();
-                        break;
-                    case 6:                                         // town --> BH
-                        //if (isPioneerJournal())
-                        //    GetGiftsNew();
+                    case 6:      //норм                                                             // town --> BH
+                        //if (isPioneerJournal())  GetGiftsNew();
 
                         botwindow.PressEscThreeTimes();
                         Pause(500);
                         SummonPet();
 
-                        //вариант 1. не идём в Демоник, а сразу идём в Кастилию
-                        WayToGoDemonic(2);
-
-                        //вариант 2. Идём в Демоник
-                        //WayToGoDemonic(0);
+                        Teleport(2, true);                          // телепорт в Гильдию Охотников (второй телепорт в списке)        переход к воротам Инфинити
+                        botParam.HowManyCyclesToSkip = 2;           // даём время, чтобы подгрузились ворота Инфинити.
                         break;
-                    case 7:                                         // поднимаем камеру максимально вверх, активируем пета и переходим к стадии 2
+                    case 7:                                                                         // в миссии. начало
+                        int NumberMission = NumberOfMissionBH();
+
                         botwindow.CommandMode();
-                        BattleModeOnDem();                          //пробел
+                        //BattleModeOnDem();                          //пробел
 
-                        botwindow.ThirdHero();                      //эксперимент от 29-01-2024
+                        //botwindow.ThirdHero();                      
 
-                        ChatFifthBookmark();
+                        //ChatFifthBookmark();
 
                         WhatsHeroes();
 
                         ActivatePetDem();                             //новая функция  22-11
-                        MaxHeight(12);
 
-                        //бафаемся, пока не вылезли мобы
-                        botwindow.ActiveAllBuffBH();
-                        botwindow.PressEsc(4);
-                        //бафаемся героями первый раз
-                        BuffHeroes();
-                        MoveCursorOfMouse();
+                        //бафаемся
+                        //botwindow.ActiveAllBuffBH();
+                        //botwindow.PressEsc(4);
+                        ////бафаемся героями первый раз
+                        //BuffHeroes();
+                        //MoveCursorOfMouse();
 
-                        //бафаемся героями второй раз
-                        BuffHeroes();
-                        MoveCursorOfMouse();
+                        ////бафаемся героями второй раз
+                        //BuffHeroes();
+                        //MoveCursorOfMouse();
 
-                        ManaForDemonic();
-                        MoveCursorOfMouse();
+                        //ManaForDemonic();
+                        //MoveCursorOfMouse();
+
+
+                        RunToBoss(NumberMission);
+
 
                         botParam.Stage = 2;
-                        //botParam.HowManyCyclesToSkip = 1;           // даём время, чтобы вылезли мобы
+                        
                         break;
-                    case 8:                                         //Gate --> Mission Lobby
-                        dialog.PressStringDialog(1);                //нажимаем нижнюю строчку (I want to play)
+                    case 8:                                             //Gate --> Mission
+                        dialog.PressOkButton(1);
+                        dialog.PressStringDialog(3);                    //нажимаем строчку "Challenge 30 Rounde"  Эта строчка, если мы не хотим увеличивать уровень миссии 
+                        //dialog.PressStringDialog(4);                  //нажимаем строчку "Challenge 31 Rounde"  Эта строчка, если мы хотим увеличить уровень миссии 
+
+                        botParam.HowManyCyclesToSkip = 1;
                         break;
-                    case 9:                                         //нет наследия. летим на мост
-                        botwindow.PressEscThreeTimes();
-                        botwindow.Pause(500);
-                        Teleport(1, true);                          // телепорт на мост (первый телепорт в списке)        
-                        botParam.HowManyCyclesToSkip = 4;           // даём время, чтобы подгрузилась карта
-                        botParam.Stage = 5;
-                        break;
-                    case 10:                                        //миссия не доступна на сегодня (уже прошли)
-                        dialog.PressOkButton(1);                    //выходим из диалога
+                    case 10:                                            //миссия не доступна на сегодня (уже прошли)
+                        dialog.PressOkButton(1);                        //выходим из диалога
                         Pause(1000);
                         //======================================================================================================================
                         WayToGoDemonic(1);
                         //======================================================================================================================
-                        break;
-                    case 18:
-                        //новейший вариант
-                        GotoBarack();
-                        botParam.HowManyCyclesToSkip = 2;
-                        break;
-                    case 40:
-                        botParam.Stage = 7;
                         break;
                     default:
                         InfinityProblemResolutionCommonForStage1(numberOfProblem);
@@ -11730,12 +11838,62 @@ namespace OpenGEWindows
             }
         }
 
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity. стадия 2. Миссия
+        /// 2, 3, 4, 10
+        /// </summary>
+        public void problemResolutionInfinityStage2()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                    ActiveWindow();
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemInfinityStage2();
+
+                switch (numberOfProblem)
+                {
+                    case 0:
+                        break;
+                    case 3:                                                 // добежали до босса
+                        Pause(2000);                                        // ожидаем, пока добегут остальные герои
+                        BattleModeOnDem();                                  // пробел
+                        break;
+                    case 4:                                                 // босс в прицеле. скиллуем
+                        SkillHeroes();
+                        ManaForDemonic();
+                        MoveCursorOfMouse();
+                        break;
+                    case 5:                                                 // Миссия окончена 
+                        botParam.HowManyCyclesToSkip = 2;                   // ждём рулетку
+                        Teleport(2, true);                                  // телепорт в БХ
+                        botParam.Stage = 1;                                 // переходим на стадию 1 (Stage 1)    
+                        botParam.HowManyCyclesToSkip = 2;
+                        break;
+                    case 6:                                                 // бежим до босса. ничего не делаем
+                        break;
+                    case 7:                                                 // Миссия окончена. не ждём рулетку 
+                        Teleport(2, true);                                  // телепорт в БХ
+                        botParam.Stage = 1;                                 // переходим на стадию 1 (Stage 1)    
+                        botParam.HowManyCyclesToSkip = 2; break;
+                    default:
+                        InfinityproblemResolutionCommonForStageFrom2To(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(3000);
+            }
+        }
+
+
         #endregion
 
 
         #endregion =================================   I N F I N I T Y   N E W  (конец)   =======================================
-
-
 
         #region ===========================  CapibaraEvent ===================================
 
@@ -12534,7 +12692,383 @@ namespace OpenGEWindows
 
         #endregion ===============================================================================
 
+        #region   ============================== методы для Inrinity New ============================================
 
+        //бежим к боссу в Инфинити и атакуем его
+        private void RunToBoss(int NumberMission)
+        {
+            switch (NumberMission)
+            {
+                case 1:
+                    MissionNumber1();
+                    //return new StateGT109(botwindow);    // круглая арена с колоннами и квадратные плиты на полу. босс по центру    1775123       109
+                    break;
+                case 2:
+                    MissionNumber2();
+                    //return new StateGT110(botwindow);    // сетка, а под ней зеленая вода    725270                                           110  самая жопа!!!
+                    break;
+                case 3:
+                    MissionNumber3();
+                    //return new StateGT111(botwindow);    // тринити с текущей водой        7505535                                           111+
+                    break;
+                case 4:
+                    MissionNumber4();
+                    //return new StateGT112(botwindow);    // лава + малиновый грунт                                                    112+
+                    break;
+                case 5:
+                    MissionNumber5();
+                    //return new StateGT113(botwindow);    // вода + плиты на полу      1517871     1715                                    113
+                    break;
+                case 6:
+                    MissionNumber6();
+                    //return new StateGT114(botwindow);    // квадратная арена. идти в обход до босса. лучше справа     1977669                 114  еще одна жопа!!!
+                    break;
+                case 7:
+                    MissionNumber7();
+                    //return new StateGT115(botwindow);    // Раффлезия             6477241                                                    115+
+                    break;
+                case 8:
+                    MissionNumber8();
+                    //return new StateGT116(botwindow);    // Лёд. синий пол, синие колонны в виде буквы Л     14978408                              116+
+                    break;
+                case 9:
+                    MissionNumber9();
+                    //return new StateGT117(botwindow);    // Золотой голем            400423                                                 117+
+                    break;
+                case 10:
+                    MissionNumber10();
+                    //return new StateGT118(botwindow);    // Море. Прибой                                                              118+
+                    break;
+                case 11:
+                    MissionNumber11();
+                    //return new StateGT119(botwindow);    // Красные свечи               5537150 5275                                             119+
+                    break;
+                case 12:
+                    MissionNumber12();
+                    //return new StateGT120(botwindow);    // Серый пол, арнамент на полу в виде змейки. Муфаса         2830124                120
+                    break;
+                case 13:
+                    MissionNumber13();
+                    //return new StateGT121(botwindow);    // Синий пол, синие кристаллы        1380621                                        121
+                    break;
+                case 14:
+                    MissionNumber14();
+                    //return new StateGT122(botwindow);    // Две темные арены со столбом посредине. Босс в дальней арене      525831              122
+                    break;
+                case 15:
+                    MissionNumber15();
+                    //return new StateGT123(botwindow);    // Желто-коричневая неровная плитка (посредине крутящаяся хрень)      2767426       123         
+                    break;
+                case 16:
+                    MissionNumber16();
+                    //return new StateGT124(botwindow);    // Лава-босс. арка посредине         2433070                                    124
+                    break;
+                case 17:
+                    MissionNumber17();
+                    //return new StateGT125(botwindow);    // Плитка ромбами, босс близко впереди    3429971                                     125
+                    break;
+                case 18:
+                    MissionNumber18();
+                    //return new StateGT126(botwindow);    // Темная арена, земляной пол     1184275                                            126
+                    break;
+
+
+                //==============================  повторные  ======================================
+
+                case 19:
+                    MissionNumber11();
+                    //return new StateGT119(botwindow);    // Красные свечи                                                             119+
+                    break;
+                case 20:
+                    MissionNumber14();
+                    //return new StateGT122(botwindow);    // Две темные арены со столбом посредине. Босс в дальней арене               122
+                    break;
+                case 21:
+                    MissionNumber5();
+                    //return new StateGT113(botwindow);    // вода + плиты на полу                                                      113+
+                    break;
+                case 22:
+                    MissionNumber6();
+                    //return new StateGT114(botwindow);    // квадратная арена. идти в обход до босса. лучше справа                                                   113+
+                    break;
+                case 23:
+                    MissionNumber6();
+                    //return new StateGT114(botwindow);    // квадратная арена. идти в обход до босса. лучше справа                                                   113+
+                    break;
+                case 24:
+                    MissionNumber10();
+                    //return new StateGT118(botwindow);    // Море. Прибой                                                              113+
+                    break;
+                case 25:
+                    MissionNumber7();
+                    //return new StateGT115(botwindow);    // Раффлезия                                                                 115+
+                    break;
+                case 26:
+                    MissionNumber16();
+                    //return new StateGT124(botwindow);    // Лава-босс. арка посредине       2433060                                    124
+                    break;
+                case 32:
+                    MissionNumber3();
+                    //return new StateGT111(botwindow);    // тринити с текущей водой                                                   111+
+                    break;
+                case 33:
+                    MissionNumber11();
+                    //return new StateGT119(botwindow);    // Красные свечи                                                             119+
+                    break;
+                case 34:
+                    MissionNumber17();
+                    //return new StateGT125(botwindow);    // Плитка ромбами, босс близко впереди                                       125
+                    break;
+                case 35:
+                    MissionNumber18();
+                    //return new StateGT126(botwindow);    // Темная арена, земляной пол    1184275                                     126
+                    break;
+                case 36:
+                    MissionNumber17();
+                    //return new StateGT125(botwindow);    // Плитка ромбами, босс близко впереди                                       125
+                    break;
+                case 37:
+                    MissionNumber3();
+                    //return new StateGT111(botwindow);    // тринити с текущей водой                                                   111+
+                    break;
+            }
+            //server.MissionNotFoundBH();
+            //return new StateGT129(botwindow);         //если карта не найдена (не может быть такого), то идём в конец цикла
+
+        }
+
+        /// <summary>
+        /// круглая арена с колоннами и квадратные плиты на полу. босс по центру      109
+        /// </summary>
+        private void MissionNumber1()
+        {
+            // круглая арена с колоннами и квадратные плиты на полу. босс по центру
+            TurnUp();
+            TurnR(1);
+            FightToPoint(152, 304, 2);
+            BattleModeOnDem();
+            FightToPoint(152, 304, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// сетка, а под ней зеленая вода                                             110  самая жопа!!!
+        /// </summary>
+        private void MissionNumber2()
+        {
+            // сетка, а под ней зеленая вода
+            Turn90L();
+            FightToPoint(620, 125, 3);
+            FightToPoint(620, 125, 3);
+            FightToPoint(620, 125, 3);
+            FightToPoint(620, 125, 3);
+
+            TurnUp();
+            BattleModeOnDem();
+            FightToPoint(620, 250, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// тринити с текущей водой                                                   111+
+        /// </summary>
+        private void MissionNumber3()
+        {
+            // тринити с текущей водой
+            TurnR(1);
+            FightToPoint(240, 132, 3);
+            BattleModeOnDem();
+            FightToPoint(240, 132, 3);
+            BattleModeOnDem();
+            FightToPoint(240, 132, 3);
+        }
+
+        /// <summary>
+        /// лава + малиновый грунт                                                    112+
+        /// </summary>
+        private void MissionNumber4()
+        {
+            // лава + малиновый грунт
+            Turn180();
+            FightToPoint(545, 110, 3);
+            BattleModeOnDem();
+            FightToPoint(545, 110, 3);
+        }
+
+        /// <summary>
+        /// вода + плиты на полу                                                      113
+        /// </summary>
+        private void MissionNumber5()
+        {
+            // вода + плиты на полу
+            TurnR(1);
+            FightToPoint(229 + 20, 129 + 20, 2);
+            BattleModeOnDem();
+            FightToPoint(229 + 20, 129 + 20, 3);
+        }
+
+        /// <summary>
+        /// квадратная арена. идти в обход до босса. лучше справа                     114  еще одна жопа!!!
+        /// </summary>
+        private void MissionNumber6()
+        {
+            // квадратная арена. идти в обход до босса. лучше справа
+            FightToPoint(997 + 25, 160 + 25, 3);
+            FightToPoint(1034, 308, 3);
+            BattleModeOnDem(); 
+            FightToPoint(1011, 80, 6);
+            TurnL(1);
+            TurnUp();
+            BattleModeOnDem();
+            FightToPoint(94, 383, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Раффлезия      //работает                                                           115+
+        /// </summary>
+        private void MissionNumber7()
+        {
+            // Раффлезия
+            TurnUp();
+            FightToPoint(780, 238, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// синий пол, синие колонны в виде буквы Л                                   116+
+        /// </summary>
+        private void MissionNumber8()
+        {
+            // синий пол, синие колонны в виде буквы Л
+            FightToPoint(545, 115, 3);
+            BattleModeOnDem();
+            FightToPoint(545, 115, 0);
+        }
+
+        /// <summary>
+        /// Золотой голем                                                             117+
+        /// </summary>
+        private void MissionNumber9()
+        {
+            // Золотой голем
+            TurnUp();
+            FightToPoint(600, 307, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Море. Прибой                                                              118+
+        /// </summary>
+        private void MissionNumber10()
+        {
+            // Море. Прибой
+            Turn90R();
+            TurnUp();
+            TurnR(1);
+            FightToPoint(114, 392, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// // Красные свечи                                                             119+
+        /// </summary>
+        private void MissionNumber11()
+        {
+            //  Красные свечи
+            Turn180();
+            TurnUp();
+
+            TurnR(1);
+            FightToPoint(236, 470, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Серый пол, арнамент на полу в виде змейки. Муфаса                         120
+        /// </summary>
+        private void MissionNumber12()
+        {
+            // Серый пол, арнамент на полу в виде змейки
+            TurnUp();
+            FightToPoint(545, 125, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Синий пол, синие кристаллы                                                121
+        /// </summary>
+        private void MissionNumber13()
+        {
+            // Синий пол, синие кристаллы
+            Turn180();
+            FightToPoint(595, 125, 3);
+            TurnUp();
+            BattleModeOnDem();
+            FightToPoint(565, 261, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Две темные арены со столбом посредине. Босс в дальней арене               122
+        /// </summary>
+        private void MissionNumber14()
+        {
+            //14 Две темные арены со столбом посредине. Босс в дальней арене
+            FightToPoint(905, 87, 3);  //вправо наискосок
+            TurnUp();
+            TurnR(1);
+            BattleModeOnDem();
+            FightToPoint(35, 456, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Желто-коричневая неровная плитка (посредине крутящаяся хрень)             123         
+        /// </summary>
+        private void MissionNumber15()
+        {
+            // Желто-коричневая неровная плитка (посредине крутящаяся хрень)  
+            TurnUp();
+            FightToPoint(526, 122, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Лава-босс. арка посредине                                                 124
+        /// </summary>
+        private void MissionNumber16()
+        {
+            // Босс лава
+            Turn90R();
+            TurnUp();
+            TurnR(1);
+            FightToPoint(176 - 75, 390 - 75, 1);
+            TurnDown();
+        }
+
+        /// <summary>
+        /// Плитка ромбами, босс близко впереди                                       125   не работает
+        /// </summary>
+        private void MissionNumber17()
+        {
+            // Плитка ромбами, босс близко впереди                                       
+            TurnR(1);
+            FightToPoint(235, 130, 1);
+        }
+
+        /// <summary>
+        /// Темная арена, земляной пол                                                126
+        /// </summary>
+        private void MissionNumber18()
+        {
+            // круглая арена, земляной пол             
+            TurnUp();
+            FightToPoint(1041, 174, 1);
+            TurnDown();
+        }
+
+        #endregion   ============================== методы для Inrinity New (end) ============================================
 
     }
 }

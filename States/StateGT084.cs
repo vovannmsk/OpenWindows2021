@@ -29,7 +29,7 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию 
         {
-            server.Logout();
+            server.GoToLogout();
 
             int i = 0;
             while (!server.isLogout())

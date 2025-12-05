@@ -54,6 +54,7 @@
             this.labelEnchanting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.InfinityMission = new System.Windows.Forms.Button();
             this.RelicProduction = new System.Windows.Forms.Button();
             this.bridgeElement = new System.Windows.Forms.Button();
             this.bridge = new System.Windows.Forms.Button();
@@ -76,7 +77,6 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.RestartClassic = new System.Windows.Forms.Button();
             this.Memorial = new System.Windows.Forms.Button();
-            this.InfinityMission = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfAccounts)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -328,7 +328,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(386, 242);
+            this.tabControl1.Size = new System.Drawing.Size(386, 245);
             this.tabControl1.TabIndex = 64;
             // 
             // tabPage1
@@ -360,9 +360,20 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(378, 216);
+            this.tabPage1.Size = new System.Drawing.Size(378, 219);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные функции";
+            // 
+            // InfinityMission
+            // 
+            this.InfinityMission.BackColor = System.Drawing.Color.GreenYellow;
+            this.InfinityMission.Location = new System.Drawing.Point(9, 173);
+            this.InfinityMission.Name = "InfinityMission";
+            this.InfinityMission.Size = new System.Drawing.Size(170, 35);
+            this.InfinityMission.TabIndex = 80;
+            this.InfinityMission.Text = "Infinity";
+            this.InfinityMission.UseVisualStyleBackColor = false;
+            this.InfinityMission.Click += new System.EventHandler(this.InfinityMission_Click);
             // 
             // RelicProduction
             // 
@@ -531,7 +542,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(378, 217);
+            this.tabPage2.Size = new System.Drawing.Size(378, 488);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Доп. функции";
             // 
@@ -573,7 +584,7 @@
             this.tabPage3.Controls.Add(this.TransferVis);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(378, 217);
+            this.tabPage3.Size = new System.Drawing.Size(378, 488);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Редкие функции";
             // 
@@ -595,7 +606,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(378, 217);
+            this.tabPage4.Size = new System.Drawing.Size(378, 488);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Classic";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -622,23 +633,12 @@
             this.Memorial.UseVisualStyleBackColor = false;
             this.Memorial.Click += new System.EventHandler(this.Memorial_Click);
             // 
-            // InfinityMission
-            // 
-            this.InfinityMission.BackColor = System.Drawing.Color.GreenYellow;
-            this.InfinityMission.Location = new System.Drawing.Point(9, 173);
-            this.InfinityMission.Name = "InfinityMission";
-            this.InfinityMission.Size = new System.Drawing.Size(170, 35);
-            this.InfinityMission.TabIndex = 80;
-            this.InfinityMission.Text = "Infinity";
-            this.InfinityMission.UseVisualStyleBackColor = false;
-            this.InfinityMission.Click += new System.EventHandler(this.InfinityMission_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(386, 242);
+            this.ClientSize = new System.Drawing.Size(386, 245);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelInformation);
             this.Cursor = System.Windows.Forms.Cursors.Default;

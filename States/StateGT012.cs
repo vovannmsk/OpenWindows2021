@@ -65,9 +65,9 @@ namespace States
             server.WriteToLogFileBH("12");
             if (globalParam.Windows10)
                 //server.CloseSandboxie();     //для себя (win 10)
-                server.Logout();
+                server.GoToLogout();
             else
-                server.Logout();            //для Наташи (win 7)
+                server.GoToLogout();            //для Наташи (win 7)
         }
 
         /// <summary>

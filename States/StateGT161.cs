@@ -57,7 +57,7 @@ namespace States
         public void run()                // переход к следующему состоянию
         {
             //server.GoToEnd();
-            server.Logout();
+            server.GoToLogout();
             botwindow.Pause(8000);
         }
 
