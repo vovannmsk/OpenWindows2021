@@ -1602,7 +1602,7 @@ namespace Main
                         infinity[j] = botParam[j].NumberOfInfinity;
                         check[j] = new Check(j);
                         botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
-                        botParam[j].Stage = 1;
+                        botParam[j].Stage = 0;
                     }
                     if (check[j].IsActiveServer)
                         check[j].problemResolutionAllinOneStage(botParam[j].Stage);
@@ -1611,14 +1611,13 @@ namespace Main
                         check[j].RemoveSandboxie();         //скорее всего это не нужно. достаточно сделать вычисление нового бота
                         check[j] = new Check(j);
                         botParam[j] = new BotParam(j);
-                        botParam[j].Stage = 1;
+                        botParam[j].Stage = 0;
                     }
                 }
             }
         }
 
         #endregion
-
 
         #region ============================== Infinity New =============================================
         private void InfinityMission_Click(object sender, EventArgs e)
@@ -1669,7 +1668,6 @@ namespace Main
             }
         }
         #endregion
-
 
         #region ============================== Переработка реликвий ===================================
 

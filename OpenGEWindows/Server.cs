@@ -9998,6 +9998,90 @@ namespace OpenGEWindows
             }
         }
 
+
+        #region ======================== Распределение по миссиям. Стадия 0 ==============================
+
+        /// <summary>
+        /// проверяем, какая часть миссии сейчас идёт. К какой стадии переходить?
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int NumberOfProblemAllinOneStage0()
+        {
+
+            if (!isHwnd()) return 0;                    //если нет окна ГЭ с hwnd таким как в файле HWND.txt
+            if (isLogout()) return 1;
+            if (isBarackCreateNewHero()) return 2;      //если стоят в бараке на странице создания нового персонажа
+            if (isBarack()) return 2;                   //если стоят в бараке 
+            if (isBarackWarningYes()) return 2;
+            if (isBarackTeamSelection()) return 2;      //если в бараках на стадии выбора группы
+
+            //город или БХ
+            if (isTown())
+            {
+                if (isUstiar()) return 3;
+                if (isCastilia()) return 4;
+                if (isBH())
+                    return 5;                           //БХ
+                else
+                    return 6;                           //Ребольдо
+            }
+
+            if (isMissionLobby()) return 7;             //Mission Lobby
+
+            if (isWaitingRoom()) return 7;              //Waiting Room //Mission Room 22-11
+
+            //диалог
+            if (dialog.isDialog())
+                return 8;                               //считаем, что стоим в воротах Инфинити
+
+            //в миссии
+            if (isWork())
+                if (isCastiliaMine())
+                    return 9;                           //миссия Кастилия
+                else
+                    return 10;                          //миссия Инфинити
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Начальное распределение по стадиям после запуска миссии "All in One"
+        /// </summary>
+        public void problemResolutionAllinOneStage0()
+        {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();
+                    Pause(1000);                        //пауза, чтобы перед оценкой проблем. Окно должно устаканиться.        10-11-2021 
+                }
+
+                //проверили, какие есть проблемы (на какой стадии находится бот)
+                int numberOfProblem = NumberOfProblemAllinOneStage0();
+
+                switch (numberOfProblem)
+                {
+                    case 0:                                         // нет окна
+                    case 1:                                         // логаут
+                    case 4:                                         // Кастилия
+                    case 6:                                         // Ребольдо
+                    case 7:                                         // Миссия лобби
+                    case 9:                                         // в миссии Кастилия-шахты
+                        botParam.Stage = 6;
+                        break;
+                    case 2:                                         // барак
+                    case 5:                                         // БХ
+                    case 8:                                         // Диалог. Считаем мы в воротах БХ
+                    case 10:                                        // миссия Инфинити
+                        botParam.Stage = 10;
+                        break;
+                    case 3:                                         // Юстиар
+                        botParam.Stage = 9;
+                        break;
+                }
+        }
+
+        #endregion
+
         #region ======================== Поиск стандартных проблем ===============================
 
         /// <summary>
@@ -10060,6 +10144,7 @@ namespace OpenGEWindows
         #endregion ===============================================================================
 
         #region ======================== Поиск проблем в Демонике ================================
+
         /// <summary>
         /// проверяем, если ли проблемы при работе в Demonic (стадия 1) и возвращаем номер проблемы
         /// 3, 4, 5, 6, 7, 8, 9, 10, 40, 41, 42, 43
@@ -10303,11 +10388,13 @@ namespace OpenGEWindows
             if (result != 0) return result;
 
             //в миссии
-            if (isWork() ||
-                isKillFirstHeroNew())       //проверить
+            if (isWork() || isKillFirstHeroNew())               
             {
-                if (isAssaultMode())     //значит ещё бегут с атакой к выбранной точке
-                    return 4;                   //тыкаем туда же ещё раз
+                if (isAssaultMode())                //значит ещё бегут с атакой к выбранной точке. либо воюем около указанной точки
+                    if (isBoss())
+                        return 9;                   //скиллуем
+                    else
+                        return 4;                   //тыкаем туда же ещё раз
                 if (isBattleMode())
                 {
                     if (NeedToPickUpRight)
@@ -10322,8 +10409,8 @@ namespace OpenGEWindows
                 }
                 else
                 {
-                    if (NextPointNumber > 6)    //дошли до конца миссии         //13-06-24
-                            return 6;               //летим на ферму
+                    if (NextPointNumber > 6)        //дошли до конца миссии         //13-06-24
+                        return 6;                   //летим на ферму
                     else
                         return 3;                   //ни пробела, ни Ctrl на нажато. Значит далее бежим с Ctrl.
                                                     //но проверяем через 1-2 сек, не пропал ли Ctrl.
@@ -11151,11 +11238,10 @@ namespace OpenGEWindows
                         if (!isAssaultMode())    //если боевой режим пропал, значит пора собирать дроп
                         {
                             //здесь можно попробовать впихнуть открытие сундука
-                            //OpenTheChest(NextPointNumber);        //не сделано 
+                            OpenTheChest(NextPointNumber);       
                             //новый вариант. сразу начинаем собирать дроп справа
                             NeedToPickUpRight = false;
                             NeedToPickUpLeft = true;
-                            //GetDropCastiliaRight(GetWaitingTimeForDropPicking(NextPointNumber));
                             GetDropCastiliaRight(NextPointNumber);
                             BattleModeOnDem();
                             botParam.HowManyCyclesToSkip = 1; //ожидаем, может кого прихлопнем 
@@ -11198,6 +11284,11 @@ namespace OpenGEWindows
                         //if (NextPointNumber > 7)
                             
                         break;
+                    case 9:                                                 //босс в прицеле
+                        SkillHeroes();  
+                        AssaultToNextPoint(NextPointNumber);                
+                        break;
+
                     default:
                         problemResolutionCommonCastiliaForStageFrom2To(numberOfProblem);
                         break;
@@ -12693,6 +12784,29 @@ namespace OpenGEWindows
         #endregion ===============================================================================
 
         #region   ============================== методы для Inrinity New ============================================
+
+        private void OpenTheChest(int NextPointNumber)
+        {
+            switch (NextPointNumber)
+            {
+                case 0:
+                case 1:
+                case 3:
+                case 4:
+                case 6:
+                    //ничего не делаем. нет сундука
+                    break;
+                case 2:
+                    new Point(720 + xx - 5, 427 + yy - 5).PressMouseL();
+                    Pause(1500);
+                    break;
+                case 5:
+                    new Point(531 + xx - 5, 284 + yy - 5).PressMouseL();
+                    Pause(1500);
+                    break;
+            }
+        }
+
 
         //бежим к боссу в Инфинити и атакуем его
         private void RunToBoss(int NumberMission)

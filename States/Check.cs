@@ -7908,7 +7908,10 @@ namespace States
         public void problemResolutionAllinOneStage(int NumberOfStage)
         {
             switch (NumberOfStage)
-            {  
+            {
+                case 0:
+                    server.problemResolutionAllinOneStage0();
+                    break;
                 case 1:
                     server.problemResolutionAllinOneStage1();
                     break;
