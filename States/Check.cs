@@ -7903,7 +7903,7 @@ namespace States
         #region  =================================== All in One Stage ==============================================
 
         /// <summary>
-        /// разрешение выявленных проблем в БХ
+        /// разрешение выявленных проблем в миссии All in One
         /// </summary>
         public void problemResolutionAllinOneStage(int NumberOfStage)
         {
@@ -7969,6 +7969,28 @@ namespace States
         }
 
         #endregion =================================================================================================
+
+
+        #region  =============================== Продажа аккаунтов в магазине ==============================
+
+        /// <summary>
+        /// разрешение выявленных проблем в массовой продаже
+        /// </summary>
+        public void problemResolutionToSellStage(int NumberOfStage)
+        {
+            switch (NumberOfStage)
+            {
+                case 1:
+                    server.ToSellproblemResolution();
+                    break;
+                //case 2:
+                //    server.problemResolutionToSellStage2();
+                //    break;
+            }
+        }
+
+        #endregion =================================================================================================
+
 
 
 

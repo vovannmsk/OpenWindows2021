@@ -5095,7 +5095,7 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region Гильдия Охотников BH 
+        #region Методы для миссии Инфинити в Гильдии Охотников BH 
 
         public abstract void runClientBH();
         //public abstract UIntPtr FindWindowGEforBH();
@@ -5125,8 +5125,6 @@ namespace OpenGEWindows
             //return new PointColor(373 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor() &&
             //        new PointColor(374 - 5 + xx, 561 - 5 + yy, 13752023, 0).isColor();
         }
-
-
 
         /// <summary>
         /// подбор дропа в миссии Инфинити
@@ -5225,22 +5223,9 @@ namespace OpenGEWindows
         /// <param name="y">коорд Y</param>
         public void FightToPoint(int x, int y, int t)
         {
-            //старый вариант
-            //Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
-            //Point pointFightBH = new Point(x - 30 + xx, y - 30 + yy);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
-
-            //pointSabreBottonBH.PressMouseL();
-            //pointFightBH.PressMouseL();
-            //Pause(t * 1000);
-
-            //новый вариант
-            //            Point pointSabreBottonBH = new Point(92 - 5 + xx, 525 - 5 + yy);         //нажимаем на кнопку с саблей на боевой панели (соответствует нажатию Ctrl+Click)
-            Point pointFightBH = new Point(x - 30 + xx + 5, y - 30 + yy + 5);                //нажимаем конкретную точку, куда надо бежать и бить всех по пути
-
             AssaultMode();
-            pointFightBH.PressMouseL();
+            new Point(x - 30 + xx + 5, y - 30 + yy + 5).PressMouseL();          //нажимаем конкретную точку, куда надо бежать и бить всех по пути
             Pause(t * 1000);
-
         }
 
         /// <summary>
@@ -5290,7 +5275,7 @@ namespace OpenGEWindows
             //botwindow.setStatusOfAtk(1);
 
             uint color = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0).GetPixelColor();                 // проверяем номер цвета в контрольной точке
-            WriteToLogFileBH("неизвестная миссия!!!, цвет " + color);
+            //WriteToLogFileBH("неизвестная миссия!!!, цвет " + color);
 
 
             //сохраняем скриншот
@@ -5322,7 +5307,6 @@ namespace OpenGEWindows
         /// <returns></returns>
         public bool isBH()
         {
-            //return (isTown() && !pointisBH1.isColor());
             return !pointisBH1.isColor();   //нет желтого ободка на миникарте
         }
 
@@ -5341,7 +5325,6 @@ namespace OpenGEWindows
         /// <returns></returns>
         public void GoToInfinityGateBH()
         {
-            //MinHeight();
             pointGateInfinityBH.PressMouseL();
         }
 
@@ -5479,7 +5462,7 @@ namespace OpenGEWindows
 
         #endregion
 
-        #region   ========== Кастилия (миссия) ==================
+        #region   ========== методы для миссии в шахте Кастилии ==================
 
         /// <summary>
         /// проверяем, находимся ли в Castilia.Mine (в миссии)
@@ -5683,7 +5666,7 @@ namespace OpenGEWindows
         {
             Point[] PointsToLeft = {
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
-                                        new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
+                                        new Point(187 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец.  взял немного левее
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
                                         new Point(217 - 5 + xx + 5, 308 - 5 + yy + 5),      // Кризалис
                                         new Point(217 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
@@ -11986,6 +11969,195 @@ namespace OpenGEWindows
 
         #endregion =================================   I N F I N I T Y   N E W  (конец)   =======================================
 
+        #region ============================== ПРОДАЖА В МАГАЗИНЕ ====================================================
+
+        #region ======================== Поиск стандартных проблем "Продажа в магазине" ===============================
+
+        /// <summary>
+        /// проверяем, если ли проблемы и возвращаем номер проблемы.  
+        /// Проблемы общие для всех миссий 1,2,12,13,16,17,20,22,23,24,38
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int ToSellNumberOfProblemCommonForAll()
+        {
+            //если нет окна
+            if (!isHwnd())        //если нет окна ГЭ с hwnd таким как в файле HWND.txt
+            {
+                //if (!FindWindowSteamBool())  //если Стима тоже нет
+                if (!FindWindowSteamBoolCW()) //если Стима тоже нет          -------------------------------------------------
+                    return 24;
+                else    //если Стим уже загружен
+                        //if (FindWindowGEforBHBool())  return 23;      //нашли окно ГЭ в текущей песочнице (и перезаписали Hwnd в функции FindWindowGEforBHBool) --------------
+                    if (FindWindowCWBool()) return 23;              //нашли чистое окно ГЭ (и перезаписали Hwnd в функции FindWindowCWBool)
+                else
+                    return 22;                  //если нет окна ГЭ в текущей песочнице
+            }
+            else            //если окно с нужным HWND нашлось
+                if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) IsItAlreadyPossibleToUploadNewWindow = 0;
+            //в логауте
+            if (isLogout()) return 1;
+            //если в магазине на странице с товарами
+            if (isExpedMerch2()) return 13;
+            //диалог
+            if (dialog.isDialog())
+                if (isExpedMerch() || isFactionMerch())  //случайно зашли в магазин Expedition Merchant или в Faction Merchant в Rebo
+                    return 12;
+            //в бараке
+            if (isBarackCreateNewHero()) return 20;      //если стоят в бараке на странице создания нового персонажа    //ПРОВЕРИТЬ РАБОТУ!
+            if (isBarack()) return 2;                    //если стоят в бараке 
+            if (isBarackWarningYes()) return 16;
+            if (isBarackTeamSelection()) return 17;    //если в бараках на стадии выбора группы
+
+            //if (isBadFightingStance()) return 19;       // если неправильная стойка
+            if (isOpenWorldTeleport()) return 38;
+            //если стандартных проблем не найдено
+            return 0;
+        }
+
+        #endregion ===============================================================================
+
+        #region ======================== Решение стандартных проблем "Продажа в магазине" ================================
+
+        /// <summary>
+        /// разрешение выявленных проблем. Стандартные проблемы (для стадии 1)
+        /// 1,2,12,13,16,17,20,22,23,24,38
+        /// </summary>
+        public void ToSellProblemResolutionCommon(int numberOfProblem)
+        {
+            switch (numberOfProblem)
+            {
+                case 1:
+                    QuickConnect();                             // Logout-->Barack  
+                    botParam.HowManyCyclesToSkip = 2;  //1
+                    break;
+                case 2:
+                    FromBarackToTown(2);                        // barack --> town
+                    botParam.HowManyCyclesToSkip = 4;  //2
+                    break;
+                case 12:                                        // закрыть магазин 
+                    CloseMerchReboldo();
+                    break;
+                case 13:                                        // закрыть магазин 
+                    CloseMerchReboldo2();
+                    break;
+                case 16:                                        // в бараках на стадии выбора группы и табличка Да/Нет
+                    PressYesBarack();
+                    break;
+                case 17:                                        // в бараках на стадии выбора группы
+                    botwindow.PressEsc();                       // нажимаем Esc
+                    break;
+                //case 19:                                        // включить правильную стойку
+                //    ProperFightingStanceOn();
+                //    MoveCursorOfMouse();
+                //    break;
+                case 20:
+                    ButtonToBarack();                    //если стоят на странице создания нового персонажа,
+                                                         //то нажимаем кнопку, чтобы войти обратно в барак
+                    break;
+                case 22:
+                    runClientCW();                              // если нет чистого окна ГЭ, но загружен Steam, то запускаем окно ГЭ -----------------------
+                    botParam.HowManyCyclesToSkip = 7;           //пропускаем следующие 6-8 циклов
+                    IsItAlreadyPossibleToUploadNewWindow = this.numberOfWindow;
+                    //IsItAlreadyPossibleToUploadNewSteam = 0;
+                    break;
+                case 23:                                    //стим есть. только что нашли новое окно с игрой
+                                                            //if (this.numberOfWindow == IsItAlreadyPossibleToUploadNewWindow) 
+                    IsItAlreadyPossibleToUploadNewWindow = 0;
+                    //IsItAlreadyPossibleToUploadNewSteam = 0;
+                    break;
+                case 24:                //если нет стима, значит удалили песочницу
+                                        //и надо заново проинициализировать основные объекты (но не факт, что это нужно)
+                    runClientSteamCW();              // если чистый Steam еще не загружен, то грузим его --------------------------------
+                    botParam.HowManyCyclesToSkip = 3;        //пропускаем следующие циклы (от 2 до 4)
+                    break;
+                case 38:
+                    botwindow.PressEsc();
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region ======================== Поиск проблем "Продажа в магазине" ================================
+        /// <summary>
+        /// проверяем, если ли проблемы при работе"Продажа в магазине" и возвращаем номер проблемы
+        /// 3, 4, 5, 6, 7, 8, 9, 10
+        /// </summary>
+        /// <returns>порядковый номер проблемы</returns>
+        public int ToSellNumberOfProblem()
+        {
+            int result = ToSellNumberOfProblemCommonForAll();
+            if (result != 0) return result;             // если нашлись стандартные проблемы
+
+            //диалог
+            if (dialog.isDialog())
+                return 8;                               // если стоим в предбаннике магазина 
+
+            //город или БХ
+            if (isTown())
+            {
+                    if (isOpenTownTeleport())           // если открыт Warp (Alt+F3), значит ещё около ТП, надо идти на Торговую
+                        return 4;
+                    else                                // уже на торговой улице. надо идти в магазин
+                        return 6;
+            }
+
+            //if (isShop())
+            //    return 7;
+
+            //если проблем не найдено
+            return 0;
+        }
+
+        #endregion   ========================================================================
+
+        #region ======================== Решение проблем "Продажа в магазине" ===============================
+
+        /// <summary>
+        /// разрешение выявленных проблем в Infinity. стадия 1. Вход в миссию
+        /// </summary>
+        public void ToSellproblemResolution()
+        {
+            if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
+            {
+                if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
+                {
+                    ActiveWindow();                     // поправляем окно, если оно сдвинулось
+                    Pause(1000);                        // пауза перед оценкой проблем. Окно должно устаканиться
+                }
+
+                //проверили, какие есть проблемы 
+                int numberOfProblem = ToSellNumberOfProblem();
+
+                switch (numberOfProblem)
+                {
+                    case 2:          
+                        break;
+                    case 4:                                                                         // город. не на торговой улице
+                        break;
+                    case 6:                                                                         // город. на торговой улице
+                        break;
+                    case 7:                                                                         // в магазине
+                        break;
+                    case 8:                                                                         // в предбаннике магазина
+                        dialog.PressStringDialog(1);
+                        break;
+                    default:
+                        ToSellProblemResolutionCommon(numberOfProblem);
+                        break;
+                }
+            }
+            else
+            {
+                botParam.HowManyCyclesToSkip--;
+                if (globalParam.TotalNumberOfAccounts <= 1) Pause(5000);
+            }
+        }
+
+        #endregion
+
+        #endregion ============================== ПРОДАЖА В МАГАЗИНЕ (конец) ====================================================
+
         #region ===========================  CapibaraEvent ===================================
 
         /// <summary>
@@ -13039,7 +13211,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Раффлезия      //работает                                                           115+
+        /// Раффлезия                                                                 115+
         /// </summary>
         private void MissionNumber7()
         {
@@ -13085,7 +13257,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// // Красные свечи                                                             119+
+        /// Красные свечи                                                             119+
         /// </summary>
         private void MissionNumber11()
         {
@@ -13162,7 +13334,7 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// Плитка ромбами, босс близко впереди                                       125   не работает
+        /// Плитка ромбами, босс близко впереди                                       125  
         /// </summary>
         private void MissionNumber17()
         {

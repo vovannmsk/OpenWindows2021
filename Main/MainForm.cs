@@ -1588,7 +1588,7 @@ namespace Main
             {
                 check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
                 botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
-                botParam[j].Stage = 1;
+                botParam[j].Stage = 0;
                 infinity[j] = botParam[j].NumberOfInfinity;
             }
 
@@ -1799,7 +1799,55 @@ namespace Main
         }
 
 
+
         #endregion
+
+        private void SellToAll_Click(object sender, EventArgs e)
+        {
+            InfinityMission.BackColor = Color.OrangeRed;
+            Thread myToSell = new Thread(funcSell);
+            myToSell.Start();
+        }
+
+        /// <summary>
+        /// метод задает функционал для потока, организуемого кнопкой AllinOne (Demonic + Castilia + Farm)
+        /// </summary>
+        private void funcSell()
+        {
+            Check[] check = new Check[numberOfAcc + 1];
+            BotParam[] botParam = new BotParam[numberOfAcc + 1];
+            int[] infinity = new int[numberOfAcc + 1];
+            for (int j = startAcc; j <= numberOfAcc; j++)
+            {
+                check[j] = new Check(j);   //проинициализировали check[j]. Сработал конструктор
+                botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                botParam[j].Stage = 1;
+                infinity[j] = botParam[j].NumberOfInfinity;
+            }
+
+            while (true)
+            {
+                // j - номер окна с ботом
+                for (int j = startAcc; j <= numberOfAcc; j++)
+                {
+                    if (botParam[j].NumberOfInfinity != infinity[j])  //инфинити поменялся,т.е. перешли к новому аккаунту
+                    {
+                        infinity[j] = botParam[j].NumberOfInfinity;
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j); //проинициализировали botParam[j]. Сработал конструктор
+                        botParam[j].Stage = 1;
+                    }
+                    if (check[j].IsActiveServer)
+                        check[j].problemResolutionToSellStage(botParam[j].Stage);
+                    else
+                    {
+                        check[j] = new Check(j);
+                        botParam[j] = new BotParam(j);
+                        botParam[j].Stage = 1;
+                    }
+                }
+            }
+        }
 
 
     }// END class MainForm 
