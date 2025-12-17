@@ -7992,8 +7992,6 @@ namespace States
         #endregion =================================================================================================
 
 
-
-
         #region  =================================== CapibaraEvent ==============================================
 
         /// <summary>
@@ -8101,7 +8099,8 @@ namespace States
             #region  доп проверки
 
             //MessageBox.Show("босс??" + server.isBoss());
-            MessageBox.Show("БХ??" + server.isBH());
+            //MessageBox.Show("БХ??" + server.isBH());
+            //MessageBox.Show("Alt+F3 ??" + server.isOpenTownTeleport());
             //MessageBox.Show("пет активный? " + server.isActivePetClassic());
             //MessageBox.Show("на работе? " + server.isWorkClassic());
             //MessageBox.Show("в городе? " + server.isTownClassic());
@@ -8362,8 +8361,8 @@ namespace States
             //PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
             //PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
 
-            PointColor point1 = new PointColor(700 - 30 + xx + 5, 500 - 30 + yy + 5, 0, 0);
-            PointColor point2 = new PointColor(235 - 5 + xx, 106 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(661 - 5 + xx, 657 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(661 - 5 + xx, 658 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(235 - 5 + xx, 107 - 5 + yy, 0, 0);
             PointColor point4 = new PointColor(938 - 5 + xx, 259 - 5 + yy, 0, 0);
 
@@ -8373,7 +8372,7 @@ namespace States
             color4 = point4.GetPixelColor();
 
             MessageBox.Show("цвет 1 = " + color1);
-            //MessageBox.Show("цвет 2 = " + color2);
+            MessageBox.Show("цвет 2 = " + color2);
             //MessageBox.Show("цвет 3 = " + color3);
             //MessageBox.Show("цвет 4 = " + color4);
             //}

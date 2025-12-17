@@ -45,7 +45,8 @@ namespace OpenGEWindows
             TownFactory townFactory = new SingTownFactory(botwindow);                                     // здесь выбирается конкретная реализация для фабрики Town
             this.town = townFactory.createTown();
             this.town_begin = new SingTownReboldo(botwindow);   //город взят по умолчанию, как Ребольдо. 
-            dialog = new DialogSing(botwindow);
+            this.dialog = new DialogSing(botwindow);
+            //this.market = new MarketSing(botwindow);    //нужно для продаж в магазине Ребольдо (для Инфинити)   17.12.2025
 
             #endregion
 

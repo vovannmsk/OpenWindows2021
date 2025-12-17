@@ -57,8 +57,8 @@ namespace States
         /// </summary>
         public void run()                // переход к следующему состоянию
         {
-            //server.ReOpenWindowCW();
-            server.OpenWindowCW();
+            server.ReOpenWindowCW();
+            //server.OpenWindowCW();
         }
 
         /// <summary>

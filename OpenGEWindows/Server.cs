@@ -1,13 +1,15 @@
-﻿using System;
+﻿//using System.Drawing;
+using GEBot.Data;
+using System;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Diagnostics;
 using System.Linq;
-//using System.IO;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
-//using System.Drawing;
-using GEBot.Data;
-using System.Diagnostics;
-using System.Data.Entity.Core.Metadata.Edm;
+//using System.IO;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 //using System.Runtime.InteropServices.ComTypes;
 //using System.Windows.Media;
 //using OpenGEWindows;
@@ -70,6 +72,7 @@ namespace OpenGEWindows
         protected GlobalParam globalParam;
         protected ServerParam serverParam;
         protected BotParam botParam;
+        //protected Market market;
         protected int xx;
         protected int yy;
         protected int xxx;
@@ -8943,8 +8946,6 @@ namespace OpenGEWindows
         {
             return new PointColor(199 - 5 + xx, 255 - 5 + yy, 6525666, 0).isColor() &&
                     new PointColor(199 - 5 + xx, 256 - 5 + yy, 6525666, 0).isColor();
-
-
         }
 
         /// <summary>
@@ -12032,7 +12033,7 @@ namespace OpenGEWindows
                     break;
                 case 2:
                     FromBarackToTown(2);                        // barack --> town
-                    botParam.HowManyCyclesToSkip = 4;  //2
+                    botParam.HowManyCyclesToSkip = 2;  //2
                     break;
                 case 12:                                        // закрыть магазин 
                     CloseMerchReboldo();
@@ -12102,8 +12103,11 @@ namespace OpenGEWindows
                         return 6;
             }
 
-            //if (isShop())
-            //    return 7;
+            if (isShopPagePurchase())
+                return 7;
+
+            if (isShopPageSell())
+                return 9;
 
             //если проблем не найдено
             return 0;
@@ -12118,6 +12122,8 @@ namespace OpenGEWindows
         /// </summary>
         public void ToSellproblemResolution()
         {
+            Point Jessica = new Point(382 - 5 + xx, 511 - 5 + yy);
+
             if (botParam.HowManyCyclesToSkip <= 0)      // проверяем, нужно ли пропустить данное окно на этом цикле.
             {
                 if (isHwnd())        //если окно с hwnd таким как в файле HWND.txt есть, то оно сдвинется на своё место
@@ -12131,16 +12137,27 @@ namespace OpenGEWindows
 
                 switch (numberOfProblem)
                 {
-                    case 2:          
-                        break;
                     case 4:                                                                         // город. не на торговой улице
+                        WARP(2);
+                        botwindow.PressEsc(3);
                         break;
                     case 6:                                                                         // город. на торговой улице
+                        OpenMapReboldo();
+                        GotoRolax();
+                        MaxHeight(8);
+                        Jessica.PressMouseL();                                                      //тыкаем в голову Джесики (Item Dealer), чтобы войти в магазин
+                        Pause(2000);
                         break;
-                    case 7:                                                                         // в магазине
+                    case 7:                                                                         // в магазине в разделе "Покупка/Purchase"
+                        PressBookmarkSell();                                                        // переходим в раздел магазина "Продажа/Sell"
+                        Pause(1000);
                         break;
                     case 8:                                                                         // в предбаннике магазина
                         dialog.PressStringDialog(1);
+                        break;
+                    case 9:                                                                         // в магазине в разделе "Продажа/Sell"
+                        SellToTheRedBottle(50);                                                     // продажа до красной бутылки
+                        Pause(1000);
                         break;
                     default:
                         ToSellProblemResolutionCommon(numberOfProblem);
@@ -13356,5 +13373,142 @@ namespace OpenGEWindows
 
         #endregion   ============================== методы для Inrinity New (end) ============================================
 
+        /// <summary>
+        /// Продажа товаров в магазине вплоть до маленькой красной бутылки 
+        /// </summary>
+        private void SellToTheRedBottle(int limit)
+        {
+            uint count = 0;
+            while ((!isRedBottle()) && (count <= limit))
+            {
+                AddToCart();
+                count++; 
+                //if (count > limit) break;   // защита от бесконечного цикла
+            }
+
+            PressButtonSell();
+        }
+
+        /// <summary>
+        /// нажимаем кнопку Sell в магазине Ребольдо
+        /// </summary>
+        private void PressButtonSell()
+        {
+            Point ButtonSell = new Point(824 - 5 + xx, 658 - 5 + yy);
+            ButtonSell.PressMouseL();
+        }
+
+        /// <summary>
+        /// проверяем, является ли товар в первой строке магазина маленькой красной бутылкой
+        /// либо другими красными бутылками
+        /// </summary>
+        /// <returns> true, если в первой строке маленькая красная бутылка или другие аналоги</returns>
+        private bool isRedBottle()
+        {
+            uint Color = new PointColor(154 - 5 + xx, 224 - 5 + yy, 0, 0).GetPixelColor();
+            return (Color == 5933520) ||       //500 HP     маленькая красная бутылка
+                    (Color == 3947742) ||       //1500 HP
+                    (Color == 2634708) ||       //2500 HP
+                    (Color == 1714255) ||       //Mitridat
+                    (Color == 13667914);        //600 SP
+        }
+
+        /// <summary>
+        /// добавляем товар из первой строки в корзину 
+        /// </summary>
+        public void AddToCart()
+        {
+            AddProduct();
+            //Pause(200);
+
+            //DownList();
+            //Pause(200);
+
+        }
+
+        private void DownList()
+        {
+            Point ArrowAddProduct = new Point(477 - 5 + xx, 256 - 5 + yy);
+            ArrowAddProduct.PressMouseWheelDown();
+        }
+
+        /// <summary>
+        /// добавить продукт в первой строчке списка в магазине
+        /// </summary>
+        private void AddProduct()
+        {
+            Point ArrowAddProduct = new Point(477 - 5 + xx, 256 - 5 + yy);
+            ArrowAddProduct.PressMouseL();
+            Pause(250);
+            ArrowAddProduct.PressMouseWheelDown();
+            Pause(250);
+        }
+
+
+        /// <summary>
+        /// в уже открытой карте моста идём к выбранному персонажу (в строке numberString )
+        /// </summary>
+        public void GotoPersonOnMapReboldo(int bookmark, int numberString)
+        {
+            Point Bookkmark1    = new Point(810 - 5 + xx, 65 - 5 + yy);
+            Point Bookkmark2    = new Point(900 - 5 + xx, 65 - 5 + yy);
+            Point SelectedRow   = new Point(810 - 5 + xx, 92 - 5 + yy + (numberString - 1) * 15);
+            Point MoveNow       = new Point(941 - 5 + xx, 734 - 5 + yy);
+
+            if (bookmark == 1)
+                Bookkmark1.PressMouseL();       //тыкаем в закладку 1 (в списке справа от карты)
+            if (bookmark == 2)
+                Bookkmark2.PressMouseL();       //тыкаем в закладку 2 (в списке справа от карты)
+
+            SelectedRow.DoubleClickL();         //тыкаем в указанную строку справа от карты
+            Pause(500);
+
+            MoveNow.PressMouseL();              //тыкаем в кнопку Move Now
+            Pause(500);
+
+            botwindow.PressEscThreeTimes();
+            Pause(2000);
+        }
+
+        /// <summary>
+        /// в уже открытой карте Ребольдо тыкаем в Ролакса /Precious Metals Merchant/ (на второй закладке, 19-я строчка в списке справа от карты Alt+Z)
+        /// </summary>
+        public void GotoRolax()
+        {
+            GotoPersonOnMapReboldo(2,19);
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в магазине Ребольдо на закладке "Покупка"
+        /// </summary>
+        /// <returns></returns>
+        private bool isShopPagePurchase()
+        {
+            return  new PointColor(824 - 5 + xx, 658 - 5 + yy, 12110000, 4).isColor() &&            // буква h в слове Purchase
+                    new PointColor(824 - 5 + xx, 659 - 5 + yy, 12110000, 4).isColor();
+        }
+
+        /// <summary>
+        /// проверяем, находимся ли в магазине Ребольдо в разделе "Продажа/Sell"
+        /// </summary>
+        /// <returns></returns>
+        private bool isShopPageSell()
+        {
+            return  new PointColor(661 - 5 + xx, 658 - 5 + yy, 12110000, 4).isColor() &&            // проверяем букву l в слове Select на кнопке внизу справа
+                    new PointColor(661 - 5 + xx, 659 - 5 + yy, 12110000, 4).isColor();
+        }
+
+        /// <summary>
+        /// нажимаем на кнопку "Sell" для перехода на страницу продаж в магазине. Повтор нажатия при неудаче
+        /// </summary>
+        private void PressBookmarkSell()
+        {
+            Point BottonSell = new Point(268 - 5 + xx, 153 - 5 + yy);
+            //while (!isShopPageSell())
+            //{
+                BottonSell.PressMouseL();
+            //    Pause(1000);
+            //}
+        }
     }
 }

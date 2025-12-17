@@ -404,10 +404,11 @@ namespace OpenGEWindows
         /// </summary>
         public void SelectingAnExitPoint()
         {
-            if (NumberOfRoute()==0 || NumberOfRoute() == 1)
-                dialog.PressStringDialog(3);
-            else
-                dialog.PressStringDialog(1);
+            //if (NumberOfRoute()==0 || NumberOfRoute() == 1)
+            //    dialog.PressStringDialog(3);
+            //else
+            //    dialog.PressStringDialog(1);
+            dialog.PressStringDialog(2);
         }
 
     }

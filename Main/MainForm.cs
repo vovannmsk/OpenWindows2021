@@ -1802,9 +1802,10 @@ namespace Main
 
         #endregion
 
+        #region ============================= ПРОДАЖА В МАГАЗИНЕ ВСЕХ АККАУНТОВ ==============================
         private void SellToAll_Click(object sender, EventArgs e)
         {
-            InfinityMission.BackColor = Color.OrangeRed;
+            SellToAll.BackColor = Color.OrangeRed;
             Thread myToSell = new Thread(funcSell);
             myToSell.Start();
         }
@@ -1849,6 +1850,7 @@ namespace Main
             }
         }
 
+        #endregion =================================================================================================
 
     }// END class MainForm 
 }// END namespace OpenGEWindows
