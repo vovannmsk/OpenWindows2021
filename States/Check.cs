@@ -8361,8 +8361,8 @@ namespace States
             //PointColor point1 = new PointColor(2 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
             //PointColor point2 = new PointColor(3 + 77 - 5 + xx + (j - 1) * 14, 591 - 5 + yy, 0, 0);
 
-            PointColor point1 = new PointColor(661 - 5 + xx, 657 - 5 + yy, 0, 0);
-            PointColor point2 = new PointColor(661 - 5 + xx, 658 - 5 + yy, 0, 0);
+            PointColor point1 = new PointColor(161 - 5 + xx, 239 - 5 + yy, 0, 0);
+            PointColor point2 = new PointColor(162 - 5 + xx, 239 - 5 + yy, 0, 0);
             PointColor point3 = new PointColor(235 - 5 + xx, 107 - 5 + yy, 0, 0);
             PointColor point4 = new PointColor(938 - 5 + xx, 259 - 5 + yy, 0, 0);
 

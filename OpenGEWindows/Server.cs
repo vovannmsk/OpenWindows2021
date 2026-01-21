@@ -5647,7 +5647,7 @@ namespace OpenGEWindows
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Робот
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Фобитанец
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // мантикора
-                                        new Point(765 - 5 + xx + 5, 308 - 5 + yy + 5),      // Кризалис
+                                        new Point(765 - 5 + xx + 5, 208 - 5 + yy + 5),      // Кризалис
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Химера
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Аргус
                                         new Point(765 - 5 + xx + 5, 408 - 5 + yy + 5),      // Череп
@@ -11132,7 +11132,7 @@ namespace OpenGEWindows
                         break;
                     case 3:                                         // старт миссии      //ок
                         MissionStart();
-                        botParam.HowManyCyclesToSkip = 1;
+                        botParam.HowManyCyclesToSkip = 2;
                         break;
                     case 4:                                         // Castilia --> Green Arrow
                         AddBullets();
@@ -11449,6 +11449,7 @@ namespace OpenGEWindows
                     case 4:                                                                        // BH --> Gate
                         botwindow.PressEscThreeTimes();
                         AddBullets();
+                        botwindow.FirstHero();
                         GoToInfinityGateBH();
                         break;
                     case 6:      //норм                                                             // town --> BH
@@ -11548,17 +11549,17 @@ namespace OpenGEWindows
                         MoveCursorOfMouse();
                         break;
                     case 5:                                                 // Миссия окончена 
-                        botParam.HowManyCyclesToSkip = 2;                   // ждём рулетку
+                        botParam.HowManyCyclesToSkip = 3;                   // ждём рулетку
                         Teleport(2, true);                                  // телепорт в БХ
                         botParam.Stage = 10;                                // переходим на стадию 10 (Stage 10)    
-                        botParam.HowManyCyclesToSkip = 2;
+                        botParam.HowManyCyclesToSkip = 3;
                         break;
                     case 6:                                                 // бежим до босса. ничего не делаем
                         break;
                     case 7:                                                 // Миссия окончена. не ждём рулетку 
                         Teleport(2, true);                                  // телепорт в БХ
                         botParam.Stage = 10;                                // переходим на стадию 10 (Stage 10)    
-                        botParam.HowManyCyclesToSkip = 2; 
+                        botParam.HowManyCyclesToSkip = 3; 
                         break;
                     default:
                         InfinityproblemResolutionCommonForStageFrom2To(numberOfProblem);
@@ -12156,8 +12157,12 @@ namespace OpenGEWindows
                         dialog.PressStringDialog(1);
                         break;
                     case 9:                                                                         // в магазине в разделе "Продажа/Sell"
-                        SellToTheRedBottle(50);                                                     // продажа до красной бутылки
+                        SellToTheRedBottle(150);                                                    // продажа 150-ти предметов или до красной бутылки
                         Pause(1000);
+                        CloseShopTrade();
+                        Pause(1000);
+                        WayToGoDemonic(1);                                                          //переход к новому аккаунту
+
                         break;
                     default:
                         ToSellProblemResolutionCommon(numberOfProblem);
@@ -13373,6 +13378,8 @@ namespace OpenGEWindows
 
         #endregion   ============================== методы для Inrinity New (end) ============================================
 
+        #region   ============================== методы для ПРОДАЖА В МАГАЗИНЕ ============================================
+
         /// <summary>
         /// Продажа товаров в магазине вплоть до маленькой красной бутылки 
         /// </summary>
@@ -13381,12 +13388,20 @@ namespace OpenGEWindows
             uint count = 0;
             while ((!isRedBottle()) && (count <= limit))
             {
-                AddToCart();
+                AddProductToCart();
                 count++; 
-                //if (count > limit) break;   // защита от бесконечного цикла
             }
 
             PressButtonSell();
+        }
+
+        /// <summary>
+        /// закрываем магазин нажатием на крестик в верхнем правом углу
+        /// </summary>
+        private void CloseShopTrade()
+        {
+            Point ButtonClose = new Point(900 - 5 + xx, 109 - 5 + yy);
+            ButtonClose.PressMouseL();
         }
 
         /// <summary>
@@ -13399,51 +13414,31 @@ namespace OpenGEWindows
         }
 
         /// <summary>
-        /// проверяем, является ли товар в первой строке магазина маленькой красной бутылкой
-        /// либо другими красными бутылками
+        /// проверяем, является ли товар в первой строке магазина маленькой красной бутылкой или митридатом
         /// </summary>
-        /// <returns> true, если в первой строке маленькая красная бутылка или другие аналоги</returns>
+        /// <returns> true, если в первой строке маленькая красная бутылка или митридат </returns>
         private bool isRedBottle()
         {
-            uint Color = new PointColor(154 - 5 + xx, 224 - 5 + yy, 0, 0).GetPixelColor();
-            return (Color == 5933520) ||       //500 HP     маленькая красная бутылка
-                    (Color == 3947742) ||       //1500 HP
-                    (Color == 2634708) ||       //2500 HP
-                    (Color == 1714255) ||       //Mitridat
-                    (Color == 13667914);        //600 SP
+            PointColor RedBottle  = new PointColor(161 - 5 + xx, 239 - 5 + yy, 4740000, 4);
+            PointColor RedBottle2 = new PointColor(162 - 5 + xx, 239 - 5 + yy, 10330000, 4);
+            PointColor Mitridath  = new PointColor(161 - 5 + xx, 239 - 5 + yy, 7640000, 4);
+            PointColor Mitridath2 = new PointColor(162 - 5 + xx, 239 - 5 + yy, 4880000, 4);
+
+            return (RedBottle.isColor() && RedBottle2.isColor()) 
+                || (Mitridath.isColor() && Mitridath2.isColor());
         }
 
         /// <summary>
-        /// добавляем товар из первой строки в корзину 
+        /// добавить продукт из первой строчки списка в магазине в корзину для последующей покупки
         /// </summary>
-        public void AddToCart()
-        {
-            AddProduct();
-            //Pause(200);
-
-            //DownList();
-            //Pause(200);
-
-        }
-
-        private void DownList()
-        {
-            Point ArrowAddProduct = new Point(477 - 5 + xx, 256 - 5 + yy);
-            ArrowAddProduct.PressMouseWheelDown();
-        }
-
-        /// <summary>
-        /// добавить продукт в первой строчке списка в магазине
-        /// </summary>
-        private void AddProduct()
+        private void AddProductToCart()
         {
             Point ArrowAddProduct = new Point(477 - 5 + xx, 256 - 5 + yy);
             ArrowAddProduct.PressMouseL();
-            Pause(250);
+            //Pause(200);
             ArrowAddProduct.PressMouseWheelDown();
-            Pause(250);
+            Pause(100);
         }
-
 
         /// <summary>
         /// в уже открытой карте моста идём к выбранному персонажу (в строке numberString )
@@ -13475,7 +13470,7 @@ namespace OpenGEWindows
         /// </summary>
         public void GotoRolax()
         {
-            GotoPersonOnMapReboldo(2,19);
+            GotoPersonOnMapReboldo(2,20);  // (2,19)
         }
 
         /// <summary>
@@ -13510,5 +13505,7 @@ namespace OpenGEWindows
             //    Pause(1000);
             //}
         }
+
+        #endregion 
     }
 }
